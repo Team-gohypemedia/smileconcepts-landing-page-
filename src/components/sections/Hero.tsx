@@ -294,40 +294,77 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Stats row */}
+            {/* 4 Feature Cards from Live Page */}
             <motion.div
               variants={fadeUp}
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(4, auto)",
-                gap: "2rem",
-                marginTop: "3.5rem",
+                gridTemplateColumns: "repeat(auto-fit, minmax(135px, 1fr))",
+                gap: "1rem",
+                marginTop: "3rem",
               }}
             >
-              {stats.map(s => (
-                <div key={s.label}>
+              {[
+                { num: "01", title: "Immediate", subtitle: "Function", desc: "Teeth in 1–3 Days" },
+                { num: "02", title: "Rejuvenation", subtitle: "Age-Rewind", desc: "Facial Support" },
+                { num: "03", title: "Expertise", subtitle: "30+ Years", desc: "Dr. Manish Shah" },
+                { num: "04", title: "All Teeth on 4", subtitle: "Protocol", desc: "No Bone Grafting" },
+              ].map((card) => (
+                <div
+                  key={card.num}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    borderRadius: "12px",
+                    padding: "1rem",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      color: "#F47A4A",
+                      letterSpacing: "0.1em",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    {card.num}
+                  </div>
                   <div
                     style={{
                       fontFamily: "var(--font-prata)",
-                      fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
-                      color: "#fff",
+                      fontSize: "1.05rem",
+                      color: "#ffffff",
                       fontWeight: 400,
-                      lineHeight: 1,
+                      lineHeight: 1.2,
                     }}
                   >
-                    {s.value}
+                    {card.title}
                   </div>
                   <div
                     style={{
                       fontFamily: "var(--font-assistant)",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.45)",
-                      marginTop: "0.4rem",
+                      fontSize: "0.78rem",
+                      fontWeight: 600,
+                      color: "rgba(255, 255, 255, 0.7)",
+                      marginTop: "0.15rem",
                     }}
                   >
-                    {s.label}
+                    {card.subtitle}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.72rem",
+                      color: "rgba(255, 255, 255, 0.45)",
+                      marginTop: "0.35rem",
+                    }}
+                  >
+                    {card.desc}
                   </div>
                 </div>
               ))}

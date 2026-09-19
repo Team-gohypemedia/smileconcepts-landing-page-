@@ -97,7 +97,7 @@ export default function AllOn4Cost() {
               color: "#555555",
             }}
           >
-            In Sydney, full arch All-on-4 dental implants typically range between <strong>$17,000 and $29,000 per arch</strong>. At Smile Concepts, we believe in complete transparency: no hidden surgeon fees, hospital surprises, or sudden extra costs.
+            While the average cost of All on Four Dental Implants in Sydney is between <strong>$17,000 and $29,000 per arch</strong>, it is highly dynamic based on your unique bone structure and choice of bridge material. Our team uses the most advanced 3D guided techniques and premium-grade materials. In the long run, you save substantially with minimal maintenance, no repeat procedures, and a lifetime foundation.
           </motion.p>
         </div>
 

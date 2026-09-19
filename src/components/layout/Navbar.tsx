@@ -16,9 +16,9 @@ const navLinks: NavLinkItem[] = [
   { label: "Overview", href: "#overview" },
   { label: "Why All-on-4", href: "#benefits" },
   { label: "Procedure", href: "#procedure" },
+  { label: "Candidacy", href: "#candidacy" },
   { label: "Cost & Super", href: "#cost" },
-  { label: "Results", href: "#gallery" },
-  { label: "Our Doctors", href: "#team" },
+  { label: "Why Choose Us", href: "#why-choose" },
   { label: "FAQ", href: "#faq" },
 ];
 
