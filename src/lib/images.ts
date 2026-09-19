@@ -96,6 +96,26 @@ export const images = {
     pointScanBone: "/images/misc/point-scan-bone.jpg",
     pinkDrops:     "/images/misc/pink-drops.jpg",
   },
+
+  brand: {
+    logo: "/images/brand/cropped-logo_large-1.png",
+    logoWhite: "/images/brand/logo-white.png",
+    favicon32: "/images/brand/cropped-favicon-32x32.png",
+    favicon192: "/images/brand/cropped-favicon-192x192.png",
+    affiliations: [
+      { name: "ADA", src: "/images/brand/ADA-logo.png" },
+      { name: "ICOI", src: "/images/brand/ICOI-logo.png" },
+      { name: "ISCD", src: "/images/brand/ISCD-logo.png" },
+      { name: "International Association of Orthodontics", src: "/images/brand/International-Association-of-Orthodontics-logo.png" },
+      { name: "Australian Sleep Association", src: "/images/brand/Australian-Sleep-Association-logo.png" },
+      { name: "Australian Medical Association", src: "/images/brand/Australian-Medical-Association-logo.png" },
+      { name: "ASID", src: "/images/brand/ASID-logo.png" },
+      { name: "American Academy of Craniofacial Pain", src: "/images/brand/American-Academy-of-Craniofacial-Pain-logo.png" },
+      { name: "AACD", src: "/images/brand/AACD-logo.png" },
+      { name: "AADSM", src: "/images/brand/AADSM-logo.png" },
+      { name: "ACSDD", src: "/images/brand/ACSDD-logo.png" },
+    ],
+  },
 } as const;
 
 // Helper type for type-safe image access

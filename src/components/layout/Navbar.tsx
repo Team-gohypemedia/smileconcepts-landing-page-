@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 
@@ -28,7 +29,7 @@ export default function Navbar() {
   const [dropdown, setDropdown] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -38,40 +39,42 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  const isLightNav = scrolled || mobileOpen;
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled
+        isLightNav
           ? "bg-white/95 backdrop-blur-md shadow-[0_2px_30px_rgba(0,0,0,0.08)] py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="container-sc flex items-center justify-between gap-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="relative w-9 h-9 rounded-full bg-[#F47A4A] flex items-center justify-center overflow-hidden">
-            <span
-              className="text-white text-xl font-bold leading-none"
-              style={{ fontFamily: "var(--font-prata)" }}
-            >
-              S
-            </span>
-          </div>
-          <div className="leading-none">
-            <span
-              className={`block text-lg font-bold transition-colors duration-300 ${
-                scrolled ? "text-[#1a1a1a]" : "text-white"
+        <Link href="/" className="relative flex items-center shrink-0" aria-label="Smile Concepts Sydney">
+          <div className="relative h-10 md:h-12 w-44 md:w-56 flex items-center">
+            {/* White version for transparent/dark hero */}
+            <Image
+              src="/images/brand/logo-white.png"
+              alt="Smile Concepts - Centre for Advanced Dentistry"
+              fill
+              sizes="(max-width: 768px) 176px, 224px"
+              className={`object-contain object-left transition-opacity duration-300 ${
+                isLightNav ? "opacity-0 pointer-events-none" : "opacity-100"
               }`}
-              style={{ fontFamily: "var(--font-prata)" }}
-            >
-              Smile Concepts
-            </span>
-            <span
-              className="block text-[10px] tracking-[0.25em] uppercase text-[#F47A4A] mt-0.5"
-              style={{ fontFamily: "var(--font-assistant)" }}
-            >
-              Dental · Sydney CBD
-            </span>
+              priority
+            />
+            {/* Color/Dark version for scrolled white navbar */}
+            <Image
+              src="/images/brand/cropped-logo_large-1.png"
+              alt="Smile Concepts - Centre for Advanced Dentistry"
+              fill
+              sizes="(max-width: 768px) 176px, 224px"
+              className={`object-contain object-left transition-opacity duration-300 ${
+                isLightNav ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+              priority
+            />
           </div>
         </Link>
 
@@ -87,7 +90,7 @@ export default function Navbar() {
               >
                 <button
                   className={`flex items-center gap-1 text-sm font-medium tracking-wide transition-colors hover:text-[#F47A4A] ${
-                    scrolled ? "text-[#3C3C3C]" : "text-white/90"
+                    isLightNav ? "text-[#3C3C3C]" : "text-white/90"
                   }`}
                   style={{ fontFamily: "var(--font-assistant)" }}
                 >
@@ -125,7 +128,7 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 className={`text-sm font-medium tracking-wide transition-colors hover:text-[#F47A4A] ${
-                  scrolled ? "text-[#3C3C3C]" : "text-white/90"
+                  isLightNav ? "text-[#3C3C3C]" : "text-white/90"
                 }`}
                 style={{ fontFamily: "var(--font-assistant)" }}
               >
@@ -140,7 +143,7 @@ export default function Navbar() {
           <a
             href="tel:0292677777"
             className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-[#F47A4A] ${
-              scrolled ? "text-[#364D5D]" : "text-white/90"
+              isLightNav ? "text-[#364D5D]" : "text-white/90"
             }`}
             style={{ fontFamily: "var(--font-assistant)" }}
           >
@@ -161,7 +164,7 @@ export default function Navbar() {
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
           className={`lg:hidden p-2 rounded-lg transition-colors ${
-            scrolled ? "text-[#3C3C3C] hover:bg-gray-100" : "text-white hover:bg-white/10"
+            isLightNav ? "text-[#3C3C3C] hover:bg-gray-100" : "text-white hover:bg-white/10"
           }`}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

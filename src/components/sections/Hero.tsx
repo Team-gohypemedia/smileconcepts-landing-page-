@@ -147,7 +147,7 @@ export default function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <div className="container-sc" style={{ paddingBottom: "2rem" }}>
+        <div className="container-sc" style={{ paddingTop: "clamp(6.5rem, 14vh, 9rem)", paddingBottom: "3rem" }}>
           <motion.div
             variants={stagger}
             initial="hidden"

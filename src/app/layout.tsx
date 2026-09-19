@@ -47,6 +47,14 @@ export const metadata: Metadata = {
     siteName: "Smile Concepts",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/images/brand/cropped-favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/brand/cropped-favicon-192x192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/images/brand/cropped-favicon-180x180.png",
+    shortcut: "/images/brand/cropped-favicon-32x32.png",
+  },
 };
 
 /* ─── Root Layout ───────────────────────────────────────────────── */

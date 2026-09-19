@@ -7,6 +7,7 @@ import ServicesSection from "@/components/sections/ServicesSection";
 import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
 import Team from "@/components/sections/Team";
+import Affiliations from "@/components/sections/Affiliations";
 import CTABanner from "@/components/sections/CTABanner";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <Gallery />
         <Testimonials />
         <Team />
+        <Affiliations />
         <CTABanner />
       </main>
       <Footer />

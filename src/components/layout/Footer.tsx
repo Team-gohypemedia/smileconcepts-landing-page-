@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Phone, MapPin, Mail } from "lucide-react";
 
 const treatments = [
@@ -41,13 +42,14 @@ export default function Footer() {
       >
         {/* Brand */}
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#F47A4A", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <span style={{ fontFamily: "var(--font-prata)", color: "#fff", fontSize: "1.1rem", fontWeight: 700 }}>S</span>
-            </div>
-            <div>
-              <div style={{ fontFamily: "var(--font-prata)", color: "#fff", fontSize: "1rem", fontWeight: 400, lineHeight: 1 }}>Smile Concepts</div>
-              <div style={{ fontFamily: "var(--font-assistant)", color: "#F47A4A", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: "3px" }}>Dental · Sydney CBD</div>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <div style={{ position: "relative", width: "200px", height: "48px" }}>
+              <Image
+                src="/images/brand/logo-white.png"
+                alt="Smile Concepts - Centre for Advanced Dentistry"
+                fill
+                className="object-contain object-left"
+              />
             </div>
           </div>
           <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: "1.5rem", maxWidth: "280px" }}>
