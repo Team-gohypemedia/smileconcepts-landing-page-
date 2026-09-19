@@ -100,12 +100,27 @@ export default function Affiliations() {
               key={`${item.name}-${idx}`}
               className="affiliation-badge"
               title={item.name}
+              style={{
+                flexShrink: 0,
+                padding: "0.65rem 1.4rem",
+                height: "56px",
+                minWidth: "150px",
+                backgroundColor: "#ffffff",
+                border: "1px solid rgba(0, 0, 0, 0.08)",
+                borderRadius: "9999px",
+                boxShadow: "0 2px 10px rgba(0, 0, 0, 0.03)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "default",
+                transition: "all 0.25s ease",
+              }}
             >
               <div
                 style={{
                   position: "relative",
-                  width: "120px",
-                  height: "44px",
+                  width: "125px",
+                  height: "40px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -115,8 +130,12 @@ export default function Affiliations() {
                   src={item.src}
                   alt={item.name}
                   fill
-                  sizes="120px"
-                  className="object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                  sizes="125px"
+                  style={{
+                    objectFit: "contain",
+                    filter: "none",
+                    opacity: 1,
+                  }}
                 />
               </div>
             </div>
@@ -128,29 +147,17 @@ export default function Affiliations() {
         .affiliations-marquee {
           display: flex;
           align-items: center;
-          gap: 2.5rem;
+          gap: 2rem;
           width: max-content;
           animation: marqueeScroll 45s linear infinite;
         }
         .affiliations-marquee:hover {
           animation-play-state: paused;
         }
-        .affiliation-badge {
-          flex-shrink: 0;
-          padding: 0.6rem 1.25rem;
-          background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.06);
-          border-radius: 9999px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-          display: flex;
-          alignItems: center;
-          justifyContent: center;
-          transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        }
         .affiliation-badge:hover {
           transform: translateY(-2px);
-          border-color: #F47A4A;
-          box-shadow: 0 6px 20px rgba(244,122,74,0.12);
+          border-color: #F47A4A !important;
+          box-shadow: 0 6px 20px rgba(244, 122, 74, 0.16) !important;
         }
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
