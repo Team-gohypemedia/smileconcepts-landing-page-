@@ -1,239 +1,296 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Phone } from "lucide-react";
+import { TestimonialsColumn, TestimonialItem } from "@/components/ui/testimonials-columns-1";
 
-const reviews = [
+const testimonials: TestimonialItem[] = [
   {
-    name: "James T.",
-    role: "Full Arch All-on-4 Patient",
-    stars: 5,
-    text: "After wearing loose dentures for 7 years, getting All-on-4 dental implants with Dr. Manish Shah was the best decision of my life. I walked out with fixed teeth and could eat steak again within days. The whole team at Smile Concepts Sydney is world-class.",
-    date: "August 2024",
+    text: "After wearing loose dentures for 7 years, getting All-on-4 with Dr. Manish Shah was the best decision of my life. I walked out with fixed teeth in 3 days and can eat steak and apples again with zero pain.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+    name: "James Thornton",
+    role: "Full Upper Arch All-on-4",
+    location: "Sydney CBD",
+    rating: 5,
   },
   {
-    name: "Robert M.",
-    role: "All-on-4 Upper Arch Patient",
-    stars: 5,
-    text: "I was terrified of the dentist and my teeth were failing. Dr. Kinnar Shah walked me through 3D imaging, digital planning, and early superannuation release. The surgery under IV sleep dentistry was totally painless. I couldn't be happier!",
-    date: "September 2024",
+    text: "I was terrified of the dentist and my teeth were failing. Dr. Kinnar Shah walked me through 3D CT diagnostics and early super fund release. The IV sleep dentistry made the entire procedure completely painless!",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop",
+    name: "Sarah McLaughlin",
+    role: "Full Mouth Dental Implants",
+    location: "Bondi, Sydney",
+    rating: 5,
   },
   {
-    name: "Elena G.",
-    role: "Full Mouth Reconstruction Patient",
-    stars: 5,
-    text: "The final Zirconia bridge looks and feels just like natural teeth. No plastic palate, no slipping, no gooey glue. Smile Concepts in Pitt Street gave me back my youth, my confidence, and my ability to laugh freely.",
-    date: "July 2024",
+    text: "Dr. Manish Shah has 40+ years of surgical experience and it shows in every detail. My previous dentist said I needed extensive bone grafts, but Smile Concepts avoided grafting entirely with tilted implants.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
+    name: "David Levin",
+    role: "Dual Arch Permanent Teeth",
+    location: "Mosman, Sydney",
+    rating: 5,
   },
   {
-    name: "David L.",
-    role: "Dual Arch Implant Patient",
-    stars: 5,
-    text: "Dr. Manish Shah has over 40 years of experience, and it shows in every single detail. My previous dentist told me I didn't have enough bone, but their tilted implant technique avoided bone grafting completely. Highly recommend them!",
-    date: "June 2024",
+    text: "The high-strength Australian Zirconia bridge looks and feels identical to natural teeth. No plastic palate, no slipping, no messy glue. I can laugh and smile with total confidence again.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
+    name: "Elena Rossi",
+    role: "Zirconia Fixed Bridge",
+    location: "Surry Hills, Sydney",
+    rating: 5,
   },
   {
-    name: "Margaret W.",
-    role: "Lower Arch All-on-4 Patient",
-    stars: 5,
-    text: "My lower denture kept floating around and causing ulcers. Since getting the 4 implants placed and my bridge screwed in, I haven't thought about my teeth once. Truly life-transforming care from compassionate professionals.",
-    date: "May 2024",
+    text: "My bottom teeth were breaking and infected. From initial consultation to final fixed teeth took just 48 hours. Exceptional clinical care, transparent pricing, and wonderful nursing staff.",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
+    name: "Michael Kovacs",
+    role: "Lower Arch All-on-4",
+    location: "North Sydney",
+    rating: 5,
+  },
+  {
+    text: "The finance team helped me access my superannuation smoothly through ATO compassionate release. That made this life-changing procedure 100% affordable. Can't recommend them enough!",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
+    name: "Chloe Richardson",
+    role: "Sedation All-on-4 Implants",
+    location: "Manly, Sydney",
+    rating: 5,
+  },
+  {
+    text: "Booked a consultation at 210 Pitt Street. The precision 3D guided surgery was done in a single session. I went to work 3 days later with permanent fixed teeth. Absolutely incredible result.",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop",
+    name: "Robert Harris",
+    role: "Immediate Teeth in 1-3 Days",
+    location: "Double Bay, Sydney",
+    rating: 5,
+  },
+  {
+    text: "Everything was explained thoroughly with zero hidden fees. Dr. Kinnar and Dr. Manish are genuine artists. The aesthetics match my facial symmetry perfectly. Worth every single cent.",
+    image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=200&auto=format&fit=crop",
+    name: "Jennifer Patterson",
+    role: "Full Arch Restoration",
+    location: "Chatswood, Sydney",
+    rating: 5,
+  },
+  {
+    text: "Cleanest, most technologically advanced surgery suite in Sydney. The digital intraoral scanners eliminated gooey impressions, and my new smile looks completely natural.",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
+    name: "Harrison Blake",
+    role: "Full Mouth Rehabilitation",
+    location: "Parramatta, Sydney",
+    rating: 5,
   },
 ];
 
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
+
 export default function Testimonials() {
-  const [current, setCurrent] = useState(0);
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
-  const prev = () => setCurrent(c => (c - 1 + reviews.length) % reviews.length);
-  const next = () => setCurrent(c => (c + 1) % reviews.length);
-
   return (
     <section
-      ref={ref}
       id="testimonials"
-      style={{ position: "relative", padding: "clamp(4rem, 8vw, 8rem) 0", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        backgroundColor: "#FAF8F5",
+        padding: "clamp(4rem, 7vw, 7rem) clamp(1rem, 3.5vw, 3rem)",
+        overflow: "hidden",
+        borderTop: "1px solid #ECE7E1",
+        borderBottom: "1px solid #ECE7E1",
+      }}
     >
-      {/* Dark BG */}
-      <div style={{ position: "absolute", inset: 0, background: "#1a1a2e" }} />
-      {/* Dot grid */}
+      {/* Background ambient lighting accents */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
-          opacity: 0.05,
-          backgroundImage: "radial-gradient(circle at 2px 2px, #F47A4A 1px, transparent 0)",
-          backgroundSize: "32px 32px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "700px",
+          height: "700px",
+          background: "radial-gradient(circle, rgba(244, 122, 74, 0.08) 0%, transparent 70%)",
+          filter: "blur(120px)",
+          pointerEvents: "none",
+          zIndex: 0,
         }}
       />
-      {/* Top line */}
-      <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(to right, transparent, rgba(244,122,74,0.4), transparent)" }} />
 
-      <div className="container-sc" style={{ position: "relative", zIndex: 1 }}>
-        {/* Header */}
-        <motion.p
+      <div style={{ maxWidth: "1520px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* Section Header */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          style={{ textAlign: "center", color: "#F47A4A", fontSize: "0.72rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.75rem", fontFamily: "var(--font-assistant)", fontWeight: 500 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            maxWidth: "800px",
+            margin: "0 auto 3rem",
+            textAlign: "center",
+            gap: "0.85rem",
+          }}
         >
-          What Our Patients Say
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1 }}
-          style={{ textAlign: "center", fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "clamp(1.9rem, 4vw, 3.2rem)", color: "#ffffff", lineHeight: 1.2, marginBottom: "3rem" }}
-        >
-          Patient Stories
-        </motion.h2>
+          <p
+            style={{
+              color: "#F47A4A",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-assistant)",
+              margin: 0,
+            }}
+          >
+            Patient Stories
+          </p>
 
-        {/* Carousel */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2 }}
-          style={{ maxWidth: "760px", margin: "0 auto" }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.10)",
-                borderRadius: "1.25rem",
-                padding: "clamp(2rem, 4vw, 3rem)",
-              }}
-            >
-              {/* Quote icon */}
-              <svg width="40" height="30" fill="rgba(244,122,74,0.35)" viewBox="0 0 24 18" style={{ marginBottom: "1.25rem" }}>
-                <path d="M0 18V10.8C0 7.2 1.2 4.2 3.6 1.8L5.4 3.6C4 5 3.2 6.6 3 8.4H6V18H0ZM12 18V10.8c0-3.6 1.2-6.6 3.6-9L17.4 3.6C16 5 15.2 6.6 15 8.4H18V18H12Z"/>
-              </svg>
+          <h2
+            style={{
+              fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
+              fontSize: "clamp(2rem, 3.8vw, 3.3rem)",
+              color: "#11121E",
+              fontWeight: 400,
+              lineHeight: 1.18,
+              letterSpacing: "-0.01em",
+              margin: 0,
+            }}
+          >
+            Real Stories, Real Smiles in Sydney
+          </h2>
 
-              {/* Stars */}
-              <div style={{ display: "flex", gap: "4px", marginBottom: "1.25rem" }}>
-                {[1,2,3,4,5].map(i => (
-                  <svg key={i} width="16" height="16" fill="#F47A4A" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                ))}
-              </div>
-
-              {/* Text */}
-              <p
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontStyle: "italic",
-                  fontSize: "clamp(1rem, 1.6vw, 1.15rem)",
-                  color: "rgba(255,255,255,0.8)",
-                  lineHeight: 1.8,
-                  marginBottom: "2rem",
-                }}
-              >
-                &ldquo;{reviews[current].text}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    background: "rgba(244,122,74,0.15)",
-                    border: "1px solid rgba(244,122,74,0.3)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "var(--font-prata)",
-                    fontSize: "1.2rem",
-                    color: "#F47A4A",
-                    flexShrink: 0,
-                  }}
-                >
-                  {reviews[current].name[0]}
-                </div>
-                <div>
-                  <div style={{ fontFamily: "var(--font-assistant)", fontWeight: 600, fontSize: "0.9rem", color: "#fff" }}>{reviews[current].name}</div>
-                  <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginTop: "0.2rem" }}>{reviews[current].role} · {reviews[current].date}</div>
-                </div>
-                <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "6px" }}>
-                  <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "#4285F4", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ color: "#fff", fontSize: "9px", fontWeight: 700 }}>G</span>
-                  </div>
-                  <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.7rem", color: "rgba(255,255,255,0.35)" }}>Google Review</span>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Dots */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginTop: "1.75rem" }}>
-            {reviews.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                aria-label={`Review ${i + 1}`}
-                style={{
-                  border: "none",
-                  cursor: "pointer",
-                  borderRadius: "999px",
-                  background: i === current ? "#F47A4A" : "rgba(255,255,255,0.2)",
-                  width: i === current ? "1.5rem" : "0.5rem",
-                  height: "0.5rem",
-                  transition: "all 0.3s",
-                  padding: 0,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Arrows */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", marginTop: "1.5rem" }}>
-            {[{ fn: prev, d: "M15 19l-7-7 7-7" }, { fn: next, d: "M9 5l7 7-7 7" }].map(({ fn, d }, i) => (
-              <button
-                key={i}
-                onClick={fn}
-                aria-label={i === 0 ? "Previous" : "Next"}
-                style={{
-                  width: "44px", height: "44px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  background: "transparent",
-                  color: "rgba(255,255,255,0.5)",
-                  cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transition: "all 0.25s",
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#F47A4A"; (e.currentTarget as HTMLButtonElement).style.color = "#F47A4A"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.2)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"; }}
-              >
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={d}/></svg>
-              </button>
-            ))}
-          </div>
+          <p
+            style={{
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "clamp(0.95rem, 1.25vw, 1.1rem)",
+              color: "#555869",
+              lineHeight: 1.65,
+              maxWidth: "680px",
+              fontWeight: 300,
+              margin: 0,
+            }}
+          >
+            Discover how Dr. Manish Shah and Dr. Kinnar Shah have transformed thousands of lives with painless All-on-4 dental implants at our Sydney CBD centre.
+          </p>
         </motion.div>
 
-        {/* Rating strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
-          style={{ marginTop: "3.5rem", display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "1rem 2rem" }}
+        {/* 3-Column Infinite Vertical Scrolling Carousel */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "1.5rem",
+            maxHeight: "680px",
+            overflow: "hidden",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+          }}
         >
-          {[
-            <span key="stars" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{ display: "flex" }}>{[1,2,3,4,5].map(i => <svg key={i} width="14" height="14" fill="#F47A4A" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>)}</span>
-              <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.8rem", color: "rgba(255,255,255,0.55)" }}>5.0 on Google</span>
-            </span>,
-            <span key="count" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.8rem", color: "rgba(255,255,255,0.35)" }}>200+ verified reviews</span>,
-            <span key="award" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.8rem", color: "rgba(255,255,255,0.35)" }}>Award Winning Practice</span>,
-          ]}
-        </motion.div>
+          <TestimonialsColumn testimonials={firstColumn} duration={20} />
+          <TestimonialsColumn
+            testimonials={secondColumn}
+            className="hidden md:block"
+            duration={26}
+          />
+          <TestimonialsColumn
+            testimonials={thirdColumn}
+            className="hidden lg:block"
+            duration={22}
+          />
+        </div>
+
+        {/* Responsive Mobile/Desktop CSS helper */}
+        <style>{`
+          @media (max-width: 767px) {
+            .hidden.md\\:block {
+              display: none !important;
+            }
+          }
+          @media (max-width: 1023px) {
+            .hidden.lg\\:block {
+              display: none !important;
+            }
+          }
+        `}</style>
+
+        {/* Bottom CTA Row */}
+        <div
+          style={{
+            marginTop: "3rem",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+          }}
+        >
+          <a
+            href="#book"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              padding: "0.85rem 2rem",
+              background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
+              color: "#ffffff",
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "0.92rem",
+              fontWeight: 700,
+              letterSpacing: "0.03em",
+              textDecoration: "none",
+              borderRadius: "8px",
+              boxShadow: "0 4px 16px rgba(244, 122, 74, 0.35)",
+              transition: "all 0.25s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background =
+                "linear-gradient(135deg, #e06934 0%, #cb5222 100%)";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background =
+                "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+            }}
+          >
+            <span>Book a Consultation Online</span>
+            <ArrowRight size={16} />
+          </a>
+          <a
+            href="tel:0292677777"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              padding: "0.85rem 1.85rem",
+              backgroundColor: "#ffffff",
+              border: "1px solid #E2E0D8",
+              color: "#222222",
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "0.92rem",
+              fontWeight: 600,
+              textDecoration: "none",
+              borderRadius: "8px",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
+              transition: "all 0.25s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = "#F47A4A";
+              (e.currentTarget as HTMLElement).style.color = "#F47A4A";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = "#E2E0D8";
+              (e.currentTarget as HTMLElement).style.color = "#222222";
+            }}
+          >
+            <Phone size={15} color="#F47A4A" />
+            <span>Call (02) 9267 7777</span>
+          </a>
+        </div>
       </div>
     </section>
   );

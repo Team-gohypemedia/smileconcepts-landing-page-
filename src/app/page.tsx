@@ -8,6 +8,7 @@ import OurPractice from "@/components/sections/OurPractice";
 import VisualJourney from "@/components/sections/VisualJourney";
 import Team from "@/components/sections/Team";
 import Affiliations from "@/components/sections/Affiliations";
+import Testimonials from "@/components/sections/Testimonials";
 import AllOn4FAQ from "@/components/sections/AllOn4FAQ";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -24,6 +25,7 @@ export default function Home() {
         <VisualJourney />
         <Team />
         <Affiliations />
+        <Testimonials />
         <AllOn4FAQ />
         <CTABanner />
       </main>

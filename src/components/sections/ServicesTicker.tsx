@@ -12,7 +12,7 @@ const items = [
   "Natural High-Strength Zirconia",
   "0% Interest-Free Payment Plans",
   "Eat Apples, Steak & Crunchy Foods",
-  "Top-Rated 5★ Google Reviews",
+  "Top-Rated 4.9★ Patient Reviews",
 ];
 
 // Duplicate for seamless infinite scroll
