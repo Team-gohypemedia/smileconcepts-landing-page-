@@ -1,404 +1,488 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
-import { images } from "@/lib/images";
+import { ArrowRight, Phone, Sparkles } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.14 } },
-};
-const fadeUp = {
-  hidden: { opacity: 0, y: 60, filter: "blur(6px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
+const TOTAL_FRAMES = 240;
+
+// URL helper for the WebP frames
+const getFrameUrl = (index: number) => {
+  const frameNum = String(index + 1).padStart(4, "0");
+  return `/hero%20video%20frame/smileconcepts_webp_frames/frame_${frameNum}.webp`;
 };
 
-const stats = [
-  { value: "1–3", label: "Days to New Teeth" },
-  { value: "98.6%", label: "Implant Success" },
-  { value: "40+", label: "Years Experience" },
-  { value: "Super", label: "Fund Access Eligible" },
+const heroFeatures = [
+  { num: "01", title: "Immediate", subtitle: "Function", desc: "Teeth in 1–3 Days" },
+  { num: "02", title: "Rejuvenation", subtitle: "Age-Rewind", desc: "Facial Support" },
+  { num: "03", title: "Expertise", subtitle: "30+ Years", desc: "Dr. Manish Shah" },
+  { num: "04", title: "All Teeth on 4", subtitle: "Protocol", desc: "No Bone Grafting" },
 ];
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const mediaRef   = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const currentFrameRef = useRef<number>(0);
+  const [loadedCount, setLoadedCount] = useState(0);
 
+  // Render a specific frame onto the canvas with cover sizing
+  const renderFrame = useCallback((index: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Look for requested frame or nearest available loaded frame
+    let img = imagesRef.current[index];
+    if (!img || !img.complete) {
+      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+        const prev = imagesRef.current[index - offset];
+        if (prev && prev.complete) {
+          img = prev;
+          break;
+        }
+        const next = imagesRef.current[index + offset];
+        if (next && next.complete) {
+          img = next;
+          break;
+        }
+      }
+    }
+
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    const scale = Math.max(cw / iw, ch / ih);
+    const nw = iw * scale;
+    const nh = ih * scale;
+    const x = (cw - nw) / 2;
+    const y = (ch - nh) / 2;
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, x, y, nw, nh);
+  }, []);
+
+  // Set canvas resolution to device pixel ratio
+  const resizeCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    renderFrame(currentFrameRef.current);
+  }, [renderFrame]);
+
+  // Preload frames progressively
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Parallax: media moves at ~40% of scroll speed
-      gsap.to(mediaRef.current, {
-        yPercent: 30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+    imagesRef.current = new Array(TOTAL_FRAMES).fill(null);
 
-      // Content lifts + fades on scroll
-      gsap.to(contentRef.current, {
-        opacity: 0,
-        y: -60,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "30% top",
-          end: "70% top",
-          scrub: true,
+    // 1. Immediately load frame 1 for instant display
+    const firstImg = new window.Image();
+    firstImg.src = getFrameUrl(0);
+    firstImg.onload = () => {
+      imagesRef.current[0] = firstImg;
+      setLoadedCount(1);
+      resizeCanvas();
+      renderFrame(0);
+    };
+
+    // 2. Preload remaining frames in background
+    let loaded = 1;
+    for (let i = 1; i < TOTAL_FRAMES; i++) {
+      const img = new window.Image();
+      img.src = getFrameUrl(i);
+      img.onload = () => {
+        imagesRef.current[i] = img;
+        loaded++;
+        if (loaded % 20 === 0 || loaded === TOTAL_FRAMES) {
+          setLoadedCount(loaded);
+        }
+      };
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, [resizeCanvas, renderFrame]);
+
+  // GSAP ScrollTrigger across 200vh container
+  useEffect(() => {
+    const container = containerRef.current;
+    const content = contentRef.current;
+    if (!container) return;
+
+    const ctx = gsap.context(() => {
+      // Scrub through the 240 frames across 200vh
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.15,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const frameIndex = Math.min(
+            TOTAL_FRAMES - 1,
+            Math.max(0, Math.round(progress * (TOTAL_FRAMES - 1)))
+          );
+          if (frameIndex !== currentFrameRef.current) {
+            currentFrameRef.current = frameIndex;
+            renderFrame(frameIndex);
+          }
+
+          // Content fades and shifts gently as scroll progresses past 40%
+          if (content) {
+            if (progress < 0.35) {
+              gsap.to(content, { opacity: 1, y: 0, duration: 0.1, overwrite: "auto" });
+            } else if (progress >= 0.35 && progress < 0.8) {
+              const fadeProg = (progress - 0.35) / 0.45;
+              gsap.to(content, {
+                opacity: Math.max(0, 1 - fadeProg * 1.2),
+                y: -fadeProg * 60,
+                duration: 0.1,
+                overwrite: "auto",
+              });
+            } else {
+              gsap.to(content, { opacity: 0, y: -60, duration: 0.1, overwrite: "auto" });
+            }
+          }
         },
       });
-    }, sectionRef);
+    }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [renderFrame]);
 
   return (
     <section
-      ref={sectionRef}
-      aria-label="All on 4 Dental Implants Sydney Hero"
+      ref={containerRef}
+      id="hero-scroll-container"
+      aria-label="All on 4 Dental Implants Sydney Hero Interactive Video"
       style={{
         position: "relative",
-        minHeight: "100svh",
-        overflow: "hidden",
+        height: "200vh", // Ends on scroll 200vh as requested
+        backgroundColor: "#0C0D17",
       }}
     >
-      {/* ── Parallax media layer ── */}
+      {/* ── Sticky Viewport (100vh) ── */}
       <div
-        ref={mediaRef}
         style={{
-          position: "absolute",
-          inset: "-15%",
-          willChange: "transform",
+          position: "sticky",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
         }}
       >
-        <Image
-          src={images.allon4.topGold}
-          alt="All on 4 Dental Implants Sydney – Smile Concepts"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center 20%" }}
+        {/* Canvas for Scroll-Driven Video Frame Sequence */}
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "block",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            backgroundColor: "#0C0D17",
+          }}
         />
-      </div>
 
-      {/* ── Gradient overlays ── */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(105deg, rgba(12,12,24,0.88) 0%, rgba(12,12,24,0.6) 55%, rgba(12,12,24,0.3) 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to top, rgba(10,10,20,0.8) 0%, transparent 60%)",
-        }}
-      />
+        {/* Gradient overlays to guarantee text legibility */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(105deg, rgba(12, 13, 23, 0.88) 0%, rgba(12, 13, 23, 0.62) 50%, rgba(12, 13, 23, 0.3) 100%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(12, 13, 23, 0.85) 0%, transparent 45%)",
+            pointerEvents: "none",
+          }}
+        />
 
-      {/* ── Content ── */}
-      <div
-        ref={contentRef}
-        style={{
-          position: "relative",
-          zIndex: 10,
-          minHeight: "100svh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          willChange: "transform, opacity",
-        }}
-      >
-        <div className="container-sc" style={{ paddingTop: "clamp(7rem, 15vh, 9.5rem)", paddingBottom: "3.5rem" }}>
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
-            style={{ maxWidth: "720px" }}
-          >
-            {/* Eyebrow */}
-            <motion.p
-              variants={fadeUp}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "#F47A4A",
-                fontSize: "0.8rem",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                marginBottom: "1.25rem",
-                fontFamily: "var(--font-assistant)",
-                fontWeight: 600,
-              }}
-            >
-              <span style={{ display: "block", width: "2rem", height: "2px", background: "#F47A4A" }} />
-              Turn Back The Clock · Sydney CBD
-            </motion.p>
-
-            {/* H1 */}
-            <motion.h1
-              variants={fadeUp}
-              style={{
-                fontFamily: "var(--font-prata)",
-                fontWeight: 400,
-                fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)",
-                lineHeight: 1.08,
-                color: "#ffffff",
-                marginBottom: "1.25rem",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              All on 4{" "}
-              <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Dental Implants</em>
-              <br />
-              Sydney
-            </motion.h1>
-
-            {/* Sub */}
-            <motion.p
-              variants={fadeUp}
-              style={{
-                color: "rgba(255,255,255,0.82)",
-                fontSize: "clamp(1.02rem, 1.8vw, 1.22rem)",
-                lineHeight: 1.68,
-                maxWidth: "600px",
-                marginBottom: "1.75rem",
-                fontFamily: "var(--font-assistant)",
-                fontWeight: 300,
-              }}
-            >
-              Smile Concepts brings you painless, state-of-the-art All on 4 dental implants in the heart of Sydney CBD. Replace failing or missing teeth with a permanent, natural-looking full arch restoration in 1 to 3 days. No bone grafting in most cases.
-            </motion.p>
-
-            {/* Benefit Badges */}
-            <motion.div
-              variants={fadeUp}
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.6rem",
-                marginBottom: "2.2rem",
-              }}
-            >
-              {[
-                "Immediate Function",
-                "Age-Rewind Rejuvenation",
-                "Fixed Non-Removable",
-                "Super Fund Release Support",
-              ].map((badge) => (
+        {/* Hero Content Overlay */}
+        <div
+          ref={contentRef}
+          style={{
+            position: "relative",
+            zIndex: 10,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            paddingTop: "clamp(5rem, 12vh, 7.5rem)",
+            paddingBottom: "3rem",
+            pointerEvents: "auto",
+          }}
+        >
+          <div className="container-sc" style={{ width: "100%" }}>
+            <div style={{ maxWidth: "720px" }}>
+              {/* Eyebrow */}
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.6rem",
+                  padding: "0.35rem 0.9rem",
+                  backgroundColor: "rgba(244, 122, 74, 0.15)",
+                  backdropFilter: "blur(8px)",
+                  borderRadius: "999px",
+                  border: "1px solid rgba(244, 122, 74, 0.3)",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <Sparkles size={14} color="#F47A4A" />
                 <span
-                  key={badge}
+                  style={{
+                    fontFamily: "var(--font-assistant)",
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "#F47A4A",
+                  }}
+                >
+                  Turn Back The Clock · Sydney CBD
+                </span>
+              </div>
+
+              {/* Headline */}
+              <h1
+                style={{
+                  fontFamily: "var(--font-prata)",
+                  fontWeight: 400,
+                  fontSize: "clamp(2.4rem, 6vw, 5.2rem)",
+                  lineHeight: 1.08,
+                  color: "#ffffff",
+                  marginBottom: "1.25rem",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                All on 4{" "}
+                <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Dental Implants</em>
+                <br />
+                Sydney
+              </h1>
+
+              {/* Subtitle */}
+              <p
+                style={{
+                  color: "rgba(255, 255, 255, 0.85)",
+                  fontSize: "clamp(1rem, 1.8vw, 1.2rem)",
+                  lineHeight: 1.68,
+                  maxWidth: "600px",
+                  marginBottom: "1.75rem",
+                  fontFamily: "var(--font-assistant)",
+                  fontWeight: 300,
+                }}
+              >
+                Smile Concepts brings you painless, state-of-the-art All on 4 dental implants in the heart of Sydney CBD. Replace failing or missing teeth with a permanent, natural-looking full arch restoration in 1 to 3 days. No bone grafting in most cases.
+              </p>
+
+              {/* CTA Buttons */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+                <a
+                  href="#book"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.4rem",
-                    padding: "0.35rem 0.85rem",
-                    borderRadius: "9999px",
-                    background: "rgba(255, 255, 255, 0.12)",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.18)",
-                    color: "#ffffff",
+                    gap: "0.5rem",
+                    padding: "0.95rem 2rem",
+                    background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
+                    color: "#fff",
                     fontFamily: "var(--font-assistant)",
-                    fontSize: "0.8rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.02em",
+                    fontWeight: 600,
+                    fontSize: "0.95rem",
+                    textDecoration: "none",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 18px rgba(244, 122, 74, 0.45)",
+                    transition: "all 0.25s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background =
+                      "linear-gradient(135deg, #e06934 0%, #cb5222 100%)";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background =
+                      "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                   }}
                 >
-                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#F47A4A" }} />
-                  {badge}
-                </span>
-              ))}
-            </motion.div>
+                  Book Free Consultation
+                  <ArrowRight size={16} />
+                </a>
 
-            {/* CTAs */}
-            <motion.div
-              variants={fadeUp}
-              style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
-            >
-              <a
-                href="#book"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.95rem 2rem",
-                  background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
-                  color: "#fff",
-                  fontFamily: "var(--font-assistant)",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  borderRadius: "4px",
-                  boxShadow: "0 4px 18px rgba(244, 122, 74, 0.45)",
-                  transition: "all 0.25s ease",
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, #e06934 0%, #cb5222 100%)";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                Book Free Consultation
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
-              <a
-                href="#cost"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  padding: "0.95rem 2rem",
-                  border: "2px solid rgba(255,255,255,0.75)",
-                  color: "#fff",
-                  fontFamily: "var(--font-assistant)",
-                  fontWeight: 500,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  borderRadius: "4px",
-                  backdropFilter: "blur(4px)",
-                  WebkitBackdropFilter: "blur(4px)",
-                  transition: "all 0.25s ease",
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = "#fff";
-                  e.currentTarget.style.background = "rgba(255,255,255,0.15)";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.75)";
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                All on 4 Cost &amp; Finance
-              </a>
-            </motion.div>
-
-            {/* 4 Feature Cards from Live Page */}
-            <motion.div
-              variants={fadeUp}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(135px, 1fr))",
-                gap: "1rem",
-                marginTop: "3rem",
-              }}
-            >
-              {[
-                { num: "01", title: "Immediate", subtitle: "Function", desc: "Teeth in 1–3 Days" },
-                { num: "02", title: "Rejuvenation", subtitle: "Age-Rewind", desc: "Facial Support" },
-                { num: "03", title: "Expertise", subtitle: "30+ Years", desc: "Dr. Manish Shah" },
-                { num: "04", title: "All Teeth on 4", subtitle: "Protocol", desc: "No Bone Grafting" },
-              ].map((card) => (
-                <div
-                  key={card.num}
+                <a
+                  href="tel:0292677777"
                   style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                    border: "1px solid rgba(255, 255, 255, 0.14)",
-                    borderRadius: "12px",
-                    padding: "1rem",
-                    transition: "all 0.3s ease",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.95rem 2rem",
+                    border: "2px solid rgba(255,255,255,0.75)",
+                    color: "#fff",
+                    fontFamily: "var(--font-assistant)",
+                    fontWeight: 500,
+                    fontSize: "0.95rem",
+                    textDecoration: "none",
+                    borderRadius: "4px",
+                    backdropFilter: "blur(4px)",
+                    WebkitBackdropFilter: "blur(4px)",
+                    transition: "all 0.25s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "#fff";
+                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.75)";
+                    (e.currentTarget as HTMLElement).style.background = "transparent";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                   }}
                 >
+                  <Phone size={15} color="#F47A4A" />
+                  02 9267 7777
+                </a>
+              </div>
+
+              {/* 4 Feature Badges from Live Page */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                  gap: "0.85rem",
+                }}
+              >
+                {heroFeatures.map((card) => (
                   <div
+                    key={card.num}
                     style={{
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      color: "#F47A4A",
-                      letterSpacing: "0.1em",
-                      marginBottom: "0.25rem",
+                      backgroundColor: "rgba(255, 255, 255, 0.08)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      border: "1px solid rgba(255, 255, 255, 0.14)",
+                      borderRadius: "10px",
+                      padding: "0.85rem 1rem",
+                      transition: "all 0.3s ease",
                     }}
                   >
-                    {card.num}
+                    <div
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        color: "#F47A4A",
+                        letterSpacing: "0.1em",
+                        marginBottom: "0.2rem",
+                      }}
+                    >
+                      {card.num}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-prata)",
+                        fontSize: "0.95rem",
+                        color: "#ffffff",
+                        fontWeight: 400,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {card.title}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.74rem",
+                        fontWeight: 600,
+                        color: "rgba(255, 255, 255, 0.75)",
+                        marginTop: "0.1rem",
+                      }}
+                    >
+                      {card.subtitle}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.68rem",
+                        color: "rgba(255, 255, 255, 0.45)",
+                        marginTop: "0.25rem",
+                      }}
+                    >
+                      {card.desc}
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-prata)",
-                      fontSize: "1.05rem",
-                      color: "#ffffff",
-                      fontWeight: 400,
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {card.title}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.78rem",
-                      fontWeight: 600,
-                      color: "rgba(255, 255, 255, 0.7)",
-                      marginTop: "0.15rem",
-                    }}
-                  >
-                    {card.subtitle}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.72rem",
-                      color: "rgba(255, 255, 255, 0.45)",
-                      marginTop: "0.35rem",
-                    }}
-                  >
-                    {card.desc}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator Prompt */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "2rem",
+            right: "2.5rem",
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backdropFilter: "blur(8px)",
+            padding: "0.5rem 1rem",
+            borderRadius: "999px",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-assistant)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "rgba(255, 255, 255, 0.8)",
+            }}
+          >
+            Scroll to scrub video
+          </span>
+          <div
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              backgroundColor: "#F47A4A",
+              boxShadow: "0 0 8px #F47A4A",
+            }}
+          />
         </div>
       </div>
-
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.5rem",
-          zIndex: 10,
-        }}
-      >
-        <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          style={{ width: "1px", height: "2.5rem", background: "linear-gradient(to bottom, rgba(255,255,255,0.5), transparent)" }}
-        />
-      </motion.div>
     </section>
   );
 }
