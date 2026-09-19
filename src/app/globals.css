@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand Colors - Smile Concepts */
+  --color-orange: #F47A4A;
+  --color-orange-dark: #F67A42;
+  --color-orange-deep: #EC844B;
+  --color-teal: #364D5D;
+  --color-teal-light: #4B5A5F;
+  --color-cream: #FCF8F8;
+  --color-gray-text: #7A7A7A;
+  --color-dark: #3C3C3C;
+  --color-navy: #181818;
+
+  /* Fonts */
+  --font-heading: var(--font-prata), "Georgia", serif;
+  --font-body: var(--font-assistant), "Helvetica Neue", sans-serif;
+  --font-accent: var(--font-playfair), "Georgia", serif;
+
+  /* Spacing */
+  --container-max: 1140px;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-dark);
+  background: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Utilities */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+/* Container */
+.container-sc {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-orange);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-orange);
+  border-radius: 3px;
+}
