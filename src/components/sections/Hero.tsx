@@ -4,6 +4,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronDown } from "lucide-react";
+import ShinyText from "@/components/ui/ShinyText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,10 +19,14 @@ const getFrameUrl = (index: number) => {
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const cursorTrackerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const currentFrameRef = useRef<number>(0);
   const [, setLoadedCount] = useState(0);
+
+  // Mouse tracking state for cursor follower
+  const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, hasMoved: false });
+  const [isHovered, setIsHovered] = useState(false);
 
   // Render a specific frame onto the canvas with cover sizing
   const renderFrame = useCallback((index: number) => {
@@ -112,10 +117,42 @@ export default function Hero() {
     return () => window.removeEventListener("resize", resizeCanvas);
   }, [resizeCanvas, renderFrame]);
 
+  // Smooth cursor follower animation using requestAnimationFrame
+  useEffect(() => {
+    let animId: number;
+
+    const updateCursor = () => {
+      const el = cursorTrackerRef.current;
+      if (el && mousePos.current.hasMoved) {
+        // Smooth lerp towards mouse position
+        mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.15;
+        mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.15;
+
+        el.style.transform = `translate3d(${mousePos.current.x + 20}px, ${mousePos.current.y + 20}px, 0)`;
+      }
+      animId = requestAnimationFrame(updateCursor);
+    };
+
+    animId = requestAnimationFrame(updateCursor);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  // Mouse move handler on hero viewport
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!mousePos.current.hasMoved) {
+      mousePos.current.hasMoved = true;
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
+      setIsHovered(true);
+    }
+    mousePos.current.targetX = e.clientX;
+    mousePos.current.targetY = e.clientY;
+  };
+
   // GSAP ScrollTrigger across 200vh container
   useEffect(() => {
     const container = containerRef.current;
-    const indicator = scrollIndicatorRef.current;
+    const tracker = cursorTrackerRef.current;
     if (!container) return;
 
     const ctx = gsap.context(() => {
@@ -137,11 +174,11 @@ export default function Hero() {
           }
 
           // Fade out scroll indicator once user starts scrolling
-          if (indicator) {
-            if (progress > 0.1) {
-              gsap.to(indicator, { opacity: 0, y: 15, duration: 0.2, overwrite: "auto" });
+          if (tracker) {
+            if (progress > 0.05) {
+              gsap.to(tracker, { opacity: 0, duration: 0.25, overwrite: "auto" });
             } else {
-              gsap.to(indicator, { opacity: 1, y: 0, duration: 0.2, overwrite: "auto" });
+              gsap.to(tracker, { opacity: 1, duration: 0.25, overwrite: "auto" });
             }
           }
         },
@@ -181,6 +218,9 @@ export default function Hero() {
 
       {/* ── Sticky Viewport (100vh) ── */}
       <div
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         style={{
           position: "sticky",
           top: 0,
@@ -188,6 +228,7 @@ export default function Hero() {
           width: "100%",
           height: "100vh",
           overflow: "hidden",
+          cursor: "default",
         }}
       >
         {/* Canvas for Scroll-Driven Video Frame Sequence */}
@@ -232,43 +273,87 @@ export default function Hero() {
           }}
         />
 
-        {/* Minimal Floating Scroll Indicator */}
+        {/* ── Cursor Follower / Floating ShinyText Scroll Indicator ── */}
         <div
-          ref={scrollIndicatorRef}
+          ref={cursorTrackerRef}
           style={{
-            position: "absolute",
-            bottom: "2.5rem",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 20,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.4rem",
-            backgroundColor: "rgba(0, 0, 0, 0.45)",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            padding: "0.5rem 1.25rem",
-            borderRadius: "999px",
-            border: "1px solid rgba(255, 255, 255, 0.15)",
-            color: "rgba(255, 255, 255, 0.85)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 40,
             pointerEvents: "none",
-            transition: "all 0.3s ease",
+            willChange: "transform, opacity",
+            transition: "opacity 0.3s ease",
+            // If mouse hasn't moved yet (or mobile touch), anchor at bottom center
+            ...(!isHovered
+              ? {
+                  position: "absolute",
+                  top: "auto",
+                  bottom: "3rem",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                }
+              : {}),
           }}
         >
-          <span
+          <div
             style={{
-              fontFamily: "var(--font-assistant)",
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.45rem 1rem",
+              borderRadius: "999px",
+              background: "rgba(10, 10, 20, 0.3)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.35)",
             }}
           >
-            Scroll Down
-          </span>
-          <ChevronDown size={14} color="#F47A4A" />
+            {/* Pulsing micro-dot */}
+            <span
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                backgroundColor: "#F47A4A",
+                boxShadow: "0 0 10px #F47A4A",
+                display: "inline-block",
+                flexShrink: 0,
+              }}
+            />
+
+            {/* Shiny text component effect */}
+            <ShinyText
+              text="SCROLL DOWN"
+              speed={2.6}
+              style={{
+                fontFamily: "var(--font-assistant), sans-serif",
+                fontSize: "0.76rem",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+              }}
+            />
+
+            {/* Subtle animated down chevron */}
+            <ChevronDown
+              size={13}
+              color="#F47A4A"
+              style={{
+                animation: "chevron-bob 1.6s ease-in-out infinite",
+                flexShrink: 0,
+              }}
+            />
+          </div>
         </div>
+
+        <style>{`
+          @keyframes chevron-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+          }
+        `}</style>
       </div>
     </section>
   );
