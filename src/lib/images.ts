@@ -1,0 +1,102 @@
+/**
+ * Smile Concepts - Image Asset Map
+ * All images are stored locally under /public/images/
+ * Use these paths directly in Next.js <Image> components or CSS.
+ */
+
+export const images = {
+  hero: {
+    homeTop2024:        "/images/hero/home-top-2024.jpg",
+    homeTop2020:        "/images/hero/home-top-2020.jpg",
+    homeTop2019:        "/images/hero/home-top-2019.jpg",
+    wisdomTeethHero:    "/images/hero/wisdom-teeth-hero.jpg",
+    background:         "/images/hero/background.jpg",
+    homepageBa:         "/images/hero/homepage-ba.jpg",
+    home1:              "/images/hero/home-1.jpg",
+    p2:                 "/images/hero/p2.jpg",
+    aboutUsSand:        "/images/hero/about-us-sand.jpg",
+    orangeSmile:        "/images/hero/orange-smile-concept.jpg",
+  },
+
+  gallery: {
+    sc2:               "/images/gallery/sc2.jpg",
+    sc3:               "/images/gallery/sc3.jpg",
+    sc4:               "/images/gallery/sc4.jpg",
+    sc5:               "/images/gallery/sc5.jpg",
+    gallery1:          "/images/gallery/gallery-1.jpg",
+    gallery2:          "/images/gallery/gallery-2.jpg",
+    kylieVeneers:      "/images/gallery/kylie-veneers.jpg",
+    veneersVsInvisalign: "/images/gallery/veneers-vs-invisalign.jpg",
+    porcelainVeneers:  "/images/gallery/porcelain-veneers.jpg",
+    veneersCost:       "/images/gallery/veneers-cost.jpg",
+    coupleSmiling:     "/images/gallery/couple-smiling.jpg",
+    beforeAfter4:      "/images/gallery/before-after-4.jpg",
+  },
+
+  services: {
+    invisalign:          "/images/services/invisalign.jpg",
+    invisalignBraces:    "/images/services/invisalign-braces.jpg",
+    clearBraces:         "/images/services/clear-braces.jpg",
+    clearBraces2:        "/images/services/clear-braces-2.jpg",
+    porcelainVeneers:    "/images/services/porcelain-veneers.jpg",
+    porcelainVeneers2:   "/images/services/porcelain-veneers-2.jpg",
+    dentalVeneers:       "/images/services/dental-veneers.jpg",
+    sleepDentistry:      "/images/services/sleep-dentistry.jpg",
+    sleepDentistry2:     "/images/services/sleep-dentistry-2.jpg",
+    sleepDentistry3:     "/images/services/sleep-dentistry-3.jpg",
+    sleepApnea:          "/images/services/sleep-apnea.jpg",
+    sleepApnoea:         "/images/services/sleep-apnoea.jpg",
+    laserSleep:          "/images/services/laser-sleep.jpg",
+    dentalImplants:      "/images/services/dental-implants.jpg",
+    dentalImplants2:     "/images/services/dental-implants-2.jpg",
+    implantReadMore:     "/images/services/implant-read-more.jpg",
+    implantCost:         "/images/services/implant-cost.jpg",
+    implantGeneral:      "/images/services/implant-general.jpg",
+    allOnFour:           "/images/services/all-on-four.jpg",
+    allTeethOn4:         "/images/services/all-teeth-on-4.jpg",
+    gumLift:             "/images/services/gum-lift.jpg",
+    gumLift2:            "/images/services/gum-lift-2.jpg",
+    gumSolutions:        "/images/services/gum-solutions.jpg",
+    laserGumDisease:     "/images/services/laser-gum-disease.jpg",
+    laserGumDisease2:    "/images/services/laser-gum-disease-2.jpg",
+    gumDiseaseTreatment: "/images/services/gum-disease-treatment.jpg",
+    gumDiseaseSydney:    "/images/services/gum-disease-sydney.jpg",
+    snoring:             "/images/services/snoring.jpg",
+    snoring2:            "/images/services/snoring-2.jpg",
+    emergencyDentistry:  "/images/services/emergency-dentistry.jpg",
+    emergencyDentistry2: "/images/services/emergency-dentistry-2.jpg",
+    emergencyDentist:    "/images/services/emergency-dentist.jpg",
+    laserRootCanal:      "/images/services/laser-root-canal.jpg",
+    laserRootCanal2:     "/images/services/laser-root-canal-2.jpg",
+    grafting:            "/images/services/grafting.jpg",
+    grafting2:           "/images/services/grafting-2.jpg",
+    wisdomTeeth:         "/images/services/wisdom-teeth.jpg",
+    wisdomTeeth2:        "/images/services/wisdom-teeth-2.jpg",
+    tmjPain:             "/images/services/tmj-pain.jpg",
+    tmjPain2:            "/images/services/tmj-pain-2.jpg",
+    orthodonticsBraces:  "/images/services/orthodontics-braces.jpg",
+    braces:              "/images/services/braces.jpg",
+    lingualBraces:       "/images/services/lingual-braces.jpg",
+    aligners:            "/images/services/aligners.jpg",
+    functionalAppliances: "/images/services/functional-appliances.jpg",
+    paymentPlans:        "/images/services/payment-plans.jpg",
+    cosmeticProblems:    "/images/services/cosmetic-problems.jpg",
+    missingTeeth:        "/images/services/missing-teeth.jpg",
+    teethMissing:        "/images/services/teeth-missing.jpg",
+    oldFillings:         "/images/services/old-fillings.jpg",
+    generalDentistry:    "/images/services/general-dentistry.jpg",
+  },
+
+  team: {
+    drKinnarShah:  "/images/team/dr-kinnar-shah.jpg",
+    drManishShah:  "/images/team/dr-manish-shah.jpg",
+  },
+
+  misc: {
+    pointScanBone: "/images/misc/point-scan-bone.jpg",
+    pinkDrops:     "/images/misc/pink-drops.jpg",
+  },
+} as const;
+
+// Helper type for type-safe image access
+export type ImageCategory = keyof typeof images;
