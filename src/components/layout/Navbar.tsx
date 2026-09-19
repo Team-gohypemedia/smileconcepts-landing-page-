@@ -13,12 +13,9 @@ interface NavLinkItem {
 }
 
 const navLinks: NavLinkItem[] = [
-  { label: "Overview", href: "#overview" },
-  { label: "Why All-on-4", href: "#benefits" },
+  { label: "Overview", href: "#intro" },
   { label: "Procedure", href: "#procedure" },
-  { label: "Candidacy", href: "#candidacy" },
   { label: "Cost & Super", href: "#cost" },
-  { label: "Why Choose Us", href: "#why-choose" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -29,7 +26,14 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 35);
+      const hero = document.getElementById("hero-scroll-container");
+      if (hero) {
+        // Trigger navbar transition ONLY after the 200vh hero section completes scroll
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        setScrolled(heroBottom <= 90);
+      } else {
+        setScrolled(window.scrollY > window.innerHeight * 1.8);
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
