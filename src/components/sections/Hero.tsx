@@ -221,17 +221,25 @@ export default function Hero() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  padding: "1rem 2rem",
-                  background: "#F47A4A",
+                  padding: "0.95rem 2rem",
+                  background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
                   color: "#fff",
                   fontFamily: "var(--font-assistant)",
                   fontWeight: 600,
                   fontSize: "0.95rem",
                   textDecoration: "none",
-                  transition: "background 0.25s",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 18px rgba(244, 122, 74, 0.45)",
+                  transition: "all 0.25s ease",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = "#e06934")}
-                onMouseLeave={e => (e.currentTarget.style.background = "#F47A4A")}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "linear-gradient(135deg, #e06934 0%, #cb5222 100%)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
               >
                 Book a Consultation
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -241,17 +249,28 @@ export default function Hero() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  padding: "1rem 2rem",
-                  border: "2px solid rgba(255,255,255,0.6)",
+                  padding: "0.95rem 2rem",
+                  border: "2px solid rgba(255,255,255,0.75)",
                   color: "#fff",
                   fontFamily: "var(--font-assistant)",
                   fontWeight: 500,
                   fontSize: "0.95rem",
                   textDecoration: "none",
-                  transition: "border-color 0.25s, background 0.25s",
+                  borderRadius: "4px",
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                  transition: "all 0.25s ease",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "transparent"; }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = "#fff";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.15)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.75)";
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
               >
                 Our Treatments
               </a>
