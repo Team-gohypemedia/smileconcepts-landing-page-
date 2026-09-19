@@ -24,10 +24,10 @@ const fadeUp = {
 };
 
 const stats = [
+  { value: "1–3", label: "Days to New Teeth" },
+  { value: "98.6%", label: "Implant Success" },
   { value: "40+", label: "Years Experience" },
-  { value: "5★", label: "Google Reviews" },
-  { value: "10K+", label: "Happy Patients" },
-  { value: "CBD", label: "Pitt St, Sydney" },
+  { value: "Super", label: "Fund Access Eligible" },
 ];
 
 export default function Hero() {
@@ -69,15 +69,14 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      aria-label="Hero"
+      aria-label="All on 4 Dental Implants Sydney Hero"
       style={{
         position: "relative",
-        height: "100svh",
-        minHeight: "640px",
+        minHeight: "100svh",
         overflow: "hidden",
       }}
     >
-      {/* ── Parallax media layer (slightly oversized so motion doesn't show edges) */}
+      {/* ── Parallax media layer ── */}
       <div
         ref={mediaRef}
         style={{
@@ -87,33 +86,13 @@ export default function Hero() {
         }}
       >
         <Image
-          src={images.hero.homeTop2024}
-          alt="Smile Concepts – Award Winning Dental Clinic Sydney CBD"
+          src={images.allon4.topGold}
+          alt="All on 4 Dental Implants Sydney – Smile Concepts"
           fill
           priority
           sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: "center 20%" }}
         />
-
-        {/* Video frame — drop hero.mp4 into /public/videos/ */}
-        <video
-          id="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={images.hero.homeTop2024}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "none", /* set to 'block' when src is added */
-          }}
-        >
-          {/* <source src="/videos/hero.mp4" type="video/mp4" /> */}
-        </video>
       </div>
 
       {/* ── Gradient overlays ── */}
@@ -122,7 +101,7 @@ export default function Hero() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(105deg, rgba(15,15,40,0.82) 0%, rgba(15,15,40,0.45) 55%, transparent 100%)",
+          background: "linear-gradient(105deg, rgba(12,12,24,0.88) 0%, rgba(12,12,24,0.6) 55%, rgba(12,12,24,0.3) 100%)",
         }}
       />
       <div
@@ -130,7 +109,7 @@ export default function Hero() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)",
+          background: "linear-gradient(to top, rgba(10,10,20,0.8) 0%, transparent 60%)",
         }}
       />
 
@@ -140,19 +119,19 @@ export default function Hero() {
         style={{
           position: "relative",
           zIndex: 10,
-          height: "100%",
+          minHeight: "100svh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           willChange: "transform, opacity",
         }}
       >
-        <div className="container-sc" style={{ paddingTop: "clamp(6.5rem, 14vh, 9rem)", paddingBottom: "3rem" }}>
+        <div className="container-sc" style={{ paddingTop: "clamp(7rem, 15vh, 9.5rem)", paddingBottom: "3.5rem" }}>
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="visible"
-            style={{ maxWidth: "680px" }}
+            style={{ maxWidth: "720px" }}
           >
             {/* Eyebrow */}
             <motion.p
@@ -162,16 +141,16 @@ export default function Hero() {
                 alignItems: "center",
                 gap: "0.6rem",
                 color: "#F47A4A",
-                fontSize: "0.75rem",
-                letterSpacing: "0.25em",
+                fontSize: "0.8rem",
+                letterSpacing: "0.22em",
                 textTransform: "uppercase",
                 marginBottom: "1.25rem",
                 fontFamily: "var(--font-assistant)",
-                fontWeight: 500,
+                fontWeight: 600,
               }}
             >
-              <span style={{ display: "block", width: "2rem", height: "1px", background: "#F47A4A" }} />
-              Award Winning · Sydney CBD
+              <span style={{ display: "block", width: "2rem", height: "2px", background: "#F47A4A" }} />
+              Turn Back The Clock · Sydney CBD
             </motion.p>
 
             {/* H1 */}
@@ -180,35 +159,74 @@ export default function Hero() {
               style={{
                 fontFamily: "var(--font-prata)",
                 fontWeight: 400,
-                fontSize: "clamp(2.8rem, 7vw, 6rem)",
-                lineHeight: 1.07,
+                fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)",
+                lineHeight: 1.08,
                 color: "#ffffff",
                 marginBottom: "1.25rem",
                 letterSpacing: "-0.02em",
               }}
             >
-              Creating{" "}
-              <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Beautiful</em>
+              All on 4{" "}
+              <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Dental Implants</em>
               <br />
-              Smiles
+              Sydney
             </motion.h1>
 
             {/* Sub */}
             <motion.p
               variants={fadeUp}
               style={{
-                color: "rgba(255,255,255,0.72)",
-                fontSize: "clamp(1rem, 1.8vw, 1.2rem)",
-                lineHeight: 1.65,
-                maxWidth: "480px",
-                marginBottom: "2.25rem",
+                color: "rgba(255,255,255,0.82)",
+                fontSize: "clamp(1.02rem, 1.8vw, 1.22rem)",
+                lineHeight: 1.68,
+                maxWidth: "600px",
+                marginBottom: "1.75rem",
                 fontFamily: "var(--font-assistant)",
                 fontWeight: 300,
               }}
             >
-              40+ years of expert General, Cosmetic &amp; Implant Dentistry at
-              our Pitt Street practice in the heart of Sydney CBD.
+              Smile Concepts brings you painless, state-of-the-art All on 4 dental implants in the heart of Sydney CBD. Replace failing or missing teeth with a permanent, natural-looking full arch restoration in 1 to 3 days. No bone grafting in most cases.
             </motion.p>
+
+            {/* Benefit Badges */}
+            <motion.div
+              variants={fadeUp}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.6rem",
+                marginBottom: "2.2rem",
+              }}
+            >
+              {[
+                "Immediate Function",
+                "Age-Rewind Rejuvenation",
+                "Fixed Non-Removable",
+                "Super Fund Release Support",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    padding: "0.35rem 0.85rem",
+                    borderRadius: "9999px",
+                    background: "rgba(255, 255, 255, 0.12)",
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(255, 255, 255, 0.18)",
+                    color: "#ffffff",
+                    fontFamily: "var(--font-assistant)",
+                    fontSize: "0.8rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#F47A4A" }} />
+                  {badge}
+                </span>
+              ))}
+            </motion.div>
 
             {/* CTAs */}
             <motion.div
@@ -241,11 +259,11 @@ export default function Hero() {
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                Book a Consultation
+                Book Free Consultation
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </a>
               <a
-                href="#services"
+                href="#cost"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -272,7 +290,7 @@ export default function Hero() {
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                Our Treatments
+                All on 4 Cost &amp; Finance
               </a>
             </motion.div>
 

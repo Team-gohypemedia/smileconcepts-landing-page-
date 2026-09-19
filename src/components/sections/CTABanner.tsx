@@ -59,17 +59,17 @@ export default function CTABanner() {
           transition={{ delay: 0.2 }}
           style={{ fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: "#fff", lineHeight: 1.2, marginBottom: "1rem" }}
         >
-          Book a Consultation Today
+          Book Your All-on-4 Consultation Today
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          style={{ color: "rgba(255,255,255,0.72)", fontFamily: "var(--font-assistant)", fontWeight: 300, fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto 2.5rem" }}
+          style={{ color: "rgba(255,255,255,0.78)", fontFamily: "var(--font-assistant)", fontWeight: 300, fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", lineHeight: 1.7, maxWidth: "560px", margin: "0 auto 2.5rem" }}
         >
-          Transform your smile with Sydney&apos;s leading cosmetic dental team.
-          Call us today or book online — we&apos;d love to meet you.
+          Speak directly with Dr. Manish Shah and Dr. Kinnar Shah at our Sydney CBD clinic.
+          Discover whether All-on-4 or All-on-6 is right for you, discuss superannuation early release, and receive a comprehensive treatment plan.
         </motion.p>
 
         <motion.div

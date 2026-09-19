@@ -28,22 +28,24 @@ const playfair = Playfair_Display({
 
 /* ─── SEO Metadata ──────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "Smile Concepts | Leading Dentist Sydney CBD – Pitt Street",
+  title: "All on 4 Dental Implants Sydney | Smile Concepts CBD – Permanent Teeth",
   description:
-    "Award-winning dental clinic in Sydney CBD. 40+ years of expert General, Cosmetic & Implant Dentistry. Book your consultation today.",
+    "Sydney's leading All on 4 Dental Implants clinic at 210 Pitt St, Sydney CBD. Permanent teeth in 1-3 days, no bone grafting in most cases. Super fund release & payment plans available. Book now: 02 9267 7777.",
   keywords: [
-    "dentist Sydney CBD",
-    "cosmetic dentistry Sydney",
-    "dental implants Sydney",
-    "Pitt Street dentist",
-    "porcelain veneers Sydney",
-    "Invisalign Sydney",
+    "All on 4 Dental Implants Sydney",
+    "All on four dental implants Sydney",
+    "All teeth on 4 Sydney cost",
+    "dental implants Sydney CBD",
+    "full mouth dental implants Sydney",
+    "Pitt Street dental implants",
+    "permanent dentures Sydney",
+    "super fund dental implants",
   ],
   openGraph: {
-    title: "Smile Concepts | Leading Dentist Sydney CBD",
+    title: "All on 4 Dental Implants Sydney | Smile Concepts",
     description:
-      "40+ years of creating beautiful smiles in the heart of Sydney.",
-    url: "https://www.smileconcepts.com.au",
+      "Transform your smile with permanent All on 4 dental implants in Sydney CBD. Over 40 years of surgical excellence.",
+    url: "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html",
     siteName: "Smile Concepts",
     type: "website",
   },

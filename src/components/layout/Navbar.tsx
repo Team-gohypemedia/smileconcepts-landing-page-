@@ -6,21 +6,20 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 
-const treatments = [
-  { label: "Cosmetic Dentistry", href: "#services" },
-  { label: "Dental Implants", href: "#services" },
-  { label: "Laser Dentistry", href: "#services" },
-  { label: "General Dentistry", href: "#services" },
-  { label: "TMJ & Sleep Dentistry", href: "#services" },
-  { label: "Orthodontics & Braces", href: "#services" },
-];
+interface NavLinkItem {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+}
 
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Treatments", href: "#services", children: treatments },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Our Team", href: "#team" },
-  { label: "Contact", href: "#contact" },
+const navLinks: NavLinkItem[] = [
+  { label: "Overview", href: "#overview" },
+  { label: "Why All-on-4", href: "#benefits" },
+  { label: "Procedure", href: "#procedure" },
+  { label: "Cost & Super", href: "#cost" },
+  { label: "Results", href: "#gallery" },
+  { label: "Our Doctors", href: "#team" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export default function Navbar() {

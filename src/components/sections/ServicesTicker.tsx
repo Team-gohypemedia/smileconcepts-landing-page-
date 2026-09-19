@@ -1,21 +1,18 @@
 "use client";
 
 const items = [
-  "Porcelain Veneers",
-  "Dental Implants",
-  "Invisalign",
-  "Laser Dentistry",
-  "All-on-4",
-  "Gum Lift",
-  "Clear Braces",
-  "Sleep Dentistry",
-  "Teeth Whitening",
-  "TMJ Treatment",
-  "Root Canal",
-  "Wisdom Teeth",
-  "Cosmetic Dentistry",
-  "Bone Grafting",
-  "Emergency Dental",
+  "All on 4 Dental Implants",
+  "Permanent Fixed Full Arch",
+  "Immediate Function in 1–3 Days",
+  "No Bone Grafting in Most Cases",
+  "Super Fund Release Assistance",
+  "Painless Sleep Dentistry",
+  "Sydney CBD – 210 Pitt Street",
+  "40+ Years Implant Experience",
+  "Natural High-Strength Zirconia",
+  "0% Interest-Free Payment Plans",
+  "Eat Apples, Steak & Crunchy Foods",
+  "Top-Rated 5★ Google Reviews",
 ];
 
 // Duplicate for seamless infinite scroll

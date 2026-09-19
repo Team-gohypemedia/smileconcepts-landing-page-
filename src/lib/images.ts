@@ -18,6 +18,16 @@ export const images = {
     orangeSmile:        "/images/hero/orange-smile-concept.jpg",
   },
 
+  allon4: {
+    topGold:     "/images/allon4/all-on-four-top-gold.jpg",
+    allOn4:      "/images/allon4/all-on-4-904x1024.jpg",
+    sunset:      "/images/allon4/sunset-all-on-4.jpg",
+    elderCouple: "/images/allon4/elder-couple-cooking-dental-implant.jpg",
+    allOn6:      "/images/allon4/All-on-6-1.2.jpg",
+    bridge:      "/images/allon4/Bridge-1-402x1024.jpg",
+    stars5:      "/images/allon4/5-stars.png",
+  },
+
   gallery: {
     sc2:               "/images/gallery/sc2.jpg",
     sc3:               "/images/gallery/sc3.jpg",

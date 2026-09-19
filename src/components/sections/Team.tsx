@@ -8,17 +8,17 @@ import { images } from "@/lib/images";
 const doctors = [
   {
     name: "Dr. Manish Shah",
-    title: "Principal Dentist & Founder",
+    title: "Principal Implant Dentist & Founder",
     img: images.team.drManishShah,
-    specialties: ["Cosmetic Dentistry", "Dental Implants", "Smile Design"],
-    bio: "With over 40 years of experience, Dr. Manish Shah has built Smile Concepts into one of Sydney's most trusted dental practices. His passion for transforming smiles and commitment to patient care is unmatched.",
+    specialties: ["All-on-4 Implants", "Full Arch Rehabilitation", "40+ Years Experience"],
+    bio: "With over 40 years of clinical excellence, Dr. Manish Shah is one of Sydney's most respected full-arch implant practitioners. He has successfully placed thousands of dental implants, delivering predictable, lifelong smile restorations.",
   },
   {
     name: "Dr. Kinnar Shah",
-    title: "Senior Cosmetic Dentist",
+    title: "Senior Implant & Cosmetic Surgeon",
     img: images.team.drKinnarShah,
-    specialties: ["Porcelain Veneers", "Invisalign", "Laser Dentistry"],
-    bio: "Dr. Kinnar Shah combines artistic vision with advanced dental techniques to create beautiful, natural-looking smiles. His expertise in cosmetic dentistry has helped thousands of patients.",
+    specialties: ["Guided Implant Surgery", "Zirconia Bridges", "Immediate Loading"],
+    bio: "Dr. Kinnar Shah combines advanced 3D CBCT digital planning with micro-surgical precision. His focus on All-on-4 full arch restorations ensures patients receive functional, beautiful new teeth in as little as 1 to 3 days.",
   },
 ];
 

@@ -6,14 +6,14 @@ import Image from "next/image";
 import { images } from "@/lib/images";
 
 const galleryItems = [
-  { img: images.gallery.sc2,             label: "Smile Transformation",  span: true },
-  { img: images.gallery.kylieVeneers,    label: "Porcelain Veneers"  },
-  { img: images.gallery.sc3,             label: "Cosmetic Result"    },
-  { img: images.gallery.veneersVsInvisalign, label: "Invisalign Result" },
-  { img: images.gallery.sc4,             label: "Smile Makeover"    },
-  { img: images.gallery.porcelainVeneers, label: "Veneer Treatment" },
-  { img: images.gallery.sc5,             label: "Before & After"    },
-  { img: images.gallery.coupleSmiling,   label: "Happy Patient"     },
+  { img: images.gallery.sc2,             label: "Full Arch All-on-4 Transformation", span: true },
+  { img: images.allon4.allOn4,           label: "All-on-4 Precision Framework" },
+  { img: images.gallery.sc3,             label: "Immediate Smile Restoration" },
+  { img: images.allon4.bridge,           label: "Fixed Implant Bridge" },
+  { img: images.gallery.sc4,             label: "Upper Arch Fixed Teeth" },
+  { img: images.allon4.allOn6,           label: "All-on-6 Full Arch Solution" },
+  { img: images.gallery.sc5,             label: "Permanent Zirconia Smile" },
+  { img: images.allon4.elderCouple,      label: "Restored Chewing & Confidence" },
 ];
 
 export default function Gallery() {
@@ -42,7 +42,7 @@ export default function Gallery() {
             fontWeight: 500,
           }}
         >
-          Real Patient Results
+          Clinical Results & Case Studies
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -58,7 +58,7 @@ export default function Gallery() {
             marginBottom: "0.75rem",
           }}
         >
-          Smile Gallery
+          All-on-4 Transformations
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -77,11 +77,11 @@ export default function Gallery() {
             fontWeight: 300,
             fontSize: "0.92rem",
             lineHeight: 1.7,
-            maxWidth: "440px",
+            maxWidth: "480px",
             margin: "0 auto 3rem",
           }}
         >
-          Witness the transformative power of expert cosmetic dentistry through our patient results.
+          Witness the life-changing results of immediate, fixed full-arch teeth performed by Dr. Manish Shah and Dr. Kinnar Shah in Sydney.
         </motion.p>
 
         {/* Grid */}
