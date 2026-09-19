@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { images } from "@/lib/images";
-import { Phone } from "lucide-react";
 
 const doctors = [
   {
@@ -19,7 +18,7 @@ const doctors = [
     title: "Senior Cosmetic Dentist",
     img: images.team.drKinnarShah,
     specialties: ["Porcelain Veneers", "Invisalign", "Laser Dentistry"],
-    bio: "Dr. Kinnar Shah combines artistic vision with advanced dental techniques to create beautiful, natural-looking smiles. His expertise in cosmetic dentistry and laser treatments has helped thousands of patients.",
+    bio: "Dr. Kinnar Shah combines artistic vision with advanced dental techniques to create beautiful, natural-looking smiles. His expertise in cosmetic dentistry has helped thousands of patients.",
   },
 ];
 
@@ -31,14 +30,13 @@ export default function Team() {
     <section
       ref={ref}
       id="team"
-      className="bg-white py-20 sm:py-28 lg:py-36 overflow-hidden"
+      style={{ background: "#ffffff", padding: "clamp(4rem, 8vw, 8rem) 0", overflow: "hidden" }}
     >
       <div className="container-sc">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-[#F47A4A] text-xs tracking-[0.3em] uppercase mb-3 font-medium text-center"
-          style={{ fontFamily: "var(--font-assistant)" }}
+          style={{ textAlign: "center", color: "#F47A4A", fontSize: "0.72rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.75rem", fontFamily: "var(--font-assistant)", fontWeight: 500 }}
         >
           Expert Care
         </motion.p>
@@ -46,8 +44,7 @@ export default function Team() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="text-3xl sm:text-4xl lg:text-5xl text-[#3c3c3c] text-center mb-3 leading-tight"
-          style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
+          style={{ textAlign: "center", fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "clamp(1.9rem, 4vw, 3.2rem)", color: "#3c3c3c", lineHeight: 1.2, marginBottom: "0.75rem" }}
         >
           Meet Our Dentists
         </motion.h2>
@@ -55,60 +52,46 @@ export default function Team() {
           initial={{ scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-12 h-0.5 bg-[#F47A4A] mx-auto mb-16 origin-left"
+          style={{ width: "3rem", height: "2px", background: "#F47A4A", margin: "0 auto 3.5rem", transformOrigin: "left" }}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+        <div
+          className="team-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", maxWidth: "900px", margin: "0 auto" }}
+        >
           {doctors.map((doc, i) => (
             <motion.div
               key={doc.name}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.15 + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="group bg-[#f9f9f9] rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-500"
+              transition={{ delay: i * 0.15 + 0.2, duration: 0.7 }}
+              style={{
+                background: "#f9f9f9",
+                borderRadius: "1rem",
+                overflow: "hidden",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                transition: "box-shadow 0.4s",
+              }}
+              onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(0,0,0,0.14)")}
+              onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)")}
             >
-              {/* Photo */}
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
                 <Image
                   src={doc.img}
                   alt={doc.name}
                   fill
                   sizes="(max-width: 768px) 90vw, 45vw"
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectFit: "cover", objectPosition: "top", transition: "transform 0.6s ease" }}
+                  className="team-img"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-
-              {/* Info */}
-              <div className="p-6 sm:p-8">
-                <h3
-                  className="text-xl sm:text-2xl text-[#3c3c3c] mb-1"
-                  style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
-                >
-                  {doc.name}
-                </h3>
-                <p
-                  className="text-[#F47A4A] text-xs tracking-wider uppercase mb-4"
-                  style={{ fontFamily: "var(--font-assistant)" }}
-                >
-                  {doc.title}
-                </p>
-                <p
-                  className="text-[#7A7A7A] text-sm leading-relaxed mb-5"
-                  style={{ fontFamily: "var(--font-assistant)", fontWeight: 300 }}
-                >
-                  {doc.bio}
-                </p>
-                {/* Specialties */}
-                <div className="flex flex-wrap gap-2">
-                  {doc.specialties.map((sp) => (
-                    <span
-                      key={sp}
-                      className="px-3 py-1 bg-orange-50 text-[#F47A4A] text-xs rounded-full border border-orange-100"
-                      style={{ fontFamily: "var(--font-assistant)" }}
-                    >
-                      {sp}
-                    </span>
+              <div style={{ padding: "1.75rem" }}>
+                <h3 style={{ fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "1.25rem", color: "#3c3c3c", marginBottom: "0.25rem" }}>{doc.name}</h3>
+                <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#F47A4A", marginBottom: "0.875rem" }}>{doc.title}</p>
+                <p style={{ fontFamily: "var(--font-assistant)", fontWeight: 300, fontSize: "0.88rem", color: "#7A7A7A", lineHeight: 1.7, marginBottom: "1rem" }}>{doc.bio}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                  {doc.specialties.map(sp => (
+                    <span key={sp} style={{ padding: "0.3rem 0.75rem", background: "rgba(244,122,74,0.08)", border: "1px solid rgba(244,122,74,0.2)", borderRadius: "999px", fontFamily: "var(--font-assistant)", fontSize: "0.72rem", color: "#F47A4A" }}>{sp}</span>
                   ))}
                 </div>
               </div>
@@ -116,6 +99,13 @@ export default function Team() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .team-grid { grid-template-columns: 1fr !important; }
+        }
+        .team-img:hover { transform: scale(1.05); }
+      `}</style>
     </section>
   );
 }

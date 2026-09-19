@@ -6,14 +6,14 @@ import Image from "next/image";
 import { images } from "@/lib/images";
 
 const galleryItems = [
-  { img: images.gallery.sc2, label: "Smile Transformation" },
-  { img: images.gallery.kylieVeneers, label: "Porcelain Veneers" },
-  { img: images.gallery.sc3, label: "Cosmetic Result" },
+  { img: images.gallery.sc2,             label: "Smile Transformation",  span: true },
+  { img: images.gallery.kylieVeneers,    label: "Porcelain Veneers"  },
+  { img: images.gallery.sc3,             label: "Cosmetic Result"    },
   { img: images.gallery.veneersVsInvisalign, label: "Invisalign Result" },
-  { img: images.gallery.sc4, label: "Smile Makeover" },
+  { img: images.gallery.sc4,             label: "Smile Makeover"    },
   { img: images.gallery.porcelainVeneers, label: "Veneer Treatment" },
-  { img: images.gallery.sc5, label: "Before & After" },
-  { img: images.gallery.coupleSmiling, label: "Happy Patient" },
+  { img: images.gallery.sc5,             label: "Before & After"    },
+  { img: images.gallery.coupleSmiling,   label: "Happy Patient"     },
 ];
 
 export default function Gallery() {
@@ -24,25 +24,39 @@ export default function Gallery() {
     <section
       ref={ref}
       id="gallery"
-      className="bg-[#f9f9f9] py-20 sm:py-28 lg:py-36 overflow-hidden"
+      style={{ background: "#f9f9f9", padding: "clamp(4rem, 8vw, 8rem) 0", overflow: "hidden" }}
     >
       <div className="container-sc">
         {/* Header */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-[#F47A4A] text-xs tracking-[0.3em] uppercase mb-3 font-medium text-center"
-          style={{ fontFamily: "var(--font-assistant)" }}
+          style={{
+            textAlign: "center",
+            color: "#F47A4A",
+            fontSize: "0.72rem",
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            marginBottom: "0.75rem",
+            fontFamily: "var(--font-assistant)",
+            fontWeight: 500,
+          }}
         >
           Real Patient Results
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-3xl sm:text-4xl lg:text-5xl text-[#3c3c3c] text-center mb-3 leading-tight"
-          style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
+          transition={{ delay: 0.1 }}
+          style={{
+            textAlign: "center",
+            fontFamily: "var(--font-prata)",
+            fontWeight: 400,
+            fontSize: "clamp(1.9rem, 4vw, 3.2rem)",
+            color: "#3c3c3c",
+            lineHeight: 1.2,
+            marginBottom: "0.75rem",
+          }}
         >
           Smile Gallery
         </motion.h2>
@@ -50,45 +64,85 @@ export default function Gallery() {
           initial={{ scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-12 h-0.5 bg-[#F47A4A] mx-auto mb-4 origin-left"
+          style={{ width: "3rem", height: "2px", background: "#F47A4A", margin: "0 auto 1rem", transformOrigin: "left" }}
         />
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          className="text-[#7A7A7A] text-center max-w-md mx-auto mb-14 text-sm leading-relaxed"
-          style={{ fontFamily: "var(--font-assistant)", fontWeight: 300 }}
+          style={{
+            textAlign: "center",
+            color: "#7A7A7A",
+            fontFamily: "var(--font-assistant)",
+            fontWeight: 300,
+            fontSize: "0.92rem",
+            lineHeight: 1.7,
+            maxWidth: "440px",
+            margin: "0 auto 3rem",
+          }}
         >
           Witness the transformative power of expert cosmetic dentistry through our patient results.
         </motion.p>
 
-        {/* Masonry-style grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Grid */}
+        <div
+          className="gallery-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gridAutoRows: "220px",
+            gap: "0.75rem",
+          }}
+        >
           {galleryItems.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: i * 0.07, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className={`group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer ${
-                i === 0 ? "sm:col-span-2 sm:row-span-2" : ""
-              } ${i === 0 ? "aspect-square sm:aspect-auto" : "aspect-square"}`}
+              style={{
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "0.75rem",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                cursor: "pointer",
+                gridColumn: i === 0 ? "span 2" : undefined,
+                gridRow: i === 0 ? "span 2" : undefined,
+              }}
+              className="gallery-item"
             >
-              <div className={`relative w-full ${i === 0 ? "h-56 sm:h-full" : "h-full"}`}>
-                <Image
-                  src={item.img}
-                  alt={item.label}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-400">
-                <span
-                  className="text-white text-xs sm:text-sm font-medium"
-                  style={{ fontFamily: "var(--font-assistant)" }}
-                >
+              <Image
+                src={item.img}
+                alt={item.label}
+                fill
+                sizes="(max-width: 640px) 50vw, 25vw"
+                style={{ objectFit: "cover", transition: "transform 0.7s ease" }}
+                className="gallery-img"
+              />
+              <div
+                className="gallery-overlay"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)",
+                  opacity: 0,
+                  transition: "opacity 0.4s",
+                }}
+              />
+              <div
+                className="gallery-label"
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: "1rem",
+                  transform: "translateY(8px)",
+                  opacity: 0,
+                  transition: "all 0.4s",
+                }}
+              >
+                <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.82rem", color: "#fff", fontWeight: 500 }}>
                   {item.label}
                 </span>
               </div>
@@ -96,21 +150,50 @@ export default function Gallery() {
           ))}
         </div>
 
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8 }}
-          className="mt-10 text-center"
+          style={{ marginTop: "2.5rem", textAlign: "center" }}
         >
           <a
             href="#"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#F47A4A] text-white text-sm font-medium hover:bg-[#e06934] transition-all hover:shadow-lg hover:shadow-orange-400/30"
-            style={{ fontFamily: "var(--font-assistant)" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "0.875rem 2rem",
+              background: "#F47A4A",
+              color: "#fff",
+              fontFamily: "var(--font-assistant)",
+              fontWeight: 500,
+              fontSize: "0.9rem",
+              textDecoration: "none",
+              transition: "background 0.25s",
+            }}
+            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#e06934")}
+            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#F47A4A")}
           >
             View Full Smile Gallery
           </a>
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .gallery-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-auto-rows: 160px !important;
+          }
+          .gallery-grid > div:first-child {
+            grid-column: span 2 !important;
+            grid-row: span 1 !important;
+          }
+        }
+        .gallery-item:hover .gallery-img { transform: scale(1.08); }
+        .gallery-item:hover .gallery-overlay { opacity: 1 !important; }
+        .gallery-item:hover .gallery-label { opacity: 1 !important; transform: translateY(0) !important; }
+      `}</style>
     </section>
   );
 }

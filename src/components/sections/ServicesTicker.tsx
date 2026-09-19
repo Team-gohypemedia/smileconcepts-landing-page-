@@ -1,8 +1,5 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
-
 const items = [
   "Porcelain Veneers",
   "Dental Implants",
@@ -21,53 +18,77 @@ const items = [
   "Emergency Dental",
 ];
 
+// Duplicate for seamless infinite scroll
+const allItems = [...items, ...items];
+
 export default function ServicesTicker() {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const clone = track.cloneNode(true) as HTMLDivElement;
-    track.parentElement?.appendChild(clone);
-
-    const totalWidth = track.scrollWidth;
-
-    const tween = gsap.to([track, clone], {
-      x: `-=${totalWidth}`,
-      duration: 28,
-      ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize((val: number) => parseFloat(val) % totalWidth),
-      },
-    });
-
-    return () => { tween.kill(); };
-  }, []);
-
   return (
     <div
-      className="relative overflow-hidden py-4 sm:py-5"
-      style={{ background: "linear-gradient(135deg, #EC844B 0%, #F47A4A 50%, #e06030 100%)" }}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "14px 0",
+        background: "linear-gradient(135deg, #EC844B 0%, #F47A4A 50%, #e06030 100%)",
+      }}
     >
-      {/* Fade edges */}
-      <div className="absolute left-0 inset-y-0 w-16 z-10 bg-gradient-to-r from-[#EC844B] to-transparent pointer-events-none" />
-      <div className="absolute right-0 inset-y-0 w-16 z-10 bg-gradient-to-l from-[#e06030] to-transparent pointer-events-none" />
+      {/* Left fade */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: "5rem",
+          zIndex: 1,
+          background: "linear-gradient(to right, #EC844B, transparent)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Right fade */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: "5rem",
+          zIndex: 1,
+          background: "linear-gradient(to left, #e06030, transparent)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="flex whitespace-nowrap gap-0 select-none">
-        <div ref={trackRef} className="flex shrink-0 items-center gap-0">
-          {items.map((item, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-4 px-6 sm:px-8 text-white"
-              style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 400, letterSpacing: "0.08em" }}
-            >
-              <span className="text-white/40 text-lg font-light">✦</span>
-              <span className="uppercase tracking-widest">{item}</span>
-            </span>
-          ))}
-        </div>
+      <div
+        className="ticker-track"
+        style={{
+          display: "flex",
+          width: "max-content",
+          userSelect: "none",
+        }}
+      >
+        {allItems.map((item, i) => (
+          <span
+            key={i}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "1rem",
+              padding: "0 1.5rem",
+              color: "#fff",
+              fontFamily: "var(--font-assistant)",
+              fontSize: "0.78rem",
+              fontWeight: 400,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.9rem" }}>✦</span>
+            {item}
+          </span>
+        ))}
       </div>
     </div>
   );

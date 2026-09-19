@@ -1,27 +1,18 @@
 @import "tailwindcss";
 
+/* ─── Brand CSS Custom Properties ─────────────────────────────────── */
 :root {
-  /* Brand Colors - Smile Concepts */
-  --color-orange: #F47A4A;
-  --color-orange-dark: #F67A42;
+  --color-orange:      #F47A4A;
+  --color-orange-dark: #e06934;
   --color-orange-deep: #EC844B;
-  --color-teal: #364D5D;
-  --color-teal-light: #4B5A5F;
-  --color-cream: #FCF8F8;
-  --color-gray-text: #7A7A7A;
-  --color-dark: #3C3C3C;
-  --color-navy: #181818;
-
-  /* Fonts */
-  --font-heading: var(--font-prata), "Georgia", serif;
-  --font-body: var(--font-assistant), "Helvetica Neue", sans-serif;
-  --font-accent: var(--font-playfair), "Georgia", serif;
-
-  /* Spacing */
-  --container-max: 1140px;
+  --color-teal:        #364D5D;
+  --color-cream:       #FCF8F8;
+  --color-gray-text:   #7A7A7A;
+  --color-dark:        #3C3C3C;
+  --color-navy:        #1a1a2e;
 }
 
-/* Reset */
+/* ─── Reset ────────────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -31,49 +22,59 @@
 }
 
 html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  scroll-behavior: auto;   /* Lenis handles smooth scroll */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-body);
-  color: var(--color-dark);
-  background: #fff;
+  min-height: 100dvh;
+  background-color: #ffffff;
+  color: #3C3C3C;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Utilities */
-.font-heading {
-  font-family: var(--font-heading);
+img,
+video {
+  display: block;
+  max-width: 100%;
 }
 
-.font-accent {
-  font-family: var(--font-accent);
-}
-
-/* Container */
+/* ─── Container ────────────────────────────────────────────────────── */
 .container-sc {
   width: 100%;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 3rem);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 5vw, 3rem);
+  padding-right: clamp(1rem, 5vw, 3rem);
 }
 
-/* Selection */
+/* ─── Text Selection ───────────────────────────────────────────────── */
 ::selection {
-  background: var(--color-orange);
-  color: #fff;
+  background-color: #F47A4A;
+  color: #ffffff;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* ─── Custom Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #f9f9f9; }
+::-webkit-scrollbar-thumb  { background: #F47A4A; border-radius: 4px; }
+
+/* ─── Ticker animation (ServicesTicker) ────────────────────────────── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
-::-webkit-scrollbar-track {
-  background: #f9f9f9;
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 30s linear infinite;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--color-orange);
-  border-radius: 3px;
+.ticker-track:hover {
+  animation-play-state: paused;
 }
+
+/* ─── Utility: hide video tag when no source, show Image fallback ─── */
+#hero-video:not([src]) { display: none; }

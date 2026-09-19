@@ -7,7 +7,11 @@ import { images } from "@/lib/images";
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
 });
 
 const features = [
@@ -25,16 +29,25 @@ export default function About() {
     <section
       ref={ref}
       id="about"
-      className="bg-[#f9f9f9] py-20 sm:py-28 lg:py-36 overflow-hidden"
+      style={{ background: "#f9f9f9", padding: "clamp(4rem, 8vw, 8rem) 0", overflow: "hidden" }}
     >
       <div className="container-sc">
-        {/* Section label */}
+
+        {/* Header */}
         <motion.p
           variants={fadeUp(0)}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="text-[#F47A4A] text-xs tracking-[0.3em] uppercase mb-3 font-medium text-center"
-          style={{ fontFamily: "var(--font-assistant)" }}
+          style={{
+            textAlign: "center",
+            color: "#F47A4A",
+            fontSize: "0.72rem",
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            marginBottom: "0.75rem",
+            fontFamily: "var(--font-assistant)",
+            fontWeight: 500,
+          }}
         >
           Leading Dental Practice · Greater Sydney
         </motion.p>
@@ -43,154 +56,242 @@ export default function About() {
           variants={fadeUp(0.1)}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="text-3xl sm:text-4xl lg:text-5xl text-[#3c3c3c] text-center mb-4 leading-tight"
-          style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
+          style={{
+            textAlign: "center",
+            fontFamily: "var(--font-prata)",
+            fontWeight: 400,
+            fontSize: "clamp(1.9rem, 4vw, 3.2rem)",
+            color: "#3c3c3c",
+            lineHeight: 1.2,
+            marginBottom: "0.75rem",
+          }}
         >
           Experience the Life-changing
-          <br className="hidden sm:block" />
-          <span className="italic text-[#F47A4A]"> Power of A Smile</span>
+          <br />
+          <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Power of A Smile</em>
         </motion.h2>
 
         <motion.p
           variants={fadeUp(0.2)}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="text-[#7A7A7A] text-center max-w-xl mx-auto mb-16 leading-relaxed text-sm sm:text-base"
-          style={{ fontFamily: "var(--font-assistant)", fontWeight: 300 }}
+          style={{
+            textAlign: "center",
+            color: "#7A7A7A",
+            fontFamily: "var(--font-assistant)",
+            fontWeight: 300,
+            fontSize: "0.95rem",
+            lineHeight: 1.7,
+            maxWidth: "500px",
+            margin: "0 auto 3.5rem",
+            fontStyle: "italic",
+          }}
         >
-          <em>Smile Concepts is one of the best dentists in Sydney creating perfect smiles</em>
+          Smile Concepts is one of the best dentists in Sydney creating perfect smiles
         </motion.p>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left: Images stacked */}
+        {/* Two-column */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(2rem, 5vw, 5rem)", alignItems: "center" }}
+          className="about-grid"
+        >
+          {/* Left: Image */}
           <motion.div
             variants={fadeUp(0.15)}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="relative"
+            style={{ position: "relative" }}
           >
-            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0 shadow-2xl">
+            <div
+              style={{
+                position: "relative",
+                borderRadius: "1rem",
+                overflow: "hidden",
+                aspectRatio: "3/4",
+                maxWidth: "380px",
+                margin: "0 auto",
+                boxShadow: "0 25px 60px rgba(0,0,0,0.18)",
+              }}
+            >
               <Image
                 src={images.hero.home1}
                 alt="Smile Concepts Sydney Dental Clinic"
                 fill
-                sizes="(max-width: 768px) 90vw, 45vw"
-                className="object-cover"
+                sizes="(max-width: 768px) 90vw, 40vw"
+                style={{ objectFit: "cover" }}
               />
             </div>
+
             {/* Before/After badge */}
-            <div className="absolute -bottom-6 -right-2 sm:right-8 lg:-right-6 rounded-xl overflow-hidden shadow-2xl border-4 border-white w-36 sm:w-44 aspect-square">
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-1.5rem",
+                right: "0",
+                width: "9rem",
+                aspectRatio: "1",
+                borderRadius: "0.75rem",
+                overflow: "hidden",
+                border: "4px solid #fff",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+              }}
+            >
               <Image
                 src={images.hero.homepageBa}
                 alt="Before and after dental transformation"
                 fill
-                sizes="200px"
-                className="object-cover"
+                sizes="160px"
+                style={{ objectFit: "cover" }}
               />
             </div>
-            {/* Floating stats card */}
+
+            {/* Floating stat */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.7 }}
-              className="absolute top-8 -left-4 sm:-left-8 bg-white rounded-xl shadow-xl px-5 py-4 border border-gray-50"
+              style={{
+                position: "absolute",
+                top: "2rem",
+                left: "-2rem",
+                background: "#fff",
+                borderRadius: "0.75rem",
+                padding: "1rem 1.25rem",
+                boxShadow: "0 10px 40px rgba(0,0,0,0.14)",
+                border: "1px solid rgba(0,0,0,0.05)",
+              }}
             >
-              <div
-                className="text-3xl font-bold text-[#F47A4A]"
-                style={{ fontFamily: "var(--font-prata)" }}
-              >
-                40+
-              </div>
-              <div
-                className="text-xs text-[#7A7A7A] uppercase tracking-widest mt-1"
-                style={{ fontFamily: "var(--font-assistant)" }}
-              >
+              <div style={{ fontFamily: "var(--font-prata)", fontSize: "2rem", color: "#F47A4A", lineHeight: 1 }}>40+</div>
+              <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#9A9A9A", marginTop: "0.3rem" }}>
                 Years of<br />Excellence
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Right: Text + features */}
-          <div className="flex flex-col gap-8">
-            <motion.div
-              variants={fadeUp(0.25)}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-            >
+          {/* Right: Text */}
+          <motion.div
+            variants={fadeUp(0.25)}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}
+          >
+            <div>
               <h3
-                className="text-2xl sm:text-3xl text-[#3c3c3c] mb-4 leading-snug"
-                style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
+                style={{
+                  fontFamily: "var(--font-prata)",
+                  fontWeight: 400,
+                  fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                  color: "#3c3c3c",
+                  lineHeight: 1.3,
+                  marginBottom: "1rem",
+                }}
               >
                 Perfect Smile
                 <br />
-                <span className="text-[#F47A4A]">Transformation</span>
+                <span style={{ color: "#F47A4A" }}>Transformation</span>
               </h3>
               <ul
-                className="flex flex-col gap-3 text-[#4f4f4f] text-sm sm:text-base mb-6"
-                style={{ fontFamily: "var(--font-assistant)", fontWeight: 300, lineHeight: 1.6 }}
+                style={{
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.65rem",
+                  marginBottom: "1.5rem",
+                  fontFamily: "var(--font-assistant)",
+                  fontWeight: 300,
+                  fontSize: "0.95rem",
+                  color: "#4f4f4f",
+                  lineHeight: 1.6,
+                }}
               >
                 {[
                   "More Than 40 Years of Experience",
                   "Best Rated Dentistry in Sydney CBD",
                   "Compassionate Service with Premium Care",
                   "State-of-the-Art Technology & Innovation",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#F47A4A] shrink-0" />
+                ].map(item => (
+                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <span style={{ marginTop: "0.5rem", width: "6px", height: "6px", borderRadius: "50%", background: "#F47A4A", flexShrink: 0 }} />
                     {item}
                   </li>
                 ))}
               </ul>
-              <div className="flex flex-wrap gap-3">
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
                 <a
                   href="tel:0292677777"
-                  className="px-6 py-3 border-2 border-[#F47A4A] text-[#F47A4A] text-sm font-medium hover:bg-[#F47A4A] hover:text-white transition-all"
-                  style={{ fontFamily: "var(--font-assistant)" }}
+                  style={{
+                    padding: "0.75rem 1.5rem",
+                    border: "2px solid #F47A4A",
+                    color: "#F47A4A",
+                    fontFamily: "var(--font-assistant)",
+                    fontWeight: 500,
+                    fontSize: "0.9rem",
+                    textDecoration: "none",
+                    transition: "all 0.25s",
+                    display: "inline-block",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "#F47A4A"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.color = "#F47A4A"; }}
                 >
                   Book Appointment
                 </a>
                 <a
                   href="#gallery"
-                  className="px-6 py-3 bg-[#F47A4A] text-white text-sm font-medium hover:bg-[#e06934] transition-all"
-                  style={{ fontFamily: "var(--font-assistant)" }}
+                  style={{
+                    padding: "0.75rem 1.5rem",
+                    background: "#F47A4A",
+                    color: "#fff",
+                    fontFamily: "var(--font-assistant)",
+                    fontWeight: 500,
+                    fontSize: "0.9rem",
+                    textDecoration: "none",
+                    transition: "background 0.25s",
+                    display: "inline-block",
+                  }}
+                  onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#e06934")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#F47A4A")}
                 >
                   Smile Gallery
                 </a>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Feature grid */}
-            <motion.div
-              variants={fadeUp(0.35)}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            {/* Feature cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.75rem",
+              }}
             >
-              {features.map((f, i) => (
+              {features.map(f => (
                 <div
                   key={f.title}
-                  className="bg-white rounded-xl p-5 border border-gray-100 hover:border-orange-200 hover:shadow-md transition-all group"
+                  style={{
+                    background: "#fff",
+                    borderRadius: "0.75rem",
+                    padding: "1.25rem",
+                    border: "1px solid #f0f0f0",
+                    transition: "box-shadow 0.25s, border-color 0.25s",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.borderColor = "#fad0bf"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; (e.currentTarget as HTMLDivElement).style.borderColor = "#f0f0f0"; }}
                 >
-                  <span className="text-2xl mb-3 block">{f.icon}</span>
-                  <h4
-                    className="text-sm font-semibold text-[#3c3c3c] mb-1 group-hover:text-[#F47A4A] transition-colors"
-                    style={{ fontFamily: "var(--font-assistant)" }}
-                  >
-                    {f.title}
-                  </h4>
-                  <p
-                    className="text-xs text-[#9A9A9A] leading-relaxed"
-                    style={{ fontFamily: "var(--font-assistant)" }}
-                  >
-                    {f.desc}
-                  </p>
+                  <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{f.icon}</div>
+                  <div style={{ fontFamily: "var(--font-assistant)", fontWeight: 600, fontSize: "0.82rem", color: "#3c3c3c", marginBottom: "0.3rem" }}>{f.title}</div>
+                  <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.75rem", color: "#9A9A9A", lineHeight: 1.5 }}>{f.desc}</div>
                 </div>
               ))}
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Mobile: stack columns */}
+      <style>{`
+        @media (max-width: 768px) {
+          .about-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

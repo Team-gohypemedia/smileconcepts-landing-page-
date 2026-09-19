@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { images } from "@/lib/images";
-import { Phone } from "lucide-react";
 
 export default function CTABanner() {
   const ref = useRef<HTMLElement>(null);
@@ -14,33 +13,22 @@ export default function CTABanner() {
     <section
       ref={ref}
       id="book"
-      className="relative py-20 sm:py-28 overflow-hidden"
+      style={{ position: "relative", padding: "clamp(4rem, 8vw, 8rem) 0", overflow: "hidden" }}
     >
-      {/* Background */}
-      <div className="absolute inset-0">
-        <Image
-          src={images.hero.background}
-          alt=""
-          fill
-          className="object-cover opacity-20"
-          aria-hidden
-        />
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(135deg, #EC844B 0%, #F47A4A 40%, #e06030 100%)" }}
-        />
+      {/* BG image */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        <Image src={images.hero.background} alt="" fill style={{ objectFit: "cover", opacity: 0.15 }} aria-hidden />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #EC844B 0%, #F47A4A 40%, #e06030 100%)" }} />
       </div>
-
       {/* Decorative circles */}
-      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/5 pointer-events-none" />
-      <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-white/5 pointer-events-none" />
+      <div aria-hidden style={{ position: "absolute", top: "-5rem", right: "-5rem", width: "20rem", height: "20rem", borderRadius: "50%", background: "rgba(255,255,255,0.06)", pointerEvents: "none" }} />
+      <div aria-hidden style={{ position: "absolute", bottom: "-5rem", left: "-5rem", width: "26rem", height: "26rem", borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
 
-      <div className="relative z-10 container-sc text-center">
+      <div className="container-sc" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-white/70 text-xs tracking-[0.35em] uppercase mb-4"
-          style={{ fontFamily: "var(--font-assistant)" }}
+          style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.7rem", letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: "1rem", fontFamily: "var(--font-assistant)" }}
         >
           Start Your Journey
         </motion.p>
@@ -49,21 +37,27 @@ export default function CTABanner() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="text-xl sm:text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-6 italic"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{
+            fontFamily: "var(--font-playfair)",
+            fontStyle: "italic",
+            fontSize: "clamp(1rem, 2vw, 1.35rem)",
+            color: "rgba(255,255,255,0.85)",
+            lineHeight: 1.75,
+            maxWidth: "820px",
+            margin: "0 auto 1.5rem",
+          }}
         >
           &ldquo;Quality is never an accident; it is the result of high intention, sincere effort,{" "}
-          <span className="text-white font-semibold not-italic">intelligent direction</span>{" "}
+          <strong style={{ fontStyle: "normal", color: "#fff" }}>intelligent direction</strong>{" "}
           and{" "}
-          <span className="text-white font-semibold not-italic">skillful execution.</span>&rdquo;
+          <strong style={{ fontStyle: "normal", color: "#fff" }}>skillful execution.</strong>&rdquo;
         </motion.blockquote>
 
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
-          className="text-3xl sm:text-4xl lg:text-5xl text-white font-bold mb-6 leading-tight"
-          style={{ fontFamily: "var(--font-prata)" }}
+          style={{ fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.2rem)", color: "#fff", lineHeight: 1.2, marginBottom: "1rem" }}
         >
           Book a Consultation Today
         </motion.h2>
@@ -72,8 +66,7 @@ export default function CTABanner() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          className="text-white/75 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed"
-          style={{ fontFamily: "var(--font-assistant)", fontWeight: 300 }}
+          style={{ color: "rgba(255,255,255,0.72)", fontFamily: "var(--font-assistant)", fontWeight: 300, fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto 2.5rem" }}
         >
           Transform your smile with Sydney&apos;s leading cosmetic dental team.
           Call us today or book online — we&apos;d love to meet you.
@@ -83,32 +76,55 @@ export default function CTABanner() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
-          className="flex flex-col sm:flex-row justify-center gap-4"
+          style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}
         >
           <a
             href="tel:0292677777"
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-[#F47A4A] font-semibold text-sm sm:text-base hover:bg-[#FCF8F8] transition-all hover:shadow-xl active:scale-[.98]"
-            style={{ fontFamily: "var(--font-assistant)" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              padding: "1rem 2rem",
+              background: "#fff",
+              color: "#F47A4A",
+              fontFamily: "var(--font-assistant)",
+              fontWeight: 600,
+              fontSize: "1rem",
+              textDecoration: "none",
+              transition: "all 0.25s",
+            }}
+            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#FCF8F8")}
+            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = "#fff")}
           >
-            <Phone className="w-5 h-5" />
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
             02 9267 7777
           </a>
           <a
             href="#"
-            className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold text-sm sm:text-base hover:bg-white/15 transition-all active:scale-[.98]"
-            style={{ fontFamily: "var(--font-assistant)" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "1rem 2rem",
+              border: "2px solid rgba(255,255,255,0.7)",
+              color: "#fff",
+              fontFamily: "var(--font-assistant)",
+              fontWeight: 500,
+              fontSize: "1rem",
+              textDecoration: "none",
+              transition: "all 0.25s",
+            }}
+            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.15)")}
+            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = "transparent")}
           >
             Book Online
           </a>
         </motion.div>
 
-        {/* Address */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
-          className="mt-10 text-white/50 text-xs tracking-widest uppercase"
-          style={{ fontFamily: "var(--font-assistant)" }}
+          style={{ marginTop: "2.5rem", fontFamily: "var(--font-assistant)", fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}
         >
           Suite 201, 210 Pitt Street, Sydney NSW 2000
         </motion.p>

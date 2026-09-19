@@ -11,16 +11,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.14 } },
 };
-
 const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 60, filter: "blur(6px)" },
   visible: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 };
 
@@ -33,14 +32,14 @@ const stats = [
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const mediaRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const mediaRef   = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Parallax: media moves slower than scroll (classic parallax depth)
+      // Parallax: media moves at ~40% of scroll speed
       gsap.to(mediaRef.current, {
-        yPercent: 28,
+        yPercent: 30,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -50,15 +49,15 @@ export default function Hero() {
         },
       });
 
-      // Content fades + lifts as you scroll down
-      gsap.to(overlayRef.current, {
+      // Content lifts + fades on scroll
+      gsap.to(contentRef.current, {
         opacity: 0,
-        y: -80,
+        y: -60,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "25% top",
-          end: "65% top",
+          start: "30% top",
+          end: "70% top",
           scrub: true,
         },
       });
@@ -70,124 +69,229 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen min-h-[640px] overflow-hidden"
       aria-label="Hero"
+      style={{
+        position: "relative",
+        height: "100svh",
+        minHeight: "640px",
+        overflow: "hidden",
+      }}
     >
-      {/* ── Parallax Media Layer ── */}
+      {/* ── Parallax media layer (slightly oversized so motion doesn't show edges) */}
       <div
         ref={mediaRef}
-        className="absolute inset-0 scale-[1.3] will-change-transform origin-center"
+        style={{
+          position: "absolute",
+          inset: "-15%",
+          willChange: "transform",
+        }}
       >
-        {/* Video frame – drop your .mp4 src here */}
+        <Image
+          src={images.hero.homeTop2024}
+          alt="Smile Concepts – Award Winning Dental Clinic Sydney CBD"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover", objectPosition: "center top" }}
+        />
+
+        {/* Video frame — drop hero.mp4 into /public/videos/ */}
         <video
-          className="absolute inset-0 w-full h-full object-cover hidden"
+          id="hero-video"
           autoPlay
           muted
           loop
           playsInline
           poster={images.hero.homeTop2024}
-          id="hero-video"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "none", /* set to 'block' when src is added */
+          }}
         >
           {/* <source src="/videos/hero.mp4" type="video/mp4" /> */}
         </video>
-
-        {/* Fallback hero image */}
-        <Image
-          src={images.hero.homeTop2024}
-          alt="Smile Concepts – Leading Dental Clinic Sydney CBD"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
       </div>
 
-      {/* ── Gradient Overlays ── */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/80 via-[#16213e]/50 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none" />
+      {/* ── Gradient overlays ── */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(105deg, rgba(15,15,40,0.82) 0%, rgba(15,15,40,0.45) 55%, transparent 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)",
+        }}
+      />
 
       {/* ── Content ── */}
       <div
-        ref={overlayRef}
-        className="relative z-10 h-full flex flex-col justify-center will-change-transform"
+        ref={contentRef}
+        style={{
+          position: "relative",
+          zIndex: 10,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          willChange: "transform, opacity",
+        }}
       >
-        <div className="container-sc pb-10">
+        <div className="container-sc" style={{ paddingBottom: "2rem" }}>
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="visible"
-            className="max-w-2xl xl:max-w-3xl"
+            style={{ maxWidth: "680px" }}
           >
             {/* Eyebrow */}
             <motion.p
               variants={fadeUp}
-              className="inline-flex items-center gap-2 text-[#F47A4A] text-xs sm:text-sm tracking-[0.25em] uppercase mb-5 font-medium"
-              style={{ fontFamily: "var(--font-assistant)" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                color: "#F47A4A",
+                fontSize: "0.75rem",
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                marginBottom: "1.25rem",
+                fontFamily: "var(--font-assistant)",
+                fontWeight: 500,
+              }}
             >
-              <span className="block w-8 h-px bg-[#F47A4A]" />
+              <span style={{ display: "block", width: "2rem", height: "1px", background: "#F47A4A" }} />
               Award Winning · Sydney CBD
             </motion.p>
 
-            {/* Headline */}
+            {/* H1 */}
             <motion.h1
               variants={fadeUp}
-              className="text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] text-white leading-[1.05] mb-6 -tracking-wide"
-              style={{ fontFamily: "var(--font-prata)", fontWeight: 400 }}
+              style={{
+                fontFamily: "var(--font-prata)",
+                fontWeight: 400,
+                fontSize: "clamp(2.8rem, 7vw, 6rem)",
+                lineHeight: 1.07,
+                color: "#ffffff",
+                marginBottom: "1.25rem",
+                letterSpacing: "-0.02em",
+              }}
             >
               Creating{" "}
-              <span className="italic text-[#F47A4A]">Beautiful</span>
+              <em style={{ color: "#F47A4A", fontStyle: "italic" }}>Beautiful</em>
               <br />
               Smiles
             </motion.h1>
 
-            {/* Subheadline */}
+            {/* Sub */}
             <motion.p
               variants={fadeUp}
-              className="text-white/75 text-base sm:text-lg lg:text-xl max-w-xl leading-relaxed mb-10"
-              style={{ fontFamily: "var(--font-assistant)", fontWeight: 300 }}
+              style={{
+                color: "rgba(255,255,255,0.72)",
+                fontSize: "clamp(1rem, 1.8vw, 1.2rem)",
+                lineHeight: 1.65,
+                maxWidth: "480px",
+                marginBottom: "2.25rem",
+                fontFamily: "var(--font-assistant)",
+                fontWeight: 300,
+              }}
             >
               40+ years of expert General, Cosmetic &amp; Implant Dentistry at
               our Pitt Street practice in the heart of Sydney CBD.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+            <motion.div
+              variants={fadeUp}
+              style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+            >
               <a
                 href="#book"
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-[#F47A4A] text-white font-medium text-sm sm:text-base hover:bg-[#e06934] transition-all hover:shadow-xl hover:shadow-orange-500/30 active:scale-[.98]"
-                style={{ fontFamily: "var(--font-assistant)" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "1rem 2rem",
+                  background: "#F47A4A",
+                  color: "#fff",
+                  fontFamily: "var(--font-assistant)",
+                  fontWeight: 600,
+                  fontSize: "0.95rem",
+                  textDecoration: "none",
+                  transition: "background 0.25s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#e06934")}
+                onMouseLeave={e => (e.currentTarget.style.background = "#F47A4A")}
               >
                 Book a Consultation
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </a>
               <a
                 href="#services"
-                className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/60 text-white font-medium text-sm sm:text-base hover:border-white hover:bg-white/10 transition-all active:scale-[.98]"
-                style={{ fontFamily: "var(--font-assistant)" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  padding: "1rem 2rem",
+                  border: "2px solid rgba(255,255,255,0.6)",
+                  color: "#fff",
+                  fontFamily: "var(--font-assistant)",
+                  fontWeight: 500,
+                  fontSize: "0.95rem",
+                  textDecoration: "none",
+                  transition: "border-color 0.25s, background 0.25s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "transparent"; }}
               >
                 Our Treatments
               </a>
             </motion.div>
 
-            {/* Stats */}
+            {/* Stats row */}
             <motion.div
               variants={fadeUp}
-              className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, auto)",
+                gap: "2rem",
+                marginTop: "3.5rem",
+              }}
             >
-              {stats.map((s) => (
-                <div key={s.label} className="flex flex-col">
-                  <span
-                    className="text-2xl sm:text-3xl text-white font-bold"
-                    style={{ fontFamily: "var(--font-prata)" }}
+              {stats.map(s => (
+                <div key={s.label}>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-prata)",
+                      fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                      color: "#fff",
+                      fontWeight: 400,
+                      lineHeight: 1,
+                    }}
                   >
                     {s.value}
-                  </span>
-                  <span
-                    className="text-white/50 text-[10px] tracking-[0.2em] uppercase mt-1"
-                    style={{ fontFamily: "var(--font-assistant)" }}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.45)",
+                      marginTop: "0.4rem",
+                    }}
                   >
                     {s.label}
-                  </span>
+                  </div>
                 </div>
               ))}
             </motion.div>
@@ -195,23 +299,30 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll Indicator ── */}
+      {/* ── Scroll indicator ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        style={{
+          position: "absolute",
+          bottom: "2rem",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.5rem",
+          zIndex: 10,
+        }}
       >
-        <span
-          className="text-white/40 text-[10px] tracking-[0.3em] uppercase"
-          style={{ fontFamily: "var(--font-assistant)" }}
-        >
+        <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-px h-10 bg-gradient-to-b from-white/50 to-transparent"
+          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          style={{ width: "1px", height: "2.5rem", background: "linear-gradient(to bottom, rgba(255,255,255,0.5), transparent)" }}
         />
       </motion.div>
     </section>
