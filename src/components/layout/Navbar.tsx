@@ -28,11 +28,12 @@ export default function Navbar() {
     const onScroll = () => {
       const hero = document.getElementById("hero-scroll-container");
       if (hero) {
-        // Trigger navbar transition ONLY after the 200vh hero section completes scroll
-        const heroBottom = hero.getBoundingClientRect().bottom;
-        setScrolled(heroBottom <= 90);
+        const pinSpacer = hero.parentElement;
+        const target = pinSpacer && pinSpacer.classList.contains("pin-spacer") ? pinSpacer : hero;
+        const rectBottom = target.getBoundingClientRect().bottom;
+        setScrolled(rectBottom <= 90);
       } else {
-        setScrolled(window.scrollY > window.innerHeight * 1.8);
+        setScrolled(window.scrollY > window.innerHeight * 1.5);
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });

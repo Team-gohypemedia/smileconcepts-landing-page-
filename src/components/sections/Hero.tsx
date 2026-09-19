@@ -1,204 +1,275 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronDown } from "lucide-react";
-import ShinyText from "@/components/ui/ShinyText";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TOTAL_FRAMES = 240;
-
-// URL helper for the WebP frames
-const getFrameUrl = (index: number) => {
-  const frameNum = String(index + 1).padStart(4, "0");
+const FRAME_PATH = (index: number) => {
+  const frameNum = String(index).padStart(4, "0");
   return `/hero%20video%20frame/smileconcepts_webp_frames/frame_${frameNum}.webp`;
 };
 
+const PHRASES = [
+  {
+    id: 1,
+    text: "Turn back the clock with All on 4 Dental Implants Sydney",
+    startPct: 0.04,
+    endPct: 0.32,
+  },
+  {
+    id: 2,
+    text: "A brand new, permanent set of fixed teeth in 1 to 3 days",
+    startPct: 0.36,
+    endPct: 0.64,
+  },
+  {
+    id: 3,
+    text: "No bone grafting, no loose dentures. Eat and smile freely",
+    startPct: 0.68,
+    endPct: 0.96,
+  },
+];
+
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const cursorTrackerRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
-  const currentFrameRef = useRef<number>(0);
-  const [, setLoadedCount] = useState(0);
+  const followerRef = useRef<HTMLDivElement>(null);
 
-  // Mouse tracking state for cursor follower
-  const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, hasMoved: false });
-  const [isHovered, setIsHovered] = useState(false);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const currentFrameObj = useRef({ frame: 0 });
 
-  // Render a specific frame onto the canvas with cover sizing
-  const renderFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Look for requested frame or nearest available loaded frame
-    let img = imagesRef.current[index];
-    if (!img || !img.complete) {
-      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
-        const prev = imagesRef.current[index - offset];
-        if (prev && prev.complete) {
-          img = prev;
-          break;
-        }
-        const next = imagesRef.current[index + offset];
-        if (next && next.complete) {
-          img = next;
-          break;
-        }
-      }
-    }
-
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    const cw = canvas.width;
-    const ch = canvas.height;
-    const iw = img.naturalWidth;
-    const ih = img.naturalHeight;
-
-    const scale = Math.max(cw / iw, ch / ih);
-    const nw = iw * scale;
-    const nh = ih * scale;
-    const x = (cw - nw) / 2;
-    const y = (ch - nh) / 2;
-
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, x, y, nw, nh);
-  }, []);
-
-  // Set canvas resolution to device pixel ratio
-  const resizeCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-
-    renderFrame(currentFrameRef.current);
-  }, [renderFrame]);
-
-  // Preload frames progressively
   useEffect(() => {
-    imagesRef.current = new Array(TOTAL_FRAMES).fill(null);
+    const loadedImages: HTMLImageElement[] = [];
 
-    // 1. Immediately load frame 1 for instant display
-    const firstImg = new window.Image();
-    firstImg.src = getFrameUrl(0);
-    firstImg.onload = () => {
-      imagesRef.current[0] = firstImg;
-      setLoadedCount(1);
-      resizeCanvas();
-      renderFrame(0);
+    // Full screen object-cover Canvas drawing function
+    const drawFrame = (index: number) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const img = imagesRef.current[index];
+      if (!img || !img.complete) return;
+
+      const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+      const rect = canvas.getBoundingClientRect();
+
+      if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+      }
+
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      const imgAspect = img.width / img.height;
+      const canvasAspect = rect.width / rect.height;
+
+      let renderWidth = rect.width;
+      let renderHeight = rect.height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      // Full Cover math: Fill full canvas screen edge-to-edge
+      if (canvasAspect > imgAspect) {
+        renderWidth = rect.width;
+        renderHeight = rect.width / imgAspect;
+        offsetY = (rect.height - renderHeight) / 2;
+      } else {
+        renderHeight = rect.height;
+        renderWidth = rect.height * imgAspect;
+        offsetX = (rect.width - renderWidth) / 2;
+      }
+
+      ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+      ctx.restore();
     };
 
-    // 2. Preload remaining frames in background
-    let loaded = 1;
-    for (let i = 1; i < TOTAL_FRAMES; i++) {
-      const img = new window.Image();
-      img.src = getFrameUrl(i);
-      img.onload = () => {
-        imagesRef.current[i] = img;
-        loaded++;
-        if (loaded % 20 === 0 || loaded === TOTAL_FRAMES) {
-          setLoadedCount(loaded);
-        }
-      };
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, [resizeCanvas, renderFrame]);
-
-  // Smooth cursor follower animation using requestAnimationFrame
-  useEffect(() => {
-    let animId: number;
-
-    const updateCursor = () => {
-      const el = cursorTrackerRef.current;
-      if (el && mousePos.current.hasMoved) {
-        // Smooth lerp towards mouse position
-        mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.15;
-        mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.15;
-
-        el.style.transform = `translate3d(${mousePos.current.x + 20}px, ${mousePos.current.y + 20}px, 0)`;
+    // Preload all 240 frames
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = FRAME_PATH(i);
+      if (i === 1) {
+        img.onload = () => drawFrame(0);
       }
-      animId = requestAnimationFrame(updateCursor);
-    };
-
-    animId = requestAnimationFrame(updateCursor);
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  // Mouse move handler on hero viewport
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mousePos.current.hasMoved) {
-      mousePos.current.hasMoved = true;
-      mousePos.current.x = e.clientX;
-      mousePos.current.y = e.clientY;
-      setIsHovered(true);
+      loadedImages.push(img);
     }
-    mousePos.current.targetX = e.clientX;
-    mousePos.current.targetY = e.clientY;
-  };
+    imagesRef.current = loadedImages;
 
-  // GSAP ScrollTrigger across 200vh container
-  useEffect(() => {
-    const container = containerRef.current;
-    const tracker = cursorTrackerRef.current;
-    if (!container) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Scrub through the 240 frames across 200vh
+      // Pin hero section and scrub frame sequence across 200vh total scroll (+100% scroll distance)
       ScrollTrigger.create({
-        trigger: container,
+        trigger: section,
         start: "top top",
-        end: "bottom bottom",
-        scrub: 0.15,
+        end: "+=120%", // Smooth 200vh scroll travel before unpinning
+        pin: true,
+        scrub: 0.5,
         onUpdate: (self) => {
           const progress = self.progress;
+
+          // Update 3D Frame Index
           const frameIndex = Math.min(
             TOTAL_FRAMES - 1,
-            Math.max(0, Math.round(progress * (TOTAL_FRAMES - 1)))
+            Math.floor(progress * (TOTAL_FRAMES - 1))
           );
-          if (frameIndex !== currentFrameRef.current) {
-            currentFrameRef.current = frameIndex;
-            renderFrame(frameIndex);
-          }
+          currentFrameObj.current.frame = frameIndex;
+          drawFrame(frameIndex);
 
-          // Fade out scroll indicator once user starts scrolling
-          if (tracker) {
-            if (progress > 0.05) {
-              gsap.to(tracker, { opacity: 0, duration: 0.25, overwrite: "auto" });
+          // Update 3 Centered Text Phrases & Character Fills
+          PHRASES.forEach((phrase, pIdx) => {
+            const phraseElem = section.querySelector(`.phrase-container-${pIdx}`);
+            if (!phraseElem) return;
+
+            // Determine phrase opacity with smooth fade buffer
+            let phraseOpacity = 0;
+            const fadeBuffer = 0.05;
+
+            if (progress >= phrase.startPct && progress <= phrase.endPct) {
+              if (progress < phrase.startPct + fadeBuffer) {
+                phraseOpacity = (progress - phrase.startPct) / fadeBuffer;
+              } else if (progress > phrase.endPct - fadeBuffer) {
+                phraseOpacity = (phrase.endPct - progress) / fadeBuffer;
+              } else {
+                phraseOpacity = 1;
+              }
             } else {
-              gsap.to(tracker, { opacity: 1, duration: 0.25, overwrite: "auto" });
+              phraseOpacity = 0;
             }
-          }
+
+            (phraseElem as HTMLElement).style.opacity = String(phraseOpacity);
+            (phraseElem as HTMLElement).style.pointerEvents =
+              phraseOpacity > 0.5 ? "auto" : "none";
+
+            // Update Character Fill inside phrase
+            if (phraseOpacity > 0) {
+              const charSpans = phraseElem.querySelectorAll(".char-span");
+              const phraseProg = Math.max(
+                0,
+                Math.min(
+                  1,
+                  (progress - phrase.startPct) / (phrase.endPct - phrase.startPct)
+                )
+              );
+              const activeCharIdx = Math.floor(phraseProg * charSpans.length);
+
+              charSpans.forEach((span, cIdx) => {
+                const el = span as HTMLElement;
+                if (cIdx < activeCharIdx) {
+                  el.style.color = "#ffffff";
+                  el.style.opacity = "1";
+                  el.style.textShadow = "0 2px 14px rgba(0, 0, 0, 0.8)";
+                } else if (cIdx === activeCharIdx) {
+                  el.style.color = "#F47A4A"; // Primary Smile Concepts Amber (#F47A4A)
+                  el.style.opacity = "1";
+                  el.style.textShadow = "0 0 24px rgba(244, 122, 74, 0.95)";
+                } else {
+                  // Upcoming unread characters hidden until scroll reaches them
+                  el.style.color = "transparent";
+                  el.style.opacity = "0";
+                  el.style.textShadow = "none";
+                }
+              });
+            }
+          });
         },
       });
-    }, container);
 
-    return () => ctx.revert();
-  }, [renderFrame]);
+      // Cursor follower quickSetter positioning (I&M implementation)
+      const follower = followerRef.current;
+      if (follower) {
+        gsap.set(follower, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+
+        const xSetter = gsap.quickSetter(follower, "x", "px");
+        const ySetter = gsap.quickSetter(follower, "y", "px");
+
+        const onMouseMove = (e: MouseEvent) => {
+          xSetter(e.clientX);
+          ySetter(e.clientY);
+        };
+
+        const onMouseEnter = () => {
+          gsap.to(follower, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+        };
+
+        const onMouseLeave = () => {
+          gsap.to(follower, { scale: 0, opacity: 0, duration: 0.3, ease: "power2.out" });
+        };
+
+        section.addEventListener("mousemove", onMouseMove);
+        section.addEventListener("mouseenter", onMouseEnter);
+        section.addEventListener("mouseleave", onMouseLeave);
+
+        // Fade out cursor follower when user begins scrolling down
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "+=20%",
+          scrub: true,
+          onUpdate: (self) => {
+            gsap.set(follower, { opacity: Math.max(0, 1 - self.progress * 3.5) });
+          },
+        });
+      }
+    }, section);
+
+    const handleResize = () => {
+      drawFrame(currentFrameObj.current.frame);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <section
-      ref={containerRef}
+      ref={sectionRef}
       id="hero-scroll-container"
-      aria-label="All on 4 Dental Implants Sydney Hero Interactive Video"
       style={{
         position: "relative",
-        height: "200vh", // Ends on scroll 200vh
+        height: "100vh",
+        width: "100%",
         backgroundColor: "#0C0D17",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        userSelect: "none",
       }}
     >
+      {/* Self-contained CSS styles for the metallic shiny text effect from I&M */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes shineSweep {
+            0% {
+              background-position: -200% 0;
+            }
+            100% {
+              background-position: 200% 0;
+            }
+          }
+          .shiny-text-effect {
+            background: linear-gradient(110deg, rgba(255,255,255,0.45) 30%, rgba(255,255,255,1) 50%, #F47A4A 55%, rgba(255,255,255,0.45) 70%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shineSweep 2.5s linear infinite;
+          }
+        `,
+        }}
+      />
+
       {/* Screen reader only H1 for SEO */}
       <h1
         style={{
@@ -216,144 +287,176 @@ export default function Hero() {
         All on 4 Dental Implants Sydney | Smile Concepts CBD
       </h1>
 
-      {/* ── Sticky Viewport (100vh) ── */}
+      {/* Custom Mouse Follower Container (I&M Pattern) */}
       <div
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        ref={followerRef}
         style={{
-          position: "sticky",
+          position: "fixed",
           top: 0,
           left: 0,
+          pointerEvents: "none",
+          zIndex: 60,
+          willChange: "transform",
+        }}
+        className="hidden lg:block"
+      >
+        <span
+          className="shiny-text-effect"
+          style={{
+            fontFamily: "var(--font-assistant), sans-serif",
+            fontSize: "13px",
+            letterSpacing: "0.28em",
+            fontWeight: 800,
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+            filter: "drop-shadow(0 4px 14px rgba(0, 0, 0, 0.7))",
+            display: "inline-block",
+            padding: "0.3rem 0.6rem",
+          }}
+        >
+          Scroll to Explore
+        </span>
+      </div>
+
+      {/* 3D Frame Sequence Full Screen Canvas - 100% Clear with NO Overlay Shadow */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
           width: "100%",
-          height: "100vh",
-          overflow: "hidden",
-          cursor: "default",
+          height: "100%",
         }}
       >
-        {/* Canvas for Scroll-Driven Video Frame Sequence */}
         <canvas
           ref={canvasRef}
           style={{
-            position: "absolute",
-            inset: 0,
-            display: "block",
             width: "100%",
             height: "100%",
-            objectFit: "cover",
-            backgroundColor: "#0C0D17",
-          }}
-        />
-
-        {/* Subtle top vignette so the Navbar is easily readable */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "140px",
-            background: "linear-gradient(to bottom, rgba(10, 11, 20, 0.75) 0%, rgba(10, 11, 20, 0) 100%)",
+            display: "block",
             pointerEvents: "none",
           }}
         />
+      </div>
 
-        {/* Subtle bottom vignette to blend smoothly into the ticker */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "100px",
-            background: "linear-gradient(to top, rgba(12, 13, 23, 0.6) 0%, transparent 100%)",
-            pointerEvents: "none",
-          }}
-        />
+      {/* Subtle top gradient so Navbar is legible against white frames */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "130px",
+          background: "linear-gradient(to bottom, rgba(10, 11, 20, 0.6) 0%, transparent 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
 
-        {/* ── Cursor Follower / Floating ShinyText Scroll Indicator ── */}
+      {/* Content Overlay with 3 Phased Scroll-Revealed Phrases */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          maxWidth: "1920px",
+          margin: "0 auto",
+          padding: "7rem 1.5rem 2.5rem",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          pointerEvents: "none",
+        }}
+      >
+        {/* Lower Positioned Display Text Container with Character Reveal */}
         <div
-          ref={cursorTrackerRef}
           style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            zIndex: 40,
-            pointerEvents: "none",
-            willChange: "transform, opacity",
-            transition: "opacity 0.3s ease",
-            // If mouse hasn't moved yet (or mobile touch), anchor at bottom center
-            ...(!isHovered
-              ? {
-                  position: "absolute",
-                  top: "auto",
-                  bottom: "3rem",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                }
-              : {}),
+            position: "relative",
+            width: "100%",
+            maxWidth: "1100px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "clamp(1.5rem, 4vh, 3rem)",
+            minHeight: "120px",
+            textAlign: "center",
           }}
         >
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0.45rem 1rem",
-              borderRadius: "999px",
-              background: "rgba(10, 10, 20, 0.3)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.18)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.35)",
-            }}
-          >
-            {/* Pulsing micro-dot */}
-            <span
+          {PHRASES.map((phrase, pIdx) => (
+            <div
+              key={phrase.id}
+              className={`phrase-container-${pIdx}`}
               style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: "#F47A4A",
-                boxShadow: "0 0 10px #F47A4A",
-                display: "inline-block",
-                flexShrink: 0,
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: 0,
+                transition: "opacity 0.2s ease",
+                pointerEvents: "none",
               }}
-            />
-
-            {/* Shiny text component effect */}
-            <ShinyText
-              text="SCROLL DOWN"
-              speed={2.6}
-              style={{
-                fontFamily: "var(--font-assistant), sans-serif",
-                fontSize: "0.76rem",
-                fontWeight: 700,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-              }}
-            />
-
-            {/* Subtle animated down chevron */}
-            <ChevronDown
-              size={13}
-              color="#F47A4A"
-              style={{
-                animation: "chevron-bob 1.6s ease-in-out infinite",
-                flexShrink: 0,
-              }}
-            />
-          </div>
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-prata), serif",
+                  fontSize: "clamp(1.5rem, 3.8vw, 3.2rem)",
+                  fontWeight: 400,
+                  letterSpacing: "-0.01em",
+                  lineHeight: 1.25,
+                  textAlign: "center",
+                  maxWidth: "960px",
+                  margin: "0 auto",
+                  filter: "drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8))",
+                }}
+              >
+                {phrase.text.split("").map((char, cIdx) => (
+                  <span
+                    key={cIdx}
+                    className="char-span"
+                    style={{
+                      color: "transparent",
+                      opacity: 0,
+                      transition: "all 0.08s ease",
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </h2>
+            </div>
+          ))}
         </div>
 
-        <style>{`
-          @keyframes chevron-bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(3px); }
-          }
-        `}</style>
+        {/* Mobile Fallback: SCROLL TO EXPLORE ShinyText Indicator */}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "auto",
+            marginBottom: "0.5rem",
+          }}
+          className="lg:hidden"
+        >
+          <span
+            className="shiny-text-effect"
+            style={{
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "11px",
+              fontWeight: 800,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))",
+            }}
+          >
+            Scroll to Explore
+          </span>
+        </div>
       </div>
     </section>
   );
