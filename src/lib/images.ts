@@ -102,6 +102,15 @@ export const images = {
     drManishShah:  "/images/team/dr-manish-shah.jpg",
   },
 
+  practice: {
+    p1: "/images/practice/P1.jpg",
+    p2: "/images/practice/P2.jpg",
+    p3: "/images/practice/P3.jpg",
+    p4: "/images/practice/P4.jpg",
+    p5: "/images/practice/P5.jpg",
+    p6: "/images/practice/P6.jpg",
+  },
+
   misc: {
     pointScanBone: "/images/misc/point-scan-bone.jpg",
     pinkDrops:     "/images/misc/pink-drops.jpg",

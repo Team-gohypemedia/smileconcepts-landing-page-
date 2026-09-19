@@ -98,29 +98,23 @@ export default function Affiliations() {
           {tickerList.map((item, idx) => (
             <div
               key={`${item.name}-${idx}`}
-              className="affiliation-badge"
+              className="affiliation-logo-item"
               title={item.name}
               style={{
                 flexShrink: 0,
-                padding: "0.65rem 1.4rem",
-                height: "56px",
-                minWidth: "150px",
-                backgroundColor: "#ffffff",
-                border: "1px solid rgba(0, 0, 0, 0.08)",
-                borderRadius: "9999px",
-                boxShadow: "0 2px 10px rgba(0, 0, 0, 0.03)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "default",
-                transition: "all 0.25s ease",
+                padding: "0 0.75rem",
+                transition: "transform 0.25s ease, opacity 0.25s ease",
               }}
             >
               <div
                 style={{
                   position: "relative",
-                  width: "125px",
-                  height: "40px",
+                  width: "clamp(160px, 15vw, 220px)",
+                  height: "clamp(55px, 6vw, 75px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -130,11 +124,10 @@ export default function Affiliations() {
                   src={item.src}
                   alt={item.name}
                   fill
-                  sizes="125px"
+                  sizes="220px"
                   style={{
                     objectFit: "contain",
                     filter: "none",
-                    opacity: 1,
                   }}
                 />
               </div>
@@ -147,17 +140,15 @@ export default function Affiliations() {
         .affiliations-marquee {
           display: flex;
           align-items: center;
-          gap: 2rem;
+          gap: 3.5rem;
           width: max-content;
           animation: marqueeScroll 45s linear infinite;
         }
         .affiliations-marquee:hover {
           animation-play-state: paused;
         }
-        .affiliation-badge:hover {
-          transform: translateY(-2px);
-          border-color: #F47A4A !important;
-          box-shadow: 0 6px 20px rgba(244, 122, 74, 0.16) !important;
+        .affiliation-logo-item:hover {
+          transform: scale(1.08);
         }
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }

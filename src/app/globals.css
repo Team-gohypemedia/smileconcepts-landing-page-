@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@theme inline {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
 /* ─── Brand CSS Custom Properties ─────────────────────────────────── */
 :root {
   --color-orange:      #F47A4A;
@@ -44,11 +67,11 @@ video {
 /* ─── Container ────────────────────────────────────────────────────── */
 .container-sc {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1520px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1rem, 5vw, 3rem);
-  padding-right: clamp(1rem, 5vw, 3rem);
+  padding-left: clamp(1.25rem, 4vw, 3.5rem);
+  padding-right: clamp(1.25rem, 4vw, 3.5rem);
 }
 
 /* ─── Text Selection ───────────────────────────────────────────────── */
@@ -57,10 +80,12 @@ video {
   color: #ffffff;
 }
 
-/* ─── Custom Scrollbar ─────────────────────────────────────────────── */
-::-webkit-scrollbar        { width: 5px; }
-::-webkit-scrollbar-track  { background: #f9f9f9; }
-::-webkit-scrollbar-thumb  { background: #F47A4A; border-radius: 4px; }
+/* ─── Custom Scrollbar (Vibrant Signature Orange) ───────────────── */
+::-webkit-scrollbar        { width: 8px; height: 8px; }
+::-webkit-scrollbar-track  { background: rgba(0, 0, 0, 0.03); }
+::-webkit-scrollbar-thumb  { background: #F47A4A; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #e06030; }
+* { scrollbar-width: thin; scrollbar-color: #F47A4A rgba(0, 0, 0, 0.03); }
 
 /* ─── Ticker animation (ServicesTicker) ────────────────────────────── */
 @keyframes ticker {

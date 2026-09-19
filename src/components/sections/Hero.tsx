@@ -15,19 +15,19 @@ const FRAME_PATH = (index: number) => {
 const PHRASES = [
   {
     id: 1,
-    text: "Turn back the clock with All on 4 Dental Implants Sydney",
+    text: "All on 4 Dental Implants Sydney",
     startPct: 0.04,
     endPct: 0.32,
   },
   {
     id: 2,
-    text: "A brand new, permanent set of fixed teeth in 1 to 3 days",
+    text: "The Best All on Four Dental Implants Sydney",
     startPct: 0.36,
     endPct: 0.64,
   },
   {
     id: 3,
-    text: "No bone grafting, no loose dentures. Eat and smile freely",
+    text: "Painless dental implants with fixed teeth in 1 to 3 days",
     startPct: 0.68,
     endPct: 0.96,
   },
@@ -104,13 +104,13 @@ export default function Hero() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Pin hero section and scrub frame sequence across 200vh total scroll (+100% scroll distance)
+      // Pin hero section and scrub frame sequence across 220% scroll travel for comfortable reading
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=120%", // Smooth 200vh scroll travel before unpinning
+        end: "+=220%", // Generous scroll distance so text doesn't disappear too fast
         pin: true,
-        scrub: 0.5,
+        scrub: 0.6,
         onUpdate: (self) => {
           const progress = self.progress;
 
@@ -129,7 +129,7 @@ export default function Hero() {
 
             // Determine phrase opacity with smooth fade buffer
             let phraseOpacity = 0;
-            const fadeBuffer = 0.05;
+            const fadeBuffer = 0.035;
 
             if (progress >= phrase.startPct && progress <= phrase.endPct) {
               if (progress < phrase.startPct + fadeBuffer) {
@@ -150,30 +150,41 @@ export default function Hero() {
             // Update Character Fill inside phrase
             if (phraseOpacity > 0) {
               const charSpans = phraseElem.querySelectorAll(".char-span");
+
+              // Characters finish typing by 62% of the phrase's window.
+              // For the remaining 38% of the window, the full completed phrase remains 100% visible!
+              const typingSpan = (phrase.endPct - phrase.startPct) * 0.62;
               const phraseProg = Math.max(
                 0,
                 Math.min(
                   1,
-                  (progress - phrase.startPct) / (phrase.endPct - phrase.startPct)
+                  (progress - phrase.startPct) / typingSpan
                 )
               );
               const activeCharIdx = Math.floor(phraseProg * charSpans.length);
 
               charSpans.forEach((span, cIdx) => {
                 const el = span as HTMLElement;
-                if (cIdx < activeCharIdx) {
+                if (phraseProg >= 1) {
+                  // Phrase is 100% completed — keep fully visible, illuminated white with high contrast shadow
                   el.style.color = "#ffffff";
                   el.style.opacity = "1";
-                  el.style.textShadow = "0 2px 14px rgba(0, 0, 0, 0.8)";
-                } else if (cIdx === activeCharIdx) {
-                  el.style.color = "#F47A4A"; // Primary Smile Concepts Amber (#F47A4A)
+                  el.style.textShadow = "0 3px 20px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9)";
+                } else if (cIdx < activeCharIdx) {
+                  // Already typed illuminated characters
+                  el.style.color = "#ffffff";
                   el.style.opacity = "1";
-                  el.style.textShadow = "0 0 24px rgba(244, 122, 74, 0.95)";
+                  el.style.textShadow = "0 2px 18px rgba(0, 0, 0, 0.9)";
+                } else if (cIdx === activeCharIdx) {
+                  // Active character cursor with signature orange glow
+                  el.style.color = "#F47A4A";
+                  el.style.opacity = "1";
+                  el.style.textShadow = "0 0 24px rgba(244, 122, 74, 1), 0 2px 10px rgba(0, 0, 0, 0.9)";
                 } else {
-                  // Upcoming unread characters hidden until scroll reaches them
-                  el.style.color = "transparent";
-                  el.style.opacity = "0";
-                  el.style.textShadow = "none";
+                  // Upcoming unread characters shown as subtle ghost text so user sees full sentence structure
+                  el.style.color = "rgba(255, 255, 255, 0.35)";
+                  el.style.opacity = "0.75";
+                  el.style.textShadow = "0 2px 10px rgba(0, 0, 0, 0.7)";
                 }
               });
             }
@@ -284,7 +295,7 @@ export default function Hero() {
           border: 0,
         }}
       >
-        All on 4 Dental Implants Sydney | Smile Concepts CBD
+        All on 4 Dental Implants Sydney - All on Four Cost | Smile Concepts
       </h1>
 
       {/* Custom Mouse Follower Container (I&M Pattern) */}
@@ -380,8 +391,8 @@ export default function Hero() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: "clamp(1.5rem, 4vh, 3rem)",
-            minHeight: "120px",
+            marginBottom: "clamp(2rem, 5vh, 4rem)",
+            minHeight: "140px",
             textAlign: "center",
           }}
         >
@@ -410,7 +421,7 @@ export default function Hero() {
                   textAlign: "center",
                   maxWidth: "960px",
                   margin: "0 auto",
-                  filter: "drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8))",
+                  filter: "drop-shadow(0 4px 24px rgba(0, 0, 0, 0.95)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.9))",
                 }}
               >
                 {phrase.text.split("").map((char, cIdx) => (
@@ -418,8 +429,8 @@ export default function Hero() {
                     key={cIdx}
                     className="char-span"
                     style={{
-                      color: "transparent",
-                      opacity: 0,
+                      color: "rgba(255, 255, 255, 0.35)",
+                      opacity: 0.75,
                       transition: "all 0.08s ease",
                     }}
                   >
@@ -429,33 +440,6 @@ export default function Hero() {
               </h2>
             </div>
           ))}
-        </div>
-
-        {/* Mobile Fallback: SCROLL TO EXPLORE ShinyText Indicator */}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            pointerEvents: "auto",
-            marginBottom: "0.5rem",
-          }}
-          className="lg:hidden"
-        >
-          <span
-            className="shiny-text-effect"
-            style={{
-              fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "11px",
-              fontWeight: 800,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8))",
-            }}
-          >
-            Scroll to Explore
-          </span>
         </div>
       </div>
     </section>

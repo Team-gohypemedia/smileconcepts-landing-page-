@@ -13,9 +13,9 @@ interface NavLinkItem {
 }
 
 const navLinks: NavLinkItem[] = [
-  { label: "Overview", href: "#intro" },
+  { label: "Overview", href: "#overview" },
   { label: "Procedure", href: "#procedure" },
-  { label: "Cost & Super", href: "#cost" },
+  { label: "Before & After", href: "#transformations" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -81,10 +81,10 @@ export default function Navbar() {
           alignItems: "center",
           justifyContent: "space-between",
           gap: "1.5rem",
-          maxWidth: "1240px",
+          maxWidth: "1520px",
           margin: "0 auto",
-          paddingLeft: "clamp(1rem, 4vw, 2.5rem)",
-          paddingRight: "clamp(1rem, 4vw, 2.5rem)",
+          paddingLeft: "clamp(1.25rem, 4vw, 3.5rem)",
+          paddingRight: "clamp(1.25rem, 4vw, 3.5rem)",
         }}
       >
         {/* ── Brand Logo ── */}
@@ -328,7 +328,7 @@ export default function Navbar() {
               letterSpacing: "0.03em",
               textTransform: "capitalize",
               textDecoration: "none",
-              borderRadius: "4px",
+              borderRadius: "8px",
               boxShadow: "0 4px 14px rgba(244, 122, 74, 0.38)",
               transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
               whiteSpace: "nowrap",
@@ -460,7 +460,7 @@ export default function Navbar() {
                     color: "#222222",
                     textDecoration: "none",
                     border: "1px solid #E5E5E5",
-                    borderRadius: "4px",
+                    borderRadius: "8px",
                   }}
                 >
                   <Phone size={16} color="#F47A4A" />
@@ -481,7 +481,7 @@ export default function Navbar() {
                     fontWeight: 700,
                     letterSpacing: "0.03em",
                     textDecoration: "none",
-                    borderRadius: "4px",
+                    borderRadius: "8px",
                     boxShadow: "0 4px 14px rgba(244, 122, 74, 0.4)",
                   }}
                 >

@@ -1,161 +1,466 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
-import { Phone, MapPin, Mail } from "lucide-react";
+import { Phone, MapPin, Mail, Globe, Clock } from "lucide-react";
+import { FooterBackgroundGradient, TextHoverEffect } from "@/components/ui/hover-footer";
+
+const FacebookIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.9v-2.89h2.538V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+  </svg>
+);
+
+const InstagramIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
+const YoutubeIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
 
 const treatments = [
-  "Porcelain Veneers", "Dental Implants", "Invisalign", "Clear Braces",
-  "Gum Lift", "Laser Dentistry", "Sleep Dentistry", "TMJ Treatment",
+  "All-on-4 Implants",
+  "Dental Implants",
+  "Porcelain Veneers",
+  "Invisalign & Clear Braces",
+  "Full Arch Rehabilitation",
+  "Zirconia Bridges",
+  "Laser Dentistry",
+  "Sleep Dentistry",
 ];
-const practice = ["About Us", "Our Team", "Smile Gallery", "Blog", "Payment Plans", "Contact Us"];
+
+const practice = [
+  { label: "About Our Clinic", href: "#overview" },
+  { label: "Our Oral Surgeons", href: "#team" },
+  { label: "Smile Transformations", href: "#transformations" },
+  { label: "Procedure & Technology", href: "#procedure" },
+  { label: "All-on-4 FAQs", href: "#faq" },
+  { label: "Payment Plans & Super", href: "#contact" },
+];
 
 const socialLinks = [
   {
+    icon: <FacebookIcon size={18} />,
     label: "Facebook",
     href: "https://www.facebook.com/SmileConceptsSydney",
-    svg: <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987H7.9v-2.89h2.538V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />,
   },
   {
+    icon: <InstagramIcon size={18} />,
     label: "Instagram",
-    href: "#",
-    svg: <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" />,
+    href: "https://www.instagram.com/smileconceptssydney",
   },
   {
+    icon: <YoutubeIcon size={18} />,
     label: "YouTube",
-    href: "#",
-    svg: <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />,
+    href: "https://www.youtube.com/@smileconceptssydney",
+  },
+  {
+    icon: <Globe size={18} />,
+    label: "Website",
+    href: "https://www.smileconcepts.com.au",
   },
 ];
 
 export default function Footer() {
   return (
-    <footer id="contact" style={{ background: "#0f0f1a", color: "rgba(255,255,255,0.7)" }}>
-      {/* Main grid */}
+    <footer
+      id="contact"
+      style={{
+        position: "relative",
+        backgroundColor: "#0A0B13",
+        color: "#ffffff",
+        overflow: "hidden",
+        borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+      }}
+    >
+      {/* Background Ambient Glow */}
+      <FooterBackgroundGradient />
+
+      {/* Responsive Style for Mobile Side-by-Side Footer Menus */}
+      <style>{`
+        .sc-footer-grid {
+          display: grid;
+          grid-template-columns: 1.3fr 1fr 1fr 1.2fr;
+          gap: clamp(2rem, 4vw, 3.5rem);
+          padding-bottom: 3rem;
+        }
+        @media (max-width: 1024px) and (min-width: 769px) {
+          .sc-footer-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 2.5rem !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .sc-footer-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 2rem 1.25rem !important;
+            padding-bottom: 2rem !important;
+          }
+          .sc-footer-col-brand {
+            grid-column: span 2 !important;
+          }
+          .sc-footer-col-treatments {
+            grid-column: span 1 !important;
+          }
+          .sc-footer-col-practice {
+            grid-column: span 1 !important;
+          }
+          .sc-footer-col-contact {
+            grid-column: span 2 !important;
+          }
+        }
+      `}</style>
+
       <div
-        className="container-sc footer-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "2fr 1.2fr 1.2fr 1.6fr",
-          gap: "3rem",
-          padding: "5rem 0",
+          maxWidth: "1520px",
+          margin: "0 auto",
+          padding: "clamp(4rem, 6vw, 6.5rem) clamp(1.5rem, 4vw, 3.5rem) 0.5rem",
+          position: "relative",
+          zIndex: 10,
         }}
       >
-        {/* Brand */}
-        <div>
-          <div style={{ marginBottom: "1.5rem" }}>
-            <div style={{ position: "relative", width: "200px", height: "48px" }}>
+        {/* Main Grid: 4 Columns (Side-by-Side on Mobile for Treatments & Practice) */}
+        <div className="sc-footer-grid">
+          {/* Column 1: Brand & Excellence */}
+          <div className="sc-footer-col-brand" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ position: "relative", width: "195px", height: "46px" }}>
               <Image
                 src="/images/brand/logo-white.png"
-                alt="Smile Concepts - Centre for Advanced Dentistry"
+                alt="Smile Concepts Sydney CBD"
                 fill
-                className="object-contain object-left"
+                sizes="195px"
+                style={{ objectFit: "contain", objectPosition: "left center" }}
               />
             </div>
-          </div>
-          <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: "1.5rem", maxWidth: "280px" }}>
-            Award-winning dental clinic in the heart of Sydney CBD. Creating beautiful, healthy smiles for over 40 years.
-          </p>
-          <div style={{ display: "flex", gap: "0.6rem" }}>
-            {socialLinks.map(({ label, href, svg }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="footer-social-btn"
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "rgba(255,255,255,0.35)",
-                  transition: "all 0.25s",
-                  textDecoration: "none",
-                }}
-              >
-                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">{svg}</svg>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Treatments */}
-        <div>
-          <h4 style={{ fontFamily: "var(--font-assistant)", color: "#fff", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.25rem" }}>Treatments</h4>
-          <ul style={{ listStyle: "none" }}>
-            {treatments.map(item => (
-              <li key={item} style={{ marginBottom: "0.5rem" }}>
-                <a href="#" className="footer-nav-link">
-                  {item}
+            <p
+              style={{
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+                color: "rgba(255, 255, 255, 0.65)",
+                maxWidth: "320px",
+                margin: 0,
+              }}
+            >
+              Sydney CBD's premier centre for All on 4 Dental Implants, full mouth rehabilitation,
+              and advanced aesthetic dentistry with over 40 years of continuous surgical leadership.
+            </p>
+            <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
+              {socialLinks.map(({ icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  style={{
+                    width: "38px",
+                    height: "38px",
+                    borderRadius: "50%",
+                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    backgroundColor: "rgba(255, 255, 255, 0.04)",
+                    color: "rgba(255, 255, 255, 0.7)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textDecoration: "none",
+                    transition: "all 0.25s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(244, 122, 74, 0.2)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "#F47A4A";
+                    (e.currentTarget as HTMLElement).style.color = "#F47A4A";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255, 255, 255, 0.04)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255, 255, 255, 0.12)";
+                    (e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.7)";
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                  }}
+                >
+                  {icon}
                 </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Practice */}
-        <div>
-          <h4 style={{ fontFamily: "var(--font-assistant)", color: "#fff", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.25rem" }}>Practice</h4>
-          <ul style={{ listStyle: "none" }}>
-            {practice.map(item => (
-              <li key={item} style={{ marginBottom: "0.5rem" }}>
-                <a href="#" className="footer-nav-link">
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contact + Hours */}
-        <div>
-          <h4 style={{ fontFamily: "var(--font-assistant)", color: "#fff", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.25rem" }}>Contact Us</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.75rem" }}>
-            {[
-              { icon: <Phone size={15} />, href: "tel:0292677777", text: "02 9267 7777" },
-              { icon: <Mail size={15} />, href: "mailto:info@smileconcepts.com.au", text: "info@smileconcepts.com.au" },
-            ].map(({ icon, href, text }) => (
-              <a
-                key={text}
-                href={href}
-                className="footer-nav-link"
-                style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}
-              >
-                <span style={{ color: "#F47A4A", flexShrink: 0 }}>{icon}</span>
-                {text}
-              </a>
-            ))}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-              <MapPin size={15} color="#F47A4A" style={{ flexShrink: 0, marginTop: "2px" }} />
-              <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>Suite 201, 210 Pitt Street,<br />Sydney NSW 2000</span>
+              ))}
             </div>
           </div>
 
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.25rem" }}>
-            <h5 style={{ fontFamily: "var(--font-assistant)", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.75rem" }}>Hours</h5>
-            {[["Mon – Fri", "8:00am – 6:00pm"], ["Saturday", "9:00am – 2:00pm"], ["Sunday", "Closed"]].map(([day, hrs]) => (
-              <div key={day} style={{ display: "flex", justifyContent: "space-between", gap: "1rem", marginBottom: "0.4rem" }}>
-                <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "rgba(255,255,255,0.3)" }}>{day}</span>
-                <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: day === "Sunday" ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.55)" }}>{hrs}</span>
+          {/* Column 2: Treatments */}
+          <div className="sc-footer-col-treatments">
+            <h4
+              style={{
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#F47A4A",
+                marginBottom: "1.25rem",
+              }}
+            >
+              Treatments
+            </h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              {treatments.map((t) => (
+                <li key={t}>
+                  <a
+                    href="#procedure"
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.88rem",
+                      color: "rgba(255, 255, 255, 0.65)",
+                      textDecoration: "none",
+                      transition: "color 0.2s ease",
+                      display: "inline-block",
+                    }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.65)")}
+                  >
+                    {t}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Practice & Patient Resources */}
+          <div className="sc-footer-col-practice">
+            <h4
+              style={{
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#F47A4A",
+                marginBottom: "1.25rem",
+              }}
+            >
+              Practice
+            </h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              {practice.map((p) => (
+                <li key={p.label}>
+                  <a
+                    href={p.href}
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.88rem",
+                      color: "rgba(255, 255, 255, 0.65)",
+                      textDecoration: "none",
+                      transition: "color 0.2s ease",
+                      display: "inline-block",
+                    }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.65)")}
+                  >
+                    {p.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact & Clinical Hours */}
+          <div className="sc-footer-col-contact" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <h4
+              style={{
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#F47A4A",
+                marginBottom: "0.25rem",
+              }}
+            >
+              Contact Us
+            </h4>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+              <a
+                href="tel:0292677777"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  color: "#ffffff",
+                  textDecoration: "none",
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.92rem",
+                  fontWeight: 600,
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#ffffff")}
+              >
+                <div
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(244, 122, 74, 0.15)",
+                    color: "#F47A4A",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Phone size={14} />
+                </div>
+                02 9267 7777
+              </a>
+
+              <a
+                href="mailto:info@smileconcepts.com.au"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  color: "rgba(255, 255, 255, 0.75)",
+                  textDecoration: "none",
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.88rem",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.75)")}
+              >
+                <div
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(244, 122, 74, 0.15)",
+                    color: "#F47A4A",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Mail size={14} />
+                </div>
+                info@smileconcepts.com.au
+              </a>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "0.75rem",
+                  color: "rgba(255, 255, 255, 0.65)",
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.85rem",
+                  lineHeight: 1.5,
+                }}
+              >
+                <div
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(244, 122, 74, 0.15)",
+                    color: "#F47A4A",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    marginTop: "2px",
+                  }}
+                >
+                  <MapPin size={14} />
+                </div>
+                <span>Suite 201, 210 Pitt Street,<br />Sydney NSW 2000 (Sydney CBD)</span>
               </div>
-            ))}
+            </div>
+
+            {/* Operating Hours */}
+            <div
+              style={{
+                marginTop: "0.5rem",
+                padding: "0.85rem 1rem",
+                borderRadius: "12px",
+                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.75rem",
+                  color: "#F47A4A",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  marginBottom: "0.45rem",
+                }}
+              >
+                <Clock size={13} />
+                Practice Hours
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.78rem", color: "rgba(255, 255, 255, 0.6)", fontFamily: "var(--font-assistant)", marginBottom: "0.2rem" }}>
+                <span>Mon – Fri:</span>
+                <span style={{ color: "#ffffff", fontWeight: 500 }}>8:00 AM – 6:00 PM</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.78rem", color: "rgba(255, 255, 255, 0.6)", fontFamily: "var(--font-assistant)" }}>
+                <span>Saturday:</span>
+                <span style={{ color: "#ffffff", fontWeight: 500 }}>9:00 AM – 2:00 PM</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <div className="container-sc" style={{ padding: "1.25rem 0", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
-          <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "rgba(255,255,255,0.25)" }}>
-            © {new Date().getFullYear()} Smile Concepts. All rights reserved.
+        {/* Separator Line */}
+        <hr
+          style={{
+            border: "none",
+            borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+            margin: "1.5rem 0",
+          }}
+        />
+
+        {/* Footer Bottom Bar: Legal & Copyright */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "1rem",
+            fontFamily: "var(--font-assistant)",
+            fontSize: "0.8rem",
+            color: "rgba(255, 255, 255, 0.45)",
+          }}
+        >
+          <p style={{ margin: 0 }}>
+            &copy; {new Date().getFullYear()} Smile Concepts Sydney. All rights reserved. Registered Dental Practice ABN 34 114 474 153.
           </p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
-            {["Privacy Policy", "Terms of Service"].map(item => (
-              <a key={item} href="#" className="footer-legal-link">
+            {["Privacy Policy", "Terms of Treatment", "Patient Charter"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                style={{
+                  color: "rgba(255, 255, 255, 0.4)",
+                  textDecoration: "none",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.4)")}
+              >
                 {item}
               </a>
             ))}
@@ -163,41 +468,30 @@ export default function Footer() {
         </div>
       </div>
 
-      <style>{`
-        .footer-social-btn:hover {
-          border-color: #F47A4A !important;
-          color: #F47A4A !important;
-        }
-        .footer-nav-link {
-          font-family: var(--font-assistant);
-          font-size: 0.875rem;
-          color: rgba(255,255,255,0.45);
-          text-decoration: none;
-          transition: color 0.2s;
-          display: block;
-          padding: 0.2rem 0;
-        }
-        .footer-nav-link:hover {
-          color: #F47A4A !important;
-        }
-        .footer-legal-link {
-          font-family: var(--font-assistant);
-          font-size: 0.78rem;
-          color: rgba(255,255,255,0.25);
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-        .footer-legal-link:hover {
-          color: rgba(255,255,255,0.6) !important;
-        }
-        @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 540px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      {/* Giant Interactive Text Hover Effect (Grand Scale Like Reference) */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1440px",
+          margin: "0 auto",
+          height: "auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          zIndex: 5,
+          boxSizing: "border-box",
+          padding: "0 clamp(1rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.75rem)",
+        }}
+      >
+        <TextHoverEffect
+          text="SMILE CONCEPTS"
+          viewBox="0 0 780 85"
+          fontSize="72px"
+          strokeWidth={1.3}
+          style={{ width: "100%", height: "auto" }}
+        />
+      </div>
     </footer>
   );
 }
-
