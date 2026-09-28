@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import LoadingScreen from "@/components/layout/LoadingScreen";
 import Hero from "@/components/sections/Hero";
 import ServicesTicker from "@/components/sections/ServicesTicker";
 import VisualStory from "@/components/sections/VisualStory";
@@ -15,6 +16,7 @@ import CTABanner from "@/components/sections/CTABanner";
 export default function Home() {
   return (
     <>
+      <LoadingScreen />
       <Navbar />
       <main>
         <Hero />
