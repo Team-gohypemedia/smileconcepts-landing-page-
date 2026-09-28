@@ -21,11 +21,11 @@ export default function Home() {
         <ServicesTicker />
         <VisualStory />
         <VisualBeforeAfter />
+        <Testimonials />
         <OurPractice />
         <VisualJourney />
         <Team />
         <Affiliations />
-        <Testimonials />
         <AllOn4FAQ />
         <CTABanner />
       </main>

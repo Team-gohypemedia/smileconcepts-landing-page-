@@ -133,7 +133,7 @@ export default function VisualBeforeAfter() {
       style={{
         backgroundColor: "#ffffff",
         color: "#1A1A24",
-        padding: "clamp(5rem, 8vw, 7.5rem) 0",
+        padding: "clamp(3rem, 8vw, 7.5rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -141,6 +141,7 @@ export default function VisualBeforeAfter() {
       <div style={{ maxWidth: "1520px", margin: "0 auto", padding: "0 clamp(1rem, 3.5vw, 3rem)" }}>
         {/* Section Header */}
         <div
+          className="sc-ba-header"
           style={{
             textAlign: "center",
             maxWidth: "840px",
@@ -198,6 +199,7 @@ export default function VisualBeforeAfter() {
 
         {/* Category Navigation Pills */}
         <div
+          className="sc-ba-pills-wrap"
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -212,6 +214,7 @@ export default function VisualBeforeAfter() {
               <button
                 key={cat.id}
                 type="button"
+                className="sc-ba-pill-btn"
                 onClick={() => handleCategoryClick(cat.id)}
                 style={{
                   padding: "0.6rem 1.4rem",
@@ -252,13 +255,14 @@ export default function VisualBeforeAfter() {
           initial={{ opacity: 0, y: 25 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
+          className="sc-ba-card"
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
             backgroundColor: "#ffffff",
             borderRadius: "26px",
             border: "1px solid #E5E7EB",
-            padding: "clamp(1.5rem, 3.5vw, 2.5rem)",
+            padding: "clamp(1rem, 3.5vw, 2.5rem)",
             boxShadow: "0 20px 50px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03)",
           }}
         >
@@ -268,12 +272,77 @@ export default function VisualBeforeAfter() {
                 border-left: none !important;
                 border-top: 1px solid #EDEDF2 !important;
                 padding-left: 0 !important;
-                padding-top: 1.5rem !important;
+                padding-top: 1.25rem !important;
                 width: 100% !important;
               }
               .sc-ba-slider-column {
                 max-width: 100% !important;
                 width: 100% !important;
+                flex: 1 1 100% !important;
+              }
+              .sc-ba-split-container {
+                gap: 1.25rem !important;
+              }
+            }
+            /* Mobile: pills grid 2-per-row */
+            @media (max-width: 600px) {
+              .sc-ba-pills-wrap {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 0.5rem !important;
+                margin-bottom: 1.5rem !important;
+              }
+              .sc-ba-pill-btn {
+                width: 100% !important;
+                padding: 0.55rem 0.5rem !important;
+                font-size: 0.8rem !important;
+                text-align: center !important;
+              }
+              .sc-ba-header {
+                margin-bottom: 1.5rem !important;
+              }
+              .sc-ba-header h2 {
+                font-size: 1.9rem !important;
+                margin-bottom: 0.65rem !important;
+              }
+              .sc-ba-header p {
+                font-size: 0.88rem !important;
+                line-height: 1.55 !important;
+              }
+              .sc-ba-card {
+                padding: 1rem !important;
+                border-radius: 16px !important;
+              }
+              .sc-ba-case-meta {
+                flex-direction: column !important;
+                gap: 0.4rem !important;
+                margin-bottom: 0.85rem !important;
+                align-items: center !important;
+                text-align: center !important;
+              }
+              .sc-ba-case-meta > div:first-child {
+                text-align: center !important;
+              }
+              .sc-ba-case-meta-right {
+                text-align: center !important;
+              }
+              .sc-ba-case-meta h3 {
+                font-size: 1.1rem !important;
+              }
+              .sc-ba-cases-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
+                gap: 0.4rem !important;
+                max-height: 200px !important;
+              }
+              .sc-ba-cases-header {
+                margin-bottom: 0.65rem !important;
+                padding-bottom: 0.5rem !important;
+              }
+              .sc-ba-footer {
+                flex-direction: column !important;
+                gap: 0.25rem !important;
+                margin-top: 1rem !important;
+                padding-top: 0.75rem !important;
               }
             }
           `}</style>
@@ -300,6 +369,7 @@ export default function VisualBeforeAfter() {
             >
               {/* Active Case Meta Header */}
               <div
+                className="sc-ba-case-meta"
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -349,6 +419,7 @@ export default function VisualBeforeAfter() {
                 </div>
 
                 <div
+                  className="sc-ba-case-meta-right"
                   style={{
                     textAlign: "right",
                     fontFamily: "var(--font-assistant)",
@@ -442,6 +513,7 @@ export default function VisualBeforeAfter() {
               }}
             >
               <div
+                className="sc-ba-cases-header"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -492,6 +564,7 @@ export default function VisualBeforeAfter() {
 
               {/* Cases List */}
               <div
+                className="sc-ba-cases-grid"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))",
@@ -586,6 +659,7 @@ export default function VisualBeforeAfter() {
 
           {/* Micro-caption below card */}
           <div
+            className="sc-ba-footer"
             style={{
               display: "flex",
               flexWrap: "wrap",
