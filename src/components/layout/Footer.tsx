@@ -133,7 +133,7 @@ export default function Footer() {
           <div className="sc-footer-col-brand" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <div style={{ position: "relative", width: "195px", height: "46px" }}>
               <Image
-                src="/images/brand/logo-white.png"
+                src="/assets/brand/logo-white.png"
                 alt="Smile Concepts Sydney CBD"
                 fill
                 sizes="195px"
@@ -353,16 +353,23 @@ export default function Footer() {
                 info@smileconcepts.com.au
               </a>
 
-              <div
+              <a
+                href="https://www.google.com/maps/dir//Smile+Concepts,+Suite+403,+Level+4%2F307+Pitt+St,+Sydney+NSW+2000/@-33.8736283,151.2055511,17z/data=!3m1!5s0x6b12ae3dd637c355:0x5ffcef57ed062bc3!4m16!1m6!3m5!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2sSmile+Concepts!8m2!3d-33.8736283!4d151.2077398!4m8!1m0!1m5!1m1!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2m2!1d151.2077398!2d-33.8736283!3e0"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "flex",
                   alignItems: "flex-start",
                   gap: "0.75rem",
                   color: "rgba(255, 255, 255, 0.65)",
+                  textDecoration: "none",
                   fontFamily: "var(--font-assistant)",
                   fontSize: "0.85rem",
                   lineHeight: 1.5,
+                  transition: "color 0.2s ease",
                 }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F47A4A")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255, 255, 255, 0.65)")}
               >
                 <div
                   style={{
@@ -380,8 +387,8 @@ export default function Footer() {
                 >
                   <MapPin size={14} />
                 </div>
-                <span>Suite 201, 210 Pitt Street,<br />Sydney NSW 2000 (Sydney CBD)</span>
-              </div>
+                <span>Suite 403, Level 4/307 Pitt St,<br />Sydney NSW 2000, Australia</span>
+              </a>
             </div>
 
             {/* Operating Hours */}

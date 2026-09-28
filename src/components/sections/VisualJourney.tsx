@@ -302,6 +302,7 @@ export default function VisualJourney() {
                   src={steps[activeStep].image}
                   alt={steps[activeStep].title}
                   fill
+                  unoptimized={true}
                   sizes="50vw"
                   style={{ objectFit: "cover" }}
                 />

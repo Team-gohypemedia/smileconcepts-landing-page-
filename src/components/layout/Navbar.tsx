@@ -110,7 +110,7 @@ export default function Navbar() {
           >
             {/* White Logo for dark background */}
             <Image
-              src="/images/brand/logo-white.png"
+              src="/assets/brand/logo-white.png"
               alt="Smile Concepts Sydney CBD"
               fill
               sizes="195px"
@@ -125,7 +125,7 @@ export default function Navbar() {
             />
             {/* Original Dark/Color Logo for light background */}
             <Image
-              src="/images/brand/cropped-logo_large-1.png"
+              src="/assets/brand/cropped-logo_large-1.png"
               alt="Smile Concepts Sydney CBD"
               fill
               sizes="195px"

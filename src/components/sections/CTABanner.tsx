@@ -62,7 +62,7 @@ export default function CTABanner() {
           transition={{ delay: 0.2 }}
           style={{ color: "rgba(255,255,255,0.9)", fontFamily: "var(--font-assistant)", fontWeight: 300, fontSize: "clamp(0.95rem, 2.8vw, 1.15rem)", lineHeight: 1.68, maxWidth: "620px", margin: "0 auto 2.25rem" }}
         >
-          All on 4 Dental Implants procedure was never this easy! Call (02) 9267 7777 and book your appointment with Dr. Manish Shah and Dr. Kinnar Shah at 210 Pitt St, Sydney CBD.
+          All on 4 Dental Implants procedure was never this easy! Call (02) 9267 7777 and book your appointment with Dr. Manish Shah and Dr. Kinnar Shah at 307 Pitt St, Sydney CBD.
         </motion.p>
 
         <motion.div
@@ -141,7 +141,7 @@ export default function CTABanner() {
           transition={{ delay: 0.6 }}
           style={{ marginTop: "2.5rem", fontFamily: "var(--font-assistant)", fontSize: "clamp(0.68rem, 2vw, 0.75rem)", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}
         >
-          Suite 201, 210 Pitt Street, Sydney NSW 2000
+          Suite 403, Level 4/307 Pitt St, Sydney NSW 2000, Australia
         </motion.p>
       </div>
     </section>

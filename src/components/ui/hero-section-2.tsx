@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { motion, type Variants, type HTMLMotionProps } from 'framer-motion';
-import { Globe, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Globe, Phone, MapPin, Mail, ArrowRight } from 'lucide-react';
 
 // Icon component for contact details using lucide-react with inline styles
-const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
+const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' | 'email' }) => {
   return (
     <div
       style={{
@@ -23,6 +23,7 @@ const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
     >
       {type === 'website' && <Globe size={15} />}
       {type === 'phone' && <Phone size={15} />}
+      {type === 'email' && <Mail size={15} />}
       {type === 'address' && <MapPin size={15} />}
     </div>
   );
@@ -45,8 +46,11 @@ export interface HeroSectionProps extends Omit<HTMLMotionProps<"section">, "titl
   backgroundImage: string;
   contactInfo: {
     website: string;
+    websiteHref?: string;
     phone: string;
+    email?: string;
     address: string;
+    addressLink?: string;
   };
 }
 
@@ -342,23 +346,65 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
-                <InfoIcon type="website" />
-                <span>{contactInfo.website}</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center" }}>
                 <InfoIcon type="phone" />
                 <a
                   href={`tel:${contactInfo.phone.replace(/\s+/g, '')}`}
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
+                  style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s ease" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#F47A4A")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.65)")}
                 >
                   {contactInfo.phone}
                 </a>
               </div>
+
+              {contactInfo.email && (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <InfoIcon type="email" />
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s ease" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#F47A4A")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.65)")}
+                  >
+                    {contactInfo.email}
+                  </a>
+                </div>
+              )}
+
               <div style={{ display: "flex", alignItems: "center" }}>
                 <InfoIcon type="address" />
-                <span>{contactInfo.address}</span>
+                {contactInfo.addressLink ? (
+                  <a
+                    href={contactInfo.addressLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s ease" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#F47A4A")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.65)")}
+                  >
+                    {contactInfo.address}
+                  </a>
+                ) : (
+                  <span>{contactInfo.address}</span>
+                )}
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <InfoIcon type="website" />
+                {contactInfo.websiteHref ? (
+                  <a
+                    href={contactInfo.websiteHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s ease" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#F47A4A")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.65)")}
+                  >
+                    {contactInfo.website}
+                  </a>
+                ) : (
+                  <span>{contactInfo.website}</span>
+                )}
               </div>
             </div>
           </motion.footer>
@@ -372,10 +418,14 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             minHeight: "560px",
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center 22%",
+            backgroundPosition: "right center",
             backgroundRepeat: "no-repeat",
             position: "relative",
             boxSizing: "border-box",
+            imageRendering: "auto",
+            filter: "contrast(102%) brightness(101%) saturate(103%)",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
           }}
           initial={{ clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' }}
           whileInView={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }}

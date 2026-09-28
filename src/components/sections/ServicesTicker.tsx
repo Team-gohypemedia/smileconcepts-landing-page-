@@ -7,7 +7,7 @@ const items = [
   "No Bone Grafting in Most Cases",
   "Super Fund Release Assistance",
   "Painless Sleep Dentistry",
-  "Sydney CBD – 210 Pitt Street",
+  "Sydney CBD – 307 Pitt Street",
   "40+ Years Implant Experience",
   "Natural High-Strength Zirconia",
   "0% Interest-Free Payment Plans",

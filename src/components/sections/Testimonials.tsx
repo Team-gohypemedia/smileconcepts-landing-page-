@@ -55,7 +55,7 @@ const testimonials: TestimonialItem[] = [
     rating: 5,
   },
   {
-    text: "Booked a consultation at 210 Pitt Street. The precision 3D guided surgery was done in a single session. I went to work 3 days later with permanent fixed teeth. Absolutely incredible result.",
+    text: "Booked a consultation at 307 Pitt Street. The precision 3D guided surgery was done in a single session. I went to work 3 days later with permanent fixed teeth. Absolutely incredible result.",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop",
     name: "Robert Harris",
     role: "Immediate Teeth in 1-3 Days",

@@ -10,7 +10,7 @@ const reasons = [
   },
   {
     title: "Free Parking in Sydney CBD",
-    desc: "We provide validated complimentary parking for our patients at Citigroup Centre, right beside 210 Pitt St.",
+    desc: "We provide validated complimentary parking for our patients at Citigroup Centre, right beside 307 Pitt St.",
   },
   {
     title: "Experienced Dentists",

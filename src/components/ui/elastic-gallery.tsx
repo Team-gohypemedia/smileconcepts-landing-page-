@@ -118,12 +118,7 @@ export function ElasticGallery({
                 height: isMobile ? (isActive ? "300px" : "62px") : "100%",
                 minHeight: isMobile ? (isActive ? "300px" : "62px") : "auto",
                 transition:
-                  "flex 0.65s cubic-bezier(0.25, 1, 0.5, 1), height 0.45s cubic-bezier(0.25, 1, 0.5, 1), border 0.3s ease, box-shadow 0.3s ease, filter 0.4s ease",
-                filter: isActive
-                  ? "brightness(1)"
-                  : isHovered
-                  ? "brightness(0.85)"
-                  : "brightness(0.65)",
+                  "flex 0.65s cubic-bezier(0.25, 1, 0.5, 1), height 0.45s cubic-bezier(0.25, 1, 0.5, 1), border 0.3s ease, box-shadow 0.3s ease",
                 boxShadow: isActive
                   ? "0 18px 40px rgba(0, 0, 0, 0.22)"
                   : "0 4px 12px rgba(0, 0, 0, 0.04)",
@@ -142,26 +137,30 @@ export function ElasticGallery({
                   src={item.src}
                   alt={item.alt}
                   fill
-                  sizes={isMobile ? "100vw" : "(max-width: 1200px) 35vw, 450px"}
+                  unoptimized={true}
+                  sizes={isMobile ? "100vw" : "(max-width: 1200px) 50vw, 800px"}
                   style={{
                     objectFit: "cover",
-                    transform: isActive ? "scale(1)" : "scale(1.08)",
-                    transition: "transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)",
+                    objectPosition: "center 28%",
+                    transform: isActive ? "scale(1)" : "scale(1.02)",
+                    transition: "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)",
                   }}
                 />
 
-                {/* Dark Gradient Overlay for active readability */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: isMobile && !isActive
-                      ? "rgba(10, 12, 20, 0.68)"
-                      : "linear-gradient(to top, rgba(10, 10, 14, 0.92) 0%, rgba(10, 10, 14, 0.35) 45%, rgba(0, 0, 0, 0.1) 100%)",
-                    opacity: isActive ? 1 : isMobile ? 1 : 0.75,
-                    transition: "opacity 0.4s ease",
-                  }}
-                />
+                {/* Subtle bottom-only text readability gradient (bottom 25% only, leaving 75% of image completely pure and untouched) */}
+                {isActive && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: "38%",
+                      background: "linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.45) 50%, transparent 100%)",
+                      pointerEvents: "none",
+                    }}
+                  />
+                )}
               </div>
 
               {/* Mobile Collapsed State Bar (Clean, instant tap-to-expand) */}

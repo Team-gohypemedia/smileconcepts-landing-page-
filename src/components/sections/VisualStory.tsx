@@ -18,11 +18,14 @@ export default function VisualStory() {
           text: "EXPLORE THE PROCEDURE",
           href: "#procedure",
         }}
-        backgroundImage="/images/gallery/couple-smiling.jpg"
+        backgroundImage="/assets/visual-story/home-top-2020.jpg"
         contactInfo={{
-          website: "smileconcepts.com.au",
           phone: "02 9267 7777",
-          address: "407/210 Pitt St, Sydney CBD",
+          email: "info@smileconcepts.com.au",
+          address: "Suite 403, Level 4/307 Pitt St, Sydney NSW 2000, Australia",
+          addressLink: "https://www.google.com/maps/dir//Smile+Concepts,+Suite+403,+Level+4%2F307+Pitt+St,+Sydney+NSW+2000/@-33.8736283,151.2055511,17z/data=!3m1!5s0x6b12ae3dd637c355:0x5ffcef57ed062bc3!4m16!1m6!3m5!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2sSmile+Concepts!8m2!3d-33.8736283!4d151.2077398!4m8!1m0!1m5!1m1!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2m2!1d151.2077398!2d-33.8736283!3e0",
+          website: "Dentist in Sydney CBD",
+          websiteHref: "https://www.smileconcepts.com.au/sydney-cbd.html",
         }}
       />
     </div>

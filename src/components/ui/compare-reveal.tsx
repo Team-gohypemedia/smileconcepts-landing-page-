@@ -277,11 +277,18 @@ export function CompareReveal({
   }, [animate]);
 
   const commit = React.useCallback(
-    (next: number) => {
+    (next: number, immediate: boolean = false) => {
+      const clamped = clamp(next, 0, 100);
       const s = sim.current;
       s.introActive = false;
       s.introDone = true;
-      setPct(clamp(next, 0, 100));
+      s.target = clamped;
+      if (immediate || s.dragging) {
+        s.x = clamped;
+        s.v = 0;
+        paintRef.current();
+      }
+      setPct(clamped);
     },
     [setPct],
   );
@@ -292,7 +299,7 @@ export function CompareReveal({
     const t = clamp(pct, 0, 100);
     if (Math.abs(s.target - t) < 0.0001) return;
     s.target = t;
-    if (params.current.still) {
+    if (params.current.still || s.dragging) {
       s.x = t;
       s.v = 0;
       paintRef.current();
@@ -303,23 +310,31 @@ export function CompareReveal({
     const root = rootRef.current;
     if (!root) return;
     const rect = root.getBoundingClientRect();
-    commit(((clientX - rect.left) / Math.max(1, rect.width)) * 100);
+    const newPct = ((clientX - rect.left) / Math.max(1, rect.width)) * 100;
+    commit(newPct, true);
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     sim.current.dragging = true;
     sim.current.pointerId = e.pointerId;
-    e.currentTarget.setPointerCapture?.(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (_) {}
     positionFromEvent(e.clientX);
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!sim.current.dragging || e.pointerId !== sim.current.pointerId) return;
+    if (!sim.current.dragging) return;
     positionFromEvent(e.clientX);
   };
 
-  const endDrag = () => {
+  const endDrag = (e?: React.PointerEvent<HTMLDivElement>) => {
+    if (e && sim.current.pointerId !== null) {
+      try {
+        e.currentTarget.releasePointerCapture(sim.current.pointerId);
+      } catch (_) {}
+    }
     sim.current.dragging = false;
     sim.current.pointerId = null;
   };
@@ -354,7 +369,7 @@ export function CompareReveal({
         position: "relative",
         width: "100%",
         aspectRatio: "1080 / 420",
-        touchAction: "pan-y",
+        touchAction: "none",
         userSelect: "none",
         WebkitUserSelect: "none",
         overflow: "hidden",

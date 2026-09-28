@@ -408,7 +408,7 @@ export default function WhySmileConcepts() {
                 Free Validated CBD Parking for All-on-4 Patients
               </div>
               <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.82rem", color: "rgba(255,255,255,0.7)" }}>
-                Suite 201, 210 Pitt Street & Suite 403, Level 4/307 Pitt St, Sydney NSW 2000
+                Suite 403, Level 4/307 Pitt St, Sydney NSW 2000, Australia
               </div>
             </div>
           </div>

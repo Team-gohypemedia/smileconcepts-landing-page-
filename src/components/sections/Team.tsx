@@ -194,10 +194,14 @@ export default function Team() {
                   src={doc.img}
                   alt={doc.name}
                   fill
-                  sizes="(max-width: 768px) 88vw, 450px"
+                  unoptimized={true}
+                  sizes="(max-width: 768px) 88vw, 650px"
                   style={{
                     objectFit: "cover",
                     objectPosition: "top",
+                    imageRendering: "auto",
+                    transform: "translateZ(0)",
+                    backfaceVisibility: "hidden",
                   }}
                 />
               </div>
