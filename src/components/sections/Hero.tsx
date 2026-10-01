@@ -37,6 +37,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
+  const mobileIndicatorRef = useRef<HTMLDivElement>(null);
 
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrameObj = useRef({ frame: 0 });
@@ -113,6 +114,15 @@ export default function Hero() {
         scrub: 0.6,
         onUpdate: (self) => {
           const progress = self.progress;
+
+          // Fade out mobile indicator as soon as user starts scrolling
+          const mobileIndicator = mobileIndicatorRef.current;
+          if (mobileIndicator) {
+            const mobileFade = Math.max(0, 1 - progress * 25);
+            mobileIndicator.style.opacity = String(mobileFade);
+            mobileIndicator.style.transform = `translate(-50%, ${(1 - mobileFade) * 12}px)`;
+            mobileIndicator.style.pointerEvents = mobileFade > 0.1 ? "auto" : "none";
+          }
 
           // Update 3D Frame Index
           const frameIndex = Math.min(
@@ -288,6 +298,36 @@ export default function Hero() {
             background-clip: text;
             animation: shineSweep 2.5s linear infinite;
           }
+          @keyframes scrollRunnerFlow {
+            0% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(20px);
+            }
+            100% {
+              transform: translateY(0px);
+            }
+          }
+          .mobile-scroll-runner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(to bottom, #FFA07A, #F47A4A);
+            border-radius: 9999px;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+            animation: scrollRunnerFlow 1.8s ease-in-out infinite;
+          }
+          .mobile-scroll-indicator {
+            display: flex;
+          }
+          @media (min-width: 1024px) {
+            .mobile-scroll-indicator {
+              display: none !important;
+            }
+          }
         `,
         }}
       />
@@ -454,6 +494,58 @@ export default function Hero() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Mobile-Only Scroll Indicator: Vertical Loading Line + SCROLL TO EXPLORE */}
+      <div
+        ref={mobileIndicatorRef}
+        className="mobile-scroll-indicator"
+        style={{
+          position: "absolute",
+          bottom: "clamp(2rem, 6vh, 3.5rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 25,
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "0.85rem",
+          pointerEvents: "none",
+          transition: "opacity 0.2s ease, transform 0.2s ease",
+          willChange: "transform, opacity",
+        }}
+      >
+        {/* Vertical Track Line with white background */}
+        <div
+          style={{
+            position: "relative",
+            width: "2.5px",
+            height: "32px",
+            backgroundColor: "rgba(255, 255, 255, 0.4)",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
+            borderRadius: "9999px",
+            overflow: "hidden",
+            contain: "paint",
+          }}
+        >
+          <div className="mobile-scroll-runner" />
+        </div>
+
+        {/* Caption text exactly matching reference screenshot */}
+        <span
+          style={{
+            fontFamily: "var(--font-assistant), sans-serif",
+            fontSize: "11px",
+            fontWeight: 700,
+            letterSpacing: "0.26em",
+            textTransform: "uppercase",
+            color: "#ffffff",
+            whiteSpace: "nowrap",
+            filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.9))",
+          }}
+        >
+          Scroll to Explore
+        </span>
       </div>
     </section>
   );
