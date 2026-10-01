@@ -127,23 +127,34 @@ export default function Hero() {
             const phraseElem = section.querySelector(`.phrase-container-${pIdx}`);
             if (!phraseElem) return;
 
-            // Determine phrase opacity with smooth fade buffer
+            // Determine phrase opacity and smooth float-into-center positioning
             let phraseOpacity = 0;
+            let translateY = 0;
             const fadeBuffer = 0.035;
 
             if (progress >= phrase.startPct && progress <= phrase.endPct) {
               if (progress < phrase.startPct + fadeBuffer) {
-                phraseOpacity = (progress - phrase.startPct) / fadeBuffer;
+                const ratio = (progress - phrase.startPct) / fadeBuffer;
+                phraseOpacity = ratio;
+                translateY = (1 - ratio) * 20; // Glides up into center
               } else if (progress > phrase.endPct - fadeBuffer) {
-                phraseOpacity = (phrase.endPct - progress) / fadeBuffer;
+                const ratio = (phrase.endPct - progress) / fadeBuffer;
+                phraseOpacity = ratio;
+                translateY = (1 - ratio) * -20; // Glides gently upward as it leaves
               } else {
                 phraseOpacity = 1;
+                translateY = 0;
               }
+            } else if (progress < phrase.startPct) {
+              phraseOpacity = 0;
+              translateY = 20;
             } else {
               phraseOpacity = 0;
+              translateY = -20;
             }
 
             (phraseElem as HTMLElement).style.opacity = String(phraseOpacity);
+            (phraseElem as HTMLElement).style.transform = `translate3d(0, ${translateY}px, 0)`;
             (phraseElem as HTMLElement).style.pointerEvents =
               phraseOpacity > 0.5 ? "auto" : "none";
 
@@ -365,23 +376,25 @@ export default function Hero() {
         }}
       />
 
-      {/* Content Overlay with 3 Phased Scroll-Revealed Phrases */}
+      {/* Content Overlay with 3 Phased Scroll-Revealed Phrases Centered */}
       <div
         style={{
-          position: "relative",
+          position: "absolute",
+          inset: 0,
           zIndex: 10,
           maxWidth: "1920px",
           margin: "0 auto",
-          padding: "7rem 1.5rem 2.5rem",
+          padding: "2rem 1.5rem",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          alignItems: "center",
+          justifyContent: "center",
           pointerEvents: "none",
         }}
       >
-        {/* Lower Positioned Display Text Container with Character Reveal */}
+        {/* Centered Display Text Container with Character Reveal */}
         <div
           style={{
             position: "relative",
@@ -391,8 +404,7 @@ export default function Hero() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: "clamp(2rem, 5vh, 4rem)",
-            minHeight: "140px",
+            minHeight: "160px",
             textAlign: "center",
           }}
         >
@@ -407,14 +419,15 @@ export default function Hero() {
                 alignItems: "center",
                 justifyContent: "center",
                 opacity: 0,
-                transition: "opacity 0.2s ease",
+                transform: "translate3d(0, 20px, 0)",
+                transition: "opacity 0.2s ease, transform 0.2s ease",
                 pointerEvents: "none",
               }}
             >
               <h2
                 style={{
                   fontFamily: "var(--font-prata), serif",
-                  fontSize: "clamp(1.5rem, 3.8vw, 3.2rem)",
+                  fontSize: "clamp(1.75rem, 4.2vw, 3.5rem)",
                   fontWeight: 400,
                   letterSpacing: "-0.01em",
                   lineHeight: 1.25,
