@@ -6,10 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TOTAL_FRAMES = 240;
+const TOTAL_FRAMES = 595;
 const FRAME_PATH = (index: number) => {
   const frameNum = String(index).padStart(4, "0");
-  return `/hero%20video%20frame/smileconcepts_webp_frames/frame_${frameNum}.webp`;
+  return `/hero%20video%20frame/smileconcepts_webp_frames/smiling_concept_webp_frames/frame_${frameNum}.webp`;
 };
 
 const PHRASES = [
@@ -249,7 +249,7 @@ export default function Hero() {
         position: "relative",
         height: "100vh",
         width: "100%",
-        backgroundColor: "#0C0D17",
+        backgroundColor: "#000000",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
