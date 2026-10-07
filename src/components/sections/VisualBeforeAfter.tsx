@@ -19,92 +19,114 @@ interface CaseItem {
 
 const cases: CaseItem[] = [
   {
-    id: "makeover-1",
-    category: "makeover",
-    categoryLabel: "Smile Makeover",
-    title: "Full Arch Porcelain Smile Makeover",
-    desc: "Correcting severe incisal wear, chipped edges, and discoloration with custom handcrafted porcelain veneers.",
-    location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: 48 Hours",
-    before: "/assets/before-after/case-makeover-1-before.png",
-    after: "/assets/before-after/case-makeover-1-after.png",
-  },
-  {
-    id: "allon4-1",
+    id: "all-1",
     category: "allon4",
     categoryLabel: "All-on-4 Implants",
-    title: "Complete Arch All-on-4 Rehabilitation",
-    desc: "Complete fixed implant transformation replacing severely decayed, broken dentition with permanent teeth.",
+    title: "Complete Upper & Lower Arch Restoration",
+    desc: "Complete fixed full-arch rehabilitation restoring natural biting function, tooth alignment, and smile aesthetics.",
     location: "Sydney CBD · Dr. Manish Shah",
     duration: "Timeframe: 1–3 Days",
-    before: "/assets/before-after/case-allon4-1-before.png",
-    after: "/assets/before-after/case-allon4-1-after.png",
+    before: "/assets/before-after/all-1.1.jpg",
+    after: "/assets/before-after/all-1.2.jpg",
   },
   {
-    id: "zirconia-1",
-    category: "zirconia",
-    categoryLabel: "Zirconia Bridge",
-    title: "Precision Aesthetic Zirconia Crowns",
-    desc: "Replacing aged, stained margins and worn restorations with precision-milled translucent zirconia crowns.",
-    location: "Sydney CBD · Dr. Kinnar Shah",
-    duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/case-zirconia-1-before.png",
-    after: "/assets/before-after/case-zirconia-1-after.png",
-  },
-  {
-    id: "allon4-2",
+    id: "all-2",
     category: "allon4",
     categoryLabel: "All-on-4 Implants",
-    title: "Immediate Implant & Arch Restoration",
-    desc: "Immediate full-arch implant placement and fixed provisional bridge replacing failing dentition.",
+    title: "Immediate Fixed Implant Arch Rehabilitation",
+    desc: "Immediate replacement of severely broken and missing dentition with permanent, natural-looking implant teeth.",
     location: "Sydney CBD · Dr. Manish Shah",
     duration: "Timeframe: 1–3 Days",
-    before: "/assets/before-after/case-allon4-2-before.png",
-    after: "/assets/before-after/case-allon4-2-after.png",
+    before: "/assets/before-after/All-2.1.jpg",
+    after: "/assets/before-after/All-2.2.jpg",
   },
   {
-    id: "makeover-2",
+    id: "all-3",
     category: "makeover",
     categoryLabel: "Smile Makeover",
-    title: "Cosmetic Alignment & Porcelain Veneers",
-    desc: "Correcting severe crowding, fractured edges, and misalignment with custom hand-crafted porcelain.",
+    title: "Aesthetic Alignment & Veneer Transformation",
+    desc: "Correcting incisal edge wear, uneven margins, and tooth discoloration with handcrafted porcelain veneers.",
     location: "Sydney CBD · Dr. Kinnar Shah",
     duration: "Timeframe: 48 Hours",
-    before: "/assets/before-after/case-makeover-2-before.png",
-    after: "/assets/before-after/case-makeover-2-after.png",
+    before: "/assets/before-after/all-3.1.jpg",
+    after: "/assets/before-after/all-3.2.jpg",
   },
   {
-    id: "fullarch-1",
+    id: "all-4",
+    category: "makeover",
+    categoryLabel: "Smile Makeover",
+    title: "Full Smile Harmony & Gumline Rejuvenation",
+    desc: "Restoring symmetry and youthfulness to worn dentition with custom precision cosmetic restorations.",
+    location: "Sydney CBD · Dr. Manish Shah",
+    duration: "Timeframe: 48 Hours",
+    before: "/assets/before-after/all-4.1.jpg",
+    after: "/assets/before-after/all-4.2.jpg",
+  },
+  {
+    id: "all-5",
     category: "fullarch",
     categoryLabel: "Full Arch Rehabilitation",
-    title: "Upper Arch Comprehensive Reconstruction",
-    desc: "Comprehensive implant and aesthetic restoration for missing central tooth, root decay, and severe wear.",
+    title: "Missing Dentition & Comprehensive Smile Rebuild",
+    desc: "Targeted full-arch restorative solution replacing lost anterior teeth and re-establishing chewing comfort.",
     location: "Sydney CBD · Dr. Manish Shah",
     duration: "Timeframe: 1–3 Days",
-    before: "/assets/before-after/case-fullarch-1-before.png",
-    after: "/assets/before-after/case-fullarch-1-after.png",
+    before: "/assets/before-after/all-5.1.jpg",
+    after: "/assets/before-after/all-5.2.jpg",
   },
   {
-    id: "zirconia-2",
+    id: "all-6",
     category: "zirconia",
     categoryLabel: "Zirconia Bridge",
-    title: "Multi-Unit Zirconia Crown & Bridge",
-    desc: "Full upper arch restoration replacing damaged front teeth with biocompatible, high-strength zirconia.",
+    title: "Aesthetic Zirconia Crown & Shade Renewal",
+    desc: "Replacing dark discolored dentition with premium translucent zirconia crowns for bright, lifelike translucency.",
     location: "Sydney CBD · Dr. Kinnar Shah",
     duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/case-zirconia-2-before.png",
-    after: "/assets/before-after/case-zirconia-2-after.png",
+    before: "/assets/before-after/all-6.1.jpg",
+    after: "/assets/before-after/all-6.2.jpg",
   },
   {
-    id: "fullarch-2",
+    id: "all-8",
+    category: "allon4",
+    categoryLabel: "All-on-4 Implants",
+    title: "Advanced Arch Reconstruction & Gum Line Balance",
+    desc: "Comprehensive rehabilitation transforming heavily compromised dentition into a confident, complete smile.",
+    location: "Sydney CBD · Dr. Manish Shah",
+    duration: "Timeframe: 1–3 Days",
+    before: "/assets/before-after/all-8.1.jpg",
+    after: "/assets/before-after/all-8.2.jpg",
+  },
+  {
+    id: "all-10",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Full Arch Restoration & Deep Stain Removal",
+    desc: "Transforming severe enamel discoloration and heavy wear with biocompatible, high-strength zirconia restorations.",
+    location: "Sydney CBD · Dr. Kinnar Shah",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-10.1.jpg",
+    after: "/assets/before-after/all-10.2.jpg",
+  },
+  {
+    id: "all-15",
     category: "fullarch",
     categoryLabel: "Full Arch Rehabilitation",
-    title: "Full Arch Diastema Closure & Recontouring",
-    desc: "Closing spacing (diastema) and reconstructing tooth proportions for an elegant, symmetrical smile.",
+    title: "Full Complex Reconstruction for Severe Breakdown",
+    desc: "Restoring extensive decay and worn bite with fixed, natural-looking prosthetic arch restoration.",
     location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: 48 Hours",
-    before: "/assets/before-after/case-fullarch-2-before.png",
-    after: "/assets/before-after/case-fullarch-2-after.png",
+    duration: "Timeframe: 1–3 Days",
+    before: "/assets/before-after/all-15.1.jpg",
+    after: "/assets/before-after/all-15.2.jpg",
+  },
+  {
+    id: "all-20",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Multi-Unit Precision Crown & Smile Realignment",
+    desc: "Replacing aged restorations and misaligned teeth with ultra-durable zirconia crowns designed to last.",
+    location: "Sydney CBD · Dr. Manish Shah",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-20.1.jpg",
+    after: "/assets/before-after/all-20.2.jpg",
   },
 ];
 
@@ -278,7 +300,44 @@ export default function VisualBeforeAfter() {
           }}
         >
           <style>{`
-            @media (max-width: 991px) {
+            .sc-ba-cases-grid {
+              overscroll-behavior: contain;
+              -webkit-overflow-scrolling: touch;
+            }
+            .sc-ba-cases-grid::-webkit-scrollbar {
+              width: 6px;
+            }
+            .sc-ba-cases-grid::-webkit-scrollbar-track {
+              background: rgba(0, 0, 0, 0.04);
+              border-radius: 999px;
+            }
+            .sc-ba-cases-grid::-webkit-scrollbar-thumb {
+              background: #F47A4A;
+              border-radius: 999px;
+            }
+            .sc-ba-cases-grid::-webkit-scrollbar-thumb:hover {
+              background: #E06332;
+            }
+            @media (min-width: 992px) {
+              .sc-ba-cases-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 0.45rem !important;
+              }
+            }
+            @media (min-width: 768px) and (max-width: 991px) {
+              .sc-ba-cases-grid {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
+                gap: 0.4rem !important;
+              }
+            }
+            @media (max-width: 767px) {
+              .sc-ba-cases-grid {
+                max-height: none !important;
+                overflow: visible !important;
+                overflow-y: visible !important;
+                touch-action: auto !important;
+                overscroll-behavior: auto !important;
+              }
               .sc-ba-cases-column {
                 border-left: none !important;
                 border-top: 1px solid #EDEDF2 !important;
@@ -341,9 +400,13 @@ export default function VisualBeforeAfter() {
                 font-size: 1.1rem !important;
               }
               .sc-ba-cases-grid {
-                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
-                gap: 0.4rem !important;
-                max-height: 200px !important;
+                grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)) !important;
+                gap: 0.35rem !important;
+                max-height: none !important;
+                overflow: visible !important;
+                overflow-y: visible !important;
+                touch-action: auto !important;
+                overscroll-behavior: auto !important;
               }
               .sc-ba-cases-header {
                 margin-bottom: 0.65rem !important;
@@ -363,7 +426,7 @@ export default function VisualBeforeAfter() {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "2.25rem",
+              gap: "clamp(1.25rem, 2.5vw, 2.25rem)",
               alignItems: "flex-start",
             }}
           >
@@ -371,9 +434,9 @@ export default function VisualBeforeAfter() {
             <div
               className="sc-ba-slider-column"
               style={{
-                flex: "1 1 560px",
+                flex: "1 1 420px",
                 maxWidth: "680px",
-                minWidth: "300px",
+                minWidth: "280px",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -485,7 +548,7 @@ export default function VisualBeforeAfter() {
                   introSweep={true}
                   snapOnDoubleClick={50}
                   style={{
-                    aspectRatio: "990 / 793",
+                    aspectRatio: "16 / 9",
                     width: "100%",
                     border: "none",
                     borderRadius: "16px",
@@ -515,12 +578,12 @@ export default function VisualBeforeAfter() {
             <div
               className="sc-ba-cases-column"
               style={{
-                flex: "1 1 360px",
-                minWidth: "290px",
+                flex: "1 1 300px",
+                minWidth: "240px",
                 display: "flex",
                 flexDirection: "column",
                 borderLeft: "1px solid #EDEDF2",
-                paddingLeft: "clamp(1rem, 2.5vw, 2rem)",
+                paddingLeft: "clamp(0.75rem, 2vw, 1.75rem)",
               }}
             >
               <div
@@ -576,13 +639,23 @@ export default function VisualBeforeAfter() {
               {/* Cases List */}
               <div
                 className="sc-ba-cases-grid"
+                onWheel={(e) => {
+                  const target = e.currentTarget;
+                  const canScrollUp = target.scrollTop > 0;
+                  const canScrollDown = target.scrollTop < target.scrollHeight - target.clientHeight;
+                  if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
+                    target.scrollTop += e.deltaY;
+                    e.stopPropagation();
+                  }
+                }}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))",
-                  gap: "0.55rem",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(72px, 1fr))",
+                  gap: "0.45rem",
                   maxHeight: "380px",
                   overflowY: "auto",
                   paddingRight: "0.35rem",
+                  touchAction: "pan-y",
                 }}
               >
                 {filteredCases.map((c, idx) => {
@@ -600,7 +673,7 @@ export default function VisualBeforeAfter() {
                           ? "2px solid #F47A4A"
                           : "1px solid #E2E4E8",
                         backgroundColor: isSelected ? "rgba(244, 122, 74, 0.08)" : "#F9FAFB",
-                        padding: "0.28rem",
+                        padding: "0.22rem",
                         cursor: "pointer",
                         textAlign: "left",
                         transition: "all 0.25s ease",
@@ -622,10 +695,10 @@ export default function VisualBeforeAfter() {
                         style={{
                           position: "relative",
                           width: "100%",
-                          aspectRatio: "990 / 793",
+                          aspectRatio: "16 / 9",
                           borderRadius: "6px",
                           overflow: "hidden",
-                          marginBottom: "0.25rem",
+                          marginBottom: "0.2rem",
                         }}
                       >
                         <Image
@@ -638,7 +711,7 @@ export default function VisualBeforeAfter() {
                       </div>
                       <div
                         style={{
-                          fontSize: "0.72rem",
+                          fontSize: "0.68rem",
                           fontFamily: "var(--font-assistant)",
                           fontWeight: 600,
                           color: isSelected ? "#F47A4A" : "#333544",
@@ -651,7 +724,7 @@ export default function VisualBeforeAfter() {
                       </div>
                       <div
                         style={{
-                          fontSize: "0.64rem",
+                          fontSize: "0.58rem",
                           fontFamily: "var(--font-assistant)",
                           color: "#8E93A4",
                           whiteSpace: "nowrap",

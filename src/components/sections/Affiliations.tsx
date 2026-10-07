@@ -29,7 +29,7 @@ export default function Affiliations() {
   return (
     <section
       style={{
-        background: "#FAF8F5",
+        background: "#ffffff",
         borderTop: "1px solid #ECE7E1",
         borderBottom: "1px solid #ECE7E1",
         padding: "3.5rem 0",
@@ -76,7 +76,7 @@ export default function Affiliations() {
             bottom: 0,
             width: "5rem",
             zIndex: 2,
-            background: "linear-gradient(to right, #FAF8F5, transparent)",
+            background: "linear-gradient(to right, #ffffff, transparent)",
             pointerEvents: "none",
           }}
         />
@@ -89,7 +89,7 @@ export default function Affiliations() {
             bottom: 0,
             width: "5rem",
             zIndex: 2,
-            background: "linear-gradient(to left, #FAF8F5, transparent)",
+            background: "linear-gradient(to left, #ffffff, transparent)",
             pointerEvents: "none",
           }}
         />
@@ -113,8 +113,8 @@ export default function Affiliations() {
               <div
                 style={{
                   position: "relative",
-                  width: "clamp(160px, 15vw, 220px)",
-                  height: "clamp(55px, 6vw, 75px)",
+                  width: "clamp(185px, 18vw, 260px)",
+                  height: "clamp(68px, 7.5vw, 92px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -124,7 +124,7 @@ export default function Affiliations() {
                   src={item.src}
                   alt={item.name}
                   fill
-                  sizes="220px"
+                  sizes="260px"
                   style={{
                     objectFit: "contain",
                     filter: "none",
@@ -140,7 +140,7 @@ export default function Affiliations() {
         .affiliations-marquee {
           display: flex;
           align-items: center;
-          gap: 3.5rem;
+          gap: clamp(3.5rem, 4.5vw, 4.5rem);
           width: max-content;
           animation: marqueeScroll 45s linear infinite;
         }

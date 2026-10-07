@@ -7,7 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const TOTAL_FRAMES = 595;
-const FRAME_PATH = (index: number) => {
+const GET_FRAME_PATH = (index: number, isMobile: boolean) => {
+  if (isMobile) {
+    const frameNum = String(index).padStart(5, "0");
+    return `/hero%20video%20frame/smileconcepts_webp_frames/smiling_concept_webp_frames/mobile/frame_${frameNum}.webp`;
+  }
   const frameNum = String(index).padStart(4, "0");
   return `/hero%20video%20frame/smileconcepts_webp_frames/smiling_concept_webp_frames/frame_${frameNum}.webp`;
 };
@@ -16,7 +20,7 @@ const PHRASES = [
   {
     id: 1,
     text: "All on 4 Dental Implants Sydney",
-    startPct: 0.04,
+    startPct: 0,
     endPct: 0.32,
   },
   {
@@ -43,7 +47,7 @@ export default function Hero() {
   const currentFrameObj = useRef({ frame: 0 });
 
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
+    let isMobileMode = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
 
     // Full screen object-cover Canvas drawing function
     const drawFrame = (index: number) => {
@@ -90,16 +94,21 @@ export default function Hero() {
       ctx.restore();
     };
 
-    // Preload all 240 frames
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = FRAME_PATH(i);
-      if (i === 1) {
-        img.onload = () => drawFrame(0);
+    const loadFramesForMode = (mobile: boolean) => {
+      const imgs: HTMLImageElement[] = [];
+      for (let i = 1; i <= TOTAL_FRAMES; i++) {
+        const img = new Image();
+        img.src = GET_FRAME_PATH(i, mobile);
+        if (i === 1) {
+          img.onload = () => drawFrame(currentFrameObj.current.frame);
+        }
+        imgs.push(img);
       }
-      loadedImages.push(img);
-    }
-    imagesRef.current = loadedImages;
+      imagesRef.current = imgs;
+      return imgs;
+    };
+
+    loadFramesForMode(isMobileMode);
 
     const section = sectionRef.current;
     if (!section) return;
@@ -143,7 +152,7 @@ export default function Hero() {
             const fadeBuffer = 0.035;
 
             if (progress >= phrase.startPct && progress <= phrase.endPct) {
-              if (progress < phrase.startPct + fadeBuffer) {
+              if (phrase.startPct > 0 && progress < phrase.startPct + fadeBuffer) {
                 const ratio = (progress - phrase.startPct) / fadeBuffer;
                 phraseOpacity = ratio;
                 translateY = (1 - ratio) * 20; // Glides up into center
@@ -252,7 +261,13 @@ export default function Hero() {
     }, section);
 
     const handleResize = () => {
-      drawFrame(currentFrameObj.current.frame);
+      const newMobile = window.innerWidth <= 768;
+      if (newMobile !== isMobileMode) {
+        isMobileMode = newMobile;
+        loadFramesForMode(newMobile);
+      } else {
+        drawFrame(currentFrameObj.current.frame);
+      }
     };
     window.addEventListener("resize", handleResize);
 
@@ -416,7 +431,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Content Overlay with 3 Phased Scroll-Revealed Phrases Centered */}
+      {/* Content Overlay with 3 Phased Scroll-Revealed Phrases at Top */}
       <div
         style={{
           position: "absolute",
@@ -424,13 +439,13 @@ export default function Hero() {
           zIndex: 10,
           maxWidth: "1920px",
           margin: "0 auto",
-          padding: "2rem 1.5rem",
+          padding: "clamp(5.5rem, 12vh, 8rem) 1.5rem 2rem",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           pointerEvents: "none",
         }}
       >
@@ -458,16 +473,16 @@ export default function Hero() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                opacity: 0,
-                transform: "translate3d(0, 20px, 0)",
+                opacity: pIdx === 0 ? 1 : 0,
+                transform: pIdx === 0 ? "translate3d(0, 0, 0)" : "translate3d(0, 20px, 0)",
                 transition: "opacity 0.2s ease, transform 0.2s ease",
-                pointerEvents: "none",
+                pointerEvents: pIdx === 0 ? "auto" : "none",
               }}
             >
               <h2
                 style={{
                   fontFamily: "var(--font-prata), serif",
-                  fontSize: "clamp(1.75rem, 4.2vw, 3.5rem)",
+                  fontSize: "clamp(22px, 4.2vw, 32px)",
                   fontWeight: 400,
                   letterSpacing: "-0.01em",
                   lineHeight: 1.25,
@@ -482,8 +497,9 @@ export default function Hero() {
                     key={cIdx}
                     className="char-span"
                     style={{
-                      color: "rgba(255, 255, 255, 0.35)",
-                      opacity: 0.75,
+                      color: pIdx === 0 ? "#ffffff" : "rgba(255, 255, 255, 0.35)",
+                      opacity: pIdx === 0 ? 1 : 0.75,
+                      textShadow: pIdx === 0 ? "0 3px 20px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9)" : "none",
                       transition: "all 0.08s ease",
                     }}
                   >

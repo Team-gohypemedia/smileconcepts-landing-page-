@@ -9,6 +9,7 @@ export default function OurPractice() {
       id: "p1",
       title: "Surgery Suite",
       category: "Advanced Tech",
+      desc: "Hospital-grade sterilization & digital 3D guided surgery operatory.",
       src: images.practice.p1,
       alt: "Smile Concepts modern dental treatment operatory room with state-of-the-art dental chair in Sydney",
     },
@@ -16,6 +17,7 @@ export default function OurPractice() {
       id: "p2",
       title: "Patient Lounge",
       category: "Welcoming Care",
+      desc: "Warm reception & tranquil waiting lounge with lush indoor greenery.",
       src: images.practice.p2,
       alt: "Smile Concepts welcoming reception and waiting lounge with lush indoor greenery in Sydney",
     },
@@ -23,6 +25,7 @@ export default function OurPractice() {
       id: "p3",
       title: "Clinical Team",
       category: "Specialists",
+      desc: "30+ years experienced dental implant surgeons & caring staff.",
       src: images.practice.p3,
       alt: "The caring dental team and patient coordinators at Smile Concepts Sydney",
     },
@@ -30,6 +33,7 @@ export default function OurPractice() {
       id: "p5",
       title: "Advanced Care",
       category: "Excellence",
+      desc: "Gentle sedation & precision restorative procedures in Sydney CBD.",
       src: images.practice.p5,
       alt: "Smile Concepts Centre for Advanced Dentistry official team apparel and branding",
     },
@@ -37,6 +41,7 @@ export default function OurPractice() {
       id: "p6",
       title: "Smile Design",
       category: "Precision Craft",
+      desc: "Custom facial aesthetic mapping & biocompatible zirconia restorations.",
       src: images.practice.p6,
       alt: "Clinical dental education model and patient consultation suite at Smile Concepts",
     },
@@ -44,6 +49,7 @@ export default function OurPractice() {
       id: "p4",
       title: "Smile Gallery",
       category: "Real Results",
+      desc: "Documented full arch transformations & life-changing smiles.",
       src: images.practice.p4,
       alt: "Smile Gallery clinical portfolio book showcasing patient transformations by Dr. Kinnar Shah",
     },
@@ -55,7 +61,7 @@ export default function OurPractice() {
       style={{
         position: "relative",
         backgroundColor: "#ffffff",
-        padding: "clamp(4rem, 6vw, 6.5rem) clamp(1rem, 3vw, 2.5rem)",
+        padding: "clamp(3.5rem, 6vw, 6.5rem) clamp(0.6rem, 2.5vw, 2rem)",
         overflow: "hidden",
       }}
     >
@@ -105,7 +111,7 @@ export default function OurPractice() {
       </div>
 
       {/* Interactive Elastic Gallery */}
-      <div style={{ maxWidth: "1520px", margin: "0 auto", padding: "0 clamp(1rem, 3.5vw, 3rem)" }}>
+      <div style={{ maxWidth: "1520px", margin: "0 auto", padding: "0 clamp(0.2rem, 1.5vw, 1.5rem)" }}>
         <ElasticGallery items={practiceItems} defaultActiveId="p2" />
       </div>
     </section>
