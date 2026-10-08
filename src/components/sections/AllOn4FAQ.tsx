@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Search, Phone, Calendar } from "lucide-react";
+import { BlurredStagger } from "@/components/ui/text-reveal-faqs";
 
 interface FAQItem {
   id: string;
@@ -422,7 +423,9 @@ export default function AllOn4FAQ() {
                             color: "#505055",
                           }}
                         >
-                          <p style={{ margin: "0.85rem 0 0" }}>{faq.answer}</p>
+                          <div style={{ margin: "0.85rem 0 0" }}>
+                            <BlurredStagger text={faq.answer} />
+                          </div>
                         </div>
                       </motion.div>
                     )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight, Calculator, Phone, ChevronDown, ChevronUp } from "lucide-react";
 
@@ -8,6 +8,29 @@ export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [readMoreCost, setReadMoreCost] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [activePhase, setActivePhase] = useState<0 | 1>(0);
+  const phasesGridRef = useRef<HTMLDivElement>(null);
+
+  const handlePhaseScroll = () => {
+    if (!phasesGridRef.current) return;
+    const { scrollLeft, clientWidth } = phasesGridRef.current;
+    const cardWidth = clientWidth * 0.86;
+    const idx = Math.round(scrollLeft / (cardWidth > 0 ? cardWidth : 290));
+    setActivePhase(idx >= 1 ? 1 : 0);
+  };
+
+  const scrollToPhase = (idx: 0 | 1) => {
+    if (!phasesGridRef.current) return;
+    const cards = phasesGridRef.current.children;
+    if (cards[idx]) {
+      (cards[idx] as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+      setActivePhase(idx);
+    }
+  };
 
   // Interactive Calculator State
   const [selectedArch, setSelectedArch] = useState<"single" | "both">("single");
@@ -59,9 +82,36 @@ export default function AllOn4Cost() {
           gap: clamp(1rem, 2.5vw, 1.75rem);
           margin: 2rem 0;
         }
-        @media (max-width: 820px) {
+        .sc-cost-phases-mobile-nav {
+          display: none;
+        }
+        @media (max-width: 768px) {
           .sc-cost-phases-grid {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch !important;
+            gap: 0.85rem !important;
+            margin: 1.5rem -1.25rem 0.65rem !important;
+            padding: 0.25rem 1.25rem 0.85rem !important;
+            scrollbar-width: none !important;
+          }
+          .sc-cost-phases-grid::-webkit-scrollbar {
+            display: none !important;
+          }
+          .sc-cost-phase-card {
+            flex: 0 0 86% !important;
+            max-width: 330px !important;
+            min-width: 285px !important;
+            scroll-snap-align: start !important;
+            padding: 1.25rem 1.15rem !important;
+          }
+          .sc-cost-phases-mobile-nav {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem !important;
           }
         }
         .sc-calc-header-btn {
@@ -287,9 +337,14 @@ export default function AllOn4Cost() {
             We believe you should know exactly what you&apos;re paying for before treatment begins. That&apos;s why your All on 4 treatment is presented in two clearly defined phases, giving you complete transparency and allowing your treatment to progress safely from surgery to your final smile.
           </p>
 
-          <div className="sc-cost-phases-grid">
+          <div
+            ref={phasesGridRef}
+            onScroll={handlePhaseScroll}
+            className="sc-cost-phases-grid"
+          >
             {/* Phase 1 Card */}
             <div
+              className="sc-cost-phase-card"
               style={{
                 backgroundColor: "#ffffff",
                 borderRadius: "16px",
@@ -354,6 +409,7 @@ export default function AllOn4Cost() {
 
             {/* Phase 2 Card */}
             <div
+              className="sc-cost-phase-card"
               style={{
                 backgroundColor: "#ffffff",
                 borderRadius: "16px",
@@ -414,6 +470,46 @@ export default function AllOn4Cost() {
                 <ArrowRight size={14} />
               </a>
             </div>
+          </div>
+
+          {/* Mobile Phase Slider Nav Pills */}
+          <div className="sc-cost-phases-mobile-nav">
+            <button
+              type="button"
+              onClick={() => scrollToPhase(0)}
+              style={{
+                padding: "0.35rem 0.85rem",
+                borderRadius: "100px",
+                border: activePhase === 0 ? "1.5px solid #E86337" : "1px solid #DCD6CD",
+                backgroundColor: activePhase === 0 ? "rgba(232, 99, 55, 0.1)" : "#ffffff",
+                color: activePhase === 0 ? "#E86337" : "#666",
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Phase 1 ($18k)
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToPhase(1)}
+              style={{
+                padding: "0.35rem 0.85rem",
+                borderRadius: "100px",
+                border: activePhase === 1 ? "1.5px solid #E86337" : "1px solid #DCD6CD",
+                backgroundColor: activePhase === 1 ? "rgba(232, 99, 55, 0.1)" : "#ffffff",
+                color: activePhase === 1 ? "#E86337" : "#666",
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Phase 2 ($10k-$14k)
+            </button>
           </div>
         </div>
 

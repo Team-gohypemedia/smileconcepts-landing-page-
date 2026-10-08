@@ -1,14 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight } from "lucide-react";
 
 export default function AllOn4Process() {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const processGridRef = useRef<HTMLDivElement>(null);
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
+  };
+
+  const handleProcessScroll = () => {
+    if (!processGridRef.current) return;
+    const { scrollLeft, clientWidth } = processGridRef.current;
+    const cardWidth = clientWidth * 0.84;
+    const idx = Math.round(scrollLeft / (cardWidth > 0 ? cardWidth : 280));
+    setActiveStep(Math.min(steps.length - 1, Math.max(0, idx)));
+  };
+
+  const scrollToStep = (idx: number) => {
+    if (!processGridRef.current) return;
+    const cards = processGridRef.current.children;
+    if (cards[idx]) {
+      (cards[idx] as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+      setActiveStep(idx);
+    }
   };
 
   // Exact 5 Steps from Live Website
@@ -56,14 +79,43 @@ export default function AllOn4Process() {
           gap: clamp(0.75rem, 1.5vw, 1.25rem);
           margin-bottom: clamp(2rem, 4vw, 3rem);
         }
+        .sc-process-mobile-nav {
+          display: none;
+        }
         @media (max-width: 1024px) {
           .sc-process-grid {
             grid-template-columns: repeat(3, 1fr);
           }
         }
-        @media (max-width: 680px) {
+        @media (max-width: 768px) {
           .sc-process-grid {
-            grid-template-columns: 1fr;
+            display: flex !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch !important;
+            gap: 0.85rem !important;
+            margin-left: -1.25rem !important;
+            margin-right: -1.25rem !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+            padding-bottom: 0.85rem !important;
+            margin-bottom: 0.85rem !important;
+            scrollbar-width: none !important;
+          }
+          .sc-process-grid::-webkit-scrollbar {
+            display: none !important;
+          }
+          .sc-process-card {
+            flex: 0 0 84% !important;
+            max-width: 310px !important;
+            min-width: 270px !important;
+            scroll-snap-align: start !important;
+          }
+          .sc-process-mobile-nav {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem !important;
           }
         }
         .sc-acc-btn-proc {
@@ -123,11 +175,16 @@ export default function AllOn4Process() {
           </p>
         </div>
 
-        {/* 5-Step Cards (Verbatim text - Inline Number & Heading) */}
-        <div className="sc-process-grid">
+        {/* 5-Step Cards (Desktop Grid / Mobile Slider) */}
+        <div
+          ref={processGridRef}
+          onScroll={handleProcessScroll}
+          className="sc-process-grid"
+        >
           {steps.map((st) => (
             <div
               key={st.num}
+              className="sc-process-card"
               style={{
                 backgroundColor: "#ffffff",
                 borderRadius: "14px",
@@ -179,6 +236,33 @@ export default function AllOn4Process() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Mobile Slider Indicator Dots & Swipe Hint */}
+        <div className="sc-process-mobile-nav">
+          <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+            {steps.map((st, idx) => (
+              <button
+                key={st.num}
+                type="button"
+                onClick={() => scrollToStep(idx)}
+                aria-label={`Go to step ${st.num}`}
+                style={{
+                  width: activeStep === idx ? "22px" : "8px",
+                  height: "8px",
+                  borderRadius: "4px",
+                  backgroundColor: activeStep === idx ? "#E86337" : "#DCD6CD",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  transition: "all 0.25s ease",
+                }}
+              />
+            ))}
+          </div>
+          <span style={{ fontSize: "0.78rem", color: "#888", fontFamily: "var(--font-assistant)", marginLeft: "0.75rem" }}>
+            Swipe for all 5 steps →
+          </span>
         </div>
 
         {/* ─── ACCORDIONS: RECOVERY, BONE LOSS, RISKS & WHY CHOOSE ─── */}

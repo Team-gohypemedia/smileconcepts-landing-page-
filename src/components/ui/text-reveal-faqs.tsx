@@ -105,53 +105,54 @@ export default function FAQs({
  
 export const BlurredStagger = ({
   text = "built by ruixen.com",
+  className = "",
 }: {
   text: string;
+  className?: string;
 }) => {
-  const headingText = text;
- 
+  const words = text.split(" ");
+
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.015,
+        staggerChildren: 0.016,
       },
     },
   };
- 
-  const letterAnimation = {
+
+  const wordAnimation = {
     hidden: {
       opacity: 0,
-      filter: "blur(10px)",
+      filter: "blur(8px)",
+      y: 3,
     },
     show: {
       opacity: 1,
       filter: "blur(0px)",
+      y: 0,
     },
   };
- 
+
   return (
-    <>
-      <div className="w-full">
-        <motion.p
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="text-base leading-relaxed break-words whitespace-normal"
+    <motion.p
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className={className || "leading-relaxed break-words"}
+      style={{ margin: 0 }}
+    >
+      {words.map((word, index) => (
+        <motion.span
+          key={index}
+          variants={wordAnimation}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          style={{ display: "inline-block", marginRight: "0.26em" }}
         >
-          {headingText.split("").map((char, index) => (
-            <motion.span
-              key={index}
-              variants={letterAnimation}
-              transition={{ duration: 0.3 }}
-              className="inline-block"
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          ))}
-        </motion.p>
-      </div>
-    </>
+          {word}
+        </motion.span>
+      ))}
+    </motion.p>
   );
 };
