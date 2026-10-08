@@ -54,10 +54,11 @@ export default function Affiliations() {
         <h3
           style={{
             fontFamily: "var(--font-prata)",
-            fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)",
+            fontSize: "clamp(1.12rem, 3.2vw, 1.75rem)",
             color: "#231F20",
             fontWeight: 400,
             letterSpacing: "-0.01em",
+            lineHeight: 1.25,
           }}
         >
           Our Accreditations &amp; Professional Affiliations

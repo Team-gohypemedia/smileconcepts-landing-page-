@@ -568,55 +568,42 @@ export default function CTABanner() {
           >
             <p
               style={{
-                color: "rgba(255,255,255,0.85)",
-                fontSize: "clamp(0.72rem, 1.8vw, 0.82rem)",
-                letterSpacing: "0.28em",
+                color: "#ffffff",
+                fontSize: "0.82rem",
+                letterSpacing: "0.22em",
                 textTransform: "uppercase",
                 marginBottom: "0.4rem",
                 fontFamily: "var(--font-assistant)",
                 fontWeight: 700,
+                opacity: 0.9,
               }}
             >
-              Take The Step
+              Consultation &amp; Assessment
             </p>
 
             <h2
               style={{
                 fontFamily: "var(--font-prata)",
                 fontWeight: 400,
-                fontSize: "clamp(2rem, 3.8vw, 3.2rem)",
+                fontSize: "clamp(1.4rem, 4.8vw, 2.8rem)",
                 color: "#fff",
-                lineHeight: 1.15,
-                marginBottom: "0.35rem",
+                lineHeight: 1.2,
+                marginBottom: "0.5rem",
                 letterSpacing: "-0.01em",
               }}
             >
-              Call Smile Concepts.
+              Book an All on 4 Consultation in Sydney
             </h2>
-
-            <p
-              style={{
-                fontFamily: "var(--font-prata)",
-                fontSize: "clamp(1.05rem, 2vw, 1.3rem)",
-                color: "#ffffff",
-                lineHeight: 1.35,
-                marginBottom: "0.6rem",
-                fontStyle: "italic",
-                opacity: 0.95,
-              }}
-            >
-              A smile can open doors and change lives.
-            </p>
 
             <a
               href="tel:0292677777"
               style={{
                 fontFamily: "var(--font-prata)",
-                fontSize: "clamp(1.9rem, 3.2vw, 2.6rem)",
+                fontSize: "clamp(1.35rem, 4.2vw, 2.2rem)",
                 color: "#ffffff",
                 textDecoration: "none",
                 fontWeight: 400,
-                marginBottom: "0.6rem",
+                marginBottom: "0.75rem",
                 display: "inline-block",
                 letterSpacing: "0.02em",
                 transition: "opacity 0.2s ease",
@@ -629,16 +616,16 @@ export default function CTABanner() {
 
             <p
               style={{
-                color: "rgba(255,255,255,0.9)",
+                color: "rgba(255,255,255,0.92)",
                 fontFamily: "var(--font-assistant)",
                 fontWeight: 300,
-                fontSize: "clamp(0.88rem, 1.8vw, 0.98rem)",
+                fontSize: "clamp(0.84rem, 2.6vw, 0.94rem)",
                 lineHeight: 1.6,
-                maxWidth: "480px",
+                maxWidth: "520px",
                 margin: "0 0 0.85rem 0",
               }}
             >
-              All on 4 Dental Implants procedure was never this easy! Call (02) 9267 7777 and book your appointment with Dr. Manish Shah and Dr. Kinnar Shah at 307 Pitt St, Sydney CBD.
+              If you&apos;re considering All on 4 dental implants (full arch) in Sydney, or exploring options for full arch dental implants Sydney wide, the first step is understanding your options. Our team will assess your oral health, discuss your concerns, and explain the most appropriate treatment options for your individual circumstances, including a clear picture of your All on 4 dental implants cost before you commit to anything. Whether you&apos;re exploring alternatives to dentures or looking for a fixed solution for failing teeth, we&apos;re here to help you make an informed decision with clear advice and personalised care.
             </p>
           </motion.div>
 

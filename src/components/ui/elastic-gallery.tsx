@@ -276,11 +276,11 @@ export function ElasticGallery({
                   <h3
                     style={{
                       fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: isMobile ? "1.35rem" : "clamp(1.6rem, 2.4vw, 2.4rem)",
+                      fontSize: isMobile ? "1.15rem" : "clamp(1.5rem, 2.4vw, 2.4rem)",
                       fontWeight: 800,
                       color: "#ffffff",
                       textTransform: "uppercase",
-                      lineHeight: 1.15,
+                      lineHeight: 1.18,
                       margin: "2px 0 0 0",
                       letterSpacing: "0.06em",
                       textShadow: "0 2px 8px rgba(0,0,0,0.6)",
@@ -294,7 +294,7 @@ export function ElasticGallery({
                     <p
                       style={{
                         fontFamily: "var(--font-assistant), sans-serif",
-                        fontSize: isMobile ? "0.82rem" : "0.92rem",
+                        fontSize: isMobile ? "0.8rem" : "0.92rem",
                         color: "rgba(255, 255, 255, 0.78)",
                         lineHeight: 1.4,
                         margin: "1px 0 2px",

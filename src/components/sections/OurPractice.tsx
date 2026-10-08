@@ -77,7 +77,7 @@ export default function OurPractice() {
         <p
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
+            fontSize: "clamp(1.65rem, 5vw, 3.4rem)",
             color: "#E86337",
             fontWeight: 600,
             fontStyle: "italic",
@@ -94,12 +94,12 @@ export default function OurPractice() {
         <h2
           style={{
             fontFamily: "var(--font-assistant), 'Helvetica Neue', Arial, sans-serif",
-            fontSize: "clamp(2.8rem, 7.5vw, 6.2rem)",
+            fontSize: "clamp(2rem, 7vw, 5.8rem)",
             fontWeight: 800,
             color: "rgba(20, 24, 38, 0.05)",
             letterSpacing: "-0.02em",
             lineHeight: 0.95,
-            margin: "-1.5rem 0 0 0",
+            margin: "clamp(-1.4rem, -2.5vw, -0.9rem) 0 0 0",
             position: "relative",
             zIndex: 1,
             userSelect: "none",

@@ -38,10 +38,10 @@ const doctors = [
   {
     id: "manish",
     name: "Dr. Manish Shah",
-    registrationText: "Registered Dental Practitioner | Registered Medical Practitioner",
+    registrationText: "Registered Dental & Medical Practitioner · AHPRA DEN0001361239 | MED0001361238",
     registrationUrl: "https://www.ahpra.gov.au/",
     img: images.team.drManishShah,
-    qualifications: "BDS, MBBS, MMED (Sleep Medicine)",
+    qualifications: "BDS (Hons), MBBS, MMED (Sleep Medicine), University of Sydney",
     certifications: [
       "Cosmetic & Implant Dentistry",
       "TMJ & Craniofacial Pain",
@@ -53,9 +53,9 @@ const doctors = [
       { name: "LinkedIn", url: "https://au.linkedin.com/in/drmanishshah", icon: <LinkedinIcon /> },
     ],
     summaryBio:
-      "Dr. Manish Shah has over 25 years of experience in comprehensive restorative, full-arch implant, and cosmetic dentistry. Following his Honours degree in Dentistry (1998), he completed his Medicine degree (2005) at the University of Sydney.",
+      "Dr Manish Shah is both a registered dentist and a registered medical practitioner. He graduated in Dentistry with honours from the University of Sydney in 1998, completed his medical degree in 2005, and holds a Master of Medicine in Sleep Medicine. With more than 25 years in restorative and cosmetic dentistry, he brings a rare dual clinical perspective to full arch implant treatment and patient comfort.",
     extraBio: [
-      "With a special interest in Craniofacial Pain and Sleep Disorders, and Functional, Anti-Aging and Regenerative Medicine, Dr Manish has also completed a Master’s in Medicine in Sleep Medicine (University of Sydney).",
+      "With a special interest in Craniofacial Pain and Sleep Disorders, and Functional, Anti-Aging and Regenerative Medicine, Dr Manish brings a rare dual clinical perspective to full-arch implant surgery and patient comfort.",
     ],
     expertiseTitle: "EXPERTISE",
     expertise: [
@@ -81,10 +81,10 @@ const doctors = [
   {
     id: "kinnar",
     name: "Dr. Kinnar Shah",
-    registrationText: "Registered Dental Practitioner",
+    registrationText: "Registered Dental Practitioner · AHPRA DEN0001309395",
     registrationUrl: "https://www.ahpra.gov.au/",
     img: images.team.drKinnarShah,
-    qualifications: "BDS (University of Glasgow)",
+    qualifications: "BDS, University of Glasgow",
     certifications: [
       "Certified High Performance Coach",
       "Certified Gallup Strengths Coach",
@@ -96,7 +96,7 @@ const doctors = [
       { name: "X", url: "https://twitter.com/drkinnarshah", icon: <XTwitterIcon /> },
     ],
     summaryBio:
-      "Dr. Kinnar Shah is a world-renowned expert in advanced cosmetic, implant, and full-mouth rehabilitation dentistry. With over two decades of clinical mastery, he creates smiles that are as functionally predictable as they are stunning.",
+      "Dr Kinnar Shah completed his dental training in Glasgow in 2000 and has more than 25 years of experience in implant, cosmetic and full mouth rehabilitation dentistry. He works with digitally guided implant techniques and is an educator who trains other dentists in advanced implant and full mouth rehabilitation.",
     extraBio: [
       "Specialising in digitally guided and advanced technology to achieve precise and predictable results for implants and comprehensive full-mouth rehabilitations, Dr. Kinnar Shah utilises cutting-edge methods to deliver life-changing outcomes tailored to the unique needs of each patient. His commitment to perfection ensures not only exceptional aesthetics but also long-term functionality and oral health.",
       "Recognised globally for his empathetic and patient-focused approach, Dr. Kinnar Shah is a pioneer in understanding the emotional needs and aspirations of those he treats. His advanced expertise in communication allows him to connect deeply with his patients, crafting bespoke treatment plans that align with their goals and enhance their confidence.",
@@ -267,23 +267,6 @@ export default function Team() {
 
       <div style={{ maxWidth: "1520px", margin: "0 auto", padding: "0 clamp(1rem, 3.5vw, 3rem)" }}>
         {/* Section Header */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          style={{
-            textAlign: "center",
-            color: "#F47A4A",
-            fontSize: "0.82rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            marginBottom: "0.65rem",
-            fontFamily: "var(--font-assistant), sans-serif",
-            fontWeight: 700,
-          }}
-        >
-          Leading Dental Practice in the Heart of Sydney
-        </motion.p>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -292,15 +275,31 @@ export default function Team() {
             textAlign: "center",
             fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
             fontWeight: 400,
-            fontSize: "clamp(2rem, 3.8vw, 3.2rem)",
+            fontSize: "clamp(1.45rem, 5vw, 3.2rem)",
             color: "#1A1A24",
-            lineHeight: 1.18,
-            marginBottom: "0.75rem",
+            lineHeight: 1.2,
+            marginBottom: "0.65rem",
             letterSpacing: "-0.01em",
           }}
         >
-          Our Doctors
+          Meet Your Full Arch Implant Dentists
         </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          style={{
+            textAlign: "center",
+            maxWidth: "780px",
+            margin: "0 auto 1.5rem",
+            color: "#5E616B",
+            fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
+            lineHeight: 1.6,
+            fontFamily: "var(--font-assistant), sans-serif",
+          }}
+        >
+          Your treatment at Smile Concepts is led by two experienced clinicians who plan and deliver every case in-house at our practice in Sydney CBD.
+        </motion.p>
 
         <motion.div
           initial={{ scaleX: 0 }}
@@ -385,7 +384,7 @@ export default function Team() {
                         style={{
                           fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
                           fontWeight: 400,
-                          fontSize: "1.35rem",
+                          fontSize: "clamp(1.15rem, 3.2vw, 1.35rem)",
                           color: "#1A1A24",
                           margin: 0,
                         }}
@@ -735,6 +734,11 @@ export default function Team() {
             </button>
           </div>
         )}
+
+        {/* Live Website Closing Note */}
+        <div style={{ textAlign: "center", maxWidth: "840px", margin: "2.5rem auto 0", fontFamily: "var(--font-assistant)", fontSize: "0.95rem", color: "#555", lineHeight: 1.6 }}>
+          Together, Dr Manish Shah and Dr Kinnar Shah have trained on and worked with most of the world&apos;s leading implant systems, and regularly take on revision cases referred from other clinics and from overseas.
+        </div>
       </div>
     </section>
   );

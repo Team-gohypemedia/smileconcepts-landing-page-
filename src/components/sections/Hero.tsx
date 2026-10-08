@@ -25,13 +25,13 @@ const PHRASES = [
   },
   {
     id: 2,
-    text: "The Best All on Four Dental Implants Sydney",
+    text: "Full arch (All on X) Fixed Teeth, Tailored To Your Anatomy",
     startPct: 0.36,
     endPct: 0.64,
   },
   {
     id: 3,
-    text: "Painless dental implants with fixed teeth in 1 to 3 days",
+    text: "Fixed teeth in a day · From $18,000 per arch",
     startPct: 0.68,
     endPct: 0.96,
   },

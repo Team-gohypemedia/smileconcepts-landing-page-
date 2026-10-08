@@ -149,12 +149,12 @@ export default function Testimonials() {
           <h2
             style={{
               fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
-              fontSize: "clamp(2rem, 3.8vw, 3.3rem)",
+              fontSize: "clamp(1.45rem, 5vw, 3.2rem)",
               color: "#11121E",
               fontWeight: 400,
-              lineHeight: 1.18,
+              lineHeight: 1.2,
               letterSpacing: "-0.01em",
-              margin: 0,
+              margin: "0 0 0.5rem 0",
             }}
           >
             Real Stories, Real Smiles in Sydney
@@ -163,15 +163,15 @@ export default function Testimonials() {
           <p
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "clamp(0.95rem, 1.25vw, 1.1rem)",
+              fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
               color: "#555869",
-              lineHeight: 1.65,
+              lineHeight: 1.62,
               maxWidth: "680px",
-              fontWeight: 300,
+              fontWeight: 400,
               margin: 0,
             }}
           >
-            Discover how Dr. Manish Shah and Dr. Kinnar Shah have transformed thousands of lives with painless All-on-4 dental implants at our Sydney CBD centre.
+            Smile Concepts is an award-winning dental practice in Sydney CBD with 675+ Google reviews. Read what our patients say on Google.
           </p>
         </motion.div>
 

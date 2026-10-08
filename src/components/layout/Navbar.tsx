@@ -14,8 +14,10 @@ interface NavLinkItem {
 
 const navLinks: NavLinkItem[] = [
   { label: "Overview", href: "#overview" },
+  { label: "Cost & Finance", href: "#cost" },
   { label: "Procedure", href: "#procedure" },
   { label: "Before & After", href: "#transformations" },
+  { label: "Doctors", href: "#team" },
   { label: "FAQ", href: "#faq" },
 ];
 

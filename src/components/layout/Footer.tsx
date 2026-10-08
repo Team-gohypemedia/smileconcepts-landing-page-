@@ -8,33 +8,27 @@ import { Phone, Mail, MapPin, ArrowUp, ChevronLeft, ChevronRight } from "lucide-
 const transformationCards = [
   {
     label: "UPPER & LOWER VENEERS",
-    before: "/assets/before-after/all-1.1.jpg",
-    after: "/assets/before-after/all-1.2.jpg",
+    image: "/assets/footer-cases/card-1.png",
   },
   {
     label: "ENHANCEMENT",
-    before: "/assets/before-after/All-2.1.jpg",
-    after: "/assets/before-after/All-2.2.jpg",
+    image: "/assets/footer-cases/card-2.png",
   },
   {
     label: "CHIPPED TEETH",
-    before: "/assets/before-after/all-3.1.jpg",
-    after: "/assets/before-after/all-3.2.jpg",
+    image: "/assets/footer-cases/card-3.png",
   },
   {
     label: "MISSING FRONT TEETH",
-    before: "/assets/before-after/all-5.1.jpg",
-    after: "/assets/before-after/all-5.2.jpg",
+    image: "/assets/footer-cases/card-4.png",
   },
   {
     label: "INVISALIGN",
-    before: "/assets/before-after/all-4.1.jpg",
-    after: "/assets/before-after/all-4.2.jpg",
+    image: "/assets/footer-cases/card-5.png",
   },
   {
     label: "GUMMY SMILE + WORN TEETH",
-    before: "/assets/before-after/all-8.1.jpg",
-    after: "/assets/before-after/all-8.2.jpg",
+    image: "/assets/footer-cases/card-6.png",
   },
 ];
 
@@ -301,7 +295,7 @@ export default function Footer() {
         }
       `}</style>
 
-      {/* ─── 1A. DESKTOP/TABLET: 6 Transformation Cards with White Borders ─── */}
+      {/* ─── 1A. DESKTOP/TABLET: 6 Transformation Cards with White Borders (Exact Reference) ─── */}
       <div className="sc-live-footer-bna-grid">
         {transformationCards.map((card) => (
           <div
@@ -309,61 +303,20 @@ export default function Footer() {
             style={{
               position: "relative",
               border: "2px solid #ffffff",
-              aspectRatio: "1.08 / 1",
+              aspectRatio: "1 / 1",
               overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
               backgroundColor: "#111111",
+              borderRadius: "2px",
             }}
           >
-            {/* Top Image: Before */}
-            <div style={{ position: "relative", width: "100%", height: "50%", overflow: "hidden" }}>
-              <Image
-                src={card.before}
-                alt={`${card.label} Before`}
-                fill
-                sizes="(max-width: 992px) 33vw, 17vw"
-                style={{ objectFit: "cover", objectPosition: "center" }}
-              />
-            </div>
-
-            {/* Middle Label Banner */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                right: 0,
-                transform: "translateY(-50%)",
-                backgroundColor: "rgba(0, 0, 0, 0.72)",
-                color: "#ffffff",
-                fontSize: "clamp(8px, 0.65vw, 10px)",
-                fontWeight: 700,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                textAlign: "center",
-                padding: "3px 4px",
-                zIndex: 2,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                fontFamily: "var(--font-assistant), sans-serif",
-                pointerEvents: "none",
-              }}
-            >
-              {card.label}
-            </div>
-
-            {/* Bottom Image: After */}
-            <div style={{ position: "relative", width: "100%", height: "50%", overflow: "hidden" }}>
-              <Image
-                src={card.after}
-                alt={`${card.label} After`}
-                fill
-                sizes="(max-width: 992px) 33vw, 17vw"
-                style={{ objectFit: "cover", objectPosition: "center" }}
-              />
-            </div>
+            <Image
+              src={card.image}
+              alt={card.label}
+              fill
+              quality={95}
+              sizes="(max-width: 992px) 33vw, 17vw"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
           </div>
         ))}
       </div>
@@ -399,6 +352,7 @@ export default function Footer() {
               border: "2px solid #ffffff",
               backgroundColor: "#111111",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.7)",
+              borderRadius: "2px",
             }}
           >
             <div
@@ -415,58 +369,17 @@ export default function Footer() {
                     minWidth: "100%",
                     width: "100%",
                     position: "relative",
-                    aspectRatio: "1.1 / 1",
-                    display: "flex",
-                    flexDirection: "column",
+                    aspectRatio: "1 / 1",
                   }}
                 >
-                  {/* Top Image: Before */}
-                  <div style={{ position: "relative", width: "100%", height: "50%", overflow: "hidden" }}>
-                    <Image
-                      src={card.before}
-                      alt={`${card.label} Before`}
-                      fill
-                      sizes="320px"
-                      style={{ objectFit: "cover", objectPosition: "center" }}
-                    />
-                  </div>
-
-                  {/* Middle Label Banner */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: 0,
-                      right: 0,
-                      transform: "translateY(-50%)",
-                      backgroundColor: "rgba(0, 0, 0, 0.75)",
-                      color: "#ffffff",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      letterSpacing: "0.05em",
-                      textTransform: "uppercase",
-                      textAlign: "center",
-                      padding: "4px",
-                      zIndex: 2,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      fontFamily: "var(--font-assistant), sans-serif",
-                    }}
-                  >
-                    {card.label}
-                  </div>
-
-                  {/* Bottom Image: After */}
-                  <div style={{ position: "relative", width: "100%", height: "50%", overflow: "hidden" }}>
-                    <Image
-                      src={card.after}
-                      alt={`${card.label} After`}
-                      fill
-                      sizes="320px"
-                      style={{ objectFit: "cover", objectPosition: "center" }}
-                    />
-                  </div>
+                  <Image
+                    src={card.image}
+                    alt={card.label}
+                    fill
+                    quality={95}
+                    sizes="320px"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
                 </div>
               ))}
             </div>
@@ -513,6 +426,7 @@ export default function Footer() {
         </div>
       </div>
 
+
       {/* ─── 2. MIDDLE 4 COLUMNS (Side-by-Side on Mobile for Information & Services) ─── */}
       <div className="sc-live-footer-cols">
         {/* Column 1: Contact Us */}
@@ -521,9 +435,9 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               color: "#E26A2C",
-              fontSize: "clamp(1.15rem, 1.4vw, 1.35rem)",
+              fontSize: "clamp(1.02rem, 2.5vw, 1.25rem)",
               fontWeight: 600,
-              margin: "0 0 1.25rem 0",
+              margin: "0 0 1rem 0",
               letterSpacing: "0.01em",
             }}
           >
@@ -572,9 +486,9 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               color: "#E26A2C",
-              fontSize: "clamp(1.15rem, 1.4vw, 1.35rem)",
+              fontSize: "clamp(1.02rem, 2.5vw, 1.25rem)",
               fontWeight: 600,
-              margin: "0 0 1.25rem 0",
+              margin: "0 0 1rem 0",
               letterSpacing: "0.01em",
             }}
           >
@@ -612,9 +526,9 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               color: "#E26A2C",
-              fontSize: "clamp(1.15rem, 1.4vw, 1.35rem)",
+              fontSize: "clamp(1.02rem, 2.5vw, 1.25rem)",
               fontWeight: 600,
-              margin: "0 0 1.25rem 0",
+              margin: "0 0 1rem 0",
               letterSpacing: "0.01em",
             }}
           >
@@ -651,9 +565,9 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               color: "#E26A2C",
-              fontSize: "clamp(1.15rem, 1.4vw, 1.35rem)",
+              fontSize: "clamp(1.02rem, 2.5vw, 1.25rem)",
               fontWeight: 600,
-              margin: "0 0 1.25rem 0",
+              margin: "0 0 1rem 0",
               letterSpacing: "0.01em",
             }}
           >

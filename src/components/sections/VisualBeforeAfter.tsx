@@ -203,11 +203,11 @@ export default function VisualBeforeAfter() {
             transition={{ delay: 0.1 }}
             style={{
               fontFamily: "var(--font-prata)",
-              fontSize: "clamp(2.1rem, 4vw, 3.4rem)",
+              fontSize: "clamp(1.5rem, 5.2vw, 3.4rem)",
               fontWeight: 400,
               color: "#11121E",
-              lineHeight: 1.15,
-              marginBottom: "1rem",
+              lineHeight: 1.18,
+              marginBottom: "0.85rem",
             }}
           >
             Before &amp; Afters
@@ -219,14 +219,13 @@ export default function VisualBeforeAfter() {
             transition={{ delay: 0.2 }}
             style={{
               fontFamily: "var(--font-assistant)",
-              fontSize: "1.05rem",
+              fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
               color: "#555869",
-              lineHeight: 1.7,
-              fontWeight: 300,
+              lineHeight: 1.62,
+              fontWeight: 400,
             }}
           >
-            A dedicated team, caring staff, experienced dentists, and top-rated infrastructure
-            make us the go-to place for the best All on 4 dental implants procedure in Sydney.
+            These are real patients treated at Smile Concepts. Every case is different. Results depend on your individual circumstances, and all surgical procedures carry risks.
           </motion.p>
         </div>
 
@@ -470,7 +469,7 @@ export default function VisualBeforeAfter() {
                   <h3
                     style={{
                       fontFamily: "var(--font-prata)",
-                      fontSize: "clamp(1.25rem, 2.2vw, 1.7rem)",
+                      fontSize: "clamp(1.08rem, 2.8vw, 1.6rem)",
                       fontWeight: 400,
                       color: "#11121E",
                       lineHeight: 1.25,
@@ -746,34 +745,45 @@ export default function VisualBeforeAfter() {
             className="sc-ba-footer"
             style={{
               display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: "column",
+              gap: "0.5rem",
               marginTop: "1.75rem",
               paddingTop: "1.25rem",
               borderTop: "1px solid #EDEDF2",
-              gap: "0.75rem",
             }}
           >
-            <span
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.82rem",
+                  color: "#7A7F92",
+                }}
+              >
+                Interactive Comparison &bull; High Precision Dental Implant &amp; Cosmetic Rehabilitation
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.82rem",
+                  color: "#F47A4A",
+                  fontWeight: 600,
+                }}
+              >
+                100% Genuine Clinical Transformations &bull; Sydney CBD
+              </span>
+            </div>
+            <p
               style={{
                 fontFamily: "var(--font-assistant)",
-                fontSize: "0.82rem",
-                color: "#7A7F92",
+                fontSize: "0.75rem",
+                color: "#8E93A4",
+                lineHeight: 1.45,
+                margin: "0.25rem 0 0",
               }}
             >
-              Interactive Comparison &bull; High Precision Dental Implant & Cosmetic Rehabilitation
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-assistant)",
-                fontSize: "0.82rem",
-                color: "#F47A4A",
-                fontWeight: 600,
-              }}
-            >
-              100% Genuine Clinical Transformations &bull; Sydney CBD
-            </span>
+              <strong>Clinical Disclosure:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary. Any surgical or invasive procedure carries risks; before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.
+            </p>
           </div>
         </motion.div>
       </div>

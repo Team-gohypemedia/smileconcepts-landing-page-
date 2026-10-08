@@ -9,14 +9,14 @@ export default function VisualStory() {
       <HeroSection
         title={
           <>
-            The Best All on Four <br />
-            <span style={{ color: "#F47A4A" }}>Dental Implants Sydney</span>
+            All on 4 Dental Implants <br />
+            <span style={{ color: "#F47A4A" }}>in Sydney</span>
           </>
         }
-        subtitle="Enjoy the Smile Concepts Difference: Painless dental implants with our All Teeth On 4 Implants dentistry services in Sydney. With over 40 years of continuous surgical excellence, cutting-edge 3D bone diagnostics, and in-house digital prosthetics, we replace failing or missing teeth with a full, permanent smile in as little as 1 to 3 days."
+        subtitle="Full arch (All on X) Fixed Teeth, Tailored To Your Anatomy, From $18,000 Per Arch. All on 4 dental implants replace a full arch of missing or failing teeth with a set of fixed, natural-looking teeth that stay put. No plates, no adhesives, no slipping."
         callToAction={{
-          text: "EXPLORE THE PROCEDURE",
-          href: "#procedure",
+          text: "COMPLETE MY SMILE",
+          href: "#cost",
         }}
         backgroundImage="/assets/visual-story/home-top-2020.jpg"
         contactInfo={{

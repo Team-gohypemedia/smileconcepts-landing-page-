@@ -245,10 +245,10 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               className="sc-hero2-title"
               style={{
                 fontFamily: "var(--font-prata)",
-                fontSize: "clamp(2rem, 3.6vw, 3.3rem)",
+                fontSize: "clamp(1.45rem, 5.5vw, 3.3rem)",
                 fontWeight: 400,
                 color: "#ffffff",
-                lineHeight: 1.15,
+                lineHeight: 1.18,
                 letterSpacing: "-0.01em",
                 margin: 0,
               }}
@@ -261,7 +261,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               variants={itemVariants}
               className="sc-hero2-divider"
               style={{
-                margin: "1.35rem 0 1.5rem 0",
+                margin: "1.2rem 0 1.35rem 0",
                 height: "3px",
                 width: "56px",
                 backgroundColor: "#F47A4A",
@@ -274,8 +274,8 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               className="sc-hero2-subtitle"
               style={{
                 fontFamily: "var(--font-assistant)",
-                fontSize: "clamp(0.95rem, 1.1vw, 1.05rem)",
-                lineHeight: 1.72,
+                fontSize: "clamp(0.88rem, 2.8vw, 1.05rem)",
+                lineHeight: 1.68,
                 color: "rgba(255, 255, 255, 0.78)",
                 maxWidth: "520px",
                 marginBottom: "2rem",
