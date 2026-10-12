@@ -23,6 +23,11 @@ export default function AllOn4Process() {
 
   const scrollToStep = (idx: number) => {
     if (!processGridRef.current) return;
+    if (idx === 0) {
+      processGridRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      setActiveStep(0);
+      return;
+    }
     const cards = processGridRef.current.children;
     if (cards[idx]) {
       (cards[idx] as HTMLElement).scrollIntoView({
@@ -76,29 +81,46 @@ export default function AllOn4Process() {
         .sc-process-grid {
           display: grid;
           grid-template-columns: repeat(6, 1fr);
-          gap: clamp(1rem, 2vw, 1.4rem);
+          gap: clamp(1.15rem, 2.2vw, 1.5rem);
           margin-bottom: clamp(2rem, 4vw, 3rem);
         }
         .sc-process-card {
+          position: relative;
           background-color: #ffffff;
-          border-radius: 16px;
-          padding: 1.5rem 1.2rem;
+          border-radius: 20px;
+          padding: 1.85rem 1.6rem 1.65rem;
           border: 1px solid #ECE7DE;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
-          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+          overflow: hidden;
+        }
+        .sc-process-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #E86337 0%, rgba(232, 99, 55, 0.3) 100%);
+          opacity: 0.85;
+          transition: opacity 0.25s ease, height 0.25s ease;
         }
         .sc-process-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-          border-color: #DFD8CD;
+          transform: translateY(-5px);
+          box-shadow: 0 18px 38px -6px rgba(232, 99, 55, 0.1), 0 8px 16px -2px rgba(0, 0, 0, 0.04);
+          border-color: rgba(232, 99, 55, 0.35);
+        }
+        .sc-process-card:hover::before {
+          opacity: 1;
+          height: 4px;
         }
         .sc-process-card-1 { grid-column: span 2; }
         .sc-process-card-2 { grid-column: span 2; }
         .sc-process-card-3 { grid-column: span 2; }
-        .sc-process-card-4 { grid-column: 2 / span 2; }
-        .sc-process-card-5 { grid-column: 4 / span 2; }
+        .sc-process-card-4 { grid-column: span 3; }
+        .sc-process-card-5 { grid-column: span 3; }
 
         .sc-process-mobile-nav {
           display: none;
@@ -126,13 +148,14 @@ export default function AllOn4Process() {
             display: flex !important;
             overflow-x: auto !important;
             scroll-snap-type: x mandatory !important;
+            scroll-padding-left: 1.65rem !important;
             -webkit-overflow-scrolling: touch !important;
-            gap: 0.9rem !important;
+            gap: 1rem !important;
             margin-left: -1.25rem !important;
             margin-right: -1.25rem !important;
-            padding-left: 1.25rem !important;
-            padding-right: 1.25rem !important;
-            padding-bottom: 0.85rem !important;
+            padding-left: 1.65rem !important;
+            padding-right: 1.65rem !important;
+            padding-bottom: 0.95rem !important;
             margin-bottom: 0.85rem !important;
             scrollbar-width: none !important;
           }
@@ -141,9 +164,9 @@ export default function AllOn4Process() {
           }
           .sc-process-card {
             grid-column: auto !important;
-            flex: 0 0 85% !important;
+            flex: 0 0 84% !important;
             max-width: 320px !important;
-            min-width: 280px !important;
+            min-width: 275px !important;
             scroll-snap-align: start !important;
             padding: 1.35rem 1.2rem !important;
           }
@@ -250,35 +273,67 @@ export default function AllOn4Process() {
               key={st.num}
               className={`sc-process-card sc-process-card-${idx + 1}`}
             >
-              {/* Step Pill & Title on Same Line */}
+              {/* Elegant Watermark Step Number */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: "0.85rem",
+                  right: "1.25rem",
+                  fontFamily: "var(--font-prata), Georgia, serif",
+                  fontSize: "2.85rem",
+                  fontWeight: 400,
+                  lineHeight: 1,
+                  color: "rgba(28, 28, 30, 0.05)",
+                  pointerEvents: "none",
+                  userSelect: "none",
+                  letterSpacing: "-0.03em",
+                }}
+              >
+                0{st.num}
+              </div>
+
+              {/* Step Badge & Title on Same Line */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
-                  marginBottom: "0.85rem",
+                  gap: "0.55rem",
+                  marginBottom: "1rem",
+                  position: "relative",
+                  zIndex: 1,
                 }}
               >
                 <div
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
+                    gap: "0.35rem",
                     backgroundColor: "rgba(232, 99, 55, 0.08)",
                     border: "1px solid rgba(232, 99, 55, 0.22)",
                     borderRadius: "999px",
-                    padding: "0.18rem 0.52rem",
+                    padding: "0.22rem 0.55rem",
                     flexShrink: 0,
                   }}
                 >
                   <span
                     style={{
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      backgroundColor: "#E86337",
+                      display: "inline-block",
+                    }}
+                  />
+                  <span
+                    style={{
                       fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: "0.68rem",
+                      fontSize: "0.7rem",
                       fontWeight: 800,
-                      letterSpacing: "0.06em",
+                      letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       color: "#E86337",
-                      lineHeight: 1.2,
+                      lineHeight: 1,
                     }}
                   >
                     Step {st.num}
@@ -288,11 +343,11 @@ export default function AllOn4Process() {
                 <h3
                   style={{
                     fontFamily: "var(--font-prata), Georgia, serif",
-                    fontSize: "clamp(0.94rem, 1.25vw, 1.05rem)",
+                    fontSize: "clamp(0.98rem, 1.35vw, 1.15rem)",
                     fontWeight: 400,
                     color: "#1C1C1E",
                     margin: 0,
-                    lineHeight: 1.25,
+                    lineHeight: 1.3,
                   }}
                 >
                   {st.title}
@@ -303,14 +358,64 @@ export default function AllOn4Process() {
               <p
                 style={{
                   fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.93rem",
-                  color: "#505055",
-                  lineHeight: 1.65,
-                  margin: 0,
+                  fontSize: "0.95rem",
+                  color: "#525258",
+                  lineHeight: 1.7,
+                  margin: "0 0 1.25rem 0",
+                  position: "relative",
+                  zIndex: 1,
+                  flexGrow: 1,
                 }}
               >
                 {st.desc}
               </p>
+
+              {/* Discreet Step Progress Bar & Counter */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  paddingTop: "0.95rem",
+                  borderTop: "1px solid #F2ECE4",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.75rem",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-assistant), sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    color: "#9E9EA4",
+                  }}
+                >
+                  Step {st.num} of 5
+                </span>
+
+                <div
+                  style={{
+                    width: "55px",
+                    height: "4px",
+                    backgroundColor: "#EBE5DB",
+                    borderRadius: "999px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${((idx + 1) / 5) * 100}%`,
+                      background: "linear-gradient(90deg, #E86337 0%, #F47A4A 100%)",
+                      borderRadius: "999px",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>

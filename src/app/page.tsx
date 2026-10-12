@@ -33,23 +33,23 @@ export default function Home() {
         {/* 4. Real Patient Transformations (Before & After) */}
         <VisualBeforeAfter />
 
-        {/* 5. What are All on 4, All on X, Systems, Candidacy & Dentures Comparison */}
+        {/* 5. Real Patient Testimonials & Google Reviews */}
+        <Testimonials />
+
+        {/* 6. What are All on 4, All on X, Systems, Candidacy & Dentures Comparison */}
         <AllOn4Overview />
 
-        {/* 6. ★ THE FLAGSHIP COST & CONVERSIONS SECTION (2-Phase Pricing, Calculator, Accordions) */}
+        {/* 7. ★ THE FLAGSHIP COST & CONVERSIONS SECTION (2-Phase Pricing, Calculator, Accordions) */}
         <AllOn4Cost />
 
-        {/* 7. The 5-Step Treatment Process, Recovery Accordion & Clinical Risks */}
+        {/* 8. The 5-Step Treatment Process, Recovery Accordion & Clinical Risks */}
         <AllOn4Process />
 
-        {/* 8. Our Practice: Sydney CBD Clinic, In-House Tech & Free Parking */}
+        {/* 9. Our Practice: Sydney CBD Clinic, In-House Tech & Free Parking */}
         <OurPractice />
 
-        {/* 9. Meet Your Full Arch Implant Dentists (Dr Manish Shah & Dr Kinnar Shah) */}
+        {/* 10. Meet Your Full Arch Implant Dentists (Dr Manish Shah & Dr Kinnar Shah) */}
         <Team />
-
-        {/* 10. Real Patient Testimonials */}
-        <Testimonials />
 
         {/* 11. Clinical Affiliations & Implant Brand Standards */}
         <Affiliations />

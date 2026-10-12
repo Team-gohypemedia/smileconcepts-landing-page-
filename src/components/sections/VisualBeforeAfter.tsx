@@ -19,15 +19,15 @@ interface CaseItem {
 
 const cases: CaseItem[] = [
   {
-    id: "all-1",
-    category: "allon4",
-    categoryLabel: "All-on-4 Implants",
-    title: "Complete Upper & Lower Arch Restoration",
-    desc: "Complete fixed full-arch rehabilitation restoring natural biting function, tooth alignment, and smile aesthetics.",
+    id: "all-20",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Multi-Unit Precision Crown & Smile Realignment",
+    desc: "Replacing aged restorations and misaligned teeth with ultra-durable zirconia crowns designed to last.",
     location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: 1–3 Days",
-    before: "/assets/before-after/all-1.1.jpg",
-    after: "/assets/before-after/all-1.2.jpg",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-20.1.jpg",
+    after: "/assets/before-after/all-20.2.jpg",
   },
   {
     id: "all-2",
@@ -118,46 +118,26 @@ const cases: CaseItem[] = [
     after: "/assets/before-after/all-15.2.jpg",
   },
   {
-    id: "all-20",
-    category: "zirconia",
-    categoryLabel: "Zirconia Bridge",
-    title: "Multi-Unit Precision Crown & Smile Realignment",
-    desc: "Replacing aged restorations and misaligned teeth with ultra-durable zirconia crowns designed to last.",
+    id: "all-1",
+    category: "allon4",
+    categoryLabel: "All-on-4 Implants",
+    title: "Complete Upper & Lower Arch Restoration",
+    desc: "Complete fixed full-arch rehabilitation restoring natural biting function, tooth alignment, and smile aesthetics.",
     location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/all-20.1.jpg",
-    after: "/assets/before-after/all-20.2.jpg",
+    duration: "Timeframe: 1–3 Days",
+    before: "/assets/before-after/all-1.1.jpg",
+    after: "/assets/before-after/all-1.2.jpg",
   },
-];
-
-const categories = [
-  { id: "all", label: "All Cases" },
-  { id: "makeover", label: "Smile Makeovers" },
-  { id: "allon4", label: "All-on-4 Implants" },
-  { id: "fullarch", label: "Full Arch Rehabilitation" },
-  { id: "zirconia", label: "Zirconia Bridges" },
 ];
 
 export default function VisualBeforeAfter() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
-  const [activeCategory, setActiveCategory] = useState("all");
   const [selectedCaseId, setSelectedCaseId] = useState(cases[0].id);
 
-  const filteredCases = activeCategory === "all"
-    ? cases
-    : cases.filter((c) => c.category === activeCategory);
-
-  const activeCase = cases.find((c) => c.id === selectedCaseId) || filteredCases[0] || cases[0];
-
-  const handleCategoryClick = (catId: string) => {
-    setActiveCategory(catId);
-    const matching = catId === "all" ? cases : cases.filter((c) => c.category === catId);
-    if (matching.length > 0 && !matching.some((c) => c.id === selectedCaseId)) {
-      setSelectedCaseId(matching[0].id);
-    }
-  };
+  const filteredCases = cases;
+  const activeCase = cases.find((c) => c.id === selectedCaseId) || cases[0];
 
   return (
     <section
@@ -227,59 +207,6 @@ export default function VisualBeforeAfter() {
           >
             These are real patients treated at Smile Concepts. Every case is different. Results depend on your individual circumstances, and all surgical procedures carry risks.
           </motion.p>
-        </div>
-
-        {/* Category Navigation Pills */}
-        <div
-          className="sc-ba-pills-wrap"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "0.65rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                className="sc-ba-pill-btn"
-                onClick={() => handleCategoryClick(cat.id)}
-                style={{
-                  padding: "0.6rem 1.4rem",
-                  borderRadius: "999px",
-                  fontSize: "0.9rem",
-                  fontFamily: "var(--font-assistant)",
-                  fontWeight: 600,
-                  border: isActive
-                    ? "1px solid #F47A4A"
-                    : "1px solid #E2E4E8",
-                  backgroundColor: isActive ? "#F47A4A" : "#F4F5F7",
-                  color: isActive ? "#ffffff" : "#4A4D5E",
-                  cursor: "pointer",
-                  transition: "all 0.25s ease",
-                  boxShadow: isActive ? "0 4px 18px rgba(244, 122, 74, 0.3)" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#EAECEF";
-                    (e.currentTarget as HTMLElement).style.color = "#11121E";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "#F4F5F7";
-                    (e.currentTarget as HTMLElement).style.color = "#4A4D5E";
-                  }
-                }}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
         </div>
 
         {/* Main Showcase Card Container */}
@@ -353,20 +280,7 @@ export default function VisualBeforeAfter() {
                 gap: 1.25rem !important;
               }
             }
-            /* Mobile: pills grid 2-per-row */
             @media (max-width: 600px) {
-              .sc-ba-pills-wrap {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 0.5rem !important;
-                margin-bottom: 1.5rem !important;
-              }
-              .sc-ba-pill-btn {
-                width: 100% !important;
-                padding: 0.55rem 0.5rem !important;
-                font-size: 0.8rem !important;
-                text-align: center !important;
-              }
               .sc-ba-header {
                 margin-bottom: 1.5rem !important;
               }
@@ -719,7 +633,7 @@ export default function VisualBeforeAfter() {
                           textOverflow: "ellipsis",
                         }}
                       >
-                        Case 0{idx + 1}
+                        Case {String(idx + 1).padStart(2, "0")}
                       </div>
                       <div
                         style={{

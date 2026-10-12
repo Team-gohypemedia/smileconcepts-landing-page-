@@ -21,6 +21,11 @@ export default function AllOn4Cost() {
 
   const scrollToPhase = (idx: 0 | 1) => {
     if (!phasesGridRef.current) return;
+    if (idx === 0) {
+      phasesGridRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      setActivePhase(0);
+      return;
+    }
     const cards = phasesGridRef.current.children;
     if (cards[idx]) {
       (cards[idx] as HTMLElement).scrollIntoView({
@@ -90,19 +95,20 @@ export default function AllOn4Cost() {
             display: flex !important;
             overflow-x: auto !important;
             scroll-snap-type: x mandatory !important;
+            scroll-padding-left: 1.65rem !important;
             -webkit-overflow-scrolling: touch !important;
-            gap: 0.85rem !important;
+            gap: 1rem !important;
             margin: 1.5rem -1.25rem 0.65rem !important;
-            padding: 0.25rem 1.25rem 0.85rem !important;
+            padding: 0.35rem 1.65rem 1rem !important;
             scrollbar-width: none !important;
           }
           .sc-cost-phases-grid::-webkit-scrollbar {
             display: none !important;
           }
           .sc-cost-phase-card {
-            flex: 0 0 86% !important;
+            flex: 0 0 84% !important;
             max-width: 330px !important;
-            min-width: 285px !important;
+            min-width: 280px !important;
             scroll-snap-align: start !important;
             padding: 1.25rem 1.15rem !important;
           }
@@ -229,15 +235,21 @@ export default function AllOn4Cost() {
             border-radius: 8px !important;
           }
         }
+        @media (min-width: 640px) {
+          .sc-cost-main-title {
+            white-space: nowrap !important;
+          }
+        }
       `}</style>
 
       <div className="container-sc" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 1.25rem" }}>
         {/* Exact Section Heading & Intro from Live Website */}
-        <div style={{ maxWidth: "860px", margin: "0 auto 2.5rem", textAlign: "center" }}>
+        <div style={{ maxWidth: "1020px", margin: "0 auto 2.5rem", textAlign: "center" }}>
           <h2
+            className="sc-cost-main-title"
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.45rem, 5vw, 2.9rem)",
+              fontSize: "clamp(1.45rem, 3.8vw, 2.85rem)",
               color: "#1C1C1E",
               fontWeight: 400,
               lineHeight: 1.22,

@@ -114,6 +114,14 @@ export default function Testimonials() {
         }}
       />
 
+      <style>{`
+        @media (min-width: 640px) {
+          .sc-testimonials-title {
+            white-space: nowrap !important;
+          }
+        }
+      `}</style>
+
       <div style={{ maxWidth: "1520px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         {/* Section Header */}
         <motion.div
@@ -126,7 +134,7 @@ export default function Testimonials() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            maxWidth: "800px",
+            maxWidth: "1000px",
             margin: "0 auto 3rem",
             textAlign: "center",
             gap: "0.85rem",
@@ -147,9 +155,10 @@ export default function Testimonials() {
           </p>
 
           <h2
+            className="sc-testimonials-title"
             style={{
               fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
-              fontSize: "clamp(1.45rem, 5vw, 3.2rem)",
+              fontSize: "clamp(1.45rem, 3.8vw, 3rem)",
               color: "#11121E",
               fontWeight: 400,
               lineHeight: 1.2,
