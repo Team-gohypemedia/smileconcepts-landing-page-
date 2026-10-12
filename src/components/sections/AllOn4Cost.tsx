@@ -7,7 +7,7 @@ import { Plus, Minus, ArrowRight, Calculator, Phone, ChevronDown, ChevronUp } fr
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [readMoreCost, setReadMoreCost] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(true);
   const [activePhase, setActivePhase] = useState<0 | 1>(0);
   const phasesGridRef = useRef<HTMLDivElement>(null);
 
@@ -626,7 +626,7 @@ export default function AllOn4Cost() {
           </button>
 
           {/* Collapsible Content */}
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {isCalculatorOpen && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}

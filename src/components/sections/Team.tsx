@@ -186,14 +186,15 @@ export default function Team() {
           .sc-team-container {
             display: grid !important;
             grid-template-columns: 1fr 1fr !important;
-            gap: clamp(1.5rem, 3.5vw, 3rem) !important;
-            max-width: 1380px !important;
+            gap: clamp(1.5rem, 2.5vw, 2.25rem) !important;
+            max-width: 920px !important;
             margin: 0 auto !important;
             padding: 0 clamp(0.5rem, 2vw, 1.5rem) !important;
-            align-items: start !important;
+            align-items: stretch !important;
           }
           .sc-team-card {
             width: 100% !important;
+            height: 100% !important;
             min-width: unset !important;
             max-width: unset !important;
             display: flex !important;
@@ -341,7 +342,7 @@ export default function Team() {
                   transition: "box-shadow 0.35s ease, transform 0.35s ease",
                 }}
               >
-                {/* Doctor Image - 1:1 Square matches 1200x1200 & 750x750 source images to prevent bottom cropping */}
+                {/* Doctor Image - Natural 1:1 Square with full headspace and zero cropping */}
                 <div
                   style={{
                     position: "relative",
@@ -356,7 +357,7 @@ export default function Team() {
                     alt={doc.name}
                     fill
                     unoptimized={true}
-                    sizes="(max-width: 768px) 88vw, 650px"
+                    sizes="(max-width: 768px) 88vw, 460px"
                     style={{
                       objectFit: "cover",
                       objectPosition: "center",
@@ -461,7 +462,7 @@ export default function Team() {
                           flexWrap: "wrap",
                           gap: "0.35rem",
                           marginBottom: "0.75rem",
-                          minHeight: "2.5rem",
+                          minHeight: "3.4rem",
                           alignItems: "center",
                         }}
                       >
@@ -634,7 +635,7 @@ export default function Team() {
                     type="button"
                     onClick={() => toggleExpanded(doc.id)}
                     className="sc-read-more-btn"
-                    style={{ marginTop: "1.25rem" }}
+                    style={{ marginTop: "auto" }}
                   >
                     {isExpanded ? (
                       <>

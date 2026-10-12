@@ -34,7 +34,7 @@ export default function AllOn4Process() {
     }
   };
 
-  // Exact 5 Steps from Live Website
+  // Exact 5 Steps from Live Website (Preserved Verbatim)
   const steps = [
     {
       num: "1",
@@ -75,16 +75,50 @@ export default function AllOn4Process() {
       <style>{`
         .sc-process-grid {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          gap: clamp(0.75rem, 1.5vw, 1.25rem);
+          grid-template-columns: repeat(6, 1fr);
+          gap: clamp(1rem, 2vw, 1.4rem);
           margin-bottom: clamp(2rem, 4vw, 3rem);
         }
+        .sc-process-card {
+          background-color: #ffffff;
+          border-radius: 16px;
+          padding: 1.5rem 1.2rem;
+          border: 1px solid #ECE7DE;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
+          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .sc-process-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+          border-color: #DFD8CD;
+        }
+        .sc-process-card-1 { grid-column: span 2; }
+        .sc-process-card-2 { grid-column: span 2; }
+        .sc-process-card-3 { grid-column: span 2; }
+        .sc-process-card-4 { grid-column: 2 / span 2; }
+        .sc-process-card-5 { grid-column: 4 / span 2; }
+
         .sc-process-mobile-nav {
           display: none;
         }
         @media (max-width: 1024px) {
           .sc-process-grid {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.15rem !important;
+          }
+          .sc-process-card-1,
+          .sc-process-card-2,
+          .sc-process-card-3,
+          .sc-process-card-4 {
+            grid-column: span 1 !important;
+          }
+          .sc-process-card-5 {
+            grid-column: 1 / span 2 !important;
+            max-width: 540px !important;
+            margin: 0 auto !important;
+            width: 100% !important;
           }
         }
         @media (max-width: 768px) {
@@ -93,7 +127,7 @@ export default function AllOn4Process() {
             overflow-x: auto !important;
             scroll-snap-type: x mandatory !important;
             -webkit-overflow-scrolling: touch !important;
-            gap: 0.85rem !important;
+            gap: 0.9rem !important;
             margin-left: -1.25rem !important;
             margin-right: -1.25rem !important;
             padding-left: 1.25rem !important;
@@ -106,10 +140,12 @@ export default function AllOn4Process() {
             display: none !important;
           }
           .sc-process-card {
-            flex: 0 0 84% !important;
-            max-width: 310px !important;
-            min-width: 270px !important;
+            grid-column: auto !important;
+            flex: 0 0 85% !important;
+            max-width: 320px !important;
+            min-width: 280px !important;
             scroll-snap-align: start !important;
+            padding: 1.35rem 1.2rem !important;
           }
           .sc-process-mobile-nav {
             display: flex !important;
@@ -122,7 +158,7 @@ export default function AllOn4Process() {
           width: 100%;
           padding: 1.25rem 1.5rem;
           display: flex;
-          justifyContent: space-between;
+          justify-content: space-between;
           align-items: center;
           gap: 1rem;
           background: transparent;
@@ -148,15 +184,42 @@ export default function AllOn4Process() {
 
       <div className="container-sc" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 1.25rem" }}>
         {/* Exact Section Header from Live Website */}
-        <div style={{ maxWidth: "860px", margin: "0 auto clamp(1.8rem, 3.5vw, 2.75rem)", textAlign: "center" }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto clamp(2rem, 4vw, 3rem)", textAlign: "center" }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              backgroundColor: "rgba(232, 99, 55, 0.08)",
+              padding: "0.35rem 0.85rem",
+              borderRadius: "999px",
+              marginBottom: "0.95rem",
+              border: "1px solid rgba(232, 99, 55, 0.2)",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "#E86337",
+                fontFamily: "var(--font-assistant), sans-serif",
+              }}
+            >
+              Treatment Journey
+            </span>
+          </div>
+
           <h2
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.45rem, 5vw, 2.9rem)",
+              fontSize: "clamp(1.75rem, 4.2vw, 2.75rem)",
               color: "#1C1C1E",
               fontWeight: 400,
-              lineHeight: 1.22,
+              lineHeight: 1.25,
               marginBottom: "0.85rem",
+              textWrap: "balance",
             }}
           >
             Our 5-Step All on 4 and All on X Process
@@ -165,70 +228,84 @@ export default function AllOn4Process() {
           <p
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "clamp(0.88rem, 2.8vw, 1.05rem)",
-              lineHeight: 1.65,
+              fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)",
+              lineHeight: 1.6,
               color: "#5E616B",
-              margin: 0,
+              margin: "0 auto",
+              maxWidth: "680px",
             }}
           >
             From first scan to final smile, one team handles every stage in-house at Smile Concepts in Sydney.
           </p>
         </div>
 
-        {/* 5-Step Cards (Desktop Grid / Mobile Slider) */}
+        {/* 5-Step Cards (Desktop Balanced Grid / Mobile Slider) */}
         <div
           ref={processGridRef}
           onScroll={handleProcessScroll}
           className="sc-process-grid"
         >
-          {steps.map((st) => (
+          {steps.map((st, idx) => (
             <div
               key={st.num}
-              className="sc-process-card"
-              style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "14px",
-                padding: "1.25rem 1.15rem",
-                border: "1px solid #EAE5DC",
-                display: "flex",
-                flexDirection: "column",
-                transition: "box-shadow 0.2s ease",
-              }}
+              className={`sc-process-card sc-process-card-${idx + 1}`}
             >
-              <h3
+              {/* Step Pill & Title on Same Line */}
+              <div
                 style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  color: "#1C1C1E",
-                  margin: "0 0 0.55rem",
-                  lineHeight: 1.3,
                   display: "flex",
-                  alignItems: "baseline",
-                  gap: "0.45rem",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  marginBottom: "0.85rem",
                 }}
               >
-                <span
+                <div
                   style={{
-                    fontFamily: "var(--font-prata)",
-                    fontSize: "1.35rem",
-                    fontWeight: 700,
-                    color: "#E86337",
-                    lineHeight: 1,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    backgroundColor: "rgba(232, 99, 55, 0.08)",
+                    border: "1px solid rgba(232, 99, 55, 0.22)",
+                    borderRadius: "999px",
+                    padding: "0.18rem 0.52rem",
                     flexShrink: 0,
                   }}
                 >
-                  {st.num}.
-                </span>
-                <span>{st.title}</span>
-              </h3>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-assistant), sans-serif",
+                      fontSize: "0.68rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      color: "#E86337",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    Step {st.num}
+                  </span>
+                </div>
 
+                <h3
+                  style={{
+                    fontFamily: "var(--font-prata), Georgia, serif",
+                    fontSize: "clamp(0.94rem, 1.25vw, 1.05rem)",
+                    fontWeight: 400,
+                    color: "#1C1C1E",
+                    margin: 0,
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {st.title}
+                </h3>
+              </div>
+
+              {/* Description (Exact Verbatim from Website) */}
               <p
                 style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "0.86rem",
-                  color: "#555",
-                  lineHeight: 1.55,
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.93rem",
+                  color: "#505055",
+                  lineHeight: 1.65,
                   margin: 0,
                 }}
               >

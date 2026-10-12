@@ -111,7 +111,7 @@ export default function AllOn4Overview() {
           width: 100%;
           padding: 1.2rem 1.4rem;
           display: flex;
-          justifyContent: space-between;
+          justify-content: space-between;
           align-items: center;
           gap: 1rem;
           background: transparent;
