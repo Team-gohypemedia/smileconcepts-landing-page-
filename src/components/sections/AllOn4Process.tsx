@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight } from "lucide-react";
 
@@ -75,8 +76,55 @@ export default function AllOn4Process() {
         padding: "clamp(3.5rem, 6vw, 6rem) 0",
         backgroundColor: "#FAF9F6",
         position: "relative",
+        overflow: "hidden",
       }}
     >
+      {/* Background Banner Image with Luxury Overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          overflow: "hidden",
+          pointerEvents: "none",
+        }}
+      >
+        <Image
+          src="/assets/hero/background.jpg"
+          alt=""
+          fill
+          style={{
+            objectFit: "cover",
+            objectPosition: "center center",
+            opacity: 0.22,
+          }}
+          priority={false}
+          aria-hidden="true"
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, #FFFFFF 0%, rgba(250, 249, 246, 0.82) 15%, rgba(250, 249, 246, 0.90) 80%, #FFFFFF 100%)",
+          }}
+        />
+        {/* Subtle warm accent radial glow behind the cards */}
+        <div
+          style={{
+            position: "absolute",
+            top: "35%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "800px",
+            height: "450px",
+            background:
+              "radial-gradient(ellipse, rgba(232, 99, 55, 0.07) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+      </div>
+
       <style>{`
         .sc-process-grid {
           display: grid;
@@ -86,15 +134,17 @@ export default function AllOn4Process() {
         }
         .sc-process-card {
           position: relative;
-          background-color: #ffffff;
+          background-color: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(8px);
           border-radius: 20px;
           padding: 1.85rem 1.6rem 1.65rem;
           border: 1px solid #ECE7DE;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
           transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
           overflow: hidden;
+          z-index: 1;
         }
         .sc-process-card::before {
           content: "";
@@ -205,7 +255,16 @@ export default function AllOn4Process() {
         }
       `}</style>
 
-      <div className="container-sc" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 1.25rem" }}>
+      <div
+        className="container-sc"
+        style={{
+          maxWidth: "1120px",
+          margin: "0 auto",
+          padding: "0 1.25rem",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         {/* Exact Section Header from Live Website */}
         <div style={{ maxWidth: "860px", margin: "0 auto clamp(2rem, 4vw, 3rem)", textAlign: "center" }}>
           <div
@@ -273,33 +332,13 @@ export default function AllOn4Process() {
               key={st.num}
               className={`sc-process-card sc-process-card-${idx + 1}`}
             >
-              {/* Elegant Watermark Step Number */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  top: "0.85rem",
-                  right: "1.25rem",
-                  fontFamily: "var(--font-prata), Georgia, serif",
-                  fontSize: "2.85rem",
-                  fontWeight: 400,
-                  lineHeight: 1,
-                  color: "rgba(28, 28, 30, 0.05)",
-                  pointerEvents: "none",
-                  userSelect: "none",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                0{st.num}
-              </div>
-
-              {/* Step Badge & Title on Same Line */}
+              {/* Card Top Meta Row: Badge on Left, Watermark Number on Right */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.55rem",
-                  marginBottom: "1rem",
+                  justifyContent: "space-between",
+                  marginBottom: "1.1rem",
                   position: "relative",
                   zIndex: 1,
                 }}
@@ -308,12 +347,11 @@ export default function AllOn4Process() {
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.35rem",
+                    gap: "0.38rem",
                     backgroundColor: "rgba(232, 99, 55, 0.08)",
                     border: "1px solid rgba(232, 99, 55, 0.22)",
                     borderRadius: "999px",
-                    padding: "0.22rem 0.55rem",
-                    flexShrink: 0,
+                    padding: "0.24rem 0.65rem",
                   }}
                 >
                   <span
@@ -328,7 +366,7 @@ export default function AllOn4Process() {
                   <span
                     style={{
                       fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: "0.7rem",
+                      fontSize: "0.72rem",
                       fontWeight: 800,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
@@ -340,28 +378,46 @@ export default function AllOn4Process() {
                   </span>
                 </div>
 
-                <h3
+                <div
+                  aria-hidden="true"
                   style={{
                     fontFamily: "var(--font-prata), Georgia, serif",
-                    fontSize: "clamp(0.98rem, 1.35vw, 1.15rem)",
+                    fontSize: "1.85rem",
                     fontWeight: 400,
-                    color: "#1C1C1E",
-                    margin: 0,
-                    lineHeight: 1.3,
+                    lineHeight: 1,
+                    color: "rgba(28, 28, 30, 0.12)",
+                    letterSpacing: "-0.03em",
+                    userSelect: "none",
                   }}
                 >
-                  {st.title}
-                </h3>
+                  0{st.num}
+                </div>
               </div>
+
+              {/* Title with Full Width & Dedicated Row */}
+              <h3
+                style={{
+                  fontFamily: "var(--font-prata), Georgia, serif",
+                  fontSize: "clamp(1.15rem, 1.45vw, 1.3rem)",
+                  fontWeight: 400,
+                  color: "#1C1C1E",
+                  margin: "0 0 0.85rem 0",
+                  lineHeight: 1.32,
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                {st.title}
+              </h3>
 
               {/* Description (Exact Verbatim from Website) */}
               <p
                 style={{
                   fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.95rem",
+                  fontSize: "0.93rem",
                   color: "#525258",
-                  lineHeight: 1.7,
-                  margin: "0 0 1.25rem 0",
+                  lineHeight: 1.68,
+                  margin: "0 0 1.35rem 0",
                   position: "relative",
                   zIndex: 1,
                   flexGrow: 1,

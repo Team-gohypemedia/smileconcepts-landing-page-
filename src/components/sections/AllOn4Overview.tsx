@@ -3,57 +3,92 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Plus, Minus, Check, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Table,
+  Check,
+  Activity,
+  Lock,
+  Sparkles,
+  Utensils,
+  ShieldCheck,
+  Layers,
+  Smile,
+  Clock,
+} from "lucide-react";
+import AllOn4ScrollFeatures from "./AllOn4ScrollFeatures";
 
 export default function AllOn4Overview() {
-  const [openSection, setOpenSection] = useState<string | null>(null);
   const [readMoreIntro, setReadMoreIntro] = useState(false);
+  const [showComparisonTable, setShowComparisonTable] = useState(true);
 
-  const toggleSection = (id: string) => {
-    setOpenSection(openSection === id ? null : id);
-  };
-
-  // Exact Denture Comparison Table from Live Website
+  // Exact Denture Comparison Table from Live Website (Verbatim Copy Preserved)
   const comparisonData = [
     {
       feature: "Surgery Required",
+      icon: <Activity size={15} color="#E86337" />,
       allon4: "Yes",
+      allon4Badge: "Minimally Invasive",
       dentures: "Usually No",
+      denturesBadge: "Non-Surgical",
     },
     {
       feature: "Fixed in place",
+      icon: <Lock size={15} color="#E86337" />,
       allon4: "Yes",
+      allon4Badge: "Non-Removable",
       dentures: "No",
+      denturesBadge: "Removable Plate",
     },
     {
       feature: "Cleaning",
+      icon: <Sparkles size={15} color="#E86337" />,
       allon4: "Daily cleaning around and beneath the bridge; professional maintenance",
+      allon4Badge: "Brush Like Natural",
       dentures: "Removed daily for cleaning; periodic review or reline may be needed",
+      denturesBadge: "Soaking Cups",
     },
     {
       feature: "Stability when eating",
-      allon4: "Higher",
-      dentures: "May vary",
+      icon: <Utensils size={15} color="#E86337" />,
+      allon4: "Higher (up to 90% natural force)",
+      allon4Badge: "90% Bite Force",
+      dentures: "May vary / slips frequently",
+      denturesBadge: "Limited Force",
     },
     {
       feature: "Denture adhesives required",
+      icon: <ShieldCheck size={15} color="#E86337" />,
       allon4: "Usually not",
-      dentures: "Often",
+      allon4Badge: "Zero Adhesives",
+      dentures: "Often daily",
+      denturesBadge: "Sticky Glue Needed",
     },
     {
       feature: "Supported by implants",
-      allon4: "Yes",
+      icon: <Layers size={15} color="#E86337" />,
+      allon4: "Yes (4 to 6 titanium implants)",
+      allon4Badge: "Jawbone Anchored",
       dentures: "No",
+      denturesBadge: "Gum-Borne",
     },
     {
       feature: "Designed as a fixed solution",
-      allon4: "Yes",
-      dentures: "No",
+      icon: <Smile size={15} color="#E86337" />,
+      allon4: "Yes (Non-removable)",
+      allon4Badge: "Permanent Arch",
+      dentures: "No (Removable plate)",
+      denturesBadge: "Palate Covered",
     },
     {
       feature: "Treatment time",
-      allon4: "Surgical and healing stages",
+      icon: <Clock size={15} color="#E86337" />,
+      allon4: "Immediate teeth on Day 1, healing stage",
+      allon4Badge: "Day 1 Smile",
       dentures: "Usually shorter and non-surgical",
+      denturesBadge: "Lab Process",
     },
   ];
 
@@ -61,7 +96,6 @@ export default function AllOn4Overview() {
     <section
       id="overview"
       style={{
-        padding: "clamp(3.5rem, 6vw, 5.5rem) 0",
         backgroundColor: "#ffffff",
         position: "relative",
       }}
@@ -72,96 +106,101 @@ export default function AllOn4Overview() {
           grid-template-columns: 1.15fr 0.85fr;
           gap: clamp(1.5rem, 3.5vw, 3rem);
           align-items: center;
-          margin-bottom: clamp(2.5rem, 4.5vw, 3.5rem);
-        }
-        .sc-acc-split {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: clamp(1.25rem, 3vw, 2.5rem);
-          align-items: center;
-          padding-top: 0.5rem;
+          margin-bottom: clamp(2rem, 3.5vw, 3rem);
         }
         .sc-card-img {
           width: 100%;
           height: auto;
           display: block;
-          border-radius: 12px;
+          border-radius: 16px;
           border: 1px solid #ECE7DE;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
           object-fit: cover;
         }
-        .sc-overview-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-family: var(--font-assistant), sans-serif;
-          font-size: 0.92rem;
-          margin-top: 0.75rem;
-        }
-        .sc-overview-table th, .sc-overview-table td {
-          padding: 0.85rem 1rem;
-          text-align: left;
+        .sc-comp-row {
+          display: grid;
+          grid-template-columns: 28% 36% 36%;
+          align-items: center;
+          padding: 0.72rem 1rem;
           border-bottom: 1px solid #ECE7DE;
+          transition: background-color 0.2s ease;
         }
-        .sc-overview-table th {
-          background-color: #F4EFEB;
-          color: #1C1C1E;
-          font-weight: 700;
+        .sc-comp-row:last-child {
+          border-bottom: none;
         }
-        .sc-acc-btn {
-          width: 100%;
-          padding: 1.2rem 1.4rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          text-align: left;
-        }
-        .sc-acc-btn h3 {
-          font-size: clamp(1.05rem, 3.2vw, 1.25rem) !important;
-          line-height: 1.35 !important;
-        }
-        .sc-acc-icon {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: all 0.2s ease;
+        .sc-comp-row:hover {
+          background-color: rgba(232, 99, 55, 0.03);
         }
         @media (max-width: 820px) {
-          .sc-hero-split, .sc-acc-split {
+          .sc-hero-split {
             grid-template-columns: 1fr !important;
-            gap: 1.25rem !important;
+            gap: 1.5rem !important;
+          }
+          .sc-comp-row {
+            grid-template-columns: 1fr !important;
+            gap: 0.45rem !important;
+            padding: 0.85rem 0.9rem !important;
+          }
+          .sc-comp-header {
+            display: none !important;
           }
         }
       `}</style>
 
-      <div className="container-sc" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 1.25rem" }}>
-        {/* ─── MAIN SECTION INTRO: WHAT ARE ALL ON 4 DENTAL IMPLANTS (2-Column with Model Image) ─── */}
+      {/* ─── 1. MAIN SECTION INTRO: WHAT ARE ALL ON 4 DENTAL IMPLANTS ─── */}
+      <div
+        className="container-sc"
+        style={{
+          maxWidth: "1120px",
+          margin: "0 auto",
+          padding: "clamp(2rem, 4vw, 3.5rem) 1.25rem 1.5rem",
+        }}
+      >
         <div className="sc-hero-split">
           <div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                backgroundColor: "rgba(232, 99, 55, 0.08)",
+                padding: "0.35rem 0.85rem",
+                borderRadius: "999px",
+                marginBottom: "0.85rem",
+                border: "1px solid rgba(232, 99, 55, 0.2)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "#E86337",
+                  fontFamily: "var(--font-assistant), sans-serif",
+                }}
+              >
+                Comprehensive Overview
+              </span>
+            </div>
+
             <h2
               style={{
                 fontFamily: "var(--font-prata), Georgia, serif",
-                fontSize: "clamp(1.45rem, 5vw, 2.9rem)",
+                fontSize: "clamp(1.5rem, 4.2vw, 2.75rem)",
                 color: "#1C1C1E",
                 fontWeight: 400,
                 lineHeight: 1.22,
                 marginBottom: "1rem",
               }}
             >
-              What are All on 4 dental implants (full arch) ?
+              What are All on 4 dental implants (full arch)?
             </h2>
 
             <div
               style={{
                 fontFamily: "var(--font-assistant), sans-serif",
-                fontSize: "clamp(0.88rem, 2.8vw, 1.05rem)",
+                fontSize: "clamp(0.92rem, 2.5vw, 1.02rem)",
                 lineHeight: 1.68,
                 color: "#444449",
                 display: "flex",
@@ -180,7 +219,12 @@ export default function AllOn4Overview() {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.22 }}
-                    style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: "0.85rem" }}
+                    style={{
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.85rem",
+                    }}
                   >
                     <p style={{ margin: 0 }}>
                       The two rear implants are placed at an angle of up to 45 degrees. This is not just a technical detail. Angling the rear implants lets them reach denser areas of existing bone further forward in the jaw, which is why most patients can avoid the bone grafting that traditional full-arch implant approaches often require. Less surgery, less recovery time, and in most cases, a same-day temporary set of teeth, so you are never without a smile while things heal.
@@ -215,14 +259,14 @@ export default function AllOn4Overview() {
               </button>
             </div>
 
-            <div style={{ marginTop: "1.25rem" }}>
+            <div style={{ marginTop: "1.35rem" }}>
               <a
                 href="#cost"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.45rem",
-                  padding: "0.75rem 1.4rem",
+                  padding: "0.78rem 1.5rem",
                   backgroundColor: "#E86337",
                   color: "#ffffff",
                   borderRadius: "8px",
@@ -230,6 +274,7 @@ export default function AllOn4Overview() {
                   fontWeight: 700,
                   fontSize: "0.92rem",
                   textDecoration: "none",
+                  boxShadow: "0 6px 18px rgba(232,99,55,0.25)",
                 }}
               >
                 <span>Complete my smile</span>
@@ -249,462 +294,563 @@ export default function AllOn4Overview() {
             />
           </div>
         </div>
+      </div>
 
-        {/* ─── ACCORDIONS: ORIGINAL SECTIONS WITH EMBEDDED IMAGES ─── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-          {/* 1. Are All on 4 or All on X Implants Right for You? (With Candidate Image) */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("suitability")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                Are All on 4 or All on X Implants Right for You?
-              </h3>
-              <span
-                className="sc-acc-icon"
+      {/* ─── 2. PREMIUM SCROLL-DRIVEN FEATURE SHOWCASE (PINNED TRANSITIONS) ─── */}
+      <AllOn4ScrollFeatures />
+
+      {/* ─── 3. CLINICAL COMPARISON: HIGH-DENSITY VISUAL MATRIX (ZERO WASTED SPACE) ─── */}
+      <div
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          padding: "1.5rem 0 4.5rem",
+        }}
+      >
+        {/* Background Banner Image with Ambient Overlay */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "none",
+            overflow: "hidden",
+          }}
+        >
+          <Image
+            src="/assets/hero/background.jpg"
+            alt=""
+            fill
+            style={{
+              objectFit: "cover",
+              objectPosition: "center center",
+              opacity: 0.18,
+            }}
+            aria-hidden="true"
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(180deg, #FFFFFF 0%, rgba(250, 249, 246, 0.82) 15%, rgba(250, 249, 246, 0.90) 80%, #FFFFFF 100%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "35%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "750px",
+              height: "450px",
+              background:
+                "radial-gradient(ellipse, rgba(232, 99, 55, 0.06) 0%, transparent 70%)",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
+
+        <div
+          className="container-sc"
+          style={{
+            maxWidth: "1120px",
+            margin: "0 auto",
+            padding: "0 1.25rem",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.97)",
+              backdropFilter: "blur(10px)",
+              borderRadius: "20px",
+              border: "1px solid #EAE5DC",
+              padding: "clamp(1.4rem, 3vw, 2rem)",
+              boxShadow:
+                "0 18px 45px -10px rgba(28, 28, 30, 0.07), 0 2px 8px rgba(0,0,0,0.02)",
+            }}
+          >
+          {/* Header Row with Toggle Button */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <div>
+              <div
                 style={{
-                  backgroundColor: openSection === "suitability" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "suitability" ? "#ffffff" : "#1C1C1E",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  fontSize: "0.74rem",
+                  fontWeight: 700,
+                  color: "#E86337",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  marginBottom: "4px",
+                  fontFamily: "var(--font-assistant), sans-serif",
                 }}
               >
-                {openSection === "suitability" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
+                <Table size={13} />
+                <span>CLINICAL REFERENCE MATRIX</span>
+              </div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-prata), Georgia, serif",
+                  fontSize: "clamp(1.22rem, 2.4vw, 1.55rem)",
+                  color: "#1C1C1E",
+                  margin: 0,
+                  fontWeight: 400,
+                  lineHeight: 1.28,
+                }}
+              >
+                All on 4 vs Traditional Dentures: Direct Comparison
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.9rem",
+                  color: "#666",
+                  margin: "0.25rem 0 0 0",
+                }}
+              >
+                Compare stability, surgical requirements, and daily maintenance side by side.
+              </p>
+            </div>
 
-            <AnimatePresence>
-              {openSection === "suitability" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
+            <button
+              type="button"
+              onClick={() => setShowComparisonTable(!showComparisonTable)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "8px 18px",
+                borderRadius: "999px",
+                border: "1px solid #DCD5C9",
+                backgroundColor: "#FAF9F6",
+                color: "#1C1C1E",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                fontFamily: "var(--font-assistant), sans-serif",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#F2ECE3";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#FAF9F6";
+              }}
+            >
+              <span>{showComparisonTable ? "Hide Clinical Table" : "View Comparison Table"}</span>
+              {showComparisonTable ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {showComparisonTable && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25 }}
+                style={{ overflow: "hidden" }}
+              >
+                {/* ─── COMPACT SIDE-BY-SIDE HEADER CARDS (VISUAL ANCHORS) ─── */}
+                <div
+                  className="sc-comp-header"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "28% 36% 36%",
+                    gap: "0",
+                    marginTop: "1.4rem",
+                    borderTop: "1px solid #ECE7DE",
+                    borderBottom: "1px solid #ECE7DE",
+                    backgroundColor: "#FAF9F6",
+                    borderRadius: "12px 12px 0 0",
+                    overflow: "hidden",
+                  }}
                 >
-                  <div style={{ padding: "0 1.4rem 1.4rem", borderTop: "1px solid #ECE7DE" }}>
-                    <div className="sc-acc-split">
-                      <div>
-                        <p style={{ marginTop: "0.5rem", marginBottom: "0.85rem", fontFamily: "var(--font-assistant)", fontSize: "0.95rem", lineHeight: 1.6, color: "#444" }}>
-                          Suitability for All on 4 at Smile Concepts is always confirmed with a clinical assessment and a 3D CBCT scan at our practice in Sydney, CBD. You may be a suitable candidate for All on 4 or All on X if any of the following applies to you:
-                        </p>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "0.85rem" }}>
-                          {[
-                            "You have lost most or all of your teeth",
-                            "Your dentures feel loose when you eat or speak",
-                            "Several remaining teeth are failing or beyond repair",
-                            "You want a fixed solution that stays in place permanently",
-                            "You have experienced bone loss after tooth loss",
-                            "You want to understand your long-term options properly",
-                          ].map((item, idx) => (
-                            <div key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "0.55rem" }}>
-                              <span
-                                style={{
-                                  width: "20px",
-                                  height: "20px",
-                                  borderRadius: "50%",
-                                  backgroundColor: "rgba(34, 197, 94, 0.15)",
-                                  color: "#16A34A",
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  flexShrink: 0,
-                                  marginTop: "2px",
-                                }}
-                              >
-                                <Check size={12} strokeWidth={3} />
-                              </span>
-                              <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#333", lineHeight: 1.45 }}>
-                                {item}
-                              </span>
-                            </div>
-                          ))}
+                  <div
+                    style={{
+                      padding: "0.85rem 1rem",
+                      fontWeight: 700,
+                      fontSize: "0.82rem",
+                      color: "#777",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      fontFamily: "var(--font-assistant), sans-serif",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    Clinical Metric
+                  </div>
+
+                  {/* All On 4 Visual Header */}
+                  <div
+                    style={{
+                      padding: "0.85rem 1rem",
+                      backgroundColor: "rgba(232, 99, 55, 0.04)",
+                      borderLeft: "1px solid #ECE7DE",
+                      borderRight: "1px solid #ECE7DE",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "8px",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "0.95rem",
+                          color: "#1C1C1E",
+                          fontFamily: "var(--font-assistant), sans-serif",
+                        }}
+                      >
+                        All On 4 Fixed Teeth
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "#16A34A",
+                          fontWeight: 600,
+                          fontFamily: "var(--font-assistant), sans-serif",
+                        }}
+                      >
+                        Permanent • 90% Bite Force
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        padding: "3px 8px",
+                        borderRadius: "999px",
+                        backgroundColor: "rgba(22, 163, 74, 0.12)",
+                        color: "#16A34A",
+                        fontSize: "0.68rem",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      Fixed
+                    </span>
+                  </div>
+
+                  {/* Traditional Dentures Header */}
+                  <div
+                    style={{
+                      padding: "0.85rem 1rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "8px",
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "0.95rem",
+                          color: "#1C1C1E",
+                          fontFamily: "var(--font-assistant), sans-serif",
+                        }}
+                      >
+                        Traditional Dentures
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "#7A756F",
+                          fontWeight: 600,
+                          fontFamily: "var(--font-assistant), sans-serif",
+                        }}
+                      >
+                        Conventional Acrylic Plate
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        padding: "3px 8px",
+                        borderRadius: "999px",
+                        backgroundColor: "#ECE7DE",
+                        color: "#666",
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Removable
+                    </span>
+                  </div>
+                </div>
+
+                {/* ─── 8 COMPARISON ROWS: HIGH DENSITY, SPACE EFFICIENT, COMPLETE TEXT ─── */}
+                <div
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "0 0 12px 12px",
+                    border: "1px solid #ECE7DE",
+                    borderTop: "none",
+                    overflow: "hidden",
+                  }}
+                >
+                  {comparisonData.map((row, idx) => (
+                    <div
+                      key={idx}
+                      className="sc-comp-row"
+                      style={{
+                        backgroundColor: idx % 2 === 0 ? "#FFFFFF" : "#FCFBF9",
+                      }}
+                    >
+                      {/* Metric Name + Icon */}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          fontFamily: "var(--font-assistant), sans-serif",
+                          fontWeight: 700,
+                          fontSize: "0.88rem",
+                          color: "#1C1C1E",
+                        }}
+                      >
+                        <span
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            borderRadius: "6px",
+                            backgroundColor: "rgba(232, 99, 55, 0.08)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {row.icon}
+                        </span>
+                        <span>{row.feature}</span>
+                      </div>
+
+                      {/* All On 4 Fixed Teeth Data */}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "8px",
+                          fontFamily: "var(--font-assistant), sans-serif",
+                          fontSize: "0.88rem",
+                          lineHeight: 1.45,
+                          color: "#1C1C1E",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "16px",
+                            height: "16px",
+                            borderRadius: "50%",
+                            backgroundColor: "rgba(22, 163, 74, 0.14)",
+                            color: "#16A34A",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                            marginTop: "2px",
+                          }}
+                        >
+                          <Check size={10} strokeWidth={3} />
                         </div>
-                        <p style={{ margin: 0, fontFamily: "var(--font-assistant)", fontSize: "0.9rem", color: "#666", lineHeight: 1.55 }}>
-                          We look at your bone volume, oral health and medical history before recommending anything. If All on 4 or All on X isn&apos;t the right fit, we&apos;ll tell you and explain what alternatives exist.
-                        </p>
+                        <div>
+                          <span style={{ fontWeight: 600, color: "#16A34A" }}>
+                            {row.allon4}
+                          </span>
+                          <span
+                            style={{
+                              marginLeft: "6px",
+                              display: "inline-block",
+                              padding: "1px 6px",
+                              borderRadius: "4px",
+                              backgroundColor: "rgba(232, 99, 55, 0.08)",
+                              color: "#E86337",
+                              fontSize: "0.7rem",
+                              fontWeight: 700,
+                            }}
+                          >
+                            {row.allon4Badge}
+                          </span>
+                        </div>
                       </div>
 
-                      <div>
-                        <Image
-                          src="/assets/allon4/candidate-smile.jpg"
-                          alt="Patient evaluating All on 4 dental implants treatment at Smile Concepts Sydney"
-                          width={450}
-                          height={437}
-                          className="sc-card-img"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* 2. Temporary Teeth And Final Teeth: What To Expect (With Bridge Image) */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("teeth-expect")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                Temporary Teeth And Final Teeth: What To Expect
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "teeth-expect" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "teeth-expect" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "teeth-expect" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "teeth-expect" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.4rem 1.4rem", borderTop: "1px solid #ECE7DE" }}>
-                    <div className="sc-acc-split">
-                      <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.95rem", lineHeight: 1.65, color: "#444" }}>
-                        <p style={{ marginTop: "0.5rem", marginBottom: "0.85rem" }}>
-                          Will you be without teeth during treatment? For most suitable patients, no. A fixed temporary bridge is fitted on the same day as surgery (or shortly after), so you leave looking and functioning normally while the implants heal underneath.
-                        </p>
-                        <p style={{ marginBottom: "0.85rem" }}>
-                          Once healing is complete, the final bridge is designed and fitted. We walk you through your material options at consultation, including the difference between acrylic and zirconia, so you can make a decision that actually makes sense for your budget and your priorities rather than just accepting whatever is standard.
-                        </p>
-                        <p style={{ margin: 0 }}>
-                          It is worth understanding the difference between the two stages when you are comparing costs, because the materials and work involved are quite different.
-                        </p>
-                      </div>
-
-                      <div style={{ backgroundColor: "#000000", borderRadius: "12px", padding: "0.5rem", border: "1px solid #ECE7DE" }}>
-                        <Image
-                          src="/assets/allon4/temporary-final-teeth-bridge.jpg"
-                          alt="All on 4 temporary fixed teeth bridge restoration at Smile Concepts Sydney"
-                          width={348}
-                          height={395}
-                          style={{ width: "100%", height: "auto", display: "block", borderRadius: "8px", objectFit: "contain" }}
-                        />
+                      {/* Traditional Dentures Data */}
+                      <div
+                        style={{
+                          fontFamily: "var(--font-assistant), sans-serif",
+                          fontSize: "0.88rem",
+                          lineHeight: 1.45,
+                          color: "#666",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <span>{row.dentures}</span>
+                        <span
+                          style={{
+                            marginLeft: "6px",
+                            display: "inline-block",
+                            padding: "1px 6px",
+                            borderRadius: "4px",
+                            backgroundColor: "#F2EFEB",
+                            color: "#7A756F",
+                            fontSize: "0.7rem",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {row.denturesBadge}
+                        </span>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  ))}
+                </div>
 
-          {/* 3. All on 4 vs All on X: What Do These Names Mean? */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("names")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                All on 4 vs All on X: What Do These Names Mean?
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "names" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "names" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "names" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "names" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
+                {/* ─── INTEGRATED CLINICAL VISUAL BANNER (SPACE SAVING) ─── */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1.25rem",
+                    marginTop: "1.1rem",
+                    padding: "0.95rem 1.1rem",
+                    borderRadius: "14px",
+                    backgroundColor: "#FAF9F6",
+                    border: "1px solid #ECE7DE",
+                    flexWrap: "wrap",
+                  }}
                 >
+                  {/* Real Transformation Thumbnail */}
                   <div
                     style={{
-                      padding: "0 1.4rem 1.4rem",
-                      borderTop: "1px solid #ECE7DE",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.65,
-                      color: "#444",
+                      width: "120px",
+                      height: "76px",
+                      borderRadius: "10px",
+                      overflow: "hidden",
+                      border: "1px solid #ECE7DE",
+                      position: "relative",
+                      flexShrink: 0,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
                     }}
                   >
-                    <p style={{ marginTop: "1rem", marginBottom: "0.85rem" }}>
-                      If you&apos;ve been researching fixed teeth, you&apos;ve probably seen both &ldquo;All on 4&rdquo; and &ldquo;All on X&rdquo; and wondered whether they&apos;re different treatments. They&apos;re not; they&apos;re two names for the same thing: a full arch of fixed teeth supported by dental implants, so you never take them out.
-                    </p>
-                    <p style={{ marginBottom: "0.85rem" }}>
-                      &ldquo;All on 4&rdquo; is simply the best-known name for this treatment. It began as a concept where a full arch is supported on four implants. &ldquo;All on X&rdquo; is the umbrella term the profession uses, where the &ldquo;X&rdquo; stands for the number of implants, because the right number is different for every patient.
-                    </p>
-                    <p style={{ marginBottom: "0.85rem" }}>
-                      Whether you&apos;re searching for All on X dental implants or the more familiar &ldquo;All on 4,&rdquo; you&apos;ll find that both treatments are based on the same principle: replacing a full arch of teeth with a fixed implant-supported prosthesis.
-                    </p>
-                    <p style={{ marginBottom: "0.85rem" }}>
-                      Today, many clinicians prefer the term All on X because it offers greater flexibility, using four, five, six, or more implants depending on what&apos;s clinically appropriate for each patient.
-                    </p>
-                    <p style={{ margin: 0, fontSize: "0.88rem", color: "#666" }}>
-                      All-on-4® is a registered trademark and treatment concept of Nobel Biocare. Smile Concepts is an independent practice and plans each full arch case using the implant system best suited to your case, which may include Neoss, DIO, Nobel Biocare, Straumann or other leading implant systems.
-                    </p>
+                    <Image
+                      src="/assets/allon4/sunset-all-on-4.jpg"
+                      alt="Real patient smile restoration comparison at Smile Concepts Sydney"
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
-          {/* 4. Why Choose All on Four Dental Implants in Sydney */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("whychoose")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                Why Choose All on Four Dental Implants in Sydney
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "whychoose" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "whychoose" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "whychoose" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "whychoose" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
-                >
+                  {/* Clinical Advisory & Action */}
                   <div
                     style={{
-                      padding: "0 1.4rem 1.4rem",
-                      borderTop: "1px solid #ECE7DE",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.65,
-                      color: "#444",
+                      flex: "1 1 280px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
                     }}
                   >
-                    <p style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-                      The all on four treatment concept is all about restoring everyday comfort and function. It&apos;s a smarter, simpler way to get a full, beautiful smile and here&apos;s why so many people in Sydney are choosing it:
-                    </p>
-
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "1rem" }}>
-                      <div style={{ backgroundColor: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E", marginBottom: "0.25rem" }}>Permanent Teeth</strong>
-                        <span>Say goodbye to dentures that slip and shift. All‑on‑4 gives you a fixed, stable set of teeth that stays with you even when you eat or talk.</span>
-                      </div>
-                      <div style={{ backgroundColor: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E", marginBottom: "0.25rem" }}>Natural Look and Feel</strong>
-                        <span>They look, feel, and work like your own real teeth. Honestly, you&apos;ll forget they&apos;re even implants after a while. They&apos;re that good.</span>
-                      </div>
-                      <div style={{ backgroundColor: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E", marginBottom: "0.25rem" }}>Quick Results</strong>
-                        <span>The best part. Most people don&apos;t need bone grafting. That means you walk out with a stunning smile on the very same day, or shortly afterwards.</span>
-                      </div>
-                      <div style={{ backgroundColor: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E", marginBottom: "0.25rem" }}>One Price, Tailored Support</strong>
-                        <span>Whether your plan calls for four, five or six implants, your price per arch stays the same. You get the most stable solution for your anatomy at one clear price.</span>
-                      </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "0.73rem",
+                          fontWeight: 700,
+                          color: "#16A34A",
+                          backgroundColor: "rgba(22, 163, 74, 0.12)",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        ✓ Zero Adhesives
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "0.73rem",
+                          fontWeight: 700,
+                          color: "#E86337",
+                          backgroundColor: "rgba(232, 99, 55, 0.09)",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        ✓ 90% Chewing Force
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "0.73rem",
+                          fontWeight: 700,
+                          color: "#1C1C1E",
+                          backgroundColor: "#EAE5DC",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        ✓ Non-Removable
+                      </span>
                     </div>
 
-                    <p style={{ margin: 0, fontSize: "0.88rem", color: "#666" }}>
-                      Results vary, and the treatment is not suitable for everyone. We assess every case individually before making any recommendation.
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "0.82rem",
+                        color: "#5E616B",
+                        lineHeight: 1.45,
+                        fontFamily: "var(--font-assistant), sans-serif",
+                      }}
+                    >
+                      The most suitable option depends on your bone volume, oral health, and clinical assessment. Schedule your 3D CBCT diagnostic consultation in Sydney CBD to determine your candidacy.
                     </p>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
-          {/* 5. How Many Implants Will I Need: All on 4, All on 5, All on 6? */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("implants-needed")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                How Many Implants Will I Need: All on 4, All on 5, All on 6?
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "implants-needed" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "implants-needed" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "implants-needed" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "implants-needed" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div
-                    style={{
-                      padding: "0 1.4rem 1.4rem",
-                      borderTop: "1px solid #ECE7DE",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.65,
-                      color: "#444",
-                    }}
-                  >
-                    <p style={{ marginTop: "1rem", marginBottom: "0.85rem" }}>
-                      The number of implants is chosen for you after a thorough clinical assessment. Many patients are treated on four implants, the classic &ldquo;All on 4.&rdquo; Others do better with five or six, especially where the bone is softer, or the bite is heavier. That&apos;s &ldquo;All on 5&rdquo; or &ldquo;All on 6.&rdquo; Same treatment, same fixed teeth, just more support where your anatomy needs it.
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      Here&apos;s what matters most: we don&apos;t charge per implant. Your dentist decides whether four, five or six implants will give you the strongest, longest-lasting result after thoroughly analysing your X-rays and 3D CBCT scan. Your treatment is driven by your anatomy, not by a price list.
-                    </p>
+                  {/* Consultation Action Button */}
+                  <div style={{ flexShrink: 0 }}>
+                    <a
+                      href="#cost"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        backgroundColor: "#E86337",
+                        color: "#FFFFFF",
+                        fontSize: "0.82rem",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        boxShadow: "0 4px 12px rgba(232, 99, 55, 0.25)",
+                      }}
+                    >
+                      <span>Check Suitability</span>
+                      <ArrowRight size={13} />
+                    </a>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* 6. The Implants We Use & Our All on 4 Technology */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("implants-tech")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                The Implants We Use &amp; Our All on 4 Technology
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "implants-tech" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "implants-tech" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "implants-tech" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "implants-tech" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div
-                    style={{
-                      padding: "0 1.4rem 1.4rem",
-                      borderTop: "1px solid #ECE7DE",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.65,
-                      color: "#444",
-                    }}
-                  >
-                    <p style={{ marginTop: "1rem", marginBottom: "0.85rem" }}>
-                      Smile Concepts works with several of the world&apos;s leading implant systems, including Neoss, DIO, Nobel Biocare and Straumann, among others, and our dentists have trained on and worked with most major systems.
-                    </p>
-                    <p style={{ marginBottom: "0.85rem" }}>
-                      Why does this matter to you? Because your jaw is unique. A clinic tied to one brand has to make your anatomy fit their implant. We choose the implant system that best fits your bone, your bite and your long-term outcome. This is brand-agnostic, anatomy-first implant dentistry.
-                    </p>
-                    <p style={{ marginBottom: "1.25rem" }}>
-                      It&apos;s also why other clinics and overseas patients send us their revision and redo cases for their All on Four dental implants. When a full arch treatment done elsewhere hasn&apos;t worked out, correcting it takes broad experience across different implant systems and complex bone situations, and that&apos;s exactly the experience our team has built.
-                    </p>
-
-                    <h4 style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E", margin: "1.25rem 0 0.65rem" }}>
-                      Our All on 4 Technology
-                    </h4>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
-                      <div style={{ backgroundColor: "#ffffff", padding: "0.85rem 1rem", borderRadius: "8px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E" }}>3D CBCT imaging</strong>
-                        <span style={{ fontSize: "0.9rem", color: "#555" }}>A full three-dimensional scan of your jaw so your implants are planned around your real anatomy, nerves and available bone before surgery begins.</span>
-                      </div>
-                      <div style={{ backgroundColor: "#ffffff", padding: "0.85rem 1rem", borderRadius: "8px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E" }}>4th generation digital guided implant technology</strong>
-                        <span style={{ fontSize: "0.9rem", color: "#555" }}>Digital planning translated into precise, guided placement for predictable positioning across whichever implant system suits your case.</span>
-                      </div>
-                      <div style={{ backgroundColor: "#ffffff", padding: "0.85rem 1rem", borderRadius: "8px", border: "1px solid #ECE7DE" }}>
-                        <strong style={{ display: "block", color: "#1C1C1E" }}>Laser dentistry</strong>
-                        <span style={{ fontSize: "0.9rem", color: "#555" }}>Used to support minimally invasive treatment and comfortable healing.</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* 7. All on 4 vs Traditional Dentures: How Do They Compare? (With Comparison Image) */}
-          <div style={{ backgroundColor: "#FAF9F6", borderRadius: "14px", border: "1px solid #EAE5DC", overflow: "hidden" }}>
-            <button type="button" onClick={() => toggleSection("compare")} className="sc-acc-btn">
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "1.25rem", color: "#1C1C1E", margin: 0, fontWeight: 400 }}>
-                All on 4 vs Traditional Dentures: How Do They Compare?
-              </h3>
-              <span
-                className="sc-acc-icon"
-                style={{
-                  backgroundColor: openSection === "compare" ? "#E86337" : "#F3F0EA",
-                  color: openSection === "compare" ? "#ffffff" : "#1C1C1E",
-                }}
-              >
-                {openSection === "compare" ? <Minus size={15} /> : <Plus size={15} />}
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {openSection === "compare" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.4rem 1.4rem", borderTop: "1px solid #ECE7DE", fontFamily: "var(--font-assistant)" }}>
-                    <p style={{ marginTop: "1rem", marginBottom: "0.75rem", fontSize: "0.95rem", lineHeight: 1.6, color: "#444" }}>
-                      While dentures remain a suitable option for some people, they are removable and may become loose over time as the jawbone changes.
-                    </p>
-
-                    <div style={{ overflowX: "auto" }}>
-                      <table className="sc-overview-table">
-                        <thead>
-                          <tr>
-                            <th>Feature</th>
-                            <th>All On 4</th>
-                            <th>Traditional Dentures</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {comparisonData.map((row, idx) => (
-                            <tr key={idx}>
-                              <td style={{ fontWeight: 600, color: "#1C1C1E" }}>{row.feature}</td>
-                              <td style={{ color: "#1C1C1E" }}>{row.allon4}</td>
-                              <td style={{ color: "#666" }}>{row.dentures}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
-                      <div style={{ flex: "1 1 200px", maxWidth: "260px", borderRadius: "10px", overflow: "hidden", border: "1px solid #EAE5DC" }}>
-                        <Image
-                          src="/assets/allon4/sunset-all-on-4.jpg"
-                          alt="All on four before and after comparison at Smile Concepts Sydney"
-                          width={518}
-                          height={400}
-                          style={{ width: "100%", height: "auto", display: "block" }}
-                        />
-                      </div>
-                      <p style={{ flex: "2 1 260px", margin: 0, fontSize: "0.88rem", color: "#666", fontStyle: "italic", lineHeight: 1.55 }}>
-                        The most suitable option depends on your oral health, goals, and clinical assessment.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           </div>
         </div>
       </div>

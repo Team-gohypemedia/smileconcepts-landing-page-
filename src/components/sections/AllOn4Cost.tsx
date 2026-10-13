@@ -1,8 +1,25 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowRight, Calculator, Phone, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  ArrowRight,
+  ArrowLeft,
+  Calculator,
+  Phone,
+  ChevronDown,
+  ChevronUp,
+  ShieldCheck,
+  CreditCard,
+  Layers,
+  Sparkles,
+  Award,
+  Clock,
+  HeartHandshake,
+} from "lucide-react";
 
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -41,6 +58,8 @@ export default function AllOn4Cost() {
   const [selectedArch, setSelectedArch] = useState<"single" | "both">("single");
   const [selectedMaterial, setSelectedMaterial] = useState<"acrylic" | "zirconia">("zirconia");
   const [financeMonths, setFinanceMonths] = useState<number>(48);
+  const [activeCostTopic, setActiveCostTopic] = useState<number>(0);
+  const [isTopicExpanded, setIsTopicExpanded] = useState<boolean>(false);
 
   // Calculations
   const phase1PerArch = 18000;
@@ -53,6 +72,221 @@ export default function AllOn4Cost() {
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
   };
+
+  const handleNextCostTopic = () => {
+    setIsTopicExpanded(false);
+    setActiveCostTopic((prev) => (prev + 1) % 5);
+  };
+
+  const handlePrevCostTopic = () => {
+    setIsTopicExpanded(false);
+    setActiveCostTopic((prev) => (prev - 1 + 5) % 5);
+  };
+
+  const costTopics = [
+    {
+      id: "factors",
+      tabLabel: "Cost Factors",
+      badge: "Financial Transparency",
+      title: "What Affects the Cost & What It Means for You",
+      src: "/assets/allon4/candidate-smile.jpg",
+      alt: "What Affects the Cost of All-on-4 dental implants",
+      caption: "Custom surgical planning & transparent pricing guarantee",
+      objectPosition: "center 22%",
+      content: (
+        <div>
+          <div style={{ overflowX: "auto", margin: "0.5rem 0" }}>
+            <table className="sc-cost-table" style={{ marginTop: 0 }}>
+              <thead>
+                <tr>
+                  <th style={{ width: "38%", backgroundColor: "#F4EFEB", color: "#1C1C1E" }}>What Affects the Cost</th>
+                  <th style={{ backgroundColor: "#F4EFEB", color: "#1C1C1E" }}>What It Means for You</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Bridge material</strong></td>
+                  <td>Zirconia is more durable and more natural-looking than acrylic but comes at a higher cost. We explain both options at your consultation.</td>
+                </tr>
+                <tr>
+                  <td><strong>Number of arches being treated</strong></td>
+                  <td>Treating the upper arch, lower arch, or both will change the total investment.</td>
+                </tr>
+                {isTopicExpanded && (
+                  <>
+                    <tr>
+                      <td><strong>Extractions needed</strong></td>
+                      <td>If you still have remaining teeth that need to be removed, this is factored into your quote.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Sedation</strong></td>
+                      <td>If you prefer to be sedated during the procedure, this adds to the overall cost but is available at our clinic.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Complexity of your case</strong></td>
+                      <td>Bone loss, previous implant history, or other clinical factors can affect the planning and surgical approach.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Number of implants</strong></td>
+                      <td>Whether your plan uses four, five or six implants, your quote stays the same.</td>
+                    </tr>
+                  </>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {isTopicExpanded && (
+            <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", marginTop: "0.75rem", marginBottom: 0, lineHeight: 1.6 }}>
+              After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={() => setIsTopicExpanded(!isTopicExpanded)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              marginTop: "0.65rem",
+              padding: "0.32rem 0.85rem",
+              borderRadius: "999px",
+              backgroundColor: "#FAF6F0",
+              border: "1px solid #E5E0D7",
+              color: "#E86337",
+              fontFamily: "var(--font-assistant)",
+              fontSize: "0.82rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+          >
+            <span>{isTopicExpanded ? "Read less" : "Read more (view all 6 factors)"}</span>
+            {isTopicExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+          </button>
+        </div>
+      ),
+    },
+    {
+      id: "materials",
+      tabLabel: "Acrylic or Zirconia",
+      badge: "Choosing Your Final Teeth",
+      title: "Acrylic or Zirconia: Choosing Your Final Teeth",
+      src: "/assets/allon4/temporary-final-teeth-bridge.jpg",
+      alt: "Acrylic vs Zirconia Final Teeth Bridge",
+      caption: "Phase two permanent teeth: engineered for long-term function & beauty",
+      objectPosition: "center center",
+      content: (
+        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
+          <p style={{ marginTop: "0.5rem" }}>
+            Your final fixed teeth come in two materials, and both are fitted in Phase two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here&apos;s how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, your budget and your goals.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.85rem", margin: "1rem 0" }}>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "1rem", borderRadius: "12px", border: "1px solid #E5E0D7" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                <strong style={{ color: "#1C1C1E" }}>Acrylic on titanium</strong>
+                <span style={{ fontWeight: 700, color: "#E86337", fontSize: "1rem" }}>$10,000</span>
+              </div>
+              <p style={{ margin: 0, fontSize: "0.86rem", color: "#555", lineHeight: 1.5 }}>
+                A lighter, reliable and more economical option. The teeth are acrylic bonded to a strong titanium bar, and the surface may need an occasional refresh or repair over the years.
+              </p>
+            </div>
+            <div style={{ backgroundColor: "#FAF7F2", padding: "1rem", borderRadius: "12px", border: "1px solid #D5CEBF" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                <strong style={{ color: "#1C1C1E" }}>Zirconia</strong>
+                <span style={{ fontWeight: 700, color: "#E86337", fontSize: "1rem" }}>$14,000</span>
+              </div>
+              <p style={{ margin: 0, fontSize: "0.86rem", color: "#555", lineHeight: 1.5 }}>
+                The strongest, most stain-resistant and most natural-looking option. Zirconia is milled from a single block of ceramic, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.
+              </p>
+            </div>
+          </div>
+          <p style={{ margin: 0 }}>
+            We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and priorities.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "additional",
+      tabLabel: "Additional Costs",
+      badge: "Clinical Considerations",
+      title: "Are There Any Additional Costs?",
+      src: "/assets/allon4/All-on-6-1.2.jpg",
+      alt: "3D Surgical planning and additional procedures",
+      caption: "Precision CBCT scanning and tailored patient care",
+      objectPosition: "center 48%",
+      content: (
+        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
+          <p style={{ marginTop: "0.5rem" }}>
+            Your treatment plan is tailored to your individual needs, so some patients may require additional procedures before implant placement. These may include:
+          </p>
+          <ul style={{ paddingLeft: "1.25rem", margin: "0.5rem 0 1rem" }}>
+            <li>IV sedation or sleep dentistry</li>
+            <li>Bone grafting or related preparatory procedures</li>
+          </ul>
+          <p style={{ margin: 0 }}>
+            If recommended, these treatments are quoted separately and discussed with you in detail before any decisions are made. You&apos;ll receive a personalised written treatment plan outlining all costs, so there are no unexpected surprises.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "super",
+      tabLabel: "Superannuation",
+      badge: "Early Super Release",
+      title: "Can I Use My Superannuation to Pay?",
+      src: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
+      alt: "Couple enjoying meal with dental implants",
+      caption: "Compassionate early release of Superannuation through SuperCare",
+      objectPosition: "center 12%",
+      content: (
+        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
+          <p style={{ marginTop: "0.5rem" }}>
+            Possibly. If dental treatment is needed to relieve chronic pain or a condition affecting your quality of life, you may be eligible to apply to the ATO for early release of superannuation on compassionate grounds.
+          </p>
+          <p>
+            It&apos;s assessed case by case against strict criteria, requires supporting reports from two practitioners plus an itemised treatment plan, and is best considered only after other payment options. We recommend speaking with a licensed financial adviser before deciding.
+          </p>
+          <div style={{ backgroundColor: "#F7F4EE", padding: "0.85rem 1.15rem", borderRadius: "10px", borderLeft: "4px solid #E86337", margin: "0.85rem 0 0" }}>
+            <p style={{ margin: 0, fontWeight: 600, color: "#1C1C1E" }}>
+              We work with SuperCare to help patients through this process. Ask us about it at your consultation.
+            </p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "plans",
+      tabLabel: "Payment Plans",
+      badge: "Flexible Financing",
+      title: "Do We Offer Payment Plans?",
+      src: "/assets/services/payment-plans.jpg",
+      alt: "Payment plan options for dental implants",
+      caption: "Interest-free payment plans up to 48 months available",
+      objectPosition: "center 22%",
+      content: (
+        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
+          <p style={{ marginTop: "0.5rem", marginBottom: "1rem" }}>
+            Yes. We offer interest-free payment plans of up to 48 months (subject to eligibility, approval and the finance provider&apos;s terms and conditions). Our team can discuss the available payment options during your consultation and include the most suitable finance solution in your personalised written treatment quote.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "0.75rem", marginTop: "1rem" }}>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
+              <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>Term Length</div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>Up to 48 Months</div>
+            </div>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
+              <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>Interest Rate</div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>0% Interest Options</div>
+            </div>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
+              <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>In-Clinic Assistance</div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>Full Paperwork Help</div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <section
@@ -238,6 +472,37 @@ export default function AllOn4Cost() {
         @media (min-width: 640px) {
           .sc-cost-main-title {
             white-space: nowrap !important;
+          }
+        }
+        .sc-cost-showcase-grid {
+          display: grid;
+          grid-template-columns: minmax(360px, 460px) 1fr;
+          gap: clamp(1.75rem, 4vw, 3.25rem);
+          align-items: center;
+        }
+        .sc-cost-showcase-visual {
+          position: relative;
+          height: 380px;
+          width: 100%;
+        }
+        .sc-cost-showcase-panel {
+          min-height: 380px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        @media (max-width: 920px) {
+          .sc-cost-showcase-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+          .sc-cost-showcase-visual {
+            height: 310px !important;
+            max-width: 480px !important;
+            margin: 0 auto !important;
+          }
+          .sc-cost-showcase-panel {
+            min-height: auto !important;
           }
         }
       `}</style>
@@ -966,281 +1231,228 @@ export default function AllOn4Cost() {
           </AnimatePresence>
         </div>
 
-        {/* ─── ACCORDIONS (+/-) FOR ORIGINAL SUBSECTIONS ─── */}
-        <div style={{ maxWidth: "980px", margin: "2rem auto 0", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          {/* 1. What Affects the Cost Table */}
-          <div style={{ backgroundColor: "#ffffff", borderRadius: "12px", border: "1px solid #E5E0D7", overflow: "hidden" }}>
-            <button
-              type="button"
-              onClick={() => toggleSection("factors")}
-              style={{
-                width: "100%",
-                padding: "1rem 1.25rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E" }}>
-                What Affects the Cost &amp; What It Means for You
-              </span>
-              <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "#1C1C1E" }}>
-                {openSection === "factors" ? "−" : "+"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {openSection === "factors" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.25rem 1.25rem", borderTop: "1px solid #ECE7DE" }}>
-                    <div style={{ overflowX: "auto" }}>
-                      <table className="sc-cost-table">
-                        <thead>
-                          <tr>
-                            <th style={{ width: "35%" }}>What Affects the Cost</th>
-                            <th>What It Means for You</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td><strong>Bridge material</strong></td>
-                            <td>Zirconia is more durable and more natural-looking than acrylic but comes at a higher cost. We explain both options at your consultation.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Number of arches being treated</strong></td>
-                            <td>Treating the upper arch, lower arch, or both will change the total investment.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Extractions needed</strong></td>
-                            <td>If you still have remaining teeth that need to be removed, this is factored into your quote.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Sedation</strong></td>
-                            <td>If you prefer to be sedated during the procedure, this adds to the overall cost but is available at our clinic.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Complexity of your case</strong></td>
-                            <td>Bone loss, previous implant history, or other clinical factors can affect the planning and surgical approach.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Number of implants</strong></td>
-                            <td>Whether your plan uses four, five or six implants, your quote stays the same.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", marginTop: "1rem", marginBottom: 0 }}>
-                      After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+        {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO ACCORDIONS, NO TOP TABS) ─── */}
+        <div
+          style={{
+            maxWidth: "1040px",
+            margin: "3rem auto 0",
+            backgroundColor: "#FFFFFF",
+            borderRadius: "28px",
+            border: "1px solid #ECE7DE",
+            boxShadow: "0 14px 40px -10px rgba(28,28,30,0.06)",
+            padding: "clamp(1.5rem, 3.5vw, 2.5rem)",
+          }}
+        >
+          {/* Main 2-Column Showcase */}
+          <div className="sc-cost-showcase-grid">
+            {/* Left: 3D Stacked Image Cards (Aceternity AnimatedTestimonials Pattern) */}
+            <div className="sc-cost-showcase-visual">
+              <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                <AnimatePresence>
+                  {costTopics.map((topic, index) => {
+                    const isCardActive = index === activeCostTopic;
+                    const cardRotations = [-4, 3, -3, 4, -2];
+                    const rotation = cardRotations[index % cardRotations.length];
+                    return (
+                      <motion.div
+                        key={topic.id}
+                        initial={{
+                          opacity: 0,
+                          scale: 0.9,
+                          z: -100,
+                          rotate: rotation,
+                        }}
+                        animate={{
+                          opacity: isCardActive ? 1 : 0.65,
+                          scale: isCardActive ? 1 : 0.94,
+                          z: isCardActive ? 0 : -80,
+                          rotate: isCardActive ? 0 : rotation,
+                          zIndex: isCardActive ? 40 : costTopics.length + 2 - index,
+                          y: isCardActive ? [0, -35, 0] : 0,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          scale: 0.9,
+                          z: 80,
+                          rotate: rotation,
+                        }}
+                        transition={{
+                          duration: 0.45,
+                          ease: "easeInOut",
+                        }}
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          transformOrigin: "bottom center",
+                          borderRadius: "24px",
+                          overflow: "hidden",
+                          boxShadow: isCardActive
+                            ? "0 22px 45px -12px rgba(28,28,30,0.2)"
+                            : "0 10px 25px -10px rgba(0,0,0,0.08)",
+                          cursor: isCardActive ? "default" : "pointer",
+                        }}
+                        onClick={() => {
+                          setIsTopicExpanded(false);
+                          setActiveCostTopic(index);
+                        }}
+                      >
+                        <Image
+                          src={topic.src}
+                          alt={topic.alt}
+                          fill
+                          sizes="(max-width: 920px) 100vw, 460px"
+                          style={{
+                            objectFit: "cover",
+                            objectPosition: topic.objectPosition || "center",
+                          }}
+                          priority={index === 0}
+                        />
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </div>
+            </div>
 
-          {/* 2. Acrylic or Zirconia: Choosing Your Final Teeth */}
-          <div style={{ backgroundColor: "#ffffff", borderRadius: "12px", border: "1px solid #E5E0D7", overflow: "hidden" }}>
-            <button
-              type="button"
-              onClick={() => toggleSection("materials")}
-              style={{
-                width: "100%",
-                padding: "1rem 1.25rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E" }}>
-                Acrylic or Zirconia: Choosing Your Final Teeth
-              </span>
-              <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "#1C1C1E" }}>
-                {openSection === "materials" ? "−" : "+"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {openSection === "materials" && (
+            {/* Right: Detailed Verbatim Content Panel (Uniform Height) */}
+            <div className="sc-cost-showcase-panel">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ overflow: "hidden" }}
+                  key={activeCostTopic}
+                  initial={{ y: 15, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -15, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  style={{ display: "flex", flexDirection: "column", flex: 1 }}
                 >
-                  <div style={{ padding: "0 1.25rem 1.25rem", borderTop: "1px solid #ECE7DE", fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-                    <p style={{ marginTop: "0.85rem" }}>
-                      Your final fixed teeth come in two materials, and both are fitted in Phase two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here&apos;s how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, your budget and your goals.
-                    </p>
-                    <ul style={{ paddingLeft: "1.25rem", margin: "0.5rem 0 1rem" }}>
-                      <li>
-                        <strong>Acrylic on titanium ($10,000):</strong> A lighter, reliable and more economical option. The teeth are acrylic bonded to a strong titanium bar, and the surface may need an occasional refresh or repair over the years.
-                      </li>
-                      <li style={{ marginTop: "0.5rem" }}>
-                        <strong>Zirconia ($14,000):</strong> The strongest, most stain-resistant and most natural-looking option. Zirconia is milled from a single block of ceramic, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.
-                      </li>
-                    </ul>
-                    <p style={{ margin: 0 }}>
-                      We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and priorities.
-                    </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.76rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "#E86337",
+                      }}
+                    >
+                      {costTopics[activeCostTopic].badge}
+                    </span>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
-          {/* 3. Are There Any Additional Costs? */}
-          <div style={{ backgroundColor: "#ffffff", borderRadius: "12px", border: "1px solid #E5E0D7", overflow: "hidden" }}>
-            <button
-              type="button"
-              onClick={() => toggleSection("additional")}
-              style={{
-                width: "100%",
-                padding: "1rem 1.25rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E" }}>
-                Are There Any Additional Costs?
-              </span>
-              <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "#1C1C1E" }}>
-                {openSection === "additional" ? "−" : "+"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {openSection === "additional" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.25rem 1.25rem", borderTop: "1px solid #ECE7DE", fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-                    <p style={{ marginTop: "0.85rem" }}>
-                      Your treatment plan is tailored to your individual needs, so some patients may require additional procedures before implant placement. These may include:
-                    </p>
-                    <ul style={{ paddingLeft: "1.25rem", margin: "0.5rem 0 1rem" }}>
-                      <li>IV sedation or sleep dentistry</li>
-                      <li>Bone grafting or related preparatory procedures</li>
-                    </ul>
-                    <p style={{ margin: 0 }}>
-                      If recommended, these treatments are quoted separately and discussed with you in detail before any decisions are made. You&apos;ll receive a personalised written treatment plan outlining all costs, so there are no unexpected surprises.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-prata)",
+                      fontSize: "clamp(1.25rem, 2.2vw, 1.7rem)",
+                      color: "#1C1C1E",
+                      margin: "0 0 0.85rem",
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {costTopics[activeCostTopic].title}
+                  </h3>
 
-          {/* 4. Can I Use My Superannuation to Pay? */}
-          <div style={{ backgroundColor: "#ffffff", borderRadius: "12px", border: "1px solid #E5E0D7", overflow: "hidden" }}>
-            <button
-              type="button"
-              onClick={() => toggleSection("super")}
-              style={{
-                width: "100%",
-                padding: "1rem 1.25rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E" }}>
-                Can I Use My Superannuation to Pay?
-              </span>
-              <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "#1C1C1E" }}>
-                {openSection === "super" ? "−" : "+"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {openSection === "super" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.25rem 1.25rem", borderTop: "1px solid #ECE7DE", fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-                    <p style={{ marginTop: "0.85rem" }}>
-                      Possibly. If dental treatment is needed to relieve chronic pain or a condition affecting your quality of life, you may be eligible to apply to the ATO for early release of superannuation on compassionate grounds.
-                    </p>
-                    <p>
-                      It&apos;s assessed case by case against strict criteria, requires supporting reports from two practitioners plus an itemised treatment plan, and is best considered only after other payment options. We recommend speaking with a licensed financial adviser before deciding.
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      We work with SuperCare to help patients through this process. Ask us about it at your consultation.
-                    </p>
+                  <div style={{ flex: 1 }}>
+                    {costTopics[activeCostTopic].content}
                   </div>
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+              </AnimatePresence>
 
-          {/* 5. Do We Offer Payment Plans? */}
-          <div style={{ backgroundColor: "#ffffff", borderRadius: "12px", border: "1px solid #E5E0D7", overflow: "hidden" }}>
-            <button
-              type="button"
-              onClick={() => toggleSection("plans")}
-              style={{
-                width: "100%",
-                padding: "1rem 1.25rem",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "left",
-              }}
-            >
-              <span style={{ fontFamily: "var(--font-prata)", fontSize: "1.1rem", color: "#1C1C1E" }}>
-                Do We Offer Payment Plans?
-              </span>
-              <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "#1C1C1E" }}>
-                {openSection === "plans" ? "−" : "+"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {openSection === "plans" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <div style={{ padding: "0 1.25rem 1.25rem", borderTop: "1px solid #ECE7DE", fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-                    <p style={{ marginTop: "0.85rem", marginBottom: 0 }}>
-                      Yes. We offer interest-free payment plans of up to 48 months (subject to eligibility, approval and the finance provider&apos;s terms and conditions). Our team can discuss the available payment options during your consultation and include the most suitable finance solution in your personalised written treatment quote.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              {/* Navigation & Actions Footer */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "1rem",
+                  paddingTop: "1.25rem",
+                  marginTop: "1.25rem",
+                  borderTop: "1px solid #ECE7DE",
+                }}
+              >
+                {/* Dots & Counter */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {costTopics.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setIsTopicExpanded(false);
+                        setActiveCostTopic(i);
+                      }}
+                      aria-label={`Go to topic ${i + 1}`}
+                      style={{
+                        height: "8px",
+                        width: activeCostTopic === i ? "24px" : "8px",
+                        borderRadius: "999px",
+                        backgroundColor: activeCostTopic === i ? "#E86337" : "#D5CEBF",
+                        border: "none",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        padding: 0,
+                      }}
+                    />
+                  ))}
+                  <span
+                    style={{
+                      marginLeft: "0.5rem",
+                      fontSize: "0.78rem",
+                      color: "#777",
+                      fontFamily: "var(--font-assistant)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {activeCostTopic + 1} of {costTopics.length}
+                  </span>
+                </div>
+
+                {/* Arrow Controls */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <button
+                    type="button"
+                    onClick={handlePrevCostTopic}
+                    aria-label="Previous Topic"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      borderRadius: "50%",
+                      backgroundColor: "#FAF6F0",
+                      border: "1px solid #E5E0D7",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#1C1C1E",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <ArrowLeft size={17} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextCostTopic}
+                    aria-label="Next Topic"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      borderRadius: "50%",
+                      backgroundColor: "#E86337",
+                      border: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#FFFFFF",
+                      boxShadow: "0 4px 12px rgba(232, 99, 55, 0.25)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <ArrowRight size={17} />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

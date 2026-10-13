@@ -75,7 +75,7 @@ export default function Affiliations() {
             left: 0,
             top: 0,
             bottom: 0,
-            width: "5rem",
+            width: "3.5rem",
             zIndex: 2,
             background: "linear-gradient(to right, #ffffff, transparent)",
             pointerEvents: "none",
@@ -88,7 +88,7 @@ export default function Affiliations() {
             right: 0,
             top: 0,
             bottom: 0,
-            width: "5rem",
+            width: "3.5rem",
             zIndex: 2,
             background: "linear-gradient(to left, #ffffff, transparent)",
             pointerEvents: "none",
@@ -107,15 +107,15 @@ export default function Affiliations() {
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "default",
-                padding: "0 0.75rem",
+                padding: "0 0.35rem",
                 transition: "transform 0.25s ease, opacity 0.25s ease",
               }}
             >
               <div
                 style={{
                   position: "relative",
-                  width: "clamp(185px, 18vw, 260px)",
-                  height: "clamp(68px, 7.5vw, 92px)",
+                  width: "clamp(130px, 11vw, 170px)",
+                  height: "clamp(48px, 4.5vw, 62px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -125,7 +125,7 @@ export default function Affiliations() {
                   src={item.src}
                   alt={item.name}
                   fill
-                  sizes="260px"
+                  sizes="180px"
                   style={{
                     objectFit: "contain",
                     filter: "none",
@@ -141,9 +141,9 @@ export default function Affiliations() {
         .affiliations-marquee {
           display: flex;
           align-items: center;
-          gap: clamp(3.5rem, 4.5vw, 4.5rem);
+          gap: clamp(1.4rem, 2vw, 2.2rem);
           width: max-content;
-          animation: marqueeScroll 45s linear infinite;
+          animation: marqueeScroll 36s linear infinite;
         }
         .affiliations-marquee:hover {
           animation-play-state: paused;

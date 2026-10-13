@@ -38,12 +38,13 @@ export interface HeroSectionProps extends Omit<HTMLMotionProps<"section">, "titl
   };
   slogan?: string;
   title: React.ReactNode;
-  subtitle: string;
+  subtitle: React.ReactNode;
   callToAction: {
     text: string;
     href: string;
   };
   backgroundImage: string;
+  imagePosition?: string;
   contactInfo: {
     website: string;
     websiteHref?: string;
@@ -55,7 +56,7 @@ export interface HeroSectionProps extends Omit<HTMLMotionProps<"section">, "titl
 }
 
 const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
-  ({ className, logo, slogan, title, subtitle, callToAction, backgroundImage, contactInfo, style, ...props }, ref) => {
+  ({ className, logo, slogan, title, subtitle, callToAction, backgroundImage, imagePosition = "center", contactInfo, style, ...props }, ref) => {
 
     const containerVariants: Variants = {
       hidden: { opacity: 0 },
@@ -100,7 +101,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         }}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, amount: 0.05 }}
         variants={containerVariants}
         {...props}
       >
@@ -120,8 +121,8 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             }
             .sc-hero2-title {
               text-align: center !important;
-              font-size: clamp(1.75rem, 5.8vw, 2.6rem) !important;
-              line-height: 1.2 !important;
+              font-size: clamp(1.25rem, 4.4vw, 1.85rem) !important;
+              line-height: 1.25 !important;
             }
             .sc-hero2-divider {
               margin: 1.15rem auto 1.35rem auto !important;
@@ -153,12 +154,12 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         <div
           className="sc-hero2-content"
           style={{
-            flex: "1 1 540px",
-            maxWidth: "680px",
+            flex: "1 1 560px",
+            maxWidth: "720px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "clamp(2.5rem, 5vw, 4.25rem) clamp(1.5rem, 4.5vw, 4rem)",
+            padding: "clamp(2.25rem, 4.5vw, 3.75rem) clamp(1.5rem, 3.5vw, 3.25rem)",
             zIndex: 2,
             boxSizing: "border-box",
           }}
@@ -245,7 +246,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               className="sc-hero2-title"
               style={{
                 fontFamily: "var(--font-prata)",
-                fontSize: "clamp(1.45rem, 5.5vw, 3.3rem)",
+                fontSize: "clamp(1.35rem, 2.35vw, 2.15rem)",
                 fontWeight: 400,
                 color: "#ffffff",
                 lineHeight: 1.18,
@@ -269,21 +270,21 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               }}
             />
 
-            <motion.p
+            <motion.div
               variants={itemVariants}
               className="sc-hero2-subtitle"
               style={{
                 fontFamily: "var(--font-assistant)",
-                fontSize: "clamp(0.88rem, 2.8vw, 1.05rem)",
+                fontSize: "clamp(0.92rem, 2.5vw, 1.02rem)",
                 lineHeight: 1.68,
-                color: "rgba(255, 255, 255, 0.78)",
-                maxWidth: "520px",
+                color: "#E2E8F0",
+                maxWidth: "600px",
                 marginBottom: "2rem",
-                fontWeight: 300,
+                fontWeight: 400,
               }}
             >
               {subtitle}
-            </motion.p>
+            </motion.div>
 
             <motion.div variants={itemVariants} className="sc-hero2-cta-wrap">
               <a
@@ -418,7 +419,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             minHeight: "560px",
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "right center",
+            backgroundPosition: imagePosition,
             backgroundRepeat: "no-repeat",
             position: "relative",
             boxSizing: "border-box",
