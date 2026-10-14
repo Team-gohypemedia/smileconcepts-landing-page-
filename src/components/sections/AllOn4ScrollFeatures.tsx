@@ -251,6 +251,20 @@ export default function AllOn4ScrollFeatures() {
   const btmBadgeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textContentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Mobile carousel state
+  const [mobileIndex, setMobileIndex] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+
+  // Auto-advance for mobile carousel
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setMobileIndex((prev) => (prev + 1) % slidesData.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
   useEffect(() => {
     const container = containerRef.current;
     const stage = stageRef.current;
@@ -258,672 +272,1011 @@ export default function AllOn4ScrollFeatures() {
 
     const mm = gsap.matchMedia();
 
-    mm.add(
-      {
-        isDesktop: "(min-width: 1024px)",
-        isMobile: "(max-width: 1023px)",
-      },
-      (context) => {
-        const { isDesktop } = context.conditions as {
-          isDesktop: boolean;
-          isMobile: boolean;
-        };
+    // GSAP pinned scroll ONLY for desktop (min-width: 1024px)
+    mm.add("(min-width: 1024px)", () => {
+      const totalSlides = slidesData.length;
+      const totalTransitions = totalSlides - 1;
 
-        const totalSlides = slidesData.length;
-        const totalTransitions = totalSlides - 1;
+      // Set initial positions
+      slidesData.forEach((_, idx) => {
+        const wrapper = visualWrapperRefs.current[idx];
+        const topBadge = topBadgeRefs.current[idx];
+        const photo = photoFrameRefs.current[idx];
+        const btmBadge = btmBadgeRefs.current[idx];
+        const textEl = textContentRefs.current[idx];
 
-        // Set initial positions
-        slidesData.forEach((_, idx) => {
-          const wrapper = visualWrapperRefs.current[idx];
-          const topBadge = topBadgeRefs.current[idx];
-          const photo = photoFrameRefs.current[idx];
-          const btmBadge = btmBadgeRefs.current[idx];
-          const textEl = textContentRefs.current[idx];
-
-          if (idx === 0) {
-            if (wrapper) gsap.set(wrapper, { opacity: 1, zIndex: 10 });
-            if (topBadge) gsap.set(topBadge, { opacity: 1, y: 0 });
-            if (photo) gsap.set(photo, { opacity: 1, y: 0, scale: 1 });
-            if (btmBadge) gsap.set(btmBadge, { opacity: 1, y: 0 });
-            if (textEl) gsap.set(textEl, { opacity: 1, y: 0, zIndex: 10, pointerEvents: "auto" });
-          } else {
-            if (wrapper) gsap.set(wrapper, { opacity: 0, zIndex: 1 });
-            if (topBadge) gsap.set(topBadge, { opacity: 0, y: isDesktop ? 35 : 20 });
-            if (photo) gsap.set(photo, { opacity: 0, y: isDesktop ? 40 : 25, scale: 0.95 });
-            if (btmBadge) gsap.set(btmBadge, { opacity: 0, y: isDesktop ? 45 : 25 });
-            if (textEl) gsap.set(textEl, { opacity: 0, y: isDesktop ? 30 : 20, zIndex: 1, pointerEvents: "none" });
-          }
-        });
-
-        // Master Timeline linked directly to scroll
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: container,
-            start: "top top",
-            end: () => `+=${totalTransitions * (isDesktop ? 120 : 100)}%`,
-            pin: stage,
-            scrub: isDesktop ? 0.75 : 0.6,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        // Build transitions
-        for (let i = 1; i < totalSlides; i++) {
-          const prevIdx = i - 1;
-
-          const outWrapper = visualWrapperRefs.current[prevIdx];
-          const outTop = topBadgeRefs.current[prevIdx];
-          const outPhoto = photoFrameRefs.current[prevIdx];
-          const outBtm = btmBadgeRefs.current[prevIdx];
-          const outText = textContentRefs.current[prevIdx];
-
-          const inWrapper = visualWrapperRefs.current[i];
-          const inTop = topBadgeRefs.current[i];
-          const inPhoto = photoFrameRefs.current[i];
-          const inBtm = btmBadgeRefs.current[i];
-          const inText = textContentRefs.current[i];
-
-          const stepTime = (i - 1) * 2;
-
-          // 1. OUTGOING SLIDE
-          if (outTop) {
-            tl.to(
-              outTop,
-              {
-                y: isDesktop ? -30 : -18,
-                opacity: 0,
-                duration: 0.45,
-                ease: "power2.inOut",
-              },
-              stepTime
-            );
-          }
-
-          if (outBtm) {
-            tl.to(
-              outBtm,
-              {
-                y: isDesktop ? 30 : 18,
-                opacity: 0,
-                duration: 0.45,
-                ease: "power2.inOut",
-              },
-              stepTime + 0.05
-            );
-          }
-
-          if (outPhoto) {
-            tl.to(
-              outPhoto,
-              {
-                y: isDesktop ? -25 : -15,
-                scale: 0.96,
-                opacity: 0,
-                duration: 0.55,
-                ease: "power2.inOut",
-              },
-              stepTime + 0.05
-            );
-          }
-
-          if (outText) {
-            tl.to(
-              outText,
-              {
-                y: isDesktop ? -25 : -15,
-                opacity: 0,
-                duration: 0.45,
-                ease: "power2.inOut",
-                onComplete: () => {
-                  if (outText) outText.style.pointerEvents = "none";
-                },
-                onReverseComplete: () => {
-                  if (outText) outText.style.pointerEvents = "auto";
-                },
-              },
-              stepTime
-            );
-          }
-
-          if (outWrapper) {
-            tl.to(
-              outWrapper,
-              {
-                opacity: 0,
-                duration: 0.35,
-                onComplete: () => {
-                  if (outWrapper) outWrapper.style.zIndex = "1";
-                },
-              },
-              stepTime + 0.3
-            );
-          }
-
-          // 2. INCOMING SLIDE
-          if (inWrapper) {
-            tl.set(inWrapper, { opacity: 1, zIndex: 10 + i }, stepTime + 0.45);
-          }
-
-          if (inPhoto) {
-            tl.fromTo(
-              inPhoto,
-              {
-                y: isDesktop ? 45 : 30,
-                scale: 0.94,
-                opacity: 0,
-              },
-              {
-                y: 0,
-                scale: 1,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out",
-              },
-              stepTime + 0.45
-            );
-          }
-
-          if (inTop) {
-            tl.fromTo(
-              inTop,
-              { y: isDesktop ? -30 : -20, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                ease: "power2.inOut",
-              },
-              stepTime + 0.5
-            );
-          }
-
-          if (inBtm) {
-            tl.fromTo(
-              inBtm,
-              { y: isDesktop ? 40 : 25, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.54,
-                ease: "power2.inOut",
-              },
-              stepTime + 0.54
-            );
-          }
-
-          if (inText) {
-            tl.fromTo(
-              inText,
-              { y: isDesktop ? 25 : 15, opacity: 0, zIndex: 10 + i },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.5,
-                ease: "power2.inOut",
-                onStart: () => {
-                  if (inText) inText.style.pointerEvents = "auto";
-                },
-                onReverseComplete: () => {
-                  if (inText) inText.style.pointerEvents = "none";
-                },
-              },
-              stepTime + 0.55
-            );
-          }
-
-          // Dwell hold
-          tl.to({}, { duration: 0.4 });
+        if (idx === 0) {
+          if (wrapper) gsap.set(wrapper, { opacity: 1, zIndex: 10 });
+          if (topBadge) gsap.set(topBadge, { opacity: 1, y: 0 });
+          if (photo) gsap.set(photo, { opacity: 1, y: 0, scale: 1 });
+          if (btmBadge) gsap.set(btmBadge, { opacity: 1, y: 0 });
+          if (textEl) gsap.set(textEl, { opacity: 1, y: 0, zIndex: 10, pointerEvents: "auto" });
+        } else {
+          if (wrapper) gsap.set(wrapper, { opacity: 0, zIndex: 1 });
+          if (topBadge) gsap.set(topBadge, { opacity: 0, y: 35 });
+          if (photo) gsap.set(photo, { opacity: 0, y: 40, scale: 0.95 });
+          if (btmBadge) gsap.set(btmBadge, { opacity: 0, y: 45 });
+          if (textEl) gsap.set(textEl, { opacity: 0, y: 30, zIndex: 1, pointerEvents: "none" });
         }
+      });
+
+      // Master Timeline linked directly to scroll
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: () => `+=${totalTransitions * 120}%`,
+          pin: stage,
+          scrub: 0.75,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Build transitions
+      for (let i = 1; i < totalSlides; i++) {
+        const prevIdx = i - 1;
+
+        const outWrapper = visualWrapperRefs.current[prevIdx];
+        const outTop = topBadgeRefs.current[prevIdx];
+        const outPhoto = photoFrameRefs.current[prevIdx];
+        const outBtm = btmBadgeRefs.current[prevIdx];
+        const outText = textContentRefs.current[prevIdx];
+
+        const inWrapper = visualWrapperRefs.current[i];
+        const inTop = topBadgeRefs.current[i];
+        const inPhoto = photoFrameRefs.current[i];
+        const inBtm = btmBadgeRefs.current[i];
+        const inText = textContentRefs.current[i];
+
+        const stepTime = (i - 1) * 2;
+
+        // 1. OUTGOING SLIDE
+        if (outTop) {
+          tl.to(
+            outTop,
+            {
+              y: -30,
+              opacity: 0,
+              duration: 0.45,
+              ease: "power2.inOut",
+            },
+            stepTime
+          );
+        }
+
+        if (outBtm) {
+          tl.to(
+            outBtm,
+            {
+              y: 30,
+              opacity: 0,
+              duration: 0.45,
+              ease: "power2.inOut",
+            },
+            stepTime + 0.05
+          );
+        }
+
+        if (outPhoto) {
+          tl.to(
+            outPhoto,
+            {
+              y: -25,
+              scale: 0.96,
+              opacity: 0,
+              duration: 0.55,
+              ease: "power2.inOut",
+            },
+            stepTime + 0.05
+          );
+        }
+
+        if (outText) {
+          tl.to(
+            outText,
+            {
+              y: -25,
+              opacity: 0,
+              duration: 0.45,
+              ease: "power2.inOut",
+              onComplete: () => {
+                if (outText) outText.style.pointerEvents = "none";
+              },
+              onReverseComplete: () => {
+                if (outText) outText.style.pointerEvents = "auto";
+              },
+            },
+            stepTime
+          );
+        }
+
+        if (outWrapper) {
+          tl.to(
+            outWrapper,
+            {
+              opacity: 0,
+              duration: 0.35,
+              onComplete: () => {
+                if (outWrapper) outWrapper.style.zIndex = "1";
+              },
+            },
+            stepTime + 0.3
+          );
+        }
+
+        // 2. INCOMING SLIDE
+        if (inWrapper) {
+          tl.set(inWrapper, { opacity: 1, zIndex: 10 + i }, stepTime + 0.45);
+        }
+
+        if (inPhoto) {
+          tl.fromTo(
+            inPhoto,
+            {
+              y: 45,
+              scale: 0.94,
+              opacity: 0,
+            },
+            {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: "power2.out",
+            },
+            stepTime + 0.45
+          );
+        }
+
+        if (inTop) {
+          tl.fromTo(
+            inTop,
+            { y: -30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.55,
+              ease: "power2.inOut",
+            },
+            stepTime + 0.5
+          );
+        }
+
+        if (inBtm) {
+          tl.fromTo(
+            inBtm,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.54,
+              ease: "power2.inOut",
+            },
+            stepTime + 0.54
+          );
+        }
+
+        if (inText) {
+          tl.fromTo(
+            inText,
+            { y: 25, opacity: 0, zIndex: 10 + i },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.5,
+              ease: "power2.inOut",
+              onStart: () => {
+                if (inText) inText.style.pointerEvents = "auto";
+              },
+              onReverseComplete: () => {
+                if (inText) inText.style.pointerEvents = "none";
+              },
+            },
+            stepTime + 0.55
+          );
+        }
+
+        // Dwell hold
+        tl.to({}, { duration: 0.4 });
       }
-    );
+    });
 
     return () => {
       mm.revert();
     };
   }, []);
 
+  const currentMobileSlide = slidesData[mobileIndex];
+
   return (
-    <div
-      ref={containerRef}
-      style={{
-        position: "relative",
-        width: "100%",
-        backgroundColor: "#FFFFFF",
-        minHeight: `${slidesData.length * 105}vh`,
-      }}
-    >
-      {/* Pinned Viewport Container */}
+    <>
+      <style>{`
+        /* Desktop vs Mobile display toggle */
+        .sc-scroll-desktop-view {
+          display: block;
+        }
+        .sc-scroll-mobile-view {
+          display: none;
+        }
+
+        @media (max-width: 1023px) {
+          .sc-scroll-desktop-view {
+            display: none !important;
+          }
+          .sc-scroll-mobile-view {
+            display: block !important;
+          }
+        }
+
+        /* Mobile carousel animations */
+        .sc-mobile-card-transition {
+          transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+      `}</style>
+
+      {/* ───────────────────────────────────────────────────────────
+          1. MOBILE VIEW (< 1024px): Matching Reference UI Screenshot
+          Auto-moving carousel, card on top, text & CTA, bottom dots
+      ──────────────────────────────────────────────────────────── */}
       <div
-        ref={stageRef}
+        className="sc-scroll-mobile-view"
         style={{
           width: "100%",
-          height: "100vh",
-          minHeight: "680px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-          position: "relative",
           backgroundColor: "#FFFFFF",
+          padding: "48px 20px 56px 20px",
+          boxSizing: "border-box",
+          overflow: "hidden",
         }}
+        onTouchStart={(e) => {
+          touchStartXRef.current = e.touches[0].clientX;
+          setIsPaused(true);
+        }}
+        onTouchEnd={(e) => {
+          if (touchStartXRef.current !== null) {
+            const diff = e.changedTouches[0].clientX - touchStartXRef.current;
+            if (diff > 45) {
+              // Swipe right -> prev
+              setMobileIndex((prev) => (prev - 1 + slidesData.length) % slidesData.length);
+            } else if (diff < -45) {
+              // Swipe left -> next
+              setMobileIndex((prev) => (prev + 1) % slidesData.length);
+            }
+            touchStartXRef.current = null;
+          }
+          setIsPaused(false);
+        }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Subtle warm ambient glow in background */}
         <div
           style={{
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            background:
-              "radial-gradient(ellipse 65% 55% at 50% 50%, rgba(232, 99, 55, 0.035) 0%, transparent 75%)",
-          }}
-        />
-
-        {/* Responsive Content Row */}
-        <div
-          className="sc-showcase-row"
-          style={{
-            width: "100%",
-            maxWidth: "1180px",
+            maxWidth: "460px",
             margin: "0 auto",
-            padding: "0 24px",
             display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "54px",
-            boxSizing: "border-box",
-            position: "relative",
-            zIndex: 10,
+            flexDirection: "column",
+            alignItems: "stretch",
           }}
         >
-          {/* Responsive CSS */}
-          <style>{`
-            @media (max-width: 960px) {
-              .sc-showcase-row {
-                flex-direction: column !important;
-                gap: 20px !important;
-                padding: 0 16px !important;
-              }
-              .sc-showcase-left {
-                width: 100% !important;
-                max-width: 440px !important;
-                height: 380px !important;
-              }
-              .sc-photo-frame-wrapper {
-                height: 270px !important;
-                max-width: 100% !important;
-              }
-              .sc-showcase-right {
-                width: 100% !important;
-                min-height: 320px !important;
-              }
-              .sc-showcase-right-inner {
-                align-items: center !important;
-                text-align: center !important;
-              }
-              .sc-showcase-checklist {
-                align-items: flex-start !important;
-                margin: 0 auto 18px auto !important;
-              }
-            }
-          `}</style>
-
-          {/* ─── LEFT COLUMN: ARCHITECTURAL GALLERY FRAME + CLEAN FLOATING BADGES ─── */}
+          {/* TOP CARD CONTAINER: Soft rounded corners, subtle warm background & shadow */}
           <div
-            className="sc-showcase-left"
             style={{
-              flex: "1 1 50%",
-              maxWidth: "500px",
-              height: "480px",
+              width: "100%",
+              backgroundColor: "#FAF9F5",
+              borderRadius: "26px",
+              padding: "16px 14px",
+              boxSizing: "border-box",
+              border: "1px solid #ECE7DE",
+              boxShadow: "0 14px 34px -10px rgba(0, 0, 0, 0.08)",
               position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              overflow: "hidden",
+              marginBottom: "28px",
             }}
           >
-            {slidesData.map((slide, idx) => (
-              <div
-                key={slide.id}
-                ref={(el) => {
-                  visualWrapperRefs.current[idx] = el;
-                }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  willChange: "transform, opacity",
-                }}
-              >
-                {/* 1. TOP BADGE: Positioned cleanly ABOVE the frame with ZERO overlap */}
+            {/* Top Floating Badge */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                backgroundColor: "#FFFFFF",
+                borderRadius: "14px",
+                padding: "8px 14px",
+                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
+                border: "1px solid #ECE7DE",
+                marginBottom: "12px",
+              }}
+            >
+              <div>
                 <div
-                  ref={(el) => {
-                    topBadgeRefs.current[idx] = el;
-                  }}
                   style={{
-                    alignSelf: "flex-start",
-                    marginBottom: "12px",
-                    willChange: "transform, opacity",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#1C1C1E",
+                    fontFamily: "var(--font-assistant), sans-serif",
+                    lineHeight: 1.25,
                   }}
                 >
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      backgroundColor: "#FFFFFF",
-                      borderRadius: "14px",
-                      padding: "8px 14px",
-                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
-                      border: "1px solid #ECE7DE",
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: "0.8rem",
-                          fontWeight: 700,
-                          color: "#1C1C1E",
-                          fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.25,
-                        }}
-                      >
-                        {slide.floatingTop.title}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "0.72rem",
-                          color: "#7A756F",
-                          fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.3,
-                          marginTop: "2px",
-                        }}
-                      >
-                        {slide.floatingTop.subtitle}
-                      </div>
-                    </div>
-                  </div>
+                  {currentMobileSlide.floatingTop.title}
                 </div>
-
-                {/* 2. PREMIUM GALLERY FRAME: Edge-to-edge fill, zero black letterboxing */}
                 <div
-                  ref={(el) => {
-                    photoFrameRefs.current[idx] = el;
-                  }}
-                  className="sc-photo-frame-wrapper"
                   style={{
-                    width: "100%",
-                    maxWidth: "480px",
-                    height: "360px",
-                    padding: "7px",
-                    borderRadius: "24px",
-                    backgroundColor: "#FFFFFF",
-                    border: "1px solid #ECE7DE",
-                    boxShadow:
-                      "0 22px 55px -12px rgba(28, 28, 30, 0.12), 0 4px 14px rgba(0, 0, 0, 0.03)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    boxSizing: "border-box",
-                    willChange: "transform, opacity",
+                    fontSize: "0.7rem",
+                    color: "#7A756F",
+                    fontFamily: "var(--font-assistant), sans-serif",
+                    lineHeight: 1.3,
+                    marginTop: "2px",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "17px",
-                      overflow: "hidden",
-                      position: "relative",
-                      backgroundColor: "#F9F8F5",
-                      boxShadow: "inset 0 0 0 1px rgba(0, 0, 0, 0.06)",
-                    }}
-                  >
-                    <Image
-                      src={slide.imageSrc}
-                      alt={slide.imageAlt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 480px"
-                      style={{
-                        objectFit: "cover",
-                        objectPosition: slide.imagePosition,
-                      }}
-                      priority={idx === 0}
-                    />
-                    {/* Subtle top crystal sheen overlay */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: "55px",
-                        background:
-                          "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 100%)",
-                        pointerEvents: "none",
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* 3. BOTTOM BADGE: Positioned cleanly BELOW the frame with ZERO overlap */}
-                <div
-                  ref={(el) => {
-                    btmBadgeRefs.current[idx] = el;
-                  }}
-                  style={{
-                    alignSelf: "flex-end",
-                    marginTop: "12px",
-                    willChange: "transform, opacity",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      backgroundColor: "#FFFFFF",
-                      borderRadius: "14px",
-                      padding: "8px 16px",
-                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
-                      border: "1px solid #ECE7DE",
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: "0.8rem",
-                          fontWeight: 700,
-                          color: "#1C1C1E",
-                          fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.25,
-                        }}
-                      >
-                        {slide.floatingBottom.title}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "0.72rem",
-                          color: "#7A756F",
-                          fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.3,
-                          marginTop: "2px",
-                        }}
-                      >
-                        {slide.floatingBottom.subtitle}
-                      </div>
-                    </div>
-                  </div>
+                  {currentMobileSlide.floatingTop.subtitle}
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Photo Preview inside Card */}
+            <div
+              style={{
+                width: "100%",
+                height: "240px",
+                borderRadius: "18px",
+                overflow: "hidden",
+                position: "relative",
+                backgroundColor: "#F0EEEA",
+                boxShadow: "0 6px 18px rgba(0, 0, 0, 0.05)",
+              }}
+            >
+              <Image
+                key={currentMobileSlide.id}
+                src={currentMobileSlide.imageSrc}
+                alt={currentMobileSlide.imageAlt}
+                fill
+                sizes="(max-width: 600px) 100vw, 460px"
+                style={{
+                  objectFit: "cover",
+                  objectPosition: currentMobileSlide.imagePosition,
+                  transition: "opacity 0.4s ease",
+                }}
+                priority
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: "45px",
+                  background:
+                    "linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%)",
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+
+            {/* Bottom Floating Badge */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                backgroundColor: "#FFFFFF",
+                borderRadius: "14px",
+                padding: "8px 14px",
+                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
+                border: "1px solid #ECE7DE",
+                marginTop: "12px",
+                alignSelf: "flex-end",
+                float: "right",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#1C1C1E",
+                    fontFamily: "var(--font-assistant), sans-serif",
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {currentMobileSlide.floatingBottom.title}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "#7A756F",
+                    fontFamily: "var(--font-assistant), sans-serif",
+                    lineHeight: 1.3,
+                    marginTop: "2px",
+                  }}
+                >
+                  {currentMobileSlide.floatingBottom.subtitle}
+                </div>
+              </div>
+            </div>
+            <div style={{ clear: "both" }} />
           </div>
 
-          {/* ─── RIGHT COLUMN: SIGNATURE BRAND TYPOGRAPHY & BUTTON ─── */}
-          <div
-            className="sc-showcase-right"
-            style={{
-              flex: "1 1 48%",
-              maxWidth: "530px",
-              minHeight: "520px",
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {slidesData.map((slide, idx) => (
+          {/* CONTENT SECTION BELOW CARD */}
+          <div style={{ textAlign: "left" }}>
+            {/* Category / Section Title with subtle mark */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
               <div
-                key={slide.id}
-                ref={(el) => {
-                  textContentRefs.current[idx] = el;
-                }}
-                className="sc-showcase-right-inner"
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  willChange: "transform, opacity",
+                  width: "12px",
+                  height: "12px",
+                  borderRadius: "3px",
+                  backgroundColor: "#E86337",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  color: "#1C1C1E",
                 }}
               >
-                {/* Main Heading in Signature Prata Serif */}
-                <h3
-                  style={{
-                    fontFamily: "var(--font-prata), Georgia, serif",
-                    fontSize: "clamp(1.4rem, 2.8vw, 2.1rem)",
-                    color: "#1C1C1E",
-                    fontWeight: 400,
-                    lineHeight: 1.25,
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  {slide.heading}
-                </h3>
+                {currentMobileSlide.category}
+              </span>
+            </div>
 
-                {/* Brand Orange Impact Hook */}
-                <p
-                  style={{
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    fontSize: "clamp(0.95rem, 1.6vw, 1.08rem)",
-                    color: "#E86337",
-                    fontWeight: 700,
-                    lineHeight: 1.42,
-                    margin: "0 0 10px 0",
-                  }}
-                >
-                  {slide.hook}
-                </p>
+            {/* Hook / Subhead */}
+            <h4
+              style={{
+                fontFamily: "var(--font-assistant), sans-serif",
+                fontSize: "1.05rem",
+                fontWeight: 700,
+                color: "#1C1C1E",
+                lineHeight: 1.35,
+                margin: "0 0 10px 0",
+              }}
+            >
+              {currentMobileSlide.hook}
+            </h4>
 
-                {/* Authoritative Clinical Description */}
-                <p
-                  style={{
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    fontSize: "0.93rem",
-                    lineHeight: 1.62,
-                    color: "#4A4A50",
-                    margin: "0 0 16px 0",
-                    fontWeight: 400,
-                  }}
-                >
-                  {slide.description}
-                </p>
+            {/* Description */}
+            <p
+              style={{
+                fontFamily: "var(--font-assistant), sans-serif",
+                fontSize: "0.92rem",
+                lineHeight: 1.6,
+                color: "#4A4A50",
+                margin: "0 0 16px 0",
+              }}
+            >
+              {currentMobileSlide.description}
+            </p>
 
-                {/* Feature Checklist */}
+            {/* Checklist */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
+                marginBottom: "24px",
+              }}
+            >
+              {currentMobileSlide.checklist.slice(0, 3).map((item, cIdx) => (
                 <div
-                  className="sc-showcase-checklist"
+                  key={cIdx}
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                    marginBottom: "22px",
-                    width: "100%",
+                    alignItems: "flex-start",
+                    gap: "10px",
                   }}
                 >
-                  {slide.checklist.map((item, cIdx) => (
-                    <div
-                      key={cIdx}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "20px",
-                          height: "20px",
-                          borderRadius: "50%",
-                          backgroundColor: "rgba(22, 163, 74, 0.12)",
-                          color: "#16A34A",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <Check size={12} strokeWidth={3} />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: "0.9rem",
-                          color: "#2C2C2E",
-                          fontWeight: 600,
-                          fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.35,
-                        }}
-                      >
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Brand CTA Button */}
-                <div>
-                  <a
-                    href={slide.ctaHref}
+                  <div
                     style={{
-                      display: "inline-flex",
+                      width: "18px",
+                      height: "18px",
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(22, 163, 74, 0.12)",
+                      color: "#16A34A",
+                      display: "flex",
                       alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 28px",
-                      borderRadius: "8px",
-                      backgroundColor: "#E86337",
-                      color: "#FFFFFF",
-                      fontWeight: 700,
-                      fontSize: "0.92rem",
-                      textDecoration: "none",
-                      boxShadow: "0 6px 20px rgba(232, 99, 55, 0.28)",
-                      transition: "all 0.2s ease",
-                      fontFamily: "var(--font-assistant), sans-serif",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.backgroundColor = "#d65529";
-                      (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                      (e.currentTarget as HTMLElement).style.boxShadow =
-                        "0 10px 26px rgba(232, 99, 55, 0.42)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.backgroundColor = "#E86337";
-                      (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                      (e.currentTarget as HTMLElement).style.boxShadow =
-                        "0 6px 20px rgba(232, 99, 55, 0.28)";
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      marginTop: "2px",
                     }}
                   >
-                    <span>{slide.ctaText}</span>
-                    <ArrowRight size={15} />
-                  </a>
+                    <Check size={11} strokeWidth={3} />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.88rem",
+                      color: "#2C2C2E",
+                      fontWeight: 600,
+                      fontFamily: "var(--font-assistant), sans-serif",
+                      lineHeight: 1.35,
+                    }}
+                  >
+                    {item}
+                  </span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* CTA Button matching brand */}
+            <div style={{ marginBottom: "26px" }}>
+              <a
+                href={currentMobileSlide.ctaHref}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  padding: "13px 32px",
+                  borderRadius: "999px",
+                  backgroundColor: "#E86337",
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  textDecoration: "none",
+                  boxShadow: "0 6px 20px rgba(232, 99, 55, 0.28)",
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                <span>{currentMobileSlide.ctaText}</span>
+                <ArrowRight size={15} />
+              </a>
+            </div>
+
+            {/* Horizontal Pagination Dots matching user's reference */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                paddingTop: "6px",
+              }}
+            >
+              {slidesData.map((_, dotIdx) => {
+                const isActive = dotIdx === mobileIndex;
+                return (
+                  <button
+                    key={dotIdx}
+                    type="button"
+                    onClick={() => setMobileIndex(dotIdx)}
+                    aria-label={`Go to slide ${dotIdx + 1}`}
+                    style={{
+                      width: isActive ? "22px" : "8px",
+                      height: "8px",
+                      borderRadius: "999px",
+                      backgroundColor: isActive ? "#E86337" : "#DDD7CD",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* ───────────────────────────────────────────────────────────
+          2. DESKTOP VIEW (>= 1024px): Pinned GSAP Scroll Animation
+          Completely untouched, preserving original brand experience
+      ──────────────────────────────────────────────────────────── */}
+      <div
+        ref={containerRef}
+        className="sc-scroll-desktop-view"
+        style={{
+          position: "relative",
+          width: "100%",
+          backgroundColor: "#FFFFFF",
+          minHeight: `${slidesData.length * 105}vh`,
+        }}
+      >
+        {/* Pinned Viewport Container */}
+        <div
+          ref={stageRef}
+          style={{
+            width: "100%",
+            height: "100vh",
+            minHeight: "680px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            position: "relative",
+            backgroundColor: "#FFFFFF",
+          }}
+        >
+          {/* Subtle warm ambient glow in background */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              background:
+                "radial-gradient(ellipse 65% 55% at 50% 50%, rgba(232, 99, 55, 0.035) 0%, transparent 75%)",
+            }}
+          />
+
+          {/* Desktop Content Row */}
+          <div
+            className="sc-showcase-row"
+            style={{
+              width: "100%",
+              maxWidth: "1180px",
+              margin: "0 auto",
+              padding: "0 24px",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "54px",
+              boxSizing: "border-box",
+              position: "relative",
+              zIndex: 10,
+            }}
+          >
+            {/* ─── LEFT COLUMN: ARCHITECTURAL GALLERY FRAME + CLEAN FLOATING BADGES ─── */}
+            <div
+              className="sc-showcase-left"
+              style={{
+                flex: "1 1 50%",
+                maxWidth: "500px",
+                height: "480px",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {slidesData.map((slide, idx) => (
+                <div
+                  key={slide.id}
+                  ref={(el) => {
+                    visualWrapperRefs.current[idx] = el;
+                  }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    willChange: "transform, opacity",
+                  }}
+                >
+                  {/* 1. TOP BADGE: Positioned cleanly ABOVE the frame with ZERO overlap */}
+                  <div
+                    ref={(el) => {
+                      topBadgeRefs.current[idx] = el;
+                    }}
+                    style={{
+                      alignSelf: "flex-start",
+                      marginBottom: "12px",
+                      willChange: "transform, opacity",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        backgroundColor: "#FFFFFF",
+                        borderRadius: "14px",
+                        padding: "8px 14px",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
+                        border: "1px solid #ECE7DE",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            fontWeight: 700,
+                            color: "#1C1C1E",
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {slide.floatingTop.title}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.72rem",
+                            color: "#7A756F",
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            lineHeight: 1.3,
+                            marginTop: "2px",
+                          }}
+                        >
+                          {slide.floatingTop.subtitle}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 2. PREMIUM GALLERY FRAME: Edge-to-edge fill */}
+                  <div
+                    ref={(el) => {
+                      photoFrameRefs.current[idx] = el;
+                    }}
+                    className="sc-photo-frame-wrapper"
+                    style={{
+                      width: "100%",
+                      maxWidth: "480px",
+                      height: "360px",
+                      padding: "7px",
+                      borderRadius: "24px",
+                      backgroundColor: "#FFFFFF",
+                      border: "1px solid #ECE7DE",
+                      boxShadow:
+                        "0 22px 55px -12px rgba(28, 28, 30, 0.12), 0 4px 14px rgba(0, 0, 0, 0.03)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      position: "relative",
+                      boxSizing: "border-box",
+                      willChange: "transform, opacity",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "17px",
+                        overflow: "hidden",
+                        position: "relative",
+                        backgroundColor: "#F9F8F5",
+                        boxShadow: "inset 0 0 0 1px rgba(0, 0, 0, 0.06)",
+                      }}
+                    >
+                      <Image
+                        src={slide.imageSrc}
+                        alt={slide.imageAlt}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 480px"
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: slide.imagePosition,
+                        }}
+                        priority={idx === 0}
+                      />
+                      {/* Subtle top crystal sheen overlay */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: "55px",
+                          background:
+                            "linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 100%)",
+                          pointerEvents: "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 3. BOTTOM BADGE: Positioned cleanly BELOW the frame with ZERO overlap */}
+                  <div
+                    ref={(el) => {
+                      btmBadgeRefs.current[idx] = el;
+                    }}
+                    style={{
+                      alignSelf: "flex-end",
+                      marginTop: "12px",
+                      willChange: "transform, opacity",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        backgroundColor: "#FFFFFF",
+                        borderRadius: "14px",
+                        padding: "8px 16px",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
+                        border: "1px solid #ECE7DE",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            fontWeight: 700,
+                            color: "#1C1C1E",
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {slide.floatingBottom.title}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.72rem",
+                            color: "#7A756F",
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            lineHeight: 1.3,
+                            marginTop: "2px",
+                          }}
+                        >
+                          {slide.floatingBottom.subtitle}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* ─── RIGHT COLUMN: SIGNATURE BRAND TYPOGRAPHY & BUTTON ─── */}
+            <div
+              className="sc-showcase-right"
+              style={{
+                flex: "1 1 48%",
+                maxWidth: "530px",
+                minHeight: "520px",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {slidesData.map((slide, idx) => (
+                <div
+                  key={slide.id}
+                  ref={(el) => {
+                    textContentRefs.current[idx] = el;
+                  }}
+                  className="sc-showcase-right-inner"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    willChange: "transform, opacity",
+                  }}
+                >
+                  {/* Main Heading in Signature Prata Serif */}
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-prata), Georgia, serif",
+                      fontSize: "clamp(1.4rem, 2.8vw, 2.1rem)",
+                      color: "#1C1C1E",
+                      fontWeight: 400,
+                      lineHeight: 1.25,
+                      margin: "0 0 8px 0",
+                    }}
+                  >
+                    {slide.heading}
+                  </h3>
+
+                  {/* Brand Orange Impact Hook */}
+                  <p
+                    style={{
+                      fontFamily: "var(--font-assistant), sans-serif",
+                      fontSize: "clamp(0.95rem, 1.6vw, 1.08rem)",
+                      color: "#E86337",
+                      fontWeight: 700,
+                      lineHeight: 1.42,
+                      margin: "0 0 10px 0",
+                    }}
+                  >
+                    {slide.hook}
+                  </p>
+
+                  {/* Authoritative Clinical Description */}
+                  <p
+                    style={{
+                      fontFamily: "var(--font-assistant), sans-serif",
+                      fontSize: "0.93rem",
+                      lineHeight: 1.62,
+                      color: "#4A4A50",
+                      margin: "0 0 16px 0",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {slide.description}
+                  </p>
+
+                  {/* Feature Checklist */}
+                  <div
+                    className="sc-showcase-checklist"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      marginBottom: "22px",
+                      width: "100%",
+                    }}
+                  >
+                    {slide.checklist.map((item, cIdx) => (
+                      <div
+                        key={cIdx}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "20px",
+                            height: "20px",
+                            borderRadius: "50%",
+                            backgroundColor: "rgba(22, 163, 74, 0.12)",
+                            color: "#16A34A",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <Check size={12} strokeWidth={3} />
+                        </div>
+                        <span
+                          style={{
+                            fontSize: "0.9rem",
+                            color: "#2C2C2E",
+                            fontWeight: 600,
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            lineHeight: 1.35,
+                          }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Brand CTA Button */}
+                  <div>
+                    <a
+                      href={slide.ctaHref}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        padding: "12px 28px",
+                        borderRadius: "8px",
+                        backgroundColor: "#E86337",
+                        color: "#FFFFFF",
+                        fontWeight: 700,
+                        fontSize: "0.92rem",
+                        textDecoration: "none",
+                        boxShadow: "0 6px 20px rgba(232, 99, 55, 0.28)",
+                        transition: "all 0.2s ease",
+                        fontFamily: "var(--font-assistant), sans-serif",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor = "#d65529";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                        (e.currentTarget as HTMLElement).style.boxShadow =
+                          "0 10px 26px rgba(232, 99, 55, 0.42)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor = "#E86337";
+                        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                        (e.currentTarget as HTMLElement).style.boxShadow =
+                          "0 6px 20px rgba(232, 99, 55, 0.28)";
+                      }}
+                    >
+                      <span>{slide.ctaText}</span>
+                      <ArrowRight size={15} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

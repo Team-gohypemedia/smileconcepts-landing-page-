@@ -104,8 +104,8 @@ export default function VisualStory() {
           text: "COMPLETE MY SMILE",
           href: "#cost",
         }}
-        backgroundImage="/assets/visual-story/couple-smiling.jpg"
-        imagePosition="center"
+        backgroundImage="/assets/allon4/sunset-couple-hd.jpg"
+        imagePosition="center 30%"
         contactInfo={{
           phone: "02 9267 7777",
           email: "info@smileconcepts.com.au",

@@ -27,6 +27,28 @@ export default function AllOn4Process() {
     setActiveStep(idx);
   };
 
+  const touchStartXRef = useRef<number | null>(null);
+
+  const onTouchStartHandler = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    setIsPaused(true);
+  };
+
+  const onTouchEndHandler = (e: React.TouchEvent) => {
+    if (touchStartXRef.current !== null) {
+      const diff = e.changedTouches[0].clientX - touchStartXRef.current;
+      if (diff > 40) {
+        // Swiped right -> go to previous step
+        handlePrevStep();
+      } else if (diff < -40) {
+        // Swiped left -> go to next step
+        handleNextStep();
+      }
+      touchStartXRef.current = null;
+    }
+    setIsPaused(false);
+  };
+
   // Autoplay carousel every 5.5s, pauses on hover / touch
   useEffect(() => {
     if (isPaused) return;
@@ -206,22 +228,33 @@ export default function AllOn4Process() {
         }
         @media (max-width: 900px) {
           .sc-proc-track-container {
-            height: 390px;
+            height: 380px;
           }
           .sc-proc-card-slide {
-            max-width: 86vw;
-            height: 350px;
+            max-width: calc(100vw - 32px);
+            width: 100%;
+            height: auto;
+            min-height: 340px;
             padding: 1.6rem 1.4rem;
           }
           .sc-proc-side-nav-btn {
-            width: 40px;
-            height: 40px;
+            top: auto;
+            bottom: -56px;
+            transform: none;
+            width: 42px;
+            height: 42px;
+          }
+          .sc-proc-side-nav-btn:hover {
+            transform: scale(1.08);
           }
           .sc-proc-side-nav-left {
-            left: 10px;
+            left: calc(50% - 95px);
           }
           .sc-proc-side-nav-right {
-            right: 10px;
+            right: calc(50% - 95px);
+          }
+          .sc-proc-pagination {
+            margin-top: 4rem;
           }
         }
         .sc-acc-btn-proc {
@@ -318,13 +351,14 @@ export default function AllOn4Process() {
           </p>
         </div>
 
-        {/* ─── 3D COVERFLOW CAROUSEL WITH LEFT & RIGHT CARD PREVIEWS (AUTOPLAY + MANUAL) ─── */}
+        {/* ─── 3D COVERFLOW CAROUSEL WITH LEFT & RIGHT CARD PREVIEWS (AUTOPLAY + MANUAL + TOUCH SWIPE) ─── */}
         <div
           className="sc-proc-carousel-stage"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
+          onTouchStart={onTouchStartHandler}
+          onTouchEnd={onTouchEndHandler}
+          style={{ touchAction: "pan-y" }}
         >
           {/* Side Circle Arrow: Left */}
           <button
