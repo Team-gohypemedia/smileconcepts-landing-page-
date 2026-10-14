@@ -72,7 +72,7 @@ export default function RootLayout({
       lang="en"
       className={`${prata.variable} ${assistant.variable} ${playfair.variable}`}
     >
-      <body suppressHydrationWarning>
+      <body id="top" suppressHydrationWarning>
         <style>{`
           /* Custom Premium Scrollbar - Vibrant Signature Orange */
           ::-webkit-scrollbar {

@@ -111,15 +111,15 @@ const slidesData: FeatureSlide[] = [
     },
   },
 
-  // ─── SLIDE 3: ALL ON 4 VS ALL ON X ───
+  // ─── SLIDE 3: THE ALL ON X ADVANTAGE ───
   {
     id: "allonx",
     category: "Treatment Concept",
     categoryIcon: <Layers size={16} />,
-    heading: "All on 4 vs All on X: What Do These Names Mean?",
-    hook: "Two names for the same fixed solution — tailored around your anatomy.",
+    heading: "Full Arch Solutions: The All on X Advantage",
+    hook: "Anatomy-first flexibility to place 4, 5, or 6 implants for lifelong support.",
     description:
-      "If you've been researching fixed teeth, you've probably seen both 'All on 4' and 'All on X' and wondered whether they're different treatments. They're not; they're two names for the same thing: a full arch of fixed teeth supported by dental implants, so you never take them out. 'All on 4' is the best-known name where a full arch is supported on four implants. 'All on X' is the umbrella clinical term where 'X' stands for the number of implants (4, 5, or 6), because the right number is different for every patient.",
+      "Because every patient's bone density, facial structure, and bite forces are unique, full arch rehabilitation is customized as 'All on X' — where X represents the precise number of implants needed for your case. Whether four, five, or six implants provide the safest foundation, treatment replaces your full arch with fixed teeth that never come out.",
     checklist: [
       "Full arch of fixed replacement teeth that never come out",
       "'X' represents 4, 5, or 6 implants based on bone density & bite force",
@@ -621,40 +621,25 @@ export default function AllOn4ScrollFeatures() {
                       border: "1px solid #ECE7DE",
                     }}
                   >
-                    <div
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "8px",
-                        backgroundColor: "#F9F8F5",
-                        border: "1px solid #ECE7DE",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
-                      {slide.floatingTop.icon}
-                    </div>
                     <div>
                       <div
                         style={{
-                          fontSize: "0.78rem",
+                          fontSize: "0.8rem",
                           fontWeight: 700,
                           color: "#1C1C1E",
                           fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.2,
+                          lineHeight: 1.25,
                         }}
                       >
                         {slide.floatingTop.title}
                       </div>
                       <div
                         style={{
-                          fontSize: "0.68rem",
+                          fontSize: "0.72rem",
                           color: "#7A756F",
                           fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.25,
-                          marginTop: "1px",
+                          lineHeight: 1.3,
+                          marginTop: "2px",
                         }}
                       >
                         {slide.floatingTop.subtitle}
@@ -740,48 +725,32 @@ export default function AllOn4ScrollFeatures() {
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "10px",
                       backgroundColor: "#FFFFFF",
                       borderRadius: "14px",
-                      padding: "8px 14px",
+                      padding: "8px 16px",
                       boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
                       border: "1px solid #ECE7DE",
                     }}
                   >
-                    <div
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "8px",
-                        backgroundColor: "#F9F8F5",
-                        border: "1px solid #ECE7DE",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
-                      {slide.floatingBottom.icon}
-                    </div>
                     <div>
                       <div
                         style={{
-                          fontSize: "0.78rem",
+                          fontSize: "0.8rem",
                           fontWeight: 700,
                           color: "#1C1C1E",
                           fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.2,
+                          lineHeight: 1.25,
                         }}
                       >
                         {slide.floatingBottom.title}
                       </div>
                       <div
                         style={{
-                          fontSize: "0.68rem",
+                          fontSize: "0.72rem",
                           color: "#7A756F",
                           fontFamily: "var(--font-assistant), sans-serif",
-                          lineHeight: 1.25,
-                          marginTop: "1px",
+                          lineHeight: 1.3,
+                          marginTop: "2px",
                         }}
                       >
                         {slide.floatingBottom.subtitle}
@@ -822,29 +791,6 @@ export default function AllOn4ScrollFeatures() {
                   willChange: "transform, opacity",
                 }}
               >
-                {/* Brand Category Tag */}
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "6px 14px",
-                    borderRadius: "9999px",
-                    backgroundColor: "rgba(232, 99, 55, 0.08)",
-                    border: "1px solid rgba(232, 99, 55, 0.22)",
-                    color: "#E86337",
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    marginBottom: "12px",
-                  }}
-                >
-                  <span>{slide.categoryIcon}</span>
-                  <span>{slide.category}</span>
-                </div>
-
                 {/* Main Heading in Signature Prata Serif */}
                 <h3
                   style={{

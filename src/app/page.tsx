@@ -4,6 +4,7 @@ import LoadingScreen from "@/components/layout/LoadingScreen";
 import Hero from "@/components/sections/Hero";
 import ServicesTicker from "@/components/sections/ServicesTicker";
 import VisualStory from "@/components/sections/VisualStory";
+import AllOn4VsAllOnX from "@/components/sections/AllOn4VsAllOnX";
 import VisualBeforeAfter from "@/components/sections/VisualBeforeAfter";
 import AllOn4Overview from "@/components/sections/AllOn4Overview";
 import AllOn4Cost from "@/components/sections/AllOn4Cost";
@@ -30,7 +31,10 @@ export default function Home() {
         {/* 3. Emotional Hook & Visual Story */}
         <VisualStory />
 
-        {/* 4. Real Patient Transformations (Before & After) */}
+        {/* 4. All on 4 vs All on X: What Do These Names Mean? */}
+        <AllOn4VsAllOnX />
+
+        {/* 5. Real Patient Transformations (Before & After) */}
         <VisualBeforeAfter />
 
         {/* 5. Real Patient Testimonials & Google Reviews */}

@@ -1,44 +1,40 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowRight } from "lucide-react";
+import { Plus, Minus, ArrowRight, ArrowLeft, CheckCircle2, Sparkles, ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function AllOn4Process() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const processGridRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const carouselTrackRef = useRef<HTMLDivElement>(null);
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
   };
 
-  const handleProcessScroll = () => {
-    if (!processGridRef.current) return;
-    const { scrollLeft, clientWidth } = processGridRef.current;
-    const cardWidth = clientWidth * 0.84;
-    const idx = Math.round(scrollLeft / (cardWidth > 0 ? cardWidth : 280));
-    setActiveStep(Math.min(steps.length - 1, Math.max(0, idx)));
+  const handleNextStep = () => {
+    setActiveStep((prev) => (prev + 1) % steps.length);
+  };
+
+  const handlePrevStep = () => {
+    setActiveStep((prev) => (prev - 1 + steps.length) % steps.length);
   };
 
   const scrollToStep = (idx: number) => {
-    if (!processGridRef.current) return;
-    if (idx === 0) {
-      processGridRef.current.scrollTo({ left: 0, behavior: "smooth" });
-      setActiveStep(0);
-      return;
-    }
-    const cards = processGridRef.current.children;
-    if (cards[idx]) {
-      (cards[idx] as HTMLElement).scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "nearest",
-      });
-      setActiveStep(idx);
-    }
+    setActiveStep(idx);
   };
+
+  // Autoplay carousel every 5.5s, pauses on hover / touch
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
   // Exact 5 Steps from Live Website (Preserved Verbatim)
   const steps = [
@@ -126,105 +122,106 @@ export default function AllOn4Process() {
       </div>
 
       <style>{`
-        .sc-process-grid {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: clamp(1.15rem, 2.2vw, 1.5rem);
-          margin-bottom: clamp(2rem, 4vw, 3rem);
-        }
-        .sc-process-card {
+        .sc-proc-carousel-stage {
           position: relative;
-          background-color: rgba(255, 255, 255, 0.96);
-          backdrop-filter: blur(8px);
+          width: 100vw;
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;
+          margin-right: -50vw;
+          padding: 2.25rem 0 3.25rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+        }
+        .sc-proc-track-container {
+          position: relative;
+          width: 100%;
+          height: 380px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: visible;
+        }
+        .sc-proc-card-slide {
+          position: absolute;
+          width: 90%;
+          max-width: 540px;
+          height: 320px;
           border-radius: 20px;
-          padding: 1.85rem 1.6rem 1.65rem;
+          background-color: #FFFFFF;
           border: 1px solid #ECE7DE;
+          padding: 2.2rem 2.25rem 2rem;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-          overflow: hidden;
-          z-index: 1;
+          justify-content: flex-start;
+          box-sizing: border-box;
+          user-select: none;
+          cursor: pointer;
         }
-        .sc-process-card::before {
-          content: "";
+        .sc-proc-side-nav-btn {
           position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background-color: #E86337;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #FFFFFF;
+          box-shadow: 0 8px 24px rgba(232, 99, 55, 0.35);
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 50;
+        }
+        .sc-proc-side-nav-btn:hover {
+          background-color: #D3542B;
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 10px 28px rgba(232, 99, 55, 0.45);
+        }
+        .sc-proc-side-nav-left {
+          left: clamp(24px, 12vw, 120px);
+        }
+        .sc-proc-side-nav-right {
+          right: clamp(24px, 12vw, 120px);
+        }
+        .sc-proc-pagination {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          margin-top: 1.75rem;
+        }
+        .sc-proc-dash {
           height: 3px;
-          background: linear-gradient(90deg, #E86337 0%, rgba(232, 99, 55, 0.3) 100%);
-          opacity: 0.85;
-          transition: opacity 0.25s ease, height 0.25s ease;
+          border-radius: 999px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
         }
-        .sc-process-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 18px 38px -6px rgba(232, 99, 55, 0.1), 0 8px 16px -2px rgba(0, 0, 0, 0.04);
-          border-color: rgba(232, 99, 55, 0.35);
-        }
-        .sc-process-card:hover::before {
-          opacity: 1;
-          height: 4px;
-        }
-        .sc-process-card-1 { grid-column: span 2; }
-        .sc-process-card-2 { grid-column: span 2; }
-        .sc-process-card-3 { grid-column: span 2; }
-        .sc-process-card-4 { grid-column: span 3; }
-        .sc-process-card-5 { grid-column: span 3; }
-
-        .sc-process-mobile-nav {
-          display: none;
-        }
-        @media (max-width: 1024px) {
-          .sc-process-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 1.15rem !important;
+        @media (max-width: 900px) {
+          .sc-proc-track-container {
+            height: 390px;
           }
-          .sc-process-card-1,
-          .sc-process-card-2,
-          .sc-process-card-3,
-          .sc-process-card-4 {
-            grid-column: span 1 !important;
+          .sc-proc-card-slide {
+            max-width: 86vw;
+            height: 350px;
+            padding: 1.6rem 1.4rem;
           }
-          .sc-process-card-5 {
-            grid-column: 1 / span 2 !important;
-            max-width: 540px !important;
-            margin: 0 auto !important;
-            width: 100% !important;
+          .sc-proc-side-nav-btn {
+            width: 40px;
+            height: 40px;
           }
-        }
-        @media (max-width: 768px) {
-          .sc-process-grid {
-            display: flex !important;
-            overflow-x: auto !important;
-            scroll-snap-type: x mandatory !important;
-            scroll-padding-left: 1.65rem !important;
-            -webkit-overflow-scrolling: touch !important;
-            gap: 1rem !important;
-            margin-left: -1.25rem !important;
-            margin-right: -1.25rem !important;
-            padding-left: 1.65rem !important;
-            padding-right: 1.65rem !important;
-            padding-bottom: 0.95rem !important;
-            margin-bottom: 0.85rem !important;
-            scrollbar-width: none !important;
+          .sc-proc-side-nav-left {
+            left: 10px;
           }
-          .sc-process-grid::-webkit-scrollbar {
-            display: none !important;
-          }
-          .sc-process-card {
-            grid-column: auto !important;
-            flex: 0 0 84% !important;
-            max-width: 320px !important;
-            min-width: 275px !important;
-            scroll-snap-align: start !important;
-            padding: 1.35rem 1.2rem !important;
-          }
-          .sc-process-mobile-nav {
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem !important;
+          .sc-proc-side-nav-right {
+            right: 10px;
           }
         }
         .sc-acc-btn-proc {
@@ -321,186 +318,188 @@ export default function AllOn4Process() {
           </p>
         </div>
 
-        {/* 5-Step Cards (Desktop Balanced Grid / Mobile Slider) */}
+        {/* ─── 3D COVERFLOW CAROUSEL WITH LEFT & RIGHT CARD PREVIEWS (AUTOPLAY + MANUAL) ─── */}
         <div
-          ref={processGridRef}
-          onScroll={handleProcessScroll}
-          className="sc-process-grid"
+          className="sc-proc-carousel-stage"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
         >
-          {steps.map((st, idx) => (
-            <div
-              key={st.num}
-              className={`sc-process-card sc-process-card-${idx + 1}`}
-            >
-              {/* Card Top Meta Row: Badge on Left, Watermark Number on Right */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "1.1rem",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.38rem",
-                    backgroundColor: "rgba(232, 99, 55, 0.08)",
-                    border: "1px solid rgba(232, 99, 55, 0.22)",
-                    borderRadius: "999px",
-                    padding: "0.24rem 0.65rem",
-                  }}
-                >
-                  <span
-                    style={{
-                      width: "5px",
-                      height: "5px",
-                      borderRadius: "50%",
-                      backgroundColor: "#E86337",
-                      display: "inline-block",
+          {/* Side Circle Arrow: Left */}
+          <button
+            type="button"
+            onClick={handlePrevStep}
+            className="sc-proc-side-nav-btn sc-proc-side-nav-left"
+            aria-label="Previous step"
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Side Circle Arrow: Right */}
+          <button
+            type="button"
+            onClick={handleNextStep}
+            className="sc-proc-side-nav-btn sc-proc-side-nav-right"
+            aria-label="Next step"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Cards Track Container with Left/Center/Right Previews (Full width) */}
+          <div style={{ width: "100%", margin: "0 auto" }}>
+            <div className="sc-proc-track-container">
+              {steps.map((st, idx) => {
+                // Calculate position relative to activeStep (-2, -1, 0, 1, 2)
+                let offset = idx - activeStep;
+                const half = Math.floor(steps.length / 2);
+                if (offset > half) offset -= steps.length;
+                if (offset < -half) offset += steps.length;
+
+                const isCenter = offset === 0;
+                const isLeft = offset === -1;
+                const isRight = offset === 1;
+                const isVisible = Math.abs(offset) <= 1;
+
+                // Motion values for smooth 3D coverflow with end-to-end bleed
+                const xPos = isCenter ? 0 : offset > 0 ? 420 : -420;
+                const scaleVal = isCenter ? 1.03 : 0.86;
+                const opacityVal = isCenter ? 1 : 0.5;
+                const zIndexVal = isCenter ? 30 : 20 - Math.abs(offset);
+                const rotateYVal = isCenter ? 0 : offset > 0 ? -4 : 4;
+
+                return (
+                  <motion.div
+                    key={st.num}
+                    onClick={() => scrollToStep(idx)}
+                    className="sc-proc-card-slide"
+                    initial={false}
+                    animate={{
+                      x: xPos,
+                      scale: scaleVal,
+                      opacity: isVisible ? opacityVal : 0,
+                      zIndex: zIndexVal,
+                      rotateY: rotateYVal,
+                      boxShadow: isCenter
+                        ? "0 24px 60px -12px rgba(232, 99, 55, 0.16), 0 8px 24px -4px rgba(0, 0, 0, 0.06)"
+                        : "0 10px 25px -8px rgba(0, 0, 0, 0.05)",
                     }}
-                  />
-                  <span
+                    transition={{
+                      duration: 0.55,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                     style={{
-                      fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: "0.72rem",
-                      fontWeight: 800,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: "#E86337",
-                      lineHeight: 1,
+                      pointerEvents: isVisible ? "auto" : "none",
                     }}
                   >
-                    Step {st.num}
-                  </span>
-                </div>
+                    {/* Meta Top: Step Pill & Watermark Numeral */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.45rem",
+                          backgroundColor: isCenter ? "rgba(232, 99, 55, 0.1)" : "rgba(0, 0, 0, 0.04)",
+                          border: isCenter ? "1px solid rgba(232, 99, 55, 0.28)" : "1px solid #ECE7DE",
+                          borderRadius: "999px",
+                          padding: "0.28rem 0.75rem",
+                          transition: "all 0.3s ease",
+                        }}
+                      >
+                        <span
+                          style={{
+                            width: "6px",
+                            height: "6px",
+                            borderRadius: "50%",
+                            backgroundColor: isCenter ? "#E86337" : "#888",
+                            display: "inline-block",
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "0.75rem",
+                            fontWeight: 800,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            color: isCenter ? "#E86337" : "#666",
+                          }}
+                        >
+                          Step {st.num} of 5
+                        </span>
+                      </div>
 
-                <div
-                  aria-hidden="true"
-                  style={{
-                    fontFamily: "var(--font-prata), Georgia, serif",
-                    fontSize: "1.85rem",
-                    fontWeight: 400,
-                    lineHeight: 1,
-                    color: "rgba(28, 28, 30, 0.12)",
-                    letterSpacing: "-0.03em",
-                    userSelect: "none",
-                  }}
-                >
-                  0{st.num}
-                </div>
-              </div>
+                      <div
+                        aria-hidden="true"
+                        style={{
+                          fontFamily: "var(--font-prata), Georgia, serif",
+                          fontSize: "2.4rem",
+                          lineHeight: 1,
+                          color: isCenter ? "rgba(232, 99, 55, 0.2)" : "rgba(28, 28, 30, 0.08)",
+                          userSelect: "none",
+                          fontWeight: 400,
+                        }}
+                      >
+                        0{st.num}
+                      </div>
+                    </div>
 
-              {/* Title with Full Width & Dedicated Row */}
-              <h3
-                style={{
-                  fontFamily: "var(--font-prata), Georgia, serif",
-                  fontSize: "clamp(1.15rem, 1.45vw, 1.3rem)",
-                  fontWeight: 400,
-                  color: "#1C1C1E",
-                  margin: "0 0 0.85rem 0",
-                  lineHeight: 1.32,
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                {st.title}
-              </h3>
+                    {/* Step Title */}
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-prata), Georgia, serif",
+                        fontSize: "clamp(1.25rem, 2.2vw, 1.65rem)",
+                        fontWeight: 400,
+                        color: "#1C1C1E",
+                        margin: "0 0 0.85rem 0",
+                        lineHeight: 1.3,
+                        textAlign: "center",
+                      }}
+                    >
+                      {st.title}
+                    </h3>
 
-              {/* Description (Exact Verbatim from Website) */}
-              <p
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.93rem",
-                  color: "#525258",
-                  lineHeight: 1.68,
-                  margin: "0 0 1.35rem 0",
-                  position: "relative",
-                  zIndex: 1,
-                  flexGrow: 1,
-                }}
-              >
-                {st.desc}
-              </p>
-
-              {/* Discreet Step Progress Bar & Counter */}
-              <div
-                style={{
-                  marginTop: "auto",
-                  paddingTop: "0.95rem",
-                  borderTop: "1px solid #F2ECE4",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "0.75rem",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    fontSize: "0.75rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "#9E9EA4",
-                  }}
-                >
-                  Step {st.num} of 5
-                </span>
-
-                <div
-                  style={{
-                    width: "55px",
-                    height: "4px",
-                    backgroundColor: "#EBE5DB",
-                    borderRadius: "999px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      height: "100%",
-                      width: `${((idx + 1) / 5) * 100}%`,
-                      background: "linear-gradient(90deg, #E86337 0%, #F47A4A 100%)",
-                      borderRadius: "999px",
-                    }}
-                  />
-                </div>
-              </div>
+                    {/* Step Description */}
+                    <p
+                      style={{
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.95rem",
+                        color: isCenter ? "#444" : "#777",
+                        lineHeight: 1.7,
+                        margin: 0,
+                      }}
+                    >
+                      {st.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
-          ))}
-        </div>
 
-        {/* Mobile Slider Indicator Dots & Swipe Hint */}
-        <div className="sc-process-mobile-nav">
-          <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
-            {steps.map((st, idx) => (
-              <button
-                key={st.num}
-                type="button"
-                onClick={() => scrollToStep(idx)}
-                aria-label={`Go to step ${st.num}`}
-                style={{
-                  width: activeStep === idx ? "22px" : "8px",
-                  height: "8px",
-                  borderRadius: "4px",
-                  backgroundColor: activeStep === idx ? "#E86337" : "#DCD6CD",
-                  border: "none",
-                  padding: 0,
-                  cursor: "pointer",
-                  transition: "all 0.25s ease",
-                }}
-              />
-            ))}
+            {/* Dash Indicators Matching Reference Carousel */}
+            <div className="sc-proc-pagination">
+              {steps.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollToStep(i)}
+                  aria-label={`Go to step ${i + 1}`}
+                  className="sc-proc-dash"
+                  style={{
+                    width: activeStep === i ? "32px" : "18px",
+                    backgroundColor: activeStep === i ? "#E86337" : "#D4CCC5",
+                  }}
+                />
+              ))}
+            </div>
           </div>
-          <span style={{ fontSize: "0.78rem", color: "#888", fontFamily: "var(--font-assistant)", marginLeft: "0.75rem" }}>
-            Swipe for all 5 steps →
-          </span>
         </div>
 
         {/* ─── ACCORDIONS: RECOVERY, BONE LOSS, RISKS & WHY CHOOSE ─── */}

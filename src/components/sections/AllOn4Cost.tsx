@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -10,8 +10,6 @@ import {
   ArrowLeft,
   Calculator,
   Phone,
-  ChevronDown,
-  ChevronUp,
   ShieldCheck,
   CreditCard,
   Layers,
@@ -24,7 +22,6 @@ import {
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [readMoreCost, setReadMoreCost] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(true);
   const [activePhase, setActivePhase] = useState<0 | 1>(0);
   const phasesGridRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +56,7 @@ export default function AllOn4Cost() {
   const [selectedMaterial, setSelectedMaterial] = useState<"acrylic" | "zirconia">("zirconia");
   const [financeMonths, setFinanceMonths] = useState<number>(48);
   const [activeCostTopic, setActiveCostTopic] = useState<number>(0);
-  const [isTopicExpanded, setIsTopicExpanded] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   // Calculations
   const phase1PerArch = 18000;
@@ -74,14 +71,21 @@ export default function AllOn4Cost() {
   };
 
   const handleNextCostTopic = () => {
-    setIsTopicExpanded(false);
     setActiveCostTopic((prev) => (prev + 1) % 5);
   };
 
   const handlePrevCostTopic = () => {
-    setIsTopicExpanded(false);
     setActiveCostTopic((prev) => (prev - 1 + 5) % 5);
   };
+
+  // Autoplay slide transition (rotates every 5.5s, pauses on user hover)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveCostTopic((prev) => (prev + 1) % 5);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
   const costTopics = [
     {
@@ -89,10 +93,11 @@ export default function AllOn4Cost() {
       tabLabel: "Cost Factors",
       badge: "Financial Transparency",
       title: "What Affects the Cost & What It Means for You",
-      src: "/assets/allon4/candidate-smile.jpg",
+      src: "/assets/allon4/cost-factors-consult.png",
       alt: "What Affects the Cost of All-on-4 dental implants",
       caption: "Custom surgical planning & transparent pricing guarantee",
-      objectPosition: "center 22%",
+      objectPosition: "center top",
+      objectFit: "contain",
       content: (
         <div>
           <div style={{ overflowX: "auto", margin: "0.5rem 0" }}>
@@ -112,57 +117,28 @@ export default function AllOn4Cost() {
                   <td><strong>Number of arches being treated</strong></td>
                   <td>Treating the upper arch, lower arch, or both will change the total investment.</td>
                 </tr>
-                {isTopicExpanded && (
-                  <>
-                    <tr>
-                      <td><strong>Extractions needed</strong></td>
-                      <td>If you still have remaining teeth that need to be removed, this is factored into your quote.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Sedation</strong></td>
-                      <td>If you prefer to be sedated during the procedure, this adds to the overall cost but is available at our clinic.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Complexity of your case</strong></td>
-                      <td>Bone loss, previous implant history, or other clinical factors can affect the planning and surgical approach.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Number of implants</strong></td>
-                      <td>Whether your plan uses four, five or six implants, your quote stays the same.</td>
-                    </tr>
-                  </>
-                )}
+                <tr>
+                  <td><strong>Extractions needed</strong></td>
+                  <td>If you still have remaining teeth that need to be removed, this is factored into your quote.</td>
+                </tr>
+                <tr>
+                  <td><strong>Sedation</strong></td>
+                  <td>If you prefer to be sedated during the procedure, this adds to the overall cost but is available at our clinic.</td>
+                </tr>
+                <tr>
+                  <td><strong>Complexity of your case</strong></td>
+                  <td>Bone loss, previous implant history, or other clinical factors can affect the planning and surgical approach.</td>
+                </tr>
+                <tr>
+                  <td><strong>Number of implants</strong></td>
+                  <td>Whether your plan uses four, five or six implants, your quote stays the same.</td>
+                </tr>
               </tbody>
             </table>
           </div>
-          {isTopicExpanded && (
-            <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", marginTop: "0.75rem", marginBottom: 0, lineHeight: 1.6 }}>
-              After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
-            </p>
-          )}
-          <button
-            type="button"
-            onClick={() => setIsTopicExpanded(!isTopicExpanded)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.35rem",
-              marginTop: "0.65rem",
-              padding: "0.32rem 0.85rem",
-              borderRadius: "999px",
-              backgroundColor: "#FAF6F0",
-              border: "1px solid #E5E0D7",
-              color: "#E86337",
-              fontFamily: "var(--font-assistant)",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-          >
-            <span>{isTopicExpanded ? "Read less" : "Read more (view all 6 factors)"}</span>
-            {isTopicExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-          </button>
+          <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", marginTop: "0.85rem", marginBottom: 0, lineHeight: 1.6 }}>
+            After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
+          </p>
         </div>
       ),
     },
@@ -354,26 +330,13 @@ export default function AllOn4Cost() {
             margin-bottom: 1.5rem !important;
           }
         }
-        .sc-calc-header-btn {
-          width: 100%;
-          padding: 1.1rem 1.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 0.85rem;
-          border: none;
-          cursor: pointer;
-          text-align: left;
-          transition: background-color 0.2s ease;
-        }
         .sc-calc-content-pad {
-          padding: 1.5rem 2rem 2rem;
-          border-top: 1px solid #ECE7DE;
+          padding: 0;
         }
         .sc-calc-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 2rem;
+          grid-template-columns: 1.15fr 0.95fr;
+          gap: 2.5rem;
           align-items: stretch;
         }
         .sc-calc-controls {
@@ -400,37 +363,15 @@ export default function AllOn4Cost() {
 
         @media (max-width: 640px) {
           .sc-calc-card {
-            border-radius: 14px !important;
-            margin-top: 1.25rem !important;
-          }
-          .sc-calc-header-btn {
-            padding: 0.75rem 0.85rem !important;
-            gap: 0.5rem !important;
-          }
-          .sc-calc-header-icon {
-            width: 32px !important;
-            height: 32px !important;
-            border-radius: 8px !important;
-          }
-          .sc-calc-header-title {
-            font-size: 0.96rem !important;
-            line-height: 1.25 !important;
-          }
-          .sc-calc-header-badge {
-            display: none !important;
-          }
-          .sc-calc-header-desc {
-            display: none !important;
-          }
-          .sc-calc-pill-action {
-            padding: 0.35rem 0.65rem !important;
-            font-size: 0.74rem !important;
+            margin-top: 2rem !important;
+            padding: 1.25rem 1rem !important;
           }
           .sc-calc-content-pad {
-            padding: 0.75rem 0.75rem 1rem !important;
+            padding: 0 !important;
           }
           .sc-calc-grid {
-            gap: 0.85rem !important;
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
           }
           .sc-calc-controls {
             gap: 0.75rem !important;
@@ -475,35 +416,13 @@ export default function AllOn4Cost() {
           }
         }
         .sc-cost-showcase-grid {
-          display: grid;
-          grid-template-columns: minmax(360px, 460px) 1fr;
-          gap: clamp(1.75rem, 4vw, 3.25rem);
-          align-items: center;
-        }
-        .sc-cost-showcase-visual {
-          position: relative;
-          height: 380px;
+          display: block;
           width: 100%;
         }
         .sc-cost-showcase-panel {
-          min-height: 380px;
+          width: 100%;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-        }
-        @media (max-width: 920px) {
-          .sc-cost-showcase-grid {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-          }
-          .sc-cost-showcase-visual {
-            height: 310px !important;
-            max-width: 480px !important;
-            margin: 0 auto !important;
-          }
-          .sc-cost-showcase-panel {
-            min-height: auto !important;
-          }
         }
       `}</style>
 
@@ -790,531 +709,406 @@ export default function AllOn4Cost() {
           </div>
         </div>
 
-        {/* ─── INTERACTIVE COST & FINANCE CALCULATOR (COLLAPSIBLE DROPDOWN) ─── */}
+        {/* ─── INTERACTIVE COST & FINANCE CALCULATOR ─── */}
         <div
           className="sc-calc-card"
           style={{
             maxWidth: "980px",
-            margin: "2.25rem auto 0",
-            backgroundColor: "#ffffff",
+            margin: "3rem auto 0",
+            backgroundColor: "#FAF9F6",
             borderRadius: "20px",
-            border: isCalculatorOpen ? "1.5px solid #E86337" : "1px solid #E5E0D7",
-            boxShadow: isCalculatorOpen
-              ? "0 10px 36px rgba(232, 99, 55, 0.08)"
-              : "0 4px 20px rgba(0, 0, 0, 0.03)",
-            overflow: "hidden",
-            transition: "border 0.25s ease, box-shadow 0.25s ease",
+            border: "none",
+            boxShadow: "none",
+            padding: "clamp(1.5rem, 3.5vw, 2.5rem)",
           }}
         >
-          {/* Dropdown Header Trigger */}
-          <button
-            type="button"
-            className="sc-calc-header-btn"
-            onClick={() => setIsCalculatorOpen(!isCalculatorOpen)}
-            aria-expanded={isCalculatorOpen}
-            style={{
-              backgroundColor: isCalculatorOpen ? "#FAF8F5" : "#ffffff",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", flex: 1, minWidth: 0 }}>
+          {/* Header */}
+          <div style={{ marginBottom: "2rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexWrap: "wrap", marginBottom: "0.35rem" }}>
               <div
-                className="sc-calc-header-icon"
                 style={{
-                  width: "40px",
-                  height: "40px",
+                  width: "36px",
+                  height: "36px",
                   borderRadius: "10px",
-                  backgroundColor: "rgba(232, 99, 55, 0.1)",
+                  backgroundColor: "rgba(232, 99, 55, 0.12)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
                 }}
               >
-                <Calculator size={20} color="#E86337" />
+                <Calculator size={19} color="#E86337" />
               </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
-                  <h3
-                    className="sc-calc-header-title"
-                    style={{
-                      fontFamily: "var(--font-prata), Georgia, serif",
-                      fontSize: "clamp(1rem, 3vw, 1.4rem)",
-                      color: "#1C1C1E",
-                      margin: 0,
-                      fontWeight: 400,
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    Interactive Investment &amp; Finance Calculator
-                  </h3>
-                  <span
-                    className="sc-calc-header-badge"
-                    style={{
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.04em",
-                      textTransform: "uppercase",
-                      backgroundColor: "rgba(232, 99, 55, 0.12)",
-                      color: "#E86337",
-                      padding: "0.15rem 0.5rem",
-                      borderRadius: "100px",
-                    }}
-                  >
-                    Estimate
-                  </span>
-                </div>
-                <p
-                  className="sc-calc-header-desc"
-                  style={{
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    fontSize: "0.86rem",
-                    color: "#666",
-                    margin: "0.25rem 0 0",
-                    lineHeight: 1.45,
-                  }}
-                >
-                  Tailor your treatment options to calculate your transparent two-phase total and view interest-free weekly payment estimates.
-                </p>
-              </div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-prata), Georgia, serif",
+                  fontSize: "clamp(1.2rem, 3.2vw, 1.55rem)",
+                  color: "#1C1C1E",
+                  margin: 0,
+                  fontWeight: 400,
+                  lineHeight: 1.25,
+                }}
+              >
+                Interactive Investment &amp; Finance Calculator
+              </h3>
+              <span
+                style={{
+                  fontFamily: "var(--font-assistant)",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                  backgroundColor: "rgba(232, 99, 55, 0.12)",
+                  color: "#E86337",
+                  padding: "0.18rem 0.55rem",
+                  borderRadius: "100px",
+                }}
+              >
+                Estimate
+              </span>
             </div>
-
-            <div
-              className="sc-calc-pill-action"
+            <p
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                padding: "0.45rem 0.85rem",
-                borderRadius: "100px",
-                backgroundColor: isCalculatorOpen ? "#1C1C1E" : "#E86337",
-                color: "#ffffff",
-                fontFamily: "var(--font-assistant)",
-                fontSize: "0.82rem",
-                fontWeight: 700,
-                flexShrink: 0,
-                transition: "all 0.2s ease",
-                whiteSpace: "nowrap",
+                fontFamily: "var(--font-assistant), sans-serif",
+                fontSize: "0.92rem",
+                color: "#666",
+                margin: "0.2rem 0 0 0",
+                lineHeight: 1.5,
+                maxWidth: "760px",
               }}
             >
-              <span>{isCalculatorOpen ? "Close" : "Open Calculator"}</span>
-              {isCalculatorOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-            </div>
-          </button>
+              Tailor your treatment options to calculate your transparent two-phase total and view interest-free weekly payment estimates.
+            </p>
+          </div>
 
-          {/* Collapsible Content */}
-          <AnimatePresence initial={false}>
-            {isCalculatorOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.28, ease: "easeInOut" }}
-                style={{ overflow: "hidden" }}
-              >
-                <div className="sc-calc-content-pad">
-                  <div className="sc-calc-grid">
-                    {/* Left Controls */}
-                    <div className="sc-calc-controls">
-                      {/* Arch Toggle */}
-                      <div>
-                        <label
-                          className="sc-calc-ctrl-label"
-                          style={{
-                            display: "block",
-                            fontFamily: "var(--font-assistant)",
-                            fontSize: "0.82rem",
-                            fontWeight: 700,
-                            color: "#1C1C1E",
-                            marginBottom: "0.45rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                          }}
-                        >
-                          1. Select Number of Arches:
-                        </label>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
-                          <button
-                            type="button"
-                            className="sc-calc-btn"
-                            onClick={() => setSelectedArch("single")}
-                            style={{
-                              padding: "0.65rem 0.75rem",
-                              borderRadius: "10px",
-                              border: selectedArch === "single" ? "2px solid #E86337" : "1px solid #DCD6CD",
-                              backgroundColor: selectedArch === "single" ? "rgba(232, 99, 55, 0.08)" : "#FAF8F5",
-                              color: selectedArch === "single" ? "#E86337" : "#444",
-                              fontFamily: "var(--font-assistant)",
-                              fontWeight: 700,
-                              cursor: "pointer",
-                              fontSize: "clamp(0.8rem, 2vw, 0.88rem)",
-                              transition: "all 0.2s ease",
-                              textAlign: "center",
-                              lineHeight: 1.25,
-                            }}
-                          >
-                            <div>Single Arch</div>
-                            <span className="sc-calc-btn-sub" style={{ fontSize: "0.72rem", fontWeight: 500, opacity: 0.75, display: "block" }}>
-                              Upper or Lower
-                            </span>
-                          </button>
-                          <button
-                            type="button"
-                            className="sc-calc-btn"
-                            onClick={() => setSelectedArch("both")}
-                            style={{
-                              padding: "0.65rem 0.75rem",
-                              borderRadius: "10px",
-                              border: selectedArch === "both" ? "2px solid #E86337" : "1px solid #DCD6CD",
-                              backgroundColor: selectedArch === "both" ? "rgba(232, 99, 55, 0.08)" : "#FAF8F5",
-                              color: selectedArch === "both" ? "#E86337" : "#444",
-                              fontFamily: "var(--font-assistant)",
-                              fontWeight: 700,
-                              cursor: "pointer",
-                              fontSize: "clamp(0.8rem, 2vw, 0.88rem)",
-                              transition: "all 0.2s ease",
-                              textAlign: "center",
-                              lineHeight: 1.25,
-                            }}
-                          >
-                            <div>Both Arches</div>
-                            <span className="sc-calc-btn-sub" style={{ fontSize: "0.72rem", fontWeight: 500, opacity: 0.75, display: "block" }}>
-                              Full Mouth
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Material Toggle */}
-                      <div>
-                        <label
-                          className="sc-calc-ctrl-label"
-                          style={{
-                            display: "block",
-                            fontFamily: "var(--font-assistant)",
-                            fontSize: "0.82rem",
-                            fontWeight: 700,
-                            color: "#1C1C1E",
-                            marginBottom: "0.45rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                          }}
-                        >
-                          2. Select Final Bridge Material (Phase 2):
-                        </label>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
-                          <button
-                            type="button"
-                            className="sc-calc-btn"
-                            onClick={() => setSelectedMaterial("acrylic")}
-                            style={{
-                              padding: "0.65rem 0.75rem",
-                              borderRadius: "10px",
-                              border: selectedMaterial === "acrylic" ? "2px solid #E86337" : "1px solid #DCD6CD",
-                              backgroundColor: selectedMaterial === "acrylic" ? "rgba(232, 99, 55, 0.08)" : "#FAF8F5",
-                              color: selectedMaterial === "acrylic" ? "#E86337" : "#444",
-                              fontFamily: "var(--font-assistant)",
-                              fontWeight: 700,
-                              cursor: "pointer",
-                              fontSize: "clamp(0.8rem, 2vw, 0.88rem)",
-                              transition: "all 0.2s ease",
-                              textAlign: "center",
-                              lineHeight: 1.25,
-                            }}
-                          >
-                            <div>Acrylic on Titanium</div>
-                            <span className="sc-calc-btn-sub" style={{ fontSize: "0.72rem", fontWeight: 500, opacity: 0.75, display: "block" }}>
-                              $10,000 / arch
-                            </span>
-                          </button>
-                          <button
-                            type="button"
-                            className="sc-calc-btn"
-                            onClick={() => setSelectedMaterial("zirconia")}
-                            style={{
-                              padding: "0.65rem 0.75rem",
-                              borderRadius: "10px",
-                              border: selectedMaterial === "zirconia" ? "2px solid #E86337" : "1px solid #DCD6CD",
-                              backgroundColor: selectedMaterial === "zirconia" ? "rgba(232, 99, 55, 0.08)" : "#FAF8F5",
-                              color: selectedMaterial === "zirconia" ? "#E86337" : "#444",
-                              fontFamily: "var(--font-assistant)",
-                              fontWeight: 700,
-                              cursor: "pointer",
-                              fontSize: "clamp(0.8rem, 2vw, 0.88rem)",
-                              transition: "all 0.2s ease",
-                              textAlign: "center",
-                              lineHeight: 1.25,
-                            }}
-                          >
-                            <div>Monolithic Zirconia</div>
-                            <span className="sc-calc-btn-sub" style={{ fontSize: "0.72rem", fontWeight: 500, opacity: 0.75, display: "block" }}>
-                              $14,000 / arch
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Finance Duration Slider */}
-                      <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.35rem" }}>
-                          <label
-                            className="sc-calc-ctrl-label"
-                            style={{
-                              fontFamily: "var(--font-assistant)",
-                              fontSize: "0.82rem",
-                              fontWeight: 700,
-                              color: "#1C1C1E",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.05em",
-                            }}
-                          >
-                            3. Plan Duration:
-                          </label>
-                          <span style={{ fontFamily: "var(--font-assistant)", fontWeight: 700, color: "#E86337", fontSize: "0.85rem" }}>
-                            {financeMonths} Mo (Interest-Free)
-                          </span>
-                        </div>
-                        <input
-                          type="range"
-                          min="12"
-                          max="48"
-                          step="12"
-                          value={financeMonths}
-                          onChange={(e) => setFinanceMonths(Number(e.target.value))}
-                          style={{
-                            width: "100%",
-                            accentColor: "#E86337",
-                            cursor: "pointer",
-                          }}
-                        />
-                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.2rem", fontSize: "0.72rem", color: "#888", fontFamily: "var(--font-assistant)" }}>
-                          <span>12 Mo</span>
-                          <span>24 Mo</span>
-                          <span>36 Mo</span>
-                          <span>48 Mo</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right Result Card */}
-                    <div className="sc-calc-result-card">
-                      <div>
-                        <span
-                          style={{
-                            fontFamily: "var(--font-assistant)",
-                            fontSize: "0.76rem",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.07em",
-                            color: "#777",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Estimated Weekly Investment:
-                        </span>
-                        <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginTop: "0.15rem" }}>
-                          <span className="sc-calc-weekly-val">
-                            ${weeklyEstimate}
-                          </span>
-                          <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
-                            / week*
-                          </span>
-                        </div>
-                        <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.72rem", color: "#777", display: "block", marginTop: "0.15rem" }}>
-                          *Subject to finance approval. Interest-free payment plans available up to 48 months.
-                        </span>
-                      </div>
-
-                      <div style={{ borderTop: "1px solid #E5DFD4", paddingTop: "0.65rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                        <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#555" }}>
-                          <span>Phase 1 ({selectedArch === "both" ? "Both Arches" : "Single Arch"}):</span>
-                          <strong style={{ color: "#1C1C1E" }}>${(phase1PerArch * archMultiplier).toLocaleString()}</strong>
-                        </div>
-                        <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#555" }}>
-                          <span>Phase 2 ({selectedMaterial === "acrylic" ? "Acrylic" : "Zirconia"}):</span>
-                          <strong style={{ color: "#1C1C1E" }}>${(phase2PerArch * archMultiplier).toLocaleString()}</strong>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            fontFamily: "var(--font-assistant)",
-                            fontSize: "0.9rem",
-                            color: "#1C1C1E",
-                            fontWeight: 700,
-                            paddingTop: "0.35rem",
-                            borderTop: "1px dashed #D9D2C6",
-                          }}
-                        >
-                          <span>Total Investment:</span>
-                          <span style={{ color: "#1C1C1E", fontFamily: "var(--font-prata)", fontSize: "1.15rem" }}>
-                            ${grandTotal.toLocaleString()}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.2rem" }}>
-                        <a
-                          href="#book"
-                          className="sc-calc-cta-btn"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "0.4rem",
-                            padding: "0.75rem 1rem",
-                            backgroundColor: "#E86337",
-                            color: "#ffffff",
-                            borderRadius: "10px",
-                            textDecoration: "none",
-                            fontFamily: "var(--font-assistant)",
-                            fontWeight: 700,
-                            fontSize: "0.88rem",
-                            textAlign: "center",
-                            boxShadow: "0 4px 14px rgba(232, 99, 55, 0.24)",
-                          }}
-                        >
-                          <span>Book Consultation &amp; Claim Quote</span>
-                          <ArrowRight size={14} />
-                        </a>
-                        <a
-                          href="tel:0292677777"
-                          className="sc-calc-phone-btn"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "0.4rem",
-                            padding: "0.65rem",
-                            backgroundColor: "#ffffff",
-                            color: "#1C1C1E",
-                            border: "1px solid #DCD6CD",
-                            borderRadius: "10px",
-                            textDecoration: "none",
-                            fontFamily: "var(--font-assistant)",
-                            fontWeight: 600,
-                            fontSize: "0.82rem",
-                          }}
-                        >
-                          <Phone size={13} color="#E86337" />
-                          <span>Call 02 9267 7777 for Quote Details</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quick Collapse Link */}
-                  <div style={{ textAlign: "center", marginTop: "0.85rem", borderTop: "1px dashed #E5DFD4", paddingTop: "0.65rem" }}>
+          {/* Calculator Content */}
+          <div className="sc-calc-content-pad">
+            <div className="sc-calc-grid">
+              {/* Left Controls */}
+              <div className="sc-calc-controls">
+                {/* Arch Toggle */}
+                <div>
+                  <label
+                    className="sc-calc-ctrl-label"
+                    style={{
+                      display: "block",
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.82rem",
+                      fontWeight: 700,
+                      color: "#1C1C1E",
+                      marginBottom: "0.55rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    1. Select Number of Arches:
+                  </label>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
                     <button
                       type="button"
-                      onClick={() => setIsCalculatorOpen(false)}
+                      className="sc-calc-btn"
+                      onClick={() => setSelectedArch("single")}
                       style={{
-                        background: "none",
-                        border: "none",
-                        color: "#777",
+                        padding: "0.75rem 0.85rem",
+                        borderRadius: "12px",
+                        border: selectedArch === "single" ? "2px solid #E86337" : "1px solid #E5E0D7",
+                        backgroundColor: selectedArch === "single" ? "#ffffff" : "#ffffff",
+                        color: selectedArch === "single" ? "#E86337" : "#444",
                         fontFamily: "var(--font-assistant)",
-                        fontSize: "0.8rem",
-                        fontWeight: 600,
+                        fontWeight: 700,
                         cursor: "pointer",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.25rem",
+                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                        transition: "all 0.2s ease",
+                        textAlign: "center",
+                        lineHeight: 1.3,
+                        boxShadow: selectedArch === "single" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
                       }}
                     >
-                      <span>Collapse Calculator</span>
-                      <ChevronUp size={13} />
+                      <div>Single Arch</div>
+                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedArch === "single" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
+                        Upper or Lower
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="sc-calc-btn"
+                      onClick={() => setSelectedArch("both")}
+                      style={{
+                        padding: "0.75rem 0.85rem",
+                        borderRadius: "12px",
+                        border: selectedArch === "both" ? "2px solid #E86337" : "1px solid #E5E0D7",
+                        backgroundColor: selectedArch === "both" ? "#ffffff" : "#ffffff",
+                        color: selectedArch === "both" ? "#E86337" : "#444",
+                        fontFamily: "var(--font-assistant)",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                        transition: "all 0.2s ease",
+                        textAlign: "center",
+                        lineHeight: 1.3,
+                        boxShadow: selectedArch === "both" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
+                      }}
+                    >
+                      <div>Both Arches</div>
+                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedArch === "both" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
+                        Full Mouth
+                      </span>
                     </button>
                   </div>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+
+                {/* Material Toggle */}
+                <div>
+                  <label
+                    className="sc-calc-ctrl-label"
+                    style={{
+                      display: "block",
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.82rem",
+                      fontWeight: 700,
+                      color: "#1C1C1E",
+                      marginBottom: "0.55rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    2. Select Final Bridge Material (Phase 2):
+                  </label>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                    <button
+                      type="button"
+                      className="sc-calc-btn"
+                      onClick={() => setSelectedMaterial("acrylic")}
+                      style={{
+                        padding: "0.75rem 0.85rem",
+                        borderRadius: "12px",
+                        border: selectedMaterial === "acrylic" ? "2px solid #E86337" : "1px solid #E5E0D7",
+                        backgroundColor: selectedMaterial === "acrylic" ? "#ffffff" : "#ffffff",
+                        color: selectedMaterial === "acrylic" ? "#E86337" : "#444",
+                        fontFamily: "var(--font-assistant)",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                        transition: "all 0.2s ease",
+                        textAlign: "center",
+                        lineHeight: 1.3,
+                        boxShadow: selectedMaterial === "acrylic" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
+                      }}
+                    >
+                      <div>Acrylic on Titanium</div>
+                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedMaterial === "acrylic" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
+                        $10,000 / arch
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="sc-calc-btn"
+                      onClick={() => setSelectedMaterial("zirconia")}
+                      style={{
+                        padding: "0.75rem 0.85rem",
+                        borderRadius: "12px",
+                        border: selectedMaterial === "zirconia" ? "2px solid #E86337" : "1px solid #E5E0D7",
+                        backgroundColor: selectedMaterial === "zirconia" ? "#ffffff" : "#ffffff",
+                        color: selectedMaterial === "zirconia" ? "#E86337" : "#444",
+                        fontFamily: "var(--font-assistant)",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                        transition: "all 0.2s ease",
+                        textAlign: "center",
+                        lineHeight: 1.3,
+                        boxShadow: selectedMaterial === "zirconia" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
+                      }}
+                    >
+                      <div>Monolithic Zirconia</div>
+                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedMaterial === "zirconia" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
+                        $14,000 / arch
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Finance Duration Slider */}
+                <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.45rem" }}>
+                    <label
+                      className="sc-calc-ctrl-label"
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.82rem",
+                        fontWeight: 700,
+                        color: "#1C1C1E",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
+                      }}
+                    >
+                      3. Plan Duration:
+                    </label>
+                    <span style={{ fontFamily: "var(--font-assistant)", fontWeight: 700, color: "#E86337", fontSize: "0.88rem" }}>
+                      {financeMonths} Mo (Interest-Free)
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="12"
+                    max="48"
+                    step="12"
+                    value={financeMonths}
+                    onChange={(e) => setFinanceMonths(Number(e.target.value))}
+                    style={{
+                      width: "100%",
+                      accentColor: "#E86337",
+                      cursor: "pointer",
+                      height: "6px",
+                    }}
+                  />
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.35rem", fontSize: "0.75rem", color: "#888", fontFamily: "var(--font-assistant)" }}>
+                    <span>12 Mo</span>
+                    <span>24 Mo</span>
+                    <span>36 Mo</span>
+                    <span>48 Mo</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Result Card */}
+              <div
+                className="sc-calc-result-card"
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "16px",
+                  border: "1px solid #ECE7DE",
+                  padding: "1.75rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1.1rem",
+                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.04)",
+                }}
+              >
+                <div>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.76rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.07em",
+                      color: "#777",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Estimated Weekly Investment:
+                  </span>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem", marginTop: "0.25rem" }}>
+                    <span className="sc-calc-weekly-val">
+                      ${weeklyEstimate}
+                    </span>
+                    <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#666" }}>
+                      / week*
+                    </span>
+                  </div>
+                  <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.74rem", color: "#777", display: "block", marginTop: "0.25rem", lineHeight: 1.4 }}>
+                    *Subject to finance approval. Interest-free payment plans available up to 48 months.
+                  </span>
+                </div>
+
+                <div style={{ borderTop: "1px solid #ECE7DE", paddingTop: "0.85rem", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                    <span>Phase 1 ({selectedArch === "both" ? "Both Arches" : "Single Arch"}):</span>
+                    <strong style={{ color: "#1C1C1E" }}>${(phase1PerArch * archMultiplier).toLocaleString()}</strong>
+                  </div>
+                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                    <span>Phase 2 ({selectedMaterial === "acrylic" ? "Acrylic" : "Zirconia"}):</span>
+                    <strong style={{ color: "#1C1C1E" }}>${(phase2PerArch * archMultiplier).toLocaleString()}</strong>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.95rem",
+                      color: "#1C1C1E",
+                      fontWeight: 700,
+                      paddingTop: "0.55rem",
+                      borderTop: "1px dashed #D9D2C6",
+                    }}
+                  >
+                    <span>Total Investment:</span>
+                    <span style={{ color: "#1C1C1E", fontFamily: "var(--font-prata)", fontSize: "1.35rem" }}>
+                      ${grandTotal.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.35rem" }}>
+                  <a
+                    href="#book"
+                    className="sc-calc-cta-btn"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.45rem",
+                      padding: "0.85rem 1rem",
+                      backgroundColor: "#E86337",
+                      color: "#ffffff",
+                      borderRadius: "10px",
+                      textDecoration: "none",
+                      fontFamily: "var(--font-assistant)",
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                      textAlign: "center",
+                      boxShadow: "0 4px 14px rgba(232, 99, 55, 0.24)",
+                    }}
+                  >
+                    <span>Book Consultation &amp; Claim Quote</span>
+                    <ArrowRight size={14} />
+                  </a>
+                  <a
+                    href="tel:0292677777"
+                    className="sc-calc-phone-btn"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.45rem",
+                      padding: "0.75rem",
+                      backgroundColor: "#FAF9F6",
+                      color: "#1C1C1E",
+                      border: "1px solid #ECE7DE",
+                      borderRadius: "10px",
+                      textDecoration: "none",
+                      fontFamily: "var(--font-assistant)",
+                      fontWeight: 600,
+                      fontSize: "0.84rem",
+                    }}
+                  >
+                    <Phone size={13} color="#E86337" />
+                    <span>Call 02 9267 7777 for Quote Details</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO ACCORDIONS, NO TOP TABS) ─── */}
+        {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO BG, NO BOX FRAME, DETAILS LEFT, FULL IMAGE RIGHT) ─── */}
         <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
           style={{
-            maxWidth: "1040px",
+            width: "100%",
+            maxWidth: "100%",
             margin: "3rem auto 0",
-            backgroundColor: "#FFFFFF",
-            borderRadius: "28px",
-            border: "1px solid #ECE7DE",
-            boxShadow: "0 14px 40px -10px rgba(28,28,30,0.06)",
-            padding: "clamp(1.5rem, 3.5vw, 2.5rem)",
+            padding: 0,
+            boxSizing: "border-box",
           }}
         >
           {/* Main 2-Column Showcase */}
           <div className="sc-cost-showcase-grid">
-            {/* Left: 3D Stacked Image Cards (Aceternity AnimatedTestimonials Pattern) */}
-            <div className="sc-cost-showcase-visual">
-              <div style={{ position: "relative", width: "100%", height: "100%" }}>
-                <AnimatePresence>
-                  {costTopics.map((topic, index) => {
-                    const isCardActive = index === activeCostTopic;
-                    const cardRotations = [-4, 3, -3, 4, -2];
-                    const rotation = cardRotations[index % cardRotations.length];
-                    return (
-                      <motion.div
-                        key={topic.id}
-                        initial={{
-                          opacity: 0,
-                          scale: 0.9,
-                          z: -100,
-                          rotate: rotation,
-                        }}
-                        animate={{
-                          opacity: isCardActive ? 1 : 0.65,
-                          scale: isCardActive ? 1 : 0.94,
-                          z: isCardActive ? 0 : -80,
-                          rotate: isCardActive ? 0 : rotation,
-                          zIndex: isCardActive ? 40 : costTopics.length + 2 - index,
-                          y: isCardActive ? [0, -35, 0] : 0,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          scale: 0.9,
-                          z: 80,
-                          rotate: rotation,
-                        }}
-                        transition={{
-                          duration: 0.45,
-                          ease: "easeInOut",
-                        }}
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          transformOrigin: "bottom center",
-                          borderRadius: "24px",
-                          overflow: "hidden",
-                          boxShadow: isCardActive
-                            ? "0 22px 45px -12px rgba(28,28,30,0.2)"
-                            : "0 10px 25px -10px rgba(0,0,0,0.08)",
-                          cursor: isCardActive ? "default" : "pointer",
-                        }}
-                        onClick={() => {
-                          setIsTopicExpanded(false);
-                          setActiveCostTopic(index);
-                        }}
-                      >
-                        <Image
-                          src={topic.src}
-                          alt={topic.alt}
-                          fill
-                          sizes="(max-width: 920px) 100vw, 460px"
-                          style={{
-                            objectFit: "cover",
-                            objectPosition: topic.objectPosition || "center",
-                          }}
-                          priority={index === 0}
-                        />
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Right: Detailed Verbatim Content Panel (Uniform Height) */}
+            {/* Left: Detailed Verbatim Content Panel (Uniform Height) */}
             <div className="sc-cost-showcase-panel">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -1377,10 +1171,7 @@ export default function AllOn4Cost() {
                     <button
                       key={i}
                       type="button"
-                      onClick={() => {
-                        setIsTopicExpanded(false);
-                        setActiveCostTopic(i);
-                      }}
+                      onClick={() => setActiveCostTopic(i)}
                       aria-label={`Go to topic ${i + 1}`}
                       style={{
                         height: "8px",
