@@ -106,6 +106,22 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         {...props}
       >
         <style>{`
+          @media (min-width: 891px) {
+            .sc-hero2-content {
+              flex: 0 0 50% !important;
+              width: 50% !important;
+              max-width: 50% !important;
+              padding: clamp(2.5rem, 4vw, 4rem) clamp(1.75rem, 3.5vw, 3.5rem) !important;
+              box-sizing: border-box !important;
+            }
+            .sc-hero2-image {
+              flex: 0 0 50% !important;
+              width: 50% !important;
+              max-width: 50% !important;
+              align-self: stretch !important;
+              box-sizing: border-box !important;
+            }
+          }
           @media (max-width: 890px) {
             .sc-hero2-container {
               flex-direction: column !important;
@@ -145,23 +161,24 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             }
             .sc-hero2-image {
               min-height: 340px !important;
-              clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%) !important;
             }
           }
         `}</style>
 
-        {/* Left Side: Content Column */}
+        {/* Left Side: Content Column with Distinct Division */}
         <div
           className="sc-hero2-content"
           style={{
-            flex: "1 1 560px",
-            maxWidth: "720px",
+            flex: "0 0 50%",
+            width: "50%",
+            maxWidth: "50%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "clamp(2.25rem, 4.5vw, 3.75rem) clamp(1.5rem, 3.5vw, 3.25rem)",
-            zIndex: 2,
+            padding: "clamp(2.5rem, 5vw, 4.25rem) clamp(1.5rem, 4vw, 3.5rem)",
+            zIndex: 10,
             boxSizing: "border-box",
+            position: "relative",
           }}
         >
           {/* Brand Logo & Slogan Header (only rendered if logo or slogan is provided) */}
@@ -411,39 +428,24 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
           </motion.footer>
         </div>
 
-        {/* Right Side: Image with Clip Path Animation */}
-        <motion.div
+        {/* Right Side: High-Definition Image Framing (Separate Clean Division) */}
+        <div
           className="sc-hero2-image"
           style={{
-            flex: "1 1 440px",
+            flex: "0 0 50%",
+            width: "50%",
+            maxWidth: "50%",
             minHeight: "560px",
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
-            backgroundPosition: imagePosition,
+            backgroundPosition: imagePosition || "center 20%",
             backgroundRepeat: "no-repeat",
             position: "relative",
             boxSizing: "border-box",
-            imageRendering: "auto",
+            borderLeft: "1px solid rgba(255, 255, 255, 0.08)",
             filter: "contrast(102%) brightness(101%) saturate(103%)",
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
           }}
-          initial={{ clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' }}
-          whileInView={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0% 100%)' }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {/* Subtle gradient vignette to blend into dark background */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(to right, rgba(12, 13, 23, 0.5) 0%, transparent 35%)",
-              pointerEvents: "none",
-            }}
-          />
-        </motion.div>
+        />
       </motion.section>
     );
   }

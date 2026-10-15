@@ -305,9 +305,9 @@ export default function AllOn4ScrollFeatures() {
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: () => `+=${totalTransitions * 120}%`,
+          end: () => `+=${totalTransitions * 90}vh`,
           pin: stage,
-          scrub: 0.75,
+          scrub: 0.6,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -874,7 +874,6 @@ export default function AllOn4ScrollFeatures() {
           position: "relative",
           width: "100%",
           backgroundColor: "#FFFFFF",
-          minHeight: `${slidesData.length * 105}vh`,
         }}
       >
         {/* Pinned Viewport Container */}
