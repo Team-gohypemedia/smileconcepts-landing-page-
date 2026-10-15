@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 const affiliations = [
   { name: "Australian Dental Association", src: "/assets/affiliations/ADA-logo.png" },
@@ -107,15 +106,15 @@ export default function Affiliations() {
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "default",
-                padding: "0 0.35rem",
+                padding: "0",
                 transition: "transform 0.25s ease, opacity 0.25s ease",
               }}
             >
               <div
                 style={{
                   position: "relative",
-                  width: "clamp(130px, 11vw, 170px)",
-                  height: "clamp(48px, 4.5vw, 62px)",
+                  width: "clamp(105px, 8vw, 135px)",
+                  height: "clamp(42px, 3.8vw, 54px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -141,15 +140,15 @@ export default function Affiliations() {
         .affiliations-marquee {
           display: flex;
           align-items: center;
-          gap: clamp(1.4rem, 2vw, 2.2rem);
+          gap: clamp(0.5rem, 1.1vw, 0.95rem);
           width: max-content;
-          animation: marqueeScroll 36s linear infinite;
+          animation: marqueeScroll 28s linear infinite;
         }
         .affiliations-marquee:hover {
           animation-play-state: paused;
         }
         .affiliation-logo-item:hover {
-          transform: scale(1.08);
+          transform: scale(1.06);
         }
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
