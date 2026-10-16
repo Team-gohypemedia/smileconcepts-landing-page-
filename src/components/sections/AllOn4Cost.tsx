@@ -19,6 +19,8 @@ import {
   HeartHandshake,
 } from "lucide-react";
 
+const COST_TOPIC_COUNT = 6;
+
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [readMoreCost, setReadMoreCost] = useState(false);
@@ -71,18 +73,20 @@ export default function AllOn4Cost() {
   };
 
   const handleNextCostTopic = () => {
-    setActiveCostTopic((prev) => (prev + 1) % 5);
+    setActiveCostTopic((prev) => (prev + 1) % COST_TOPIC_COUNT);
   };
 
   const handlePrevCostTopic = () => {
-    setActiveCostTopic((prev) => (prev - 1 + 5) % 5);
+    setActiveCostTopic((prev) => (prev - 1 + COST_TOPIC_COUNT) % COST_TOPIC_COUNT);
   };
 
   // Autoplay slide transition (rotates every 5.5s, pauses on user hover)
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
-      setActiveCostTopic((prev) => (prev + 1) % 5);
+      // Topics are text-heavy: on phones readers move through them with the arrows instead
+      if (window.matchMedia("(max-width: 640px)").matches) return;
+      setActiveCostTopic((prev) => (prev + 1) % COST_TOPIC_COUNT);
     }, 5500);
     return () => clearInterval(timer);
   }, [isPaused]);
@@ -111,7 +115,7 @@ export default function AllOn4Cost() {
               <tbody>
                 <tr>
                   <td><strong>Bridge material</strong></td>
-                  <td>Zirconia is more durable and more natural-looking than acrylic but comes at a higher cost. We explain both options at your consultation.</td>
+                  <td>Zirconia and acrylic have different costs, repair needs and material properties. The choice depends on your bite and bridge design.</td>
                 </tr>
                 <tr>
                   <td><strong>Number of arches being treated</strong></td>
@@ -119,11 +123,11 @@ export default function AllOn4Cost() {
                 </tr>
                 <tr>
                   <td><strong>Extractions needed</strong></td>
-                  <td>If you still have remaining teeth that need to be removed, this is factored into your quote.</td>
+                  <td>Planned extractions are included in phase one as described; the written quote confirms the scope.</td>
                 </tr>
                 <tr>
                   <td><strong>Sedation</strong></td>
-                  <td>If you prefer to be sedated during the procedure, this adds to the overall cost but is available at our clinic.</td>
+                  <td>If you prefer to be sedated during the procedure, this adds to the overall cost and is available at our clinic managed by trained sedationists.</td>
                 </tr>
                 <tr>
                   <td><strong>Complexity of your case</strong></td>
@@ -131,7 +135,7 @@ export default function AllOn4Cost() {
                 </tr>
                 <tr>
                   <td><strong>Number of implants</strong></td>
-                  <td>Whether your plan uses four, five or six implants, your quote stays the same.</td>
+                  <td>Our clinic quotes per arch rather than per implant; the written plan confirms the included implant number.</td>
                 </tr>
               </tbody>
             </table>
@@ -154,7 +158,7 @@ export default function AllOn4Cost() {
       content: (
         <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
           <p style={{ marginTop: "0.5rem" }}>
-            Your final fixed teeth come in two materials, and both are fitted in Phase two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here&apos;s how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, your budget and your goals.
+            Your final fixed teeth come in two materials, and both are fitted in Phase Two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here is how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, budget, and goals.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.85rem", margin: "1rem 0" }}>
             <div style={{ backgroundColor: "#FFFFFF", padding: "1rem", borderRadius: "12px", border: "1px solid #E5E0D7" }}>
@@ -172,12 +176,12 @@ export default function AllOn4Cost() {
                 <span style={{ fontWeight: 700, color: "#E86337", fontSize: "1rem" }}>$14,000</span>
               </div>
               <p style={{ margin: 0, fontSize: "0.86rem", color: "#555", lineHeight: 1.5 }}>
-                The strongest, most stain-resistant and most natural-looking option. Zirconia is milled from a single block of ceramic, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.
+                Offers high strength, excellent stain resistance and very natural aesthetics. Zirconia is milled from a single ceramic block, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.
               </p>
             </div>
           </div>
           <p style={{ margin: 0 }}>
-            We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and priorities.
+            We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and your priorities.
           </p>
         </div>
       ),
@@ -194,14 +198,34 @@ export default function AllOn4Cost() {
       content: (
         <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
           <p style={{ marginTop: "0.5rem" }}>
-            Your treatment plan is tailored to your individual needs, so some patients may require additional procedures before implant placement. These may include:
+            Sedation and bone grafting fees are not included in the two phases. They are quoted separately and only if you need them:
           </p>
           <ul style={{ paddingLeft: "1.25rem", margin: "0.5rem 0 1rem" }}>
             <li>IV sedation or sleep dentistry</li>
             <li>Bone grafting or related preparatory procedures</li>
           </ul>
           <p style={{ margin: 0 }}>
-            If recommended, these treatments are quoted separately and discussed with you in detail before any decisions are made. You&apos;ll receive a personalised written treatment plan outlining all costs, so there are no unexpected surprises.
+            We will discuss both openly at your consultation before anything is decided, and confirm everything in a written, itemised quote.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "insurance",
+      tabLabel: "Insurance & Medicare",
+      badge: "Health Fund Benefits",
+      title: "Does Private Insurance or Medicare Cover Any of the Costs of All on 4?",
+      src: "/assets/allon4/cost-factors-consult.png",
+      alt: "Private health insurance and Medicare for All on 4",
+      caption: "Itemised quotes for your health fund",
+      objectPosition: "center top",
+      content: (
+        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
+          <p style={{ marginTop: "0.5rem" }}>
+            Private health insurance benefits depend on your policy, item numbers, waiting periods and annual or lifetime limits.
+          </p>
+          <p style={{ margin: 0 }}>
+            Ask your insurer for a written benefit estimate using your itemised quote. Medicare generally does not cover routine private dental implant treatment. [6]
           </p>
         </div>
       ),
@@ -221,7 +245,7 @@ export default function AllOn4Cost() {
             Possibly. If dental treatment is needed to relieve chronic pain or a condition affecting your quality of life, you may be eligible to apply to the ATO for early release of superannuation on compassionate grounds.
           </p>
           <p>
-            It&apos;s assessed case by case against strict criteria, requires supporting reports from two practitioners plus an itemised treatment plan, and is best considered only after other payment options. We recommend speaking with a licensed financial adviser before deciding.
+            The ATO assesses applications case by case against strict criteria, requires supporting reports from two practitioners and an itemised treatment plan, and recommends considering other payment options first. Consider the tax and retirement savings implications and seek independent financial advice. [7]
           </p>
           <div style={{ backgroundColor: "#F7F4EE", padding: "0.85rem 1.15rem", borderRadius: "10px", borderLeft: "4px solid #E86337", margin: "0.85rem 0 0" }}>
             <p style={{ margin: 0, fontWeight: 600, color: "#1C1C1E" }}>
@@ -243,7 +267,7 @@ export default function AllOn4Cost() {
       content: (
         <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
           <p style={{ marginTop: "0.5rem", marginBottom: "1rem" }}>
-            Yes. We offer interest-free payment plans of up to 48 months (subject to eligibility, approval and the finance provider&apos;s terms and conditions). Our team can discuss the available payment options during your consultation and include the most suitable finance solution in your personalised written treatment quote.
+            Yes. Interest-free payment plans are available up to 48 months and up to $30,000, based on eligibility, from around $90 per week (subject to eligibility, approval and terms). Ask our team which option suits your circumstances, and we will include your payment options in your written quote.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "0.75rem", marginTop: "1rem" }}>
             <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
@@ -255,8 +279,8 @@ export default function AllOn4Cost() {
               <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>0% Interest Options</div>
             </div>
             <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
-              <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>In-Clinic Assistance</div>
-              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>Full Paperwork Help</div>
+              <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>Plan Limit</div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>Up to $30,000</div>
             </div>
           </div>
         </div>
@@ -410,6 +434,11 @@ export default function AllOn4Cost() {
             border-radius: 8px !important;
           }
         }
+        @media (max-width: 640px) {
+          .sc-cost-intro-text {
+            text-align: left !important;
+          }
+        }
         @media (min-width: 640px) {
           .sc-cost-main-title {
             white-space: nowrap !important;
@@ -440,7 +469,7 @@ export default function AllOn4Cost() {
               marginBottom: "1rem",
             }}
           >
-            Understanding All on Four Cost in Sydney
+            Understanding All on 4 Dental Implants Cost in Sydney
           </h2>
 
           <div
@@ -456,7 +485,10 @@ export default function AllOn4Cost() {
             }}
           >
             <p style={{ margin: 0 }}>
-              If you&apos;ve been searching for All on 4 cost in Sydney, here&apos;s the full picture. All on 4 dental implants cost between <strong>$18,000 and $32,000 per arch</strong> at Smile Concepts, quoted in two clear phases.
+              A common issue we see when reviewing external All on 4 or All on X quotes is that the advertised fee includes temporary teeth but not the definitive bridge.
+            </p>
+            <p style={{ margin: 0 }}>
+              All on 4 cost at Smile Concepts ranges from <strong>$18,000 to $32,000 per arch</strong> in Sydney, quoted in two clear phases.
             </p>
 
             <AnimatePresence>
@@ -469,13 +501,13 @@ export default function AllOn4Cost() {
                   style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: "0.85rem" }}
                 >
                   <p style={{ margin: 0 }}>
-                    Phase one, at <strong>$18,000 per arch</strong>, covers your surgery and the fixed temporary teeth you leave with on the day of surgery or shortly after. Phase two is your final fixed teeth, at <strong>$10,000 for acrylic on titanium</strong> or <strong>$14,000 for zirconia</strong>.
+                    Phase one, at <strong>$18,000 per arch</strong>, covers your surgery and the fixed temporary teeth you leave with on the day of surgery or shortly afterwards.
                   </p>
                   <p style={{ margin: 0 }}>
-                    What drives your total dental implants cost is your materials, your anatomy and your choices, <strong>never the number of implants, because we don&apos;t charge per implant.</strong>
+                    Phase two is your final fixed teeth, at <strong>$10,000 for acrylic on titanium</strong> or <strong>$14,000 for zirconia</strong>. What drives your total is your materials, your anatomy and your choices, <strong>never the number of implants, because we don&apos;t charge per implant.</strong>
                   </p>
                   <p style={{ margin: 0 }}>
-                    Many patients ask about All on Four cost before committing to a consultation, which is why we&apos;ve broken the full pricing structure down below.
+                    After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
                   </p>
                 </motion.div>
               )}
@@ -517,9 +549,10 @@ export default function AllOn4Cost() {
               lineHeight: 1.3,
             }}
           >
-            Your Investment: Transparent, Two-Phase Pricing
+            Your Investment: Transparent Two Phase Pricing
           </h3>
           <p
+            className="sc-cost-intro-text"
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
               fontSize: "0.95rem",
@@ -530,7 +563,7 @@ export default function AllOn4Cost() {
               lineHeight: 1.6,
             }}
           >
-            We believe you should know exactly what you&apos;re paying for before treatment begins. That&apos;s why your All on 4 treatment is presented in two clearly defined phases, giving you complete transparency and allowing your treatment to progress safely from surgery to your final smile.
+            Your All on 4 or All on X treatment is quoted in two clear phases, the surgical phase and the final bridge phase, so nothing is hidden. Sedation and bone grafting fees are not included in the phases below. They are quoted separately and only if you need them, and we will discuss both openly at your consultation before anything is decided.
           </p>
 
           <div
@@ -576,10 +609,10 @@ export default function AllOn4Cost() {
                 Your first phase includes everything needed to restore your smile on the day of surgery (where clinically suitable), including:
               </p>
               <ul style={{ paddingLeft: "1.25rem", margin: "0 0 1.5rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", lineHeight: 1.6, flexGrow: 1 }}>
-                <li>Comprehensive consultation and 3D CBCT planning</li>
-                <li>Tooth extractions, if required</li>
-                <li>Placement of four to six dental implants at no additional per-implant cost</li>
-                <li>A fixed temporary bridge fitted on the same day, allowing you to leave with a functional smile</li>
+                <li>Your consultation and 3D CBCT planning</li>
+                <li>Any extractions</li>
+                <li>Placement of your implants (usually four to six), with no per-implant charge</li>
+                <li>Fixed temporary teeth on the day of surgery or shortly afterwards, where suitable</li>
               </ul>
               <a
                 href="#book"
@@ -1007,7 +1040,7 @@ export default function AllOn4Cost() {
                     </span>
                   </div>
                   <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.74rem", color: "#777", display: "block", marginTop: "0.25rem", lineHeight: 1.4 }}>
-                    *Subject to finance approval. Interest-free payment plans available up to 48 months.
+                    *Indicative estimate only. Interest-free plans up to 48 months and up to $30,000, based on eligibility; approval and terms apply.
                   </span>
                 </div>
 

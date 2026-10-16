@@ -1,18 +1,18 @@
 "use client";
 
 const items = [
-  "All on 4 Dental Implants",
-  "Permanent Fixed Full Arch",
-  "Immediate Function in 1–3 Days",
-  "No Bone Grafting in Most Cases",
-  "Super Fund Release Assistance",
-  "Painless Sleep Dentistry",
+  "All on 4 & All on X Dental Implants",
+  "Full Arch Fixed Teeth",
+  "From $18,000 Per Arch",
+  "Priced Per Arch, Not Per Implant",
+  "Teeth in a Day for Suitable Cases",
+  "Sedation Available",
   "Sydney CBD – 307 Pitt Street",
-  "40+ Years Implant Experience",
-  "Natural High-Strength Zirconia",
-  "0% Interest-Free Payment Plans",
-  "Eat Apples, Steak & Crunchy Foods",
-  "Top-Rated 4.9★ Patient Reviews",
+  "Dentists With 25+ Years' Experience",
+  "3D CBCT & Digital Guided Planning",
+  "Interest-Free Plans up to 48 Months",
+  "Free Parking",
+  "600+ Google Reviews",
 ];
 
 // Duplicate for seamless infinite scroll

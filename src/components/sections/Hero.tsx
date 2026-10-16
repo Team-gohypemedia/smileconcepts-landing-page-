@@ -19,20 +19,14 @@ const GET_FRAME_PATH = (index: number, isMobile: boolean) => {
 const PHRASES = [
   {
     id: 1,
-    text: "All on 4 Dental Implants Sydney",
+    text: "Full Arch and Full Mouth Fixed Teeth, Tailored to Your Anatomy",
     startPct: 0,
-    endPct: 0.32,
+    endPct: 0.48,
   },
   {
     id: 2,
-    text: "Full arch (All on X) Fixed Teeth, Tailored To Your Anatomy",
-    startPct: 0.36,
-    endPct: 0.64,
-  },
-  {
-    id: 3,
-    text: "Fixed teeth in a day · From $18,000 per arch",
-    startPct: 0.68,
+    text: "From $18,000 Per Arch",
+    startPct: 0.52,
     endPct: 0.96,
   },
 ];
@@ -346,23 +340,6 @@ export default function Hero() {
         `,
         }}
       />
-
-      {/* Screen reader only H1 for SEO */}
-      <h1
-        style={{
-          position: "absolute",
-          width: "1px",
-          height: "1px",
-          padding: 0,
-          margin: "-1px",
-          overflow: "hidden",
-          clip: "rect(0, 0, 0, 0)",
-          whiteSpace: "nowrap",
-          border: 0,
-        }}
-      >
-        All on 4 Dental Implants Sydney - All on Four Cost | Smile Concepts
-      </h1>
 
       {/* Custom Mouse Follower Container (I&M Pattern) */}
       <div

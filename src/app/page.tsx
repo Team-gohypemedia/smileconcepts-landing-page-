@@ -8,6 +8,9 @@ import AllOn4VsAllOnX from "@/components/sections/AllOn4VsAllOnX";
 import VisualBeforeAfter from "@/components/sections/VisualBeforeAfter";
 import AllOn4Overview from "@/components/sections/AllOn4Overview";
 import AllOn4Cost from "@/components/sections/AllOn4Cost";
+import AllOn4SnapOn from "@/components/sections/AllOn4SnapOn";
+import CompleteMySmile from "@/components/sections/CompleteMySmile";
+import ImportantInformation from "@/components/sections/ImportantInformation";
 import AllOn4Process from "@/components/sections/AllOn4Process";
 import OurPractice from "@/components/sections/OurPractice";
 import Team from "@/components/sections/Team";
@@ -46,6 +49,9 @@ export default function Home() {
         {/* 7. ★ THE FLAGSHIP COST & CONVERSIONS SECTION (2-Phase Pricing, Calculator, Accordions) */}
         <AllOn4Cost />
 
+        {/* 7b. Cheaper Alternative: Snap-on Implant Dentures (All on 2) */}
+        <AllOn4SnapOn />
+
         {/* 8. The 5-Step Treatment Process, Recovery Accordion & Clinical Risks */}
         <AllOn4Process />
 
@@ -58,11 +64,17 @@ export default function Home() {
         {/* 11. Clinical Affiliations & Implant Brand Standards */}
         <Affiliations />
 
-        {/* 12. Complete 16 FAQs with Search, Category Filters & (+/-) Accordions */}
+        {/* 12. Complete My Smile: Key Benefits Grid */}
+        <CompleteMySmile />
+
+        {/* 13. FAQs with Search, Category Filters & (+/-) Accordions */}
         <AllOn4FAQ />
 
-        {/* 13. High-Converting Booking Banner & Consultation Form */}
+        {/* 14. High-Converting Booking Banner & Consultation Form */}
         <CTABanner />
+
+        {/* 15. Important Information, Clinical References & Review Details */}
+        <ImportantInformation />
       </main>
       <Footer />
     </>

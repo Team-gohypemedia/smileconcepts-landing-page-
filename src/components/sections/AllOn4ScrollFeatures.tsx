@@ -13,12 +13,25 @@ import {
   Sparkles,
   Activity,
   Award,
-  Utensils,
   HeartHandshake,
-  Cpu,
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const toParagraphs = (description: string | string[]) =>
+  Array.isArray(description) ? description : [description];
+
+// Checklist items written as "Label: text" render the label in bold
+const renderChecklistItem = (item: string) => {
+  const splitAt = item.indexOf(": ");
+  if (splitAt === -1 || splitAt > 60) return item;
+  return (
+    <>
+      <strong style={{ fontWeight: 700, color: "#1C1C1E" }}>{item.slice(0, splitAt)}:</strong>
+      {item.slice(splitAt + 1)}
+    </>
+  );
+};
 
 export interface FeatureSlide {
   id: string;
@@ -26,8 +39,10 @@ export interface FeatureSlide {
   categoryIcon: React.ReactNode;
   heading: string;
   hook: string;
-  description: string;
+  description: string | string[];
+  checklistTitle?: string;
   checklist: string[];
+  footnote?: string;
   ctaText: string;
   ctaHref: string;
   imageSrc: string;
@@ -46,196 +61,167 @@ export interface FeatureSlide {
 }
 
 const slidesData: FeatureSlide[] = [
-  // ─── SLIDE 1: CANDIDATE SUITABILITY ───
+  // ─── SLIDE 1: WHO IS SUITABLE ───
   {
     id: "suitability",
     category: "Clinical Suitability",
     categoryIcon: <ShieldCheck size={16} />,
-    heading: "Are All on 4 or All on X Implants Right for You?",
-    hook: "Fixed teeth planned around your unique bone anatomy and bite.",
+    heading: "Who is suitable for All on 4 or All on X Implants?",
+    hook: "Suitability is always confirmed with a clinical assessment and a 3D CBCT scan.",
     description:
-      "Suitability for All on 4 at Smile Concepts is always confirmed with an in-depth clinical assessment and a 3D CBCT scan at our Sydney CBD practice. By placing the two rear implants at an angle of up to 45°, we engage dense existing bone — eliminating the need for invasive bone grafting for the vast majority of patients. We look closely at your bone volume, oral health, and medical history before recommending anything. If All on 4 isn't the right fit, we explain all alternatives.",
+      "Suitability for All on 4 at Smile Concepts is always confirmed with a clinical assessment and a 3D CBCT scan at our Sydney CBD practice. As a starting point, it may be worth exploring if any of the following sounds familiar:",
     checklist: [
-      "Loose, slipping, or uncomfortable dentures eliminated permanently",
-      "Failing, broken, or decayed teeth replaced in as little as 1–3 days",
-      "Severe bone loss accommodated without invasive bone grafting",
-      "Walk out with immediate fixed provisional teeth on surgery day",
-      "Long-term options planned transparently for your bone volume",
+      "You have lost most or all of your teeth",
+      "Your dentures feel loose when you eat or speak",
+      "Several remaining teeth are failing or beyond repair",
+      "You want a fixed solution that stays in place permanently",
+      "You have experienced bone loss after tooth loss",
+      "You want to understand your long-term options properly",
     ],
+    footnote:
+      "We always determine suitability through a proper clinical assessment. We look at your bone volume, oral health, and medical history before recommending anything. If all on 4 is not the right fit, we will tell you and explain what alternatives exist.",
     ctaText: "Check Your Suitability",
-    ctaHref: "#cost",
+    ctaHref: "#book",
     imageSrc: "/assets/allon4/candidate-smile.jpg",
-    imageAlt: "Patient smile transformation evaluation at Smile Concepts Sydney",
+    imageAlt: "Patient smile assessment for All on 4 suitability at Smile Concepts Sydney",
     imagePosition: "center 22%",
     floatingTop: {
       icon: <ShieldCheck size={17} color="#16A34A" />,
       title: "3D CBCT Bone Assessment",
-      subtitle: "In-house scans at Sydney CBD",
+      subtitle: "At our Sydney CBD practice",
     },
     floatingBottom: {
-      icon: <Activity size={17} color="#E86337" />,
-      title: "Zero Bone Grafting Needed",
-      subtitle: "Angled rear implants (up to 45°)",
+      icon: <HeartHandshake size={17} color="#E86337" />,
+      title: "Honest Clinical Advice",
+      subtitle: "Alternatives explained if it's not the right fit",
     },
   },
 
-  // ─── SLIDE 2: TREATMENT TIMELINE & FINAL BRIDGE ───
-  {
-    id: "timeline",
-    category: "Treatment Stages",
-    categoryIcon: <Clock size={16} />,
-    heading: "Temporary Teeth & Final Teeth: What To Expect",
-    hook: "Walk out with a complete, fixed smile on surgery day.",
-    description:
-      "Will you be without teeth during treatment? For most suitable patients, no. A fixed temporary bridge is fitted on the same day as surgery (or shortly after), so you leave looking and functioning normally while the implants heal underneath. Once osseointegration is complete, your final bridge is designed and fitted. We walk you through material options at consultation, including acrylic vs high-strength monolithic zirconia, so you make a decision tailored to your budget and long-term durability.",
-    checklist: [
-      "Fixed provisional bridge fitted on Day 1 of surgery",
-      "Normal eating & speech maintained throughout the healing phase",
-      "Ultra-durable milled monolithic zirconia bridge for lifetime strength",
-      "Clear 2-stage guidance so you understand materials and costs",
-    ],
-    ctaText: "Explore Healing Stages",
-    ctaHref: "#cost",
-    imageSrc: "/assets/allon4/temporary-final-teeth-bridge.jpg",
-    imageAlt: "All on 4 temporary and final teeth bridge restoration at Smile Concepts",
-    imagePosition: "center 48%",
-    floatingTop: {
-      icon: <Clock size={17} color="#E86337" />,
-      title: "Day 1 Smile Delivery",
-      subtitle: "Immediate Fixed Provisional Teeth",
-    },
-    floatingBottom: {
-      icon: <Sparkles size={17} color="#16A34A" />,
-      title: "Milled Monolithic Zirconia",
-      subtitle: "High-Strength Final Fixed Bridge",
-    },
-  },
-
-  // ─── SLIDE 3: THE ALL ON X ADVANTAGE ───
-  {
-    id: "allonx",
-    category: "Treatment Concept",
-    categoryIcon: <Layers size={16} />,
-    heading: "Full Arch Solutions: The All on X Advantage",
-    hook: "Anatomy-first flexibility to place 4, 5, or 6 implants for lifelong support.",
-    description:
-      "Because every patient's bone density, facial structure, and bite forces are unique, full arch rehabilitation is customized as 'All on X' — where X represents the precise number of implants needed for your case. Whether four, five, or six implants provide the safest foundation, treatment replaces your full arch with fixed teeth that never come out.",
-    checklist: [
-      "Full arch of fixed replacement teeth that never come out",
-      "'X' represents 4, 5, or 6 implants based on bone density & bite force",
-      "Brand-agnostic: planned using Nobel Biocare, Straumann, Neoss or DIO",
-      "Independent clinical approach: anatomy-first, never tied to a single brand",
-    ],
-    ctaText: "Understand All on X",
-    ctaHref: "#cost",
-    imageSrc: "/assets/allon4/All-on-6-1.2.jpg",
-    imageAlt: "All on 4 and All on 6 implant positioning architecture model",
-    imagePosition: "center center",
-    floatingTop: {
-      icon: <Layers size={17} color="#E86337" />,
-      title: "4–6 Implants Biomechanically Tailored",
-      subtitle: "Planned Around Your Bone Anatomy",
-    },
-    floatingBottom: {
-      icon: <Award size={17} color="#16A34A" />,
-      title: "Brand-Agnostic Implant Care",
-      subtitle: "Nobel Biocare • Straumann • Neoss • DIO",
-    },
-  },
-
-  // ─── SLIDE 4: WHY CHOOSE ALL ON FOUR IN SYDNEY ───
+  // ─── SLIDE 2: WHY CHOOSE ALL ON FOUR AT SMILE CONCEPTS ───
   {
     id: "whychoose",
-    category: "Clinical Advantages",
+    category: "Why Smile Concepts",
     categoryIcon: <Award size={16} />,
-    heading: "Why Choose All on Four Dental Implants in Sydney",
-    hook: "Permanent stability, natural chewing, and single-arch transparent pricing.",
+    heading: "Why Choose All on Four Dental Implants at Smile Concepts in Sydney?",
+    hook: "Restoring everyday comfort and function.",
     description:
-      "The All on Four treatment concept is all about restoring everyday comfort and function. It's a smarter, simpler way to get a full, beautiful smile without adhesives or loose dentures. Permanent teeth eliminate slipping dentures, looking and functioning like real natural teeth. Most patients avoid bone grafting, getting fast results on surgery day. Best of all, whether your case requires four, five, or six implants, your price per arch stays the same.",
+      "The all on four treatment concept is all about restoring everyday comfort and function. It's a smarter, simpler way to get a full, beautiful smile and here's why so many people at Smile Concepts in Sydney are choosing it.",
     checklist: [
-      "Permanent Teeth: Fixed, stable set that never slips or shifts",
-      "Natural Look & Feel: Functions and chews just like real natural teeth",
-      "Quick Results: Same-day fixed teeth without prolonged bone grafting",
-      "One Price, Tailored Support: Same price per arch for 4, 5, or 6 implants",
+      "Over 25 Years Experienced Team looking after you: If you want highly experienced dental surgeons to genuinely care for you, you've come to the right place.",
+      "Permanent Teeth: Say goodbye to dentures that slip and shift. All on 4 gives you a fixed, stable set of teeth that stays put when you eat or talk.",
+      "Natural Look and Feel: Fixed implant-supported teeth offer greater stability and chewing confidence than removable dentures. They look, feel and work like your own real teeth. Appearance and function vary between individuals.",
+      "One Price, Tailored Support: Whether your plan calls for four, five or six implants, your price per arch stays the same. You get the most stable solution for your anatomy at one clear price.",
     ],
-    ctaText: "Why Smile Concepts",
+    footnote:
+      "Results vary, and this treatment isn't suitable for everyone. We assess every case individually before making any recommendation.",
+    ctaText: "Complete My Smile",
     ctaHref: "#cost",
     imageSrc: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
-    imageAlt: "Restored chewing freedom and confidence with All on 4 dental implants",
+    imageAlt: "Couple enjoying everyday comfort and function with fixed implant-supported teeth",
     imagePosition: "center 18%",
     floatingTop: {
-      icon: <Utensils size={17} color="#E86337" />,
-      title: "Eat Apples & Steak Freely",
-      subtitle: "90%+ Natural Chewing Force Restored",
+      icon: <Award size={17} color="#E86337" />,
+      title: "25+ Years' Experience",
+      subtitle: "Dr Manish Shah & Dr Kinnar Shah",
     },
     floatingBottom: {
       icon: <HeartHandshake size={17} color="#16A34A" />,
-      title: "Permanent Stability",
-      subtitle: "No Slipping, No Plates, No Adhesives",
+      title: "Fixed, Stable Teeth",
+      subtitle: "No Plates, No Adhesives, No Slipping",
     },
   },
 
-  // ─── SLIDE 5: 4, 5, OR 6 IMPLANTS ───
+  // ─── SLIDE 3: SURGERY & SAME-DAY TEETH ───
   {
-    id: "implants-needed",
-    category: "Implant Engineering",
-    categoryIcon: <Layers size={16} />,
-    heading: "How Many Implants Will I Need: All on 4, 5, or 6?",
-    hook: "Driven by your bone density and bite dynamics — never a price list.",
-    description:
-      "The number of implants is chosen for you after a thorough clinical assessment. Many patients are treated on four implants, the classic 'All on 4.' Others do better with five or six, especially where bone is softer or the bite is heavier ('All on 5' or 'All on 6'). Same treatment, same fixed teeth, just more support where your anatomy needs it. Crucially, we do not charge per implant — treatment is driven purely by long-term clinical stability.",
+    id: "sameday",
+    category: "Same-Day Teeth",
+    categoryIcon: <Clock size={16} />,
+    heading: "All on 4 Surgery and Same-Day Teeth",
+    hook: "You can walk out with teeth the same day as surgery, as long as you are a suitable candidate.",
+    description: [],
     checklist: [
-      "4 Implants: Proven biomechanical standard for good bone volume",
-      "5 or 6 Implants: Additional anchor points for softer bone or heavy bites",
-      "No Surcharge: Never priced per implant — fixed pricing per arch",
-      "Guided Planning: 3D CBCT scans ensure precise angulation and depth",
+      "Quick Results: The best part. Most people don't need bone grafting. That means you can walk out with a stunning smile the same day, or shortly after.",
+      "No Bone Grafting: Nobody loves extra surgery. Most patients skip it entirely, which saves you time, money, and a whole lot of discomfort.",
     ],
-    ctaText: "View Arch Pricing",
-    ctaHref: "#cost",
-    imageSrc: "/assets/allon4/all-on-four-top-gold.jpg",
-    imageAlt: "Precision All on 4 full arch fixed bridge restoration at Smile Concepts",
+    ctaText: "See the Treatment Steps",
+    ctaHref: "#procedure",
+    imageSrc: "/assets/allon4/sunset-all-on-4.jpg",
+    imageAlt: "Patient smiling after All on 4 same-day teeth at Smile Concepts Sydney",
+    imagePosition: "center 25%",
+    floatingTop: {
+      icon: <Clock size={17} color="#E86337" />,
+      title: "Teeth in a Day",
+      subtitle: "For suitable candidates",
+    },
+    floatingBottom: {
+      icon: <Activity size={17} color="#16A34A" />,
+      title: "Quick Results",
+      subtitle: "Same day, or shortly after",
+    },
+  },
+
+  // ─── SLIDE 4: VS INDIVIDUAL IMPLANTS & BOTH JAWS ───
+  {
+    id: "individual",
+    category: "Treatment Options",
+    categoryIcon: <Layers size={16} />,
+    heading: "All on 4 Surgery vs Individual Implants",
+    hook: "All on 4 supports an entire arch with one fixed bridge.",
+    description: [
+      "Individual implants usually replace one or several teeth with crowns or smaller bridges. All on 4 supports an entire arch with one fixed bridge.",
+      "If you only have a few missing teeth and your remaining teeth are healthy, individual implants or another tooth-preserving option may be more appropriate.",
+      "Neither approach is automatically cheaper or better; the plan depends on bone requirements, restorative design, and the number of teeth being replaced.",
+    ],
+    checklistTitle: "Do I need All on 4 on both upper and lower Jaws?",
+    checklist: [
+      "An arch means the upper or lower set of teeth. One arch can be treated independently.",
+      "You may not need both arches to be treated. That is why a detailed assessment is required to make that decision. Your remaining teeth, opposing bite and oral health guide the plan.",
+      "Pricing is quoted per arch.",
+    ],
+    ctaText: "Book an Assessment",
+    ctaHref: "#book",
+    imageSrc: "/assets/services/dental-implants.jpg",
+    imageAlt: "Single dental implant model compared with full arch All on 4 treatment",
     imagePosition: "center center",
     floatingTop: {
       icon: <Layers size={17} color="#E86337" />,
-      title: "Anatomy-First Planning",
-      subtitle: "4, 5, or 6 Implants Selected",
-    },
-    floatingBottom: {
-      icon: <Award size={17} color="#16A34A" />,
-      title: "Honest Single-Arch Fee",
-      subtitle: "No Extra Surcharge for 5th or 6th Implant",
-    },
-  },
-
-  // ─── SLIDE 6: ADVANCED TECH & REDO CASES ───
-  {
-    id: "implants-tech",
-    category: "Advanced Technology",
-    categoryIcon: <Cpu size={16} />,
-    heading: "The Implants We Use & Our All on 4 Technology",
-    hook: "In-house 3D CBCT, 4th generation guided surgery, and laser dentistry.",
-    description:
-      "Smile Concepts works with several of the world's leading implant systems, including Neoss, DIO, Nobel Biocare, and Straumann. A clinic tied to one brand has to make your anatomy fit their implant. We choose the system that best fits your bone, bite, and long-term outcome. This is also why other clinics and overseas patients send us their revision and redo cases when treatments done elsewhere have failed.",
-    checklist: [
-      "3D CBCT Imaging: Pre-surgical scan of real bone, anatomy, and nerves",
-      "4th Gen Digital Guided Implant Tech: Highly predictable, guided placement",
-      "Laser Dentistry: Minimally invasive surgery supporting comfortable healing",
-      "Sydney Redo & Revision Center: Deep experience fixing complex failed cases",
-    ],
-    ctaText: "Complete My Smile",
-    ctaHref: "#cost",
-    imageSrc: "/assets/allon4/sunset-all-on-4.jpg",
-    imageAlt: "Patient smile transformation result at Smile Concepts Sydney",
-    imagePosition: "center 25%",
-    floatingTop: {
-      icon: <Sparkles size={17} color="#E86337" />,
-      title: "4th Gen Digital Guided Surgery",
-      subtitle: "Computerized High-Precision Placement",
+      title: "Single Tooth or Full Arch",
+      subtitle: "Planned around your remaining teeth",
     },
     floatingBottom: {
       icon: <ShieldCheck size={17} color="#16A34A" />,
-      title: "Sydney Redo & Revision Center",
-      subtitle: "Trusted for Complex Full Arch Cases",
+      title: "Upper, Lower or Both",
+      subtitle: "Pricing is quoted per arch",
+    },
+  },
+
+  // ─── SLIDE 5: TEMPORARY & FINAL TEETH ───
+  {
+    id: "timeline",
+    category: "Prosthetics (Teeth)",
+    categoryIcon: <Sparkles size={16} />,
+    heading: "Temporary Teeth and Final Teeth: What To Expect",
+    hook: "Will you be without teeth during treatment? For most suitable patients, no.",
+    description: [
+      "A fixed temporary bridge may be fitted on the day of surgery or shortly afterwards if implant stability and other clinical factors allow. If immediate loading is unsuitable, your dentist will explain the alternative plan. Temporary teeth require a modified diet during healing. [1]",
+      "Once healing is complete, the final bridge is designed and fitted. We walk you through your material options at consultation, including the difference between acrylic and zirconia, so you can make a decision that actually makes sense for your budget and your priorities rather than just accepting whatever is standard.",
+      "It is worth understanding the difference between the two stages when you are comparing costs, because the materials and work involved are quite different.",
+    ],
+    checklist: [],
+    ctaText: "Compare Final Teeth Options",
+    ctaHref: "#cost",
+    imageSrc: "/assets/allon4/temporary-final-teeth-bridge.jpg",
+    imageAlt: "All on 4 temporary and final teeth bridge at Smile Concepts",
+    imagePosition: "center 48%",
+    floatingTop: {
+      icon: <Clock size={17} color="#E86337" />,
+      title: "Fixed Temporary Teeth",
+      subtitle: "Same day or shortly after, where suitable",
+    },
+    floatingBottom: {
+      icon: <Sparkles size={17} color="#16A34A" />,
+      title: "Acrylic or Zirconia",
+      subtitle: "Your choice of final fixed teeth",
     },
   },
 ];
@@ -253,17 +239,7 @@ export default function AllOn4ScrollFeatures() {
 
   // Mobile carousel state
   const [mobileIndex, setMobileIndex] = React.useState(0);
-  const [isPaused, setIsPaused] = React.useState(false);
   const touchStartXRef = useRef<number | null>(null);
-
-  // Auto-advance for mobile carousel
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setMobileIndex((prev) => (prev + 1) % slidesData.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isPaused]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -530,7 +506,6 @@ export default function AllOn4ScrollFeatures() {
         }}
         onTouchStart={(e) => {
           touchStartXRef.current = e.touches[0].clientX;
-          setIsPaused(true);
         }}
         onTouchEnd={(e) => {
           if (touchStartXRef.current !== null) {
@@ -544,10 +519,7 @@ export default function AllOn4ScrollFeatures() {
             }
             touchStartXRef.current = null;
           }
-          setIsPaused(false);
         }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
       >
         <div
           style={{
@@ -740,17 +712,34 @@ export default function AllOn4ScrollFeatures() {
             </h4>
 
             {/* Description */}
-            <p
-              style={{
-                fontFamily: "var(--font-assistant), sans-serif",
-                fontSize: "0.92rem",
-                lineHeight: 1.6,
-                color: "#4A4A50",
-                margin: "0 0 16px 0",
-              }}
-            >
-              {currentMobileSlide.description}
-            </p>
+            {toParagraphs(currentMobileSlide.description).map((para, pIdx) => (
+              <p
+                key={pIdx}
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.92rem",
+                  lineHeight: 1.6,
+                  color: "#4A4A50",
+                  margin: "0 0 12px 0",
+                }}
+              >
+                {para}
+              </p>
+            ))}
+
+            {currentMobileSlide.checklistTitle && (
+              <h5
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: "#1C1C1E",
+                  margin: "4px 0 8px 0",
+                }}
+              >
+                {currentMobileSlide.checklistTitle}
+              </h5>
+            )}
 
             {/* Checklist */}
             <div
@@ -758,10 +747,10 @@ export default function AllOn4ScrollFeatures() {
                 display: "flex",
                 flexDirection: "column",
                 gap: "8px",
-                marginBottom: "24px",
+                marginBottom: currentMobileSlide.footnote ? "12px" : "24px",
               }}
             >
-              {currentMobileSlide.checklist.slice(0, 3).map((item, cIdx) => (
+              {currentMobileSlide.checklist.map((item, cIdx) => (
                 <div
                   key={cIdx}
                   style={{
@@ -790,16 +779,30 @@ export default function AllOn4ScrollFeatures() {
                     style={{
                       fontSize: "0.88rem",
                       color: "#2C2C2E",
-                      fontWeight: 600,
+                      fontWeight: 500,
                       fontFamily: "var(--font-assistant), sans-serif",
-                      lineHeight: 1.35,
+                      lineHeight: 1.4,
                     }}
                   >
-                    {item}
+                    {renderChecklistItem(item)}
                   </span>
                 </div>
               ))}
             </div>
+
+            {currentMobileSlide.footnote && (
+              <p
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.86rem",
+                  lineHeight: 1.55,
+                  color: "#6A6A70",
+                  margin: "0 0 24px 0",
+                }}
+              >
+                {currentMobileSlide.footnote}
+              </p>
+            )}
 
             {/* CTA Button matching brand */}
             <div style={{ marginBottom: "26px" }}>
@@ -1171,18 +1174,35 @@ export default function AllOn4ScrollFeatures() {
                   </p>
 
                   {/* Authoritative Clinical Description */}
-                  <p
-                    style={{
-                      fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: "0.93rem",
-                      lineHeight: 1.62,
-                      color: "#4A4A50",
-                      margin: "0 0 16px 0",
-                      fontWeight: 400,
-                    }}
-                  >
-                    {slide.description}
-                  </p>
+                  {toParagraphs(slide.description).map((para, pIdx) => (
+                    <p
+                      key={pIdx}
+                      style={{
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.93rem",
+                        lineHeight: 1.62,
+                        color: "#4A4A50",
+                        margin: "0 0 12px 0",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {para}
+                    </p>
+                  ))}
+
+                  {slide.checklistTitle && (
+                    <h4
+                      style={{
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "1rem",
+                        fontWeight: 700,
+                        color: "#1C1C1E",
+                        margin: "4px 0 8px 0",
+                      }}
+                    >
+                      {slide.checklistTitle}
+                    </h4>
+                  )}
 
                   {/* Feature Checklist */}
                   <div
@@ -1191,7 +1211,7 @@ export default function AllOn4ScrollFeatures() {
                       display: "flex",
                       flexDirection: "column",
                       gap: "8px",
-                      marginBottom: "22px",
+                      marginBottom: slide.footnote ? "12px" : "22px",
                       width: "100%",
                     }}
                   >
@@ -1200,7 +1220,7 @@ export default function AllOn4ScrollFeatures() {
                         key={cIdx}
                         style={{
                           display: "flex",
-                          alignItems: "center",
+                          alignItems: "flex-start",
                           gap: "10px",
                         }}
                       >
@@ -1221,18 +1241,32 @@ export default function AllOn4ScrollFeatures() {
                         </div>
                         <span
                           style={{
-                            fontSize: "0.9rem",
+                            fontSize: "0.88rem",
                             color: "#2C2C2E",
-                            fontWeight: 600,
+                            fontWeight: 500,
                             fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.35,
+                            lineHeight: 1.42,
                           }}
                         >
-                          {item}
+                          {renderChecklistItem(item)}
                         </span>
                       </div>
                     ))}
                   </div>
+
+                  {slide.footnote && (
+                    <p
+                      style={{
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.86rem",
+                        lineHeight: 1.55,
+                        color: "#6A6A70",
+                        margin: "0 0 20px 0",
+                      }}
+                    >
+                      {slide.footnote}
+                    </p>
+                  )}
 
                   {/* Brand CTA Button */}
                   <div>

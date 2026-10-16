@@ -2,87 +2,157 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Phone } from "lucide-react";
-import { TestimonialsColumn, TestimonialItem } from "@/components/ui/testimonials-columns-1";
+import { ArrowRight, Phone, ExternalLink, Star } from "lucide-react";
+import { TestimonialsColumn, TestimonialItem, GoogleGIcon } from "@/components/ui/testimonials-columns-1";
 
-const testimonials: TestimonialItem[] = [
+const GOOGLE_PROFILE_URL = "https://share.google/4Z9FLkA3yM48zIdYS";
+
+// Real Google Reviews from Smile Concepts (Sydney CBD)
+// Names formatted with First name + Last name initial letter (e.g. Sally D.)
+// Reviews curated to medium length to fit cards comfortably
+const googleReviews: TestimonialItem[] = [
+  // --- Column 1 ---
   {
-    text: "After wearing loose dentures for 7 years, getting All-on-4 with Dr. Manish Shah was the best decision of my life. I walked out with fixed teeth in 3 days and can eat steak and apples again with zero pain.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-    name: "James Thornton",
-    role: "Full Upper Arch All-on-4",
+    name: "Sally D.",
+    initials: "SD",
+    avatarColor: "#4285F4",
+    text: "Nobody likes going to the dentist, but Dr Angie Papas always makes me feel at ease and does an amazing job every time. The team is warm, reassuring and thorough. Highly recommend Smile Concepts!",
+    role: "Verified Google Review",
     location: "Sydney CBD",
+    date: "Oct 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "I was terrified of the dentist and my teeth were failing. Dr. Kinnar Shah walked me through 3D CT diagnostics and early super fund release. The IV sleep dentistry made the entire procedure completely painless!",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop",
-    name: "Sarah McLaughlin",
-    role: "Full Mouth Dental Implants",
-    location: "Bondi, Sydney",
+    name: "Ruqiya K.",
+    initials: "RK",
+    avatarColor: "#EA4335",
+    text: "Dr Manish has been absolutely amazing throughout my treatment. He corrected both my TMJ and bite alignment issues, and I couldn't be happier with the final result. Always felt in the best hands.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Sep 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "Dr. Manish Shah has 40+ years of surgical experience and it shows in every detail. My previous dentist said I needed extensive bone grafts, but Smile Concepts avoided grafting entirely with tilted implants.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    name: "David Levin",
-    role: "Dual Arch Permanent Teeth",
-    location: "Mosman, Sydney",
+    name: "Jordyn L.",
+    initials: "JL",
+    avatarColor: "#34A853",
+    text: "Such a wonderful experience from start to finish. Dr Angie and the team were very professional, took their time and made sure everything was perfect. I will be highly recommending Smile Concepts.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Sep 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "The high-strength Australian Zirconia bridge looks and feels identical to natural teeth. No plastic palate, no slipping, no messy glue. I can laugh and smile with total confidence again.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
-    name: "Elena Rossi",
-    role: "Zirconia Fixed Bridge",
-    location: "Surry Hills, Sydney",
+    name: "Joseph B.",
+    initials: "JB",
+    avatarColor: "#F59E0B",
+    text: "The team is just amazing. They took care of me throughout the entire process. The clinic environment is modern and welcoming, and the treatment was completely smooth and hassle-free.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Sep 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
+  },
+
+  // --- Column 2 ---
+  {
+    name: "Allan A.",
+    initials: "AA",
+    avatarColor: "#8B5CF6",
+    text: "The staff here are fantastic, the atmosphere is relaxed and very friendly. The dentists do a fantastic job — extremely professional, reassuring, and gentle from initial consult to completion.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Aug 2026",
+    rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "My bottom teeth were breaking and infected. From initial consultation to final fixed teeth took just 48 hours. Exceptional clinical care, transparent pricing, and wonderful nursing staff.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-    name: "Michael Kovacs",
-    role: "Lower Arch All-on-4",
-    location: "North Sydney",
+    name: "Darren J.",
+    initials: "DJ",
+    avatarColor: "#0D9488",
+    text: "Highly experienced and skilled dentists with state-of-the-art facilities in Sydney CBD. Exceptional clinical standard, transparent consultation, and friendly practice. Will definitely return.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Aug 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "The finance team helped me access my superannuation smoothly through ATO compassionate release. That made this life-changing procedure 100% affordable. Can't recommend them enough!",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-    name: "Chloe Richardson",
-    role: "Sedation All-on-4 Implants",
-    location: "Manly, Sydney",
+    name: "Anne H.",
+    initials: "AH",
+    avatarColor: "#EC4899",
+    text: "I highly commend Smile Concepts for their excellent care. They eased my dental anxiety, made me feel completely comfortable, and brought back my smile and confidence. Simply the best team!",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Jul 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "Booked a consultation at 307 Pitt Street. The precision 3D guided surgery was done in a single session. I went to work 3 days later with permanent fixed teeth. Absolutely incredible result.",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop",
-    name: "Robert Harris",
-    role: "Immediate Teeth in 1-3 Days",
-    location: "Double Bay, Sydney",
+    name: "Samuel T.",
+    initials: "ST",
+    avatarColor: "#2563EB",
+    text: "Very pleased with the exceptional service and modern clinic facilities at 307 Pitt Street. The attention to detail, high hygiene standards, and patient comfort is outstanding. Thoroughly recommended.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Sep 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
+  },
+
+  // --- Column 3 ---
+  {
+    name: "Rose S.",
+    initials: "RS",
+    avatarColor: "#059669",
+    text: "Very happy with Smile Concepts. I had severe jaw pain and grinding for years and Dr Manish was able to stop the pain and correct my bite. All the latest technology and done efficiently.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Jul 2026",
+    rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "Everything was explained thoroughly with zero hidden fees. Dr. Kinnar and Dr. Manish are genuine artists. The aesthetics match my facial symmetry perfectly. Worth every single cent.",
-    image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=200&auto=format&fit=crop",
-    name: "Jennifer Patterson",
-    role: "Full Arch Restoration",
-    location: "Chatswood, Sydney",
+    name: "Sreya N.",
+    initials: "SN",
+    avatarColor: "#D97706",
+    text: "So professional and great customer service from everyone at Smile Concepts. The dentists and nurses are knowledgeable, helpful and welcoming. Best dental clinic experience in Sydney.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Jul 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
   {
-    text: "Cleanest, most technologically advanced surgery suite in Sydney. The digital intraoral scanners eliminated gooey impressions, and my new smile looks completely natural.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
-    name: "Harrison Blake",
-    role: "Full Mouth Rehabilitation",
-    location: "Parramatta, Sydney",
+    name: "Kerrie M.",
+    initials: "KM",
+    avatarColor: "#7C3AED",
+    text: "Made an appointment after a recommendation and was put at ease right from the beginning. Skill, gentle care and modern technology. Sorting appointments and payment was a total breeze.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Jul 2026",
     rating: 5,
+    url: GOOGLE_PROFILE_URL,
+  },
+  {
+    name: "Megan M.",
+    initials: "MM",
+    avatarColor: "#E11D48",
+    text: "Brilliant experience at Smile Concepts. Dr Manish and the clinical team are great! The whole practice is spotless, welcoming and uses top-tier digital dental equipment.",
+    role: "Verified Google Review",
+    location: "Sydney CBD",
+    date: "Jul 2026",
+    rating: 5,
+    url: GOOGLE_PROFILE_URL,
   },
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+const firstColumn = googleReviews.slice(0, 4);
+const secondColumn = googleReviews.slice(4, 8);
+const thirdColumn = googleReviews.slice(8, 12);
 
 export default function Testimonials() {
   return (
@@ -107,7 +177,7 @@ export default function Testimonials() {
           transform: "translate(-50%, -50%)",
           width: "700px",
           height: "700px",
-          background: "radial-gradient(circle, rgba(244, 122, 74, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(66, 133, 244, 0.06) 0%, transparent 70%)",
           filter: "blur(120px)",
           pointerEvents: "none",
           zIndex: 0,
@@ -140,19 +210,74 @@ export default function Testimonials() {
             gap: "0.85rem",
           }}
         >
-          <p
+          {/* Interactive Google Review Badge with Direct Redirection */}
+          <a
+            href={GOOGLE_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="View Smile Concepts Google Business Profile & 600+ Reviews"
             style={{
-              color: "#F47A4A",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              fontFamily: "var(--font-assistant)",
-              margin: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              padding: "0.45rem 1.1rem",
+              backgroundColor: "#ffffff",
+              border: "1px solid #E2E0D8",
+              borderRadius: "100px",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.04)",
+              textDecoration: "none",
+              transition: "all 0.25s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = "#4285F4";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                "0 6px 18px rgba(66, 133, 244, 0.15)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = "#E2E0D8";
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                "0 2px 10px rgba(0, 0, 0, 0.04)";
             }}
           >
-            Patient Stories
-          </p>
+            <GoogleGIcon size={18} />
+            <span
+              style={{
+                color: "#202124",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                fontFamily: "var(--font-assistant)",
+              }}
+            >
+              Google Reviews
+            </span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.15rem", color: "#FBBC05" }}>
+              <Star size={13} fill="#FBBC05" color="#FBBC05" />
+              <span
+                style={{
+                  color: "#202124",
+                  fontSize: "0.82rem",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-assistant)",
+                }}
+              >
+                4.8
+              </span>
+            </div>
+            <span
+              style={{
+                color: "#70757A",
+                fontSize: "0.78rem",
+                fontFamily: "var(--font-assistant)",
+                fontWeight: 500,
+              }}
+            >
+              (600+ Reviews)
+            </span>
+            <ExternalLink size={12} color="#4285F4" />
+          </a>
 
           <h2
             className="sc-testimonials-title"
@@ -163,10 +288,10 @@ export default function Testimonials() {
               fontWeight: 400,
               lineHeight: 1.2,
               letterSpacing: "-0.01em",
-              margin: "0 0 0.5rem 0",
+              margin: "0.25rem 0 0.5rem 0",
             }}
           >
-            Real Stories, Real Smiles in Sydney
+            Trusted by Sydney Patients
           </h2>
 
           <p
@@ -175,12 +300,12 @@ export default function Testimonials() {
               fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
               color: "#555869",
               lineHeight: 1.62,
-              maxWidth: "680px",
+              maxWidth: "700px",
               fontWeight: 400,
               margin: 0,
             }}
           >
-            Smile Concepts is an award-winning dental practice in Sydney CBD with 675+ Google reviews. Read what our patients say on Google.
+            Smile Concepts is an award winning Sydney CBD dental practice with 600+ Google reviews. Read what our patients say on Google.
           </p>
         </motion.div>
 
@@ -190,23 +315,23 @@ export default function Testimonials() {
             display: "flex",
             justifyContent: "center",
             gap: "1.5rem",
-            maxHeight: "680px",
+            maxHeight: "720px",
             overflow: "hidden",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
             WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+              "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
           }}
         >
-          <TestimonialsColumn testimonials={firstColumn} duration={20} />
+          <TestimonialsColumn testimonials={firstColumn} duration={26} />
           <TestimonialsColumn
             testimonials={secondColumn}
             className="hidden md:block"
-            duration={26}
+            duration={32}
           />
           <TestimonialsColumn
             testimonials={thirdColumn}
             className="hidden lg:block"
-            duration={22}
+            duration={28}
           />
         </div>
 
@@ -235,6 +360,7 @@ export default function Testimonials() {
             gap: "1rem",
           }}
         >
+          {/* Book Consultation Button */}
           <a
             href="#book"
             style={{
@@ -265,9 +391,11 @@ export default function Testimonials() {
               (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
             }}
           >
-            <span>Book a Consultation Online</span>
+            <span>Book Consultation Online</span>
             <ArrowRight size={16} />
           </a>
+
+          {/* Direct Call Button */}
           <a
             href="tel:0292677777"
             style={{
@@ -304,3 +432,4 @@ export default function Testimonials() {
     </section>
   );
 }
+

@@ -13,103 +13,103 @@ interface FAQItem {
   answer: string;
 }
 
-// 100% Verbatim Original FAQs from Live Website
+// FAQs from the All on X content brief
 const faqsData: FAQItem[] = [
   {
     id: "faq-1",
-    category: "cost",
-    categoryLabel: "Cost & Super",
-    question: "How much do all on 4 dental implants (full arch) cost in Sydney?",
+    category: "procedure",
+    categoryLabel: "Procedure & Implants",
+    question: "What is the difference between All on 4 and All on X?",
     answer:
-      "At Smile Concepts, All on 4 is quoted in two phases. Phase one, which includes your implants and the fixed temporary teeth you leave with on the day of surgery (where suitable), is $18,000 per arch. Your final fixed teeth are $10,000 for acrylic or $14,000 for zirconia, so complete treatment ranges from $28,000 to $32,000 per arch. We don't charge per implant, and you receive a written, itemised quote after your 3D scan.",
+      "There is no difference in the treatment. Both give you a full arch of fixed teeth on dental implants. “All on 4” is the well-known name, while “All on X” means the number of implants (the “X”) is tailored to you, usually four to six. At Smile Concepts, we plan each case to your anatomy and don't charge per implant.",
   },
   {
     id: "faq-2",
-    category: "cost",
-    categoryLabel: "Cost & Super",
-    question: "Can I keep the temporary teeth and skip the final bridge?",
+    category: "procedure",
+    categoryLabel: "Procedure & Implants",
+    question: "Is All on 4 surgery painful?",
     answer:
-      "The same-day teeth are designed for the healing period, not for long-term wear. They are made from a lighter material so we can adjust them while your gums settle, and your bite is refined, and they are not built to withstand years of full chewing force. Once your implants have healed, we fit your final fixed teeth in acrylic on titanium or zirconia, which are made to last. This is why every All on 4 plan at Smile Concepts includes both phases.",
+      "Generally, the procedure itself is not painful. Most patients choose sleep dentistry (IV sedation), so they stay completely relaxed throughout. They typically report the discomfort afterwards is less than they expected and is well managed with prescribed pain relief and simple aftercare.",
   },
   {
     id: "faq-3",
-    category: "cost",
-    categoryLabel: "Cost & Super",
-    question: "Can I use my superannuation to pay for All on 4?",
+    category: "maintenance",
+    categoryLabel: "Recovery & Maintenance",
+    question: "How long does recovery take?",
     answer:
-      "Eligible patients may be able to access their superannuation early on compassionate grounds to fund treatment, and we can refer you to SuperCare to manage the application with the ATO. Approval isn't guaranteed. The ATO assesses each application against strict criteria, and you'll need supporting reports from two practitioners. It's best considered only after other payment options.",
+      "Many patients return to light activities within a few days. Most surgical recovery happens over 2 to 4 weeks. Full healing and integration of the implants with your jaw typically takes three to six months, during which you wear your fixed temporary teeth before your final bridge is fitted.",
   },
   {
     id: "faq-4",
-    category: "cost",
-    categoryLabel: "Cost & Super",
-    question: "How many implants will I need, and does it change the price?",
+    category: "candidacy",
+    categoryLabel: "Candidacy & Bone Loss",
+    question: "Can I get all on four implants if I have bone loss?",
     answer:
-      "There is no difference in the treatment. Both give you a full arch of fixed teeth on dental implants. “All on 4” is the well-known name, while “All on X” means the number of implants (the “X”) is tailored to you, usually four to six. At Smile Concepts, we plan each case to your anatomy and don't charge per implant.",
+      "Possibly, yes. Bone loss does not automatically rule you out. Angled implants may make use of available bone, but some people need grafting or a different approach. Suitability is determined with clinical examination and 3D imaging. [1–3] Severe bone loss may require assessment for advanced options such as zygomatic or pterygoid implants. These have different risks and may require specialist referral.",
   },
   {
     id: "faq-5",
     category: "procedure",
     categoryLabel: "Procedure & Implants",
-    question: "What is the difference between All on 4 and All on X?",
+    question: "Can I keep the temporary teeth and skip the final bridge?",
     answer:
-      "This depends on the clinic and treatment plan. Costs may include consultations, imaging, implant placement, temporary teeth, final restorations, and follow-up care. We provide a detailed written treatment plan before treatment begins.",
+      "Temporary teeth are intended for the healing phase and need a modified diet. They are adjustable as tissues change but are not a substitute for the planned definitive bridge. They are a short term solution and designed to last no longer than 6 to 12 months. Once your implants have healed, we fit your final fixed teeth on a titanium base with acrylic or zirconia teeth on top, built to last. This is why every All on 4 plan at Smile Concepts includes both phases.",
   },
   {
     id: "faq-6",
-    category: "maintenance",
-    categoryLabel: "Recovery & Maintenance",
-    question: "How long do All on 4 dental implants last?",
-    answer:
-      "Dental implants and full-arch bridges are intended as long-term treatment, but no lifespan is guaranteed. Implants, components and bridge materials can require maintenance, repair or replacement. Longevity is influenced by oral hygiene, professional reviews, smoking, health, bite forces and other individual factors. We'll show you exactly how to care for your new teeth.",
-  },
-  {
-    id: "faq-7",
-    category: "procedure",
-    categoryLabel: "Procedure & Implants",
-    question: "How long does all on 4 treatment procedure take?",
-    answer:
-      "Treatment timelines vary between patients. In suitable cases, temporary teeth may be provided shortly after surgery, while the final restoration is fitted after healing and implant integration are complete.",
-  },
-  {
-    id: "faq-8",
-    category: "procedure",
-    categoryLabel: "Procedure & Implants",
-    question: "Is All on 4 surgery painful?",
-    answer:
-      "Most patients choose to have the procedure under sleep dentistry (IV sedation), so they're completely relaxed. They typically report the discomfort afterwards is less than expected, and it's well managed with prescribed pain relief and simple aftercare.",
-  },
-  {
-    id: "faq-9",
-    category: "maintenance",
-    categoryLabel: "Recovery & Maintenance",
-    question: "How long does recovery take?",
-    answer:
-      "Many patients return to light activities within a few days. Full healing and integration of the implants with your jaw typically takes three to six months, during which you wear your fixed temporary teeth before your final bridge is fitted.",
-  },
-  {
-    id: "faq-10",
     category: "procedure",
     categoryLabel: "Procedure & Implants",
     question: "Can I really get teeth in a day?",
     answer:
-      "When immediate loading is suitable, yes. It depends on bone, implant stability, bite and health. If you've searched teeth in a day Sydney, here's how it works at Smile Concepts: your implants and a fixed temporary bridge can be placed on the same day, so you leave with teeth. Your final bridge is fitted after your implants have healed and integrated with the bone, usually within three to six months.",
+      "When immediate loading is suitable, yes. Immediate loading depends on bone, implant stability, bite and health. We can place your implants and fit a fixed temporary bridge the same day or the next day, so you can leave with teeth. Your final bridge is fitted after your implants have healed and integrated with the bone, usually within three to six months.",
+  },
+  {
+    id: "faq-7",
+    category: "cost",
+    categoryLabel: "Cost & Super",
+    question: "How much do All on 4 dental implants cost at Smile Concepts in Sydney?",
+    answer:
+      "At Smile Concepts, All on 4 or All on X is quoted in two phases. Phase one, which includes your implants and the fixed temporary teeth you leave with on the day of surgery (where suitable), is $18,000 per arch. Phase 2 includes your final fixed teeth: $10,000 for acrylic on titanium or $14,000 for zirconia on titanium or pure zirconia, so complete treatment ranges from $28,000 to $32,000 per arch. We don't charge per implant, and you receive a written, itemised quote after your examination, photos and 3D CT scan.",
+  },
+  {
+    id: "faq-8",
+    category: "cost",
+    categoryLabel: "Cost & Super",
+    question: "What is included in the cost of All on 4 dental implants?",
+    answer:
+      "At Smile Concepts, phase one of your quote ($18,000 per arch) includes your consultation, 3D CBCT planning, any extractions, placement of your implants (usually four to six) and your same-day fixed temporary teeth. Phase two covers your final fixed teeth in acrylic or zirconia. Your care doesn't stop at phase two. The same team that planned and placed your implants looks after you for the long term, with regular reviews, professional implant maintenance and cleaning, and prompt help if anything ever feels loose or uncomfortable. We'll explain your recommended maintenance schedule and any ongoing costs at your consultation. Sedation and bone grafting are quoted separately, and we confirm everything in a written, itemised quote.",
+  },
+  {
+    id: "faq-9",
+    category: "cost",
+    categoryLabel: "Cost & Super",
+    question: "How many implants will I need, and does it change the price?",
+    answer:
+      "Your dentist decides the number of implants, most commonly four to six (and sometimes eight), after analysing your X-rays and 3D CBCT scan. It depends on your bone and what gives you the most stable result. Because we don't charge per implant, the number placed does not change your price. Your quote is driven by case complexity, not implant count.",
+  },
+  {
+    id: "faq-10",
+    category: "cost",
+    categoryLabel: "Cost & Super",
+    question: "Can I use my superannuation to pay for All on 4 or All on X?",
+    answer:
+      "Eligible patients may apply to the ATO for compassionate release of superannuation. We can provide treatment information and discuss application support, but the ATO determines approval. Confirm current supporting report requirements with the ATO and consider independent financial advice before applying. [7] We partner with SuperCare who can help you manage the application process with the ATO.",
   },
   {
     id: "faq-11",
-    category: "candidacy",
-    categoryLabel: "Candidacy & Bone Loss",
-    question: "Can I get All on four implants if I have bone loss?",
+    category: "cost",
+    categoryLabel: "Cost & Super",
+    question: "Is there a cheaper alternative to All on 4?",
     answer:
-      "Possibly, yes. Bone loss does not automatically rule you out. The rear implants in All on 4 are placed at an angle so they can reach denser, healthier bone that straight implants cannot, which is why many patients avoid grafting. Your 3D CBCT scan at Smile Concepts shows exactly how much bone you have before we recommend anything.",
+      "Yes. Snap on implant dentures, also called an implant overdenture or All on 2, start from $12,000 per arch at Smile Concepts. The denture clips onto two to four implants and is removed for cleaning, so it costs less than fixed All on 4 teeth while being far more stable than a conventional denture.",
   },
   {
     id: "faq-12",
-    category: "cost",
-    categoryLabel: "Cost & Super",
-    question: "What is included in All on 4 dental implants cost?",
+    category: "maintenance",
+    categoryLabel: "Recovery & Maintenance",
+    question: "How long do All on 4 dental implants last?",
     answer:
-      "At Smile Concepts, phase one of your quote ($18,000 per arch) includes your consultation, 3D CBCT planning, any extractions, placement of four to six implants and your same-day fixed temporary teeth. Phase two covers your final fixed teeth in acrylic or zirconia. Sedation and bone grafting are quoted separately, and everything is confirmed in a written, itemised quote.",
+      "Dental implants and full-arch bridges are intended as long-term treatment, but no lifespan is guaranteed. Implants, components and bridge materials can require maintenance, repair or replacement. Longevity depends on oral hygiene, regular checkups, smoking, overall health, bite forces, and other individual factors. We'll show you exactly how to care for your new teeth.",
   },
   {
     id: "faq-13",
@@ -117,23 +117,23 @@ const faqsData: FAQItem[] = [
     categoryLabel: "Candidacy & Bone Loss",
     question: "Is All on 4 better than dentures?",
     answer:
-      "They solve the same problem in different ways. All on 4 gives you fixed teeth that stay in place, so there's no daily removal, no adhesive and more stability when eating. Dentures remain a reasonable option for some patients. The right choice depends on your oral health, your bone and your goals, which is what your assessment confirms.",
+      "They solve the same problem in different ways. All on 4 gives you fixed teeth that stay in place, so you don't have to remove them daily, no adhesive, and more stability when eating. Dentures remain a reasonable option for some patients. The right choice depends on your oral health, your bone and your goals, which is what your assessment confirms.",
   },
   {
     id: "faq-14",
     category: "candidacy",
     categoryLabel: "Candidacy & Bone Loss",
-    question: "Can smokers have All on 4 dental implants?",
+    question: "Can smokers have all on 4 dental implants?",
     answer:
-      "Often, yes, but smoking matters. Nicotine reduces blood flow to the bone and gums, which slows healing and raises the risk of implant failure. We assess smokers individually, discuss the risks honestly at consultation, and can talk through ways to reduce risk around the time of surgery.",
+      "Smoking is associated with increased implant failure risk and bone loss. Suitability is assessed individually; stopping smoking is an important risk reduction step. [4] Nicotine reduces blood flow to the bone and gums, which slows healing and raises the risk of implant failure. We assess smokers individually, discuss the risks at consultation, and can talk through ways to reduce risk around the time of surgery. A successful early result does not remove the longer-term risks associated with smoking.",
   },
   {
     id: "faq-15",
     category: "maintenance",
     categoryLabel: "Recovery & Maintenance",
-    question: "How do I clean All on Four dental implants?",
+    question: "How do I clean all on four dental implants?",
     answer:
-      "You clean them much like natural teeth. Brush twice a day, clean under the bridge with the interdental brushes or water flosser we show you how to use, and keep up regular professional implant maintenance visits at Smile Concepts. Good daily hygiene is the single biggest factor in how long your All on 4 teeth last.",
+      "Brush twice daily and clean beneath the bridge with the aids recommended for your design, such as suitable interdental brushes or floss. A water flosser may be an adjunct. Attend regular professional reviews so inflammation and mechanical problems can be detected early. [5]",
   },
   {
     id: "faq-16",
@@ -141,11 +141,22 @@ const faqsData: FAQItem[] = [
     categoryLabel: "Candidacy & Bone Loss",
     question: "What happens if my remaining teeth are failing?",
     answer:
-      "That's one of the most common starting points for All on 4. During your assessment, we look at whether your remaining teeth can be saved or whether replacing the full arch is the more predictable long-term option. If extractions are needed, they're done at the same appointment as your implant placement, and they're included in your phase one fee.",
+      "That is one of the most common starting points for All on 4. During your assessment, we look at whether your remaining teeth can be saved or whether replacing the full arch is the more predictable long-term option. If extractions are needed, they are done at the same appointment as your implant placement, and they are included in your phase one fee.",
+  },
+  {
+    id: "faq-17",
+    category: "maintenance",
+    categoryLabel: "Recovery & Maintenance",
+    question: "What if my Bridge breaks or an Implant fails?",
+    answer:
+      "Contact us promptly if the bridge becomes loose, breaks or causes pain. Avoid chewing on the affected area and do not attempt a repair yourself. The cause must be assessed before deciding whether repair, replacement or further implant treatment is appropriate.",
   },
 ];
 
 type CategoryFilter = "all" | "cost" | "procedure" | "candidacy" | "maintenance";
+
+const countByCategory = (category: FAQItem["category"]) =>
+  faqsData.filter((faq) => faq.category === category).length;
 
 export default function AllOn4FAQ() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
@@ -302,11 +313,11 @@ export default function AllOn4FAQ() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
             <div className="sc-faq-pills">
               {[
-                { key: "all", label: "All Questions (16)" },
-                { key: "cost", label: "Cost & Super (5)" },
-                { key: "procedure", label: "Procedure & Implants (4)" },
-                { key: "candidacy", label: "Candidacy & Bone Loss (4)" },
-                { key: "maintenance", label: "Recovery & Care (3)" },
+                { key: "all", label: `All Questions (${faqsData.length})` },
+                { key: "cost", label: `Cost & Super (${countByCategory("cost")})` },
+                { key: "procedure", label: `Procedure & Implants (${countByCategory("procedure")})` },
+                { key: "candidacy", label: `Candidacy & Bone Loss (${countByCategory("candidacy")})` },
+                { key: "maintenance", label: `Recovery & Care (${countByCategory("maintenance")})` },
               ].map((tab) => (
                 <button
                   key={tab.key}

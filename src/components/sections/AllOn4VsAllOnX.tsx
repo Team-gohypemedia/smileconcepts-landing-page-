@@ -24,7 +24,7 @@ export default function AllOn4VsAllOnX() {
         <h2
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(2rem, 3.8vw, 3.1rem)",
+            fontSize: "clamp(1.55rem, 3.8vw, 3.1rem)",
             fontWeight: 400,
             color: "#E86337",
             lineHeight: 1.25,
@@ -32,7 +32,7 @@ export default function AllOn4VsAllOnX() {
             letterSpacing: "-0.01em",
           }}
         >
-          All on 4 vs All on X: What Do These Names Mean?
+          All on 4 vs All on X: What Do These Names Actually Mean?
         </h2>
 
         {/* Primary Explanatory Paragraph - Relaxed wide lines without excessive word wrap */}
@@ -47,7 +47,7 @@ export default function AllOn4VsAllOnX() {
             maxWidth: "1280px",
           }}
         >
-          If you&apos;ve been researching fixed teeth, you&apos;ve probably seen both &ldquo;All on 4&rdquo; and &ldquo;All on X&rdquo; and wondered whether they&apos;re different treatments. They&apos;re not; they&apos;re two names for the same thing: a full arch of fixed teeth supported by dental implants, so you never take them out.
+          If you&apos;ve been researching fixed teeth, you&apos;ve probably seen both &ldquo;All on 4&rdquo; and &ldquo;All on X&rdquo; and wondered whether they are different treatments. They&apos;re not. They are two names for the same thing: a full arch of fixed teeth supported by dental implants, so you never take them out.
         </p>
 
         {/* Secondary Clinical Distinction Paragraph */}
@@ -62,7 +62,7 @@ export default function AllOn4VsAllOnX() {
             maxWidth: "1320px",
           }}
         >
-          &ldquo;All on 4&rdquo; is simply the best-known name for this treatment. It began as a concept where a full arch is supported on four implants. &ldquo;All on X&rdquo; is the umbrella term the profession uses, where the &ldquo;X&rdquo; stands for the number of implants, because the right number is different for every patient. Whether you&apos;re searching for All on X dental implants or the more familiar &ldquo;All on 4,&rdquo; you&apos;ll find that both treatments are based on the same principle: replacing a full arch of teeth with a fixed implant-supported prosthesis. Today, many clinicians prefer the term <em>All on X</em> because it offers greater flexibility, using four, five, six, or more implants depending on what&apos;s clinically appropriate for each patient.
+          &ldquo;All on 4&rdquo; is simply the best-known name for this treatment. It began as a treatment concept where a full arch is supported on four implants. &ldquo;All on X&rdquo; is the umbrella term the profession uses, where &ldquo;X&rdquo; stands for the number of implants, because the right number varies for every patient. How we decide that number, and why it never changes your price, is explained further down this page.
         </p>
 
         {/* Trademark & Independence Clinical Disclaimer */}
@@ -77,7 +77,7 @@ export default function AllOn4VsAllOnX() {
             maxWidth: "1200px",
           }}
         >
-          All on 4® is a registered trademark and treatment concept of Nobel Biocare. Smile Concepts is an independent practice and plans each full arch case using the implant system best suited to your case, which may include Neoss, DIO, Nobel Biocare, Straumann or other leading implant systems.
+          All on 4® is a registered trademark and treatment concept of Nobel Biocare. Smile Concepts is an independent practice and plans each full arch case using the implant system best suited to your case, which may include Neoss, DIO, Nobel Biocare, Straumann, NeoDent, Southern Implants or other leading implant systems.
         </p>
       </div>
     </section>

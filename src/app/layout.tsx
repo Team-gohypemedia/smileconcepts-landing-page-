@@ -28,13 +28,15 @@ const playfair = Playfair_Display({
 
 /* ─── SEO Metadata ──────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "All on 4 Dental Implants Sydney - All on Four Cost | Smile Concepts",
+  title: "All on 4 Dental Implants & All on X Sydney | Cost From $18k/Arch",
   description:
-    "Smile Concepts provides affordable All on 4 Dental Implants Sydney with costs between $17,000 and $29,000. Permanent teeth in 1-3 days, no bone grafting in most cases. Super fund release & payment plans available. Book now: 02 9267 7777.",
+    "All on 4 dental implants cost in Sydney from $18,000 per arch. Also known as All on X or full mouth dental implants. 25+ years' experience.",
   keywords: [
     "All on 4 Dental Implants Sydney",
+    "All on X Sydney",
     "All on four dental implants Sydney",
     "All on Four Cost",
+    "full arch dental implants Sydney",
     "All Teeth On 4 Implants Sydney",
     "All Teeth On 4 Implants Cost",
     "dental implants Sydney CBD",
@@ -44,9 +46,9 @@ export const metadata: Metadata = {
     "super fund dental implants",
   ],
   openGraph: {
-    title: "All on 4 Dental Implants Sydney | Smile Concepts",
+    title: "All on 4 Dental Implants & All on X Sydney | Cost From $18k/Arch",
     description:
-      "Transform your smile with permanent All on 4 dental implants in Sydney CBD. Over 40 years of surgical excellence.",
+      "All on 4 dental implants cost in Sydney from $18,000 per arch. Also known as All on X or full mouth dental implants. 25+ years' experience.",
     url: "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html",
     siteName: "Smile Concepts",
     type: "website",

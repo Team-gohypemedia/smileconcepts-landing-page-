@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import AllOn4ScrollFeatures from "./AllOn4ScrollFeatures";
+import AllOn4ImplantSurgery from "./AllOn4ImplantSurgery";
 
 export default function AllOn4Overview() {
   const [readMoreIntro, setReadMoreIntro] = useState(false);
@@ -12,19 +13,14 @@ export default function AllOn4Overview() {
   // Exact Denture Comparison Table Matching Reference Website
   const comparisonData = [
     {
-      feature: "Surgery Required",
-      allon4: "Yes",
-      dentures: "Usually No",
-    },
-    {
       feature: "Fixed in place",
       allon4: "Yes",
       dentures: "No",
     },
     {
-      feature: "Cleaning",
-      allon4: "Daily cleaning around and beneath the bridge; professional maintenance",
-      dentures: "Removed daily for cleaning; periodic review or reline may be needed",
+      feature: "Removed for cleaning",
+      allon4: "No",
+      dentures: "Yes",
     },
     {
       feature: "Stability when eating",
@@ -45,11 +41,6 @@ export default function AllOn4Overview() {
       feature: "Designed as a fixed solution",
       allon4: "Yes",
       dentures: "No",
-    },
-    {
-      feature: "Treatment time",
-      allon4: "Surgical and healing stages",
-      dentures: "Usually shorter and non-surgical",
     },
   ];
 
@@ -91,6 +82,19 @@ export default function AllOn4Overview() {
         }
         .sc-comp-row:hover {
           background-color: rgba(232, 99, 55, 0.03);
+        }
+        .sc-dent-cards {
+          display: none;
+        }
+        @media (max-width: 640px) {
+          .sc-dent-table {
+            display: none !important;
+          }
+          .sc-dent-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+          }
         }
         @media (max-width: 820px) {
           .sc-hero-split {
@@ -155,7 +159,7 @@ export default function AllOn4Overview() {
                 marginBottom: "1rem",
               }}
             >
-              What are All on 4 dental implants (full arch)?
+              What are All on 4 Dental Implants (full arch)?
             </h2>
 
             <div
@@ -170,7 +174,7 @@ export default function AllOn4Overview() {
               }}
             >
               <p style={{ margin: 0 }}>
-                All on 4 is a full arch treatment where a complete fixed bridge of replacement teeth is supported by a small number of dental implants, most commonly four, and up to six where your anatomy calls for it. It&apos;s designed for patients missing all or most of their upper or lower teeth, and it removes the need to place an individual implant for every missing tooth. Some patients refer to this as All on 4 implants (full arch) treatment, while others simply call it All on four implants.
+                All on 4 is a full-arch treatment in which a complete fixed bridge of replacement teeth is supported by a small number of dental implants, most commonly four, and up to six when your anatomy calls for it. It is designed for patients missing all or most of their upper or lower teeth, and it removes the need to place an individual implant for every missing tooth.
               </p>
 
               <AnimatePresence>
@@ -188,10 +192,16 @@ export default function AllOn4Overview() {
                     }}
                   >
                     <p style={{ margin: 0 }}>
-                      The two rear implants are placed at an angle of up to 45 degrees. This is not just a technical detail. Angling the rear implants lets them reach denser areas of existing bone further forward in the jaw, which is why most patients can avoid the bone grafting that traditional full-arch implant approaches often require. Less surgery, less recovery time, and in most cases, a same-day temporary set of teeth, so you are never without a smile while things heal.
+                      The two rear implants may or may not be placed at an angle of up to 45 degrees. This is not just a technical detail. Sometimes, angling the rear implants lets them reach denser bone further forward in the jaw, which is why most patients can avoid the bone grafting traditional full-arch implant approaches often require. Less surgery, less recovery time, and, in most cases, a same-day temporary set of teeth, so you never go without a smile while things heal.
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      Same-day teeth also depend on adequate implant stability. [1–3]
                     </p>
                     <p style={{ margin: 0 }}>
                       The final bridge is fixed permanently to the implants. It does not come out at night. It does not need adhesive. It functions much more like your natural teeth than any removable denture can.
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      The bridge stays in place for daily use and is removed by a clinician when needed. It still requires daily cleaning and professional maintenance.
                     </p>
                   </motion.div>
                 )}
@@ -260,6 +270,9 @@ export default function AllOn4Overview() {
       {/* ─── 3. PREMIUM SCROLL-DRIVEN FEATURE SHOWCASE (PINNED TRANSITIONS) ─── */}
       <AllOn4ScrollFeatures />
 
+      {/* ─── 3b. ALL ON 4 IMPLANT SURGERY: IMPLANT NUMBER, PLACEMENT, SYSTEMS, TECHNOLOGY & BONE LOSS ─── */}
+      <AllOn4ImplantSurgery />
+
       {/* ─── 4. ALL ON 4 VS TRADITIONAL DENTURES: HOW DO THEY COMPARE? (MATCHING SECOND IMAGE) ─── */}
       <section
         id="dentures-comparison"
@@ -304,11 +317,12 @@ export default function AllOn4Overview() {
               lineHeight: 1.6,
             }}
           >
-            While dentures remain a suitable option for some people, they are removable and may become loose over time as the jawbone changes.
+            While dentures remain a suitable option for some people, they are removable and may become loose over time as the jawbone changes. The most suitable option depends on your oral health, goals, and clinical assessment.
           </p>
 
           {/* Clean, Simple Table (Responsive & Easy to Read) */}
           <div
+            className="sc-dent-table"
             style={{
               width: "100%",
               overflowX: "auto",
@@ -419,6 +433,40 @@ export default function AllOn4Overview() {
             </table>
           </div>
 
+          {/* Mobile: comparison as stacked cards */}
+          <div className="sc-dent-cards">
+            {comparisonData.map((row) => (
+              <div
+                key={row.feature}
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #ECE7DE",
+                  borderRadius: "14px",
+                  overflow: "hidden",
+                  fontFamily: "var(--font-assistant), sans-serif",
+                }}
+              >
+                <div style={{ backgroundColor: "#EB6B3D", color: "#FFFFFF", fontWeight: 700, fontSize: "0.9rem", padding: "0.6rem 0.95rem" }}>
+                  {row.feature}
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+                  <div style={{ padding: "0.7rem 0.95rem", borderRight: "1px solid #ECE7DE" }}>
+                    <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#E86337", marginBottom: "0.2rem" }}>
+                      All On 4
+                    </div>
+                    <div style={{ fontSize: "0.92rem", color: "#333333", fontWeight: 600 }}>{row.allon4}</div>
+                  </div>
+                  <div style={{ padding: "0.7rem 0.95rem" }}>
+                    <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#777777", marginBottom: "0.2rem" }}>
+                      Traditional Dentures
+                    </div>
+                    <div style={{ fontSize: "0.92rem", color: "#555555", fontWeight: 600 }}>{row.dentures}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* Centered Footnote Matching Second Image */}
           <p
             style={{
@@ -430,7 +478,7 @@ export default function AllOn4Overview() {
               lineHeight: 1.6,
             }}
           >
-            The most suitable option depends on your oral health, goals, and clinical assessment.
+            In our Sydney practice, one of the most common questions we hear from denture wearers is whether significant bone loss rules them out.
           </p>
         </div>
       </section>

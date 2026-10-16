@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, type Variants, type HTMLMotionProps } from 'framer-motion';
 import { Globe, Phone, MapPin, Mail, ArrowRight } from 'lucide-react';
 
@@ -128,6 +129,8 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             }
             .sc-hero2-content {
               padding: 2.75rem 1.25rem 2.25rem !important;
+              flex: 0 0 auto !important;
+              width: 100% !important;
               max-width: 100% !important;
               text-align: center !important;
               align-items: center !important;
@@ -160,7 +163,29 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               gap: 0.85rem 1.25rem !important;
             }
             .sc-hero2-image {
+              flex: 0 0 auto !important;
+              width: 100% !important;
+              max-width: 100% !important;
               min-height: 340px !important;
+              border-left: none !important;
+            }
+            .sc-hero2-subtitle button {
+              align-self: center !important;
+            }
+          }
+          @media (max-width: 640px) {
+            .sc-hero2-content {
+              padding: 2.25rem 1.1rem 2rem !important;
+            }
+            .sc-hero2-title {
+              font-size: 1.6rem !important;
+            }
+            .sc-hero2-image {
+              min-height: 300px !important;
+            }
+            .sc-hero2-footer-links {
+              flex-direction: column !important;
+              align-items: center !important;
             }
           }
         `}</style>
@@ -436,16 +461,24 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             width: "50%",
             maxWidth: "50%",
             minHeight: "560px",
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: imagePosition || "center 20%",
-            backgroundRepeat: "no-repeat",
             position: "relative",
+            overflow: "hidden",
             boxSizing: "border-box",
             borderLeft: "1px solid rgba(255, 255, 255, 0.08)",
-            filter: "contrast(102%) brightness(101%) saturate(103%)",
           }}
-        />
+        >
+          <Image
+            src={backgroundImage}
+            alt="Smile Concepts All-on-4 dental implants smiling patient couple"
+            fill
+            priority
+            sizes="(max-width: 890px) 100vw, 50vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: imagePosition || "center 28%",
+            }}
+          />
+        </div>
       </motion.section>
     );
   }

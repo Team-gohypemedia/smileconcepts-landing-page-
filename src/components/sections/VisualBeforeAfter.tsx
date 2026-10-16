@@ -190,7 +190,7 @@ export default function VisualBeforeAfter() {
               marginBottom: "0.85rem",
             }}
           >
-            Before &amp; Afters
+            Real All on 4 Results
           </motion.h2>
 
           <motion.p
@@ -696,7 +696,7 @@ export default function VisualBeforeAfter() {
                 margin: "0.25rem 0 0",
               }}
             >
-              <strong>Clinical Disclosure:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary. Any surgical or invasive procedure carries risks; before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.
+              <strong>Warning:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary.
             </p>
           </div>
         </motion.div>

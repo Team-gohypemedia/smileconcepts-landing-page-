@@ -53,7 +53,7 @@ const doctors = [
       { name: "LinkedIn", url: "https://au.linkedin.com/in/drmanishshah", icon: <LinkedinIcon /> },
     ],
     summaryBio:
-      "Dr Manish Shah is both a registered dentist and a registered medical practitioner. He graduated in Dentistry with honours from the University of Sydney in 1998, completed his medical degree in 2005, and holds a Master of Medicine in Sleep Medicine. With more than 25 years in restorative and cosmetic dentistry, he brings a rare dual clinical perspective to full arch implant treatment and patient comfort.",
+      "Dr Manish Shah is a registered dentist and medical practitioner. He graduated in Dentistry with honours from the University of Sydney in 1998, completed his Medical Degree in 2005, and holds a Master of Medicine in Sleep Medicine. With more than 25 years in restorative and cosmetic dentistry, he brings a rare dual clinical perspective to full-arch implant surgery and prosthetics, with a focus on patient comfort.",
     extraBio: [
       "With a special interest in Craniofacial Pain and Sleep Disorders, and Functional, Anti-Aging and Regenerative Medicine, Dr Manish brings a rare dual clinical perspective to full-arch implant surgery and patient comfort.",
     ],
@@ -96,7 +96,7 @@ const doctors = [
       { name: "X", url: "https://twitter.com/drkinnarshah", icon: <XTwitterIcon /> },
     ],
     summaryBio:
-      "Dr Kinnar Shah completed his dental training in Glasgow in 2000 and has more than 25 years of experience in implant, cosmetic and full mouth rehabilitation dentistry. He works with digitally guided implant techniques and is an educator who trains other dentists in advanced implant and full mouth rehabilitation.",
+      "Dr Kinnar Shah completed his dental training in Glasgow in 2000 and has more than 25 years of experience in implant, cosmetic and full-mouth rehabilitation dentistry. He uses digitally guided implant techniques and trains other dentists in advanced implant and full-mouth rehabilitation.",
     extraBio: [
       "Specialising in digitally guided and advanced technology to achieve precise and predictable results for implants and comprehensive full-mouth rehabilitations, Dr. Kinnar Shah utilises cutting-edge methods to deliver life-changing outcomes tailored to the unique needs of each patient. His commitment to perfection ensures not only exceptional aesthetics but also long-term functionality and oral health.",
       "Recognised globally for his empathetic and patient-focused approach, Dr. Kinnar Shah is a pioneer in understanding the emotional needs and aspirations of those he treats. His advanced expertise in communication allows him to connect deeply with his patients, crafting bespoke treatment plans that align with their goals and enhance their confidence.",
@@ -299,7 +299,7 @@ export default function Team() {
             fontFamily: "var(--font-assistant), sans-serif",
           }}
         >
-          Your treatment at Smile Concepts is led by two experienced clinicians who plan and deliver every case in-house at our practice in Sydney CBD.
+          Your treatment at Smile Concepts is led by two experienced clinicians who plan and deliver every case in-house at our Sydney CBD practice.
         </motion.p>
 
         <motion.div

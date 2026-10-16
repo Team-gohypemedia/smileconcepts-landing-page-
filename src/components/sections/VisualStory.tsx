@@ -12,10 +12,10 @@ export default function VisualStory() {
     <div id="overview" className="w-full relative" style={{ backgroundColor: "#0C0D17" }}>
       <HeroSection
         title={
-          <span className="lg:whitespace-nowrap">
-            All on 4 Dental Implants{" "}
+          <h1 style={{ font: "inherit", color: "inherit", margin: 0 }}>
+            All on 4 Dental Implants &amp; All on X{" "}
             <span style={{ color: "#F47A4A" }}>in Sydney</span>
-          </span>
+          </h1>
         }
         subtitle={
           <div className="flex flex-col gap-3">
@@ -29,7 +29,7 @@ export default function VisualStory() {
                 letterSpacing: "-0.01em",
               }}
             >
-              Full arch (All on X) Fixed Teeth, Tailored To Your Anatomy, From $18,000 Per Arch.
+              Full Arch and Full Mouth Fixed Teeth, Tailored to Your Anatomy, From $18,000 Per Arch.
             </p>
 
             {/* Core Summary (Always Visible) */}
@@ -41,7 +41,7 @@ export default function VisualStory() {
                 fontWeight: 400,
               }}
             >
-              All on 4 dental implants replace a full arch of missing or failing teeth with a set of fixed, natural-looking teeth that stay put. No plates, no adhesives, no slipping.
+              All on 4 dental implants replace a full arch of missing or failing teeth with fixed, natural looking teeth that stay in place. No plates, no adhesives, no slipping.
             </p>
 
             {/* Expandable Extended Details */}
@@ -62,7 +62,17 @@ export default function VisualStory() {
                       fontWeight: 400,
                     }}
                   >
-                    Also known as All on X dental implants or full arch implants, the treatment uses a tailored number of implants, most often four to six, to support your new smile. If you&apos;ve been searching for full arch dental implants or comparing options for All on X in Sydney, Smile Concepts plans your case around your own bone and bite, with dentists who each bring over 25 years&apos; experience, and prices it per arch, not per implant.
+                    Also known as All on X, full arch or full mouth dental implants, the treatment uses a tailored number of implants, most often four to six, to support your new smile.
+                  </p>
+                  <p
+                    style={{
+                      color: "#E2E8F0",
+                      fontSize: "clamp(0.9rem, 1.8vw, 0.98rem)",
+                      lineHeight: 1.68,
+                      fontWeight: 400,
+                    }}
+                  >
+                    Located in the Sydney CBD and easy to reach from across Sydney, Smile Concepts plans every full arch case around your own bone and bite. Our dentists each have over 25 years of experience, and treatment is priced per arch, not per implant.
                   </p>
                   <p
                     style={{
@@ -105,7 +115,7 @@ export default function VisualStory() {
           href: "#cost",
         }}
         backgroundImage="/yamu_jay-ai-generated-9214176.jpg"
-        imagePosition="center 20%"
+        imagePosition="center 25%"
         contactInfo={{
           phone: "02 9267 7777",
           email: "info@smileconcepts.com.au",

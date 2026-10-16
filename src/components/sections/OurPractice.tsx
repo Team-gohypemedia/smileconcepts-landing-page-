@@ -24,8 +24,8 @@ export default function OurPractice() {
     {
       id: "p3",
       title: "Clinical Team",
-      category: "Specialists",
-      desc: "30+ years experienced dental implant surgeons & caring staff.",
+      category: "Experienced Team",
+      desc: "Implant dentists with 25+ years of experience & caring staff.",
       src: images.practice.p3,
       alt: "The caring dental team and patient coordinators at Smile Concepts Sydney",
     },

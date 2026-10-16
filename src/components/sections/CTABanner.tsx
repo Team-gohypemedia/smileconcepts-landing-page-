@@ -625,7 +625,7 @@ export default function CTABanner() {
                 margin: "0 0 0.85rem 0",
               }}
             >
-              If you&apos;re considering All on 4 dental implants (full arch) in Sydney, or exploring options for full arch dental implants Sydney wide, the first step is understanding your options. Our team will assess your oral health, discuss your concerns, and explain the most appropriate treatment options for your individual circumstances, including a clear picture of your All on 4 dental implants cost before you commit to anything. Whether you&apos;re exploring alternatives to dentures or looking for a fixed solution for failing teeth, we&apos;re here to help you make an informed decision with clear advice and personalised care.
+              If you are considering all on 4 dental implants (full arch) in Sydney, the first step is understanding your options. Our team will assess your oral health, discuss your concerns, and explain the most appropriate treatment options for your individual circumstances. Whether you are exploring alternatives to dentures or looking for a fixed solution for failing teeth, we are here to help you make an informed decision with clear advice and personalised care.
             </p>
           </motion.div>
 
