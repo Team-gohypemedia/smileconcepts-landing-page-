@@ -1,5 +1,7 @@
 "use client";
 
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
+
 const items = [
   "All on 4 & All on X Dental Implants",
   "Full Arch Fixed Teeth",
@@ -12,7 +14,7 @@ const items = [
   "3D CBCT & Digital Guided Planning",
   "Interest-Free Plans up to 48 Months",
   "Free Parking",
-  "600+ Google Reviews",
+  `${GOOGLE_RATING}★ · ${GOOGLE_REVIEW_COUNT} Google Reviews`,
 ];
 
 // Duplicate for seamless infinite scroll

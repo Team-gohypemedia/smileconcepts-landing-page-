@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
 import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
+import { GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
+
 
 const STACK_MOBILE_QUERY = "(max-width: 640px)";
 const STACK_MOBILE_DOCK_PX = 84; // just below the mobile navbar
@@ -724,7 +726,8 @@ export default function AllOn4Process() {
                     src="/assets/allon4/elder-couple-cooking-dental-implant.jpg"
                     alt="Elder couple cooking healthy meal enjoying dental implants recovery"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "center center" }}
+                    sizes="(max-width: 900px) 100vw, 740px"
+                    style={{ objectFit: "cover", objectPosition: "left 20%" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
                   <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
@@ -791,6 +794,7 @@ export default function AllOn4Process() {
                     src="/assets/allon4/All-on-6-1.2.jpg"
                     alt="Dental implant arch restoration bridge demonstrating precision engineering"
                     fill
+                    sizes="(max-width: 900px) 100vw, 740px"
                     style={{ objectFit: "cover", objectPosition: "center center" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
@@ -853,7 +857,8 @@ export default function AllOn4Process() {
                     src="/assets/allon4/all-on-4-904x1024.jpg"
                     alt="Full arch implant bridge assessed for repair or replacement"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "center center" }}
+                    sizes="(max-width: 900px) 100vw, 740px"
+                    style={{ objectFit: "contain", objectPosition: "center center" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
                   <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
@@ -913,7 +918,7 @@ export default function AllOn4Process() {
                         <strong>Flexible Ways to Pay:</strong> Interest-free payment plans up to 48 months and up to $30,000 (eligibility applies), plus guidance on superannuation access for eligible patients.
                       </div>
                       <div>
-                        <strong>Trusted by Sydney Patients:</strong> An award winning Sydney CBD dental practice with 600+ Google reviews.
+                        <strong>Trusted by Sydney Patients:</strong> An award winning Sydney CBD dental practice with {GOOGLE_REVIEW_COUNT} Google reviews.
                       </div>
                     </div>
                   </div>
@@ -950,12 +955,13 @@ export default function AllOn4Process() {
                     src="/assets/allon4/sunset-couple-hd.jpg"
                     alt="Happy couple smiling after successful Smile Concepts All-on-4 transformation"
                     fill
-                    style={{ objectFit: "cover", objectPosition: "center center" }}
+                    sizes="(max-width: 900px) 100vw, 740px"
+                    style={{ objectFit: "cover", objectPosition: "35% center" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
                   <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
                     <p style={{ margin: 0, fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#1C1C1E", fontWeight: 600 }}>
-                      An award winning Sydney CBD practice with 600+ Google reviews.
+                      An award winning Sydney CBD practice with {GOOGLE_REVIEW_COUNT} Google reviews.
                     </p>
                   </div>
                 </div>

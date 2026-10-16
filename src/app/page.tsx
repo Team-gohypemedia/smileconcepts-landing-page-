@@ -1,4 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
+import SectionStepper from "@/components/layout/SectionStepper";
+import MobileSectionBar from "@/components/layout/MobileSectionBar";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import Hero from "@/components/sections/Hero";
@@ -24,6 +26,8 @@ export default function Home() {
     <>
       <LoadingScreen />
       <Navbar />
+      <SectionStepper />
+      <MobileSectionBar />
       <main>
         {/* 1. Cinematic Hero with Scroll Video Scrubbing */}
         <Hero />

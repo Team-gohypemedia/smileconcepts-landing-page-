@@ -46,7 +46,7 @@ export default function AllOn4Overview() {
 
   return (
     <section
-      id="overview"
+      id="general-info"
       style={{
         backgroundColor: "#ffffff",
         position: "relative",

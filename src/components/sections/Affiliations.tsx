@@ -27,6 +27,7 @@ const tickerList = [...affiliations, ...affiliations];
 export default function Affiliations() {
   return (
     <section
+      id="affiliations"
       style={{
         background: "#ffffff",
         borderTop: "1px solid #ECE7E1",

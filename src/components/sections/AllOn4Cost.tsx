@@ -439,11 +439,6 @@ export default function AllOn4Cost() {
             text-align: left !important;
           }
         }
-        @media (min-width: 640px) {
-          .sc-cost-main-title {
-            white-space: nowrap !important;
-          }
-        }
         .sc-cost-showcase-grid {
           display: block;
           width: 100%;
@@ -462,11 +457,12 @@ export default function AllOn4Cost() {
             className="sc-cost-main-title"
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.45rem, 3.8vw, 2.85rem)",
+              fontSize: "clamp(1.5rem, 3.2vw, 2.25rem)",
               color: "#1C1C1E",
               fontWeight: 400,
               lineHeight: 1.22,
               marginBottom: "1rem",
+              textWrap: "balance",
             }}
           >
             Understanding All on 4 Dental Implants Cost in Sydney

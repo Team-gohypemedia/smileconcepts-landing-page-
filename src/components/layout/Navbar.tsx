@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
 interface NavLinkItem {
   label: string;
@@ -12,19 +13,114 @@ interface NavLinkItem {
   children?: { label: string; href: string }[];
 }
 
+// Each menu item scrolls to its main section; its dropdown lists the related sections on the page
 const navLinks: NavLinkItem[] = [
-  { label: "Overview", href: "#overview" },
-  { label: "Cost & Finance", href: "#cost" },
-  { label: "Procedure", href: "#procedure" },
-  { label: "Before & After", href: "#transformations" },
-  { label: "Doctors", href: "#team" },
-  { label: "FAQ", href: "#faq" },
+  {
+    label: "Overview",
+    href: "#overview",
+    children: [
+      { label: "Introduction", href: "#overview" },
+      { label: "All on 4 vs All on X", href: "#all-on-4-vs-all-on-x" },
+      { label: "General Information", href: "#general-info" },
+      { label: "Complete My Smile", href: "#complete-my-smile" },
+    ],
+  },
+  {
+    label: "Cost & Finance",
+    href: "#cost",
+    children: [
+      { label: "Cost & Pricing", href: "#cost" },
+      { label: "Cheaper Alternative", href: "#snap-on-dentures" },
+    ],
+  },
+  {
+    label: "Procedure",
+    href: "#procedure",
+    children: [
+      { label: "Implant Surgery", href: "#implant-surgery" },
+      { label: "5-Step Process", href: "#procedure" },
+      { label: "All on 4 vs Dentures", href: "#dentures-comparison" },
+    ],
+  },
+  {
+    label: "Before & After",
+    href: "#transformations",
+    children: [
+      { label: "Before & Afters", href: "#transformations" },
+      { label: "Patient Reviews", href: "#testimonials" },
+    ],
+  },
+  {
+    label: "Doctors",
+    href: "#team",
+    children: [
+      { label: "Our Dentists", href: "#team" },
+      { label: "Our Practice", href: "#our-practice" },
+      { label: "Accreditations", href: "#affiliations" },
+    ],
+  },
+  {
+    label: "FAQ",
+    href: "#faq",
+    children: [
+      { label: "FAQs", href: "#faq" },
+      { label: "Important Information", href: "#important-information" },
+    ],
+  },
 ];
+
+const sectionIds = Array.from(
+  new Set(navLinks.flatMap((link) => [link.href, ...(link.children ?? []).map((c) => c.href)]).map((h) => h.slice(1)))
+);
+
+// Smooth-scroll in-page links to their section (falls back to the browser for anything else)
+const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  if (!href.startsWith("#")) return;
+  e.preventDefault();
+  scrollToSection(href.slice(1));
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  // Scroll-spy: the last section whose top has passed below the header is the current one
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = (document.querySelector("header")?.getBoundingClientRect().bottom ?? 0) + 24;
+      let current: { id: string; top: number } | null = null;
+      for (const id of sectionIds) {
+        const top = document.getElementById(id)?.getBoundingClientRect().top;
+        if (top !== undefined && top <= line && (!current || top > current.top)) current = { id, top };
+      }
+      setActiveSection(current?.id ?? null);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const isActiveGroup = (link: NavLinkItem) =>
+    !!activeSection && (link.children ?? [link]).some((c) => c.href === `#${activeSection}`);
+
+  // Close the drawer first (it locks page scrolling), then scroll to the section
+  const handleMobileClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    window.setTimeout(() => scrollToSection(href.slice(1)), 80);
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -148,125 +244,136 @@ export default function Navbar() {
           className="sc-desktop-nav"
           style={{
             alignItems: "center",
-            gap: "2.2rem",
+            gap: "clamp(0.9rem, 1.7vw, 2.2rem)",
             margin: "0 auto",
           }}
         >
-          {navLinks.map((link) =>
-            link.children ? (
+          {navLinks.map((link) => {
+            const isOpen = openDropdown === link.label;
+            const groupActive = isActiveGroup(link);
+            return (
               <div
                 key={link.label}
                 style={{ position: "relative" }}
-                onMouseEnter={() => setDropdown(true)}
-                onMouseLeave={() => setDropdown(false)}
+                onMouseEnter={() => setOpenDropdown(link.label)}
+                onMouseLeave={() => setOpenDropdown(null)}
+                onFocus={() => setOpenDropdown(link.label)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenDropdown(null);
+                }}
               >
-                <button
+                <a
+                  href={link.href}
                   className="sc-nav-link"
+                  aria-haspopup="true"
+                  aria-expanded={isOpen}
+                  onClick={(e) => {
+                    handleSectionClick(e, link.href);
+                    setOpenDropdown(null);
+                  }}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.35rem",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
+                    gap: "0.3rem",
                     padding: "0.5rem 0",
+                    whiteSpace: "nowrap",
                     fontFamily: "var(--font-assistant), sans-serif",
                     fontSize: "0.95rem",
                     fontWeight: 600,
                     letterSpacing: "0.02em",
-                    color: isLight ? "#2C2C2C" : "rgba(255, 255, 255, 0.95)",
+                    color: groupActive && isLight ? "#F47A4A" : isLight ? "#2C2C2C" : "rgba(255, 255, 255, 0.95)",
+                    textDecoration: "none",
                     transition: "color 0.2s ease",
+                    boxShadow: groupActive && isLight ? "inset 0 -2px 0 #F47A4A" : "none",
                   }}
                 >
                   {link.label}
-                  <ChevronDown
-                    size={14}
-                    style={{
-                      transition: "transform 0.25s ease",
-                      transform: dropdown ? "rotate(180deg)" : "rotate(0deg)",
-                      opacity: 0.8,
-                    }}
-                  />
-                </button>
+                  {link.children && (
+                    <ChevronDown
+                      size={14}
+                      style={{
+                        transition: "transform 0.25s ease",
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        opacity: 0.8,
+                      }}
+                    />
+                  )}
+                </a>
 
                 <AnimatePresence>
-                  {dropdown && (
+                  {link.children && isOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
                       transition={{ duration: 0.18 }}
                       style={{
                         position: "absolute",
                         top: "100%",
                         left: "50%",
-                        transform: "translateX(-50%)",
-                        marginTop: "0.5rem",
+                        marginLeft: "-120px",
                         width: "240px",
-                        backgroundColor: "#ffffff",
-                        borderRadius: "10px",
-                        boxShadow: "0 12px 36px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0,0,0,0.04)",
-                        border: "1px solid rgba(0, 0, 0, 0.08)",
-                        padding: "0.5rem 0",
+                        paddingTop: "0.6rem", // hover bridge between the link and the menu
                         zIndex: 100,
-                        overflow: "hidden",
                       }}
                     >
-                      {link.children.map((child) => (
-                        <a
-                          key={child.label}
-                          href={child.href}
-                          className="sc-dropdown-item"
-                          onClick={() => setDropdown(false)}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            padding: "0.65rem 1.25rem",
-                            fontFamily: "var(--font-assistant), sans-serif",
-                            fontSize: "0.88rem",
-                            fontWeight: 500,
-                            color: "#3A3A3A",
-                            textDecoration: "none",
-                            transition: "all 0.15s ease",
-                          }}
-                        >
-                          <span
-                            style={{
-                              width: "5px",
-                              height: "5px",
-                              borderRadius: "50%",
-                              backgroundColor: "#F47A4A",
-                              marginRight: "0.75rem",
-                              flexShrink: 0,
-                            }}
-                          />
-                          {child.label}
-                        </a>
-                      ))}
+                      <div
+                        role="menu"
+                        style={{
+                          backgroundColor: "#ffffff",
+                          borderRadius: "10px",
+                          boxShadow: "0 12px 36px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0,0,0,0.04)",
+                          border: "1px solid rgba(0, 0, 0, 0.08)",
+                          padding: "0.5rem 0",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {link.children.map((child) => {
+                          const childActive = activeSection !== null && child.href === `#${activeSection}`;
+                          return (
+                            <a
+                              key={child.label}
+                              href={child.href}
+                              role="menuitem"
+                              className="sc-dropdown-item"
+                              onClick={(e) => {
+                                handleSectionClick(e, child.href);
+                                setOpenDropdown(null);
+                              }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                padding: "0.65rem 1.25rem",
+                                fontFamily: "var(--font-assistant), sans-serif",
+                                fontSize: "0.88rem",
+                                fontWeight: childActive ? 700 : 500,
+                                color: childActive ? "#F47A4A" : "#3A3A3A",
+                                backgroundColor: childActive ? "#FFF4EF" : "transparent",
+                                textDecoration: "none",
+                                transition: "all 0.15s ease",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  width: "5px",
+                                  height: "5px",
+                                  borderRadius: "50%",
+                                  backgroundColor: "#F47A4A",
+                                  marginRight: "0.75rem",
+                                  flexShrink: 0,
+                                }}
+                              />
+                              {child.label}
+                            </a>
+                          );
+                        })}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-            ) : (
-              <a
-                key={link.label}
-                href={link.href}
-                className="sc-nav-link"
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.95rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.02em",
-                  color: isLight ? "#2C2C2C" : "rgba(255, 255, 255, 0.95)",
-                  textDecoration: "none",
-                  padding: "0.5rem 0",
-                  transition: "color 0.2s ease",
-                }}
-              >
-                {link.label}
-              </a>
-            )
-          )}
+            );
+          })}
         </nav>
 
         {/* ── Desktop CTAs ── */}
@@ -282,6 +389,7 @@ export default function Navbar() {
           <a
             href="tel:0292677777"
             className="sc-phone-link"
+            aria-label="Call 02 9267 7777"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -309,12 +417,13 @@ export default function Navbar() {
             >
               <Phone size={14} />
             </span>
-            02 9267 7777
+            <span className="sc-phone-text">02 9267 7777</span>
           </a>
 
           {/* Primary "Book Online" CTA button */}
           <a
             href="#book"
+            onClick={(e) => handleSectionClick(e, "#book")}
             className="sc-primary-cta"
             style={{
               display: "inline-flex",
@@ -375,6 +484,7 @@ export default function Navbar() {
               boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
               overflow: "hidden",
             }}
+            data-lenis-prevent
           >
             <div
               style={{
@@ -384,13 +494,16 @@ export default function Navbar() {
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.4rem",
+                maxHeight: "calc(100dvh - 70px)",
+                overflowY: "auto",
+                overscrollBehavior: "contain",
               }}
             >
               {navLinks.map((link) => (
                 <div key={link.label}>
                   <a
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => handleMobileClick(e, link.href)}
                     style={{
                       display: "block",
                       padding: "0.75rem 0.5rem",
@@ -420,7 +533,7 @@ export default function Navbar() {
                         <a
                           key={child.label}
                           href={child.href}
-                          onClick={() => setMobileOpen(false)}
+                          onClick={(e) => handleMobileClick(e, child.href)}
                           style={{
                             padding: "0.4rem 0.5rem",
                             fontFamily: "var(--font-assistant), sans-serif",
@@ -470,7 +583,7 @@ export default function Navbar() {
                 </a>
                 <a
                   href="#book"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleMobileClick(e, "#book")}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -527,7 +640,14 @@ export default function Navbar() {
           transform: translateY(0);
         }
 
-        @media (max-width: 1024px) {
+        /* Narrow laptops: phone icon only, to leave room for the menu dropdowns */
+        @media (max-width: 1279px) {
+          .sc-phone-text {
+            display: none;
+          }
+        }
+
+        @media (max-width: 1100px) {
           .sc-desktop-nav {
             display: none !important;
           }

@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone, ExternalLink, Star } from "lucide-react";
 import { TestimonialsColumn, TestimonialItem, GoogleGIcon } from "@/components/ui/testimonials-columns-1";
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
 
 const GOOGLE_PROFILE_URL = "https://share.google/4Z9FLkA3yM48zIdYS";
 
@@ -215,7 +216,7 @@ export default function Testimonials() {
             href={GOOGLE_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            title="View Smile Concepts Google Business Profile & 600+ Reviews"
+            title={`View Smile Concepts Google Business Profile & ${GOOGLE_REVIEW_COUNT} Reviews`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -263,7 +264,7 @@ export default function Testimonials() {
                   fontFamily: "var(--font-assistant)",
                 }}
               >
-                4.8
+                {GOOGLE_RATING}
               </span>
             </div>
             <span
@@ -274,7 +275,7 @@ export default function Testimonials() {
                 fontWeight: 500,
               }}
             >
-              (600+ Reviews)
+              ({GOOGLE_REVIEW_COUNT} Reviews)
             </span>
             <ExternalLink size={12} color="#4285F4" />
           </a>
@@ -305,7 +306,7 @@ export default function Testimonials() {
               margin: 0,
             }}
           >
-            Smile Concepts is an award winning Sydney CBD dental practice with 600+ Google reviews. Read what our patients say on Google.
+            Smile Concepts is an award winning Sydney CBD dental practice with {GOOGLE_REVIEW_COUNT} Google reviews. Read what our patients say on Google.
           </p>
         </motion.div>
 
