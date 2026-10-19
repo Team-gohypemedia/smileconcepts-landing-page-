@@ -86,6 +86,9 @@ export default function AllOn4SnapOn() {
             flex-direction: column;
             gap: 0.75rem;
           }
+          .sc-snap-intro-para {
+            text-align: left !important;
+          }
         }
       `}</style>
 
@@ -106,6 +109,7 @@ export default function AllOn4SnapOn() {
         </h2>
 
         <p
+          className="sc-snap-intro-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
             fontSize: "clamp(0.92rem, 1.6vw, 1.02rem)",

@@ -110,6 +110,9 @@ export default function AllOn4Overview() {
           .sc-hero-h2 {
             text-align: center !important;
           }
+          .sc-overview-intro-body {
+            text-align: left !important;
+          }
           .sc-hero-cta-wrap {
             display: flex !important;
             justify-content: center !important;
@@ -177,6 +180,7 @@ export default function AllOn4Overview() {
             </h2>
 
             <div
+              className="sc-overview-intro-body"
               style={{
                 fontFamily: "var(--font-assistant), sans-serif",
                 fontSize: "clamp(0.92rem, 2.5vw, 1.02rem)",

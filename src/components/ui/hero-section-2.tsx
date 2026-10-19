@@ -9,6 +9,7 @@ import { Globe, Phone, MapPin, Mail, ArrowRight } from 'lucide-react';
 const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' | 'email' }) => {
   return (
     <div
+      className="sc-hero2-info-icon"
       style={{
         marginRight: "0.65rem",
         flexShrink: 0,
@@ -157,10 +158,42 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               justify-content: center !important;
               width: 100% !important;
             }
+            .sc-hero2-footer {
+              margin-top: 1.25rem !important;
+              padding-top: 0.85rem !important;
+              width: 100% !important;
+            }
             .sc-hero2-footer-links {
-              justify-content: center !important;
-              text-align: center !important;
-              gap: 0.85rem 1.25rem !important;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              justify-content: flex-start !important;
+              text-align: left !important;
+              gap: 0.45rem !important;
+              width: 100% !important;
+            }
+            .sc-hero2-footer-item {
+              display: flex !important;
+              align-items: flex-start !important;
+              text-align: left !important;
+              width: 100% !important;
+              font-size: 0.8rem !important;
+              line-height: 1.35 !important;
+            }
+            .sc-hero2-footer-item a,
+            .sc-hero2-footer-item span {
+              text-align: left !important;
+            }
+            .sc-hero2-info-icon {
+              width: 24px !important;
+              height: 24px !important;
+              min-width: 24px !important;
+              margin-right: 0.5rem !important;
+              margin-top: 1px !important;
+            }
+            .sc-hero2-info-icon svg {
+              width: 13px !important;
+              height: 13px !important;
             }
             .sc-hero2-image {
               flex: 0 0 auto !important;
@@ -175,7 +208,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
           }
           @media (max-width: 640px) {
             .sc-hero2-content {
-              padding: 2.25rem 1.1rem 2rem !important;
+              padding: 2rem 1.1rem 1.75rem !important;
             }
             .sc-hero2-title {
               font-size: 1.6rem !important;
@@ -183,9 +216,14 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
             .sc-hero2-image {
               min-height: 300px !important;
             }
+            .sc-hero2-footer {
+              margin-top: 1rem !important;
+              padding-top: 0.75rem !important;
+            }
             .sc-hero2-footer-links {
-              flex-direction: column !important;
-              align-items: center !important;
+              gap: 0.4rem !important;
+              align-items: flex-start !important;
+              text-align: left !important;
             }
           }
         `}</style>
@@ -370,6 +408,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
           {/* Contact Details Footer */}
           <motion.footer
             variants={itemVariants}
+            className="sc-hero2-footer"
             style={{
               marginTop: "clamp(2rem, 3.5vw, 2.75rem)",
               paddingTop: "1.25rem",
@@ -388,7 +427,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
                 color: "rgba(255, 255, 255, 0.65)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="sc-hero2-footer-item" style={{ display: "flex", alignItems: "center" }}>
                 <InfoIcon type="phone" />
                 <a
                   href={`tel:${contactInfo.phone.replace(/\s+/g, '')}`}
@@ -401,7 +440,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               </div>
 
               {contactInfo.email && (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div className="sc-hero2-footer-item" style={{ display: "flex", alignItems: "center" }}>
                   <InfoIcon type="email" />
                   <a
                     href={`mailto:${contactInfo.email}`}
@@ -414,7 +453,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
                 </div>
               )}
 
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="sc-hero2-footer-item" style={{ display: "flex", alignItems: "center" }}>
                 <InfoIcon type="address" />
                 {contactInfo.addressLink ? (
                   <a
@@ -432,7 +471,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
                 )}
               </div>
 
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="sc-hero2-footer-item" style={{ display: "flex", alignItems: "center" }}>
                 <InfoIcon type="website" />
                 {contactInfo.websiteHref ? (
                   <a

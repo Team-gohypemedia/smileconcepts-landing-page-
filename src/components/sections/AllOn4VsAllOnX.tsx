@@ -12,6 +12,13 @@ export default function AllOn4VsAllOnX() {
         position: "relative",
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .sc-vsonx-para {
+            text-align: left !important;
+          }
+        }
+      `}</style>
       <div
         style={{
           maxWidth: "1140px",
@@ -37,6 +44,7 @@ export default function AllOn4VsAllOnX() {
 
         {/* Primary Explanatory Paragraph - Relaxed wide lines without excessive word wrap */}
         <p
+          className="sc-vsonx-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
             fontSize: "clamp(0.96rem, 1.4vw, 1.05rem)",
@@ -52,6 +60,7 @@ export default function AllOn4VsAllOnX() {
 
         {/* Secondary Clinical Distinction Paragraph */}
         <p
+          className="sc-vsonx-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
             fontSize: "clamp(0.94rem, 1.35vw, 1.03rem)",
@@ -67,6 +76,7 @@ export default function AllOn4VsAllOnX() {
 
         {/* Trademark & Independence Clinical Disclaimer */}
         <p
+          className="sc-vsonx-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
             fontSize: "clamp(0.82rem, 1.1vw, 0.9rem)",
