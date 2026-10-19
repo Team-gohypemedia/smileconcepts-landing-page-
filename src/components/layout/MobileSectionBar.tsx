@@ -7,17 +7,21 @@ import { scrollToSection } from "@/lib/scroll-to-section";
 // All section navigation tabs for mobile
 const ALL_SECTION_TABS = [
   { id: "overview", label: "Overview" },
+  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs X" },
   { id: "transformations", label: "Results" },
   { id: "testimonials", label: "Reviews" },
+  { id: "general-info", label: "About" },
+  { id: "implant-surgery", label: "Surgery" },
+  { id: "dentures-comparison", label: "Vs Dentures" },
   { id: "cost", label: "Cost" },
   { id: "snap-on-dentures", label: "Snap-On" },
   { id: "procedure", label: "Process" },
-  { id: "dentures-comparison", label: "Vs Dentures" },
-  { id: "implant-surgery", label: "Surgery" },
-  { id: "team", label: "Doctors" },
   { id: "our-practice", label: "Clinic" },
+  { id: "team", label: "Doctors" },
   { id: "affiliations", label: "Accreditation" },
+  { id: "complete-my-smile", label: "Why Us" },
   { id: "faq", label: "FAQs" },
+  { id: "important-information", label: "Info" },
 ];
 
 export default function MobileSectionBar() {
@@ -31,11 +35,13 @@ export default function MobileSectionBar() {
       frame = 0;
       const headerOffset = 110;
       let currentId = "overview";
+      let closestTop = -Infinity;
       for (const tab of ALL_SECTION_TABS) {
         const el = document.getElementById(tab.id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= headerOffset) {
+          if (rect.top <= headerOffset && rect.top > closestTop) {
+            closestTop = rect.top;
             currentId = tab.id;
           }
         }

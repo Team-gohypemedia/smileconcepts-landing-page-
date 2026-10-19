@@ -23,7 +23,6 @@ const COST_TOPIC_COUNT = 6;
 
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [readMoreCost, setReadMoreCost] = useState(false);
   const [activePhase, setActivePhase] = useState<0 | 1>(0);
   const phasesGridRef = useRef<HTMLDivElement>(null);
 
@@ -487,49 +486,15 @@ export default function AllOn4Cost() {
               All on 4 cost at Smile Concepts ranges from <strong>$18,000 to $32,000 per arch</strong> in Sydney, quoted in two clear phases.
             </p>
 
-            <AnimatePresence>
-              {readMoreCost && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.22 }}
-                  style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: "0.85rem" }}
-                >
-                  <p style={{ margin: 0 }}>
-                    Phase one, at <strong>$18,000 per arch</strong>, covers your surgery and the fixed temporary teeth you leave with on the day of surgery or shortly afterwards.
-                  </p>
-                  <p style={{ margin: 0 }}>
-                    Phase two is your final fixed teeth, at <strong>$10,000 for acrylic on titanium</strong> or <strong>$14,000 for zirconia</strong>. What drives your total is your materials, your anatomy and your choices, <strong>never the number of implants, because we don&apos;t charge per implant.</strong>
-                  </p>
-                  <p style={{ margin: 0 }}>
-                    After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <button
-              type="button"
-              onClick={() => setReadMoreCost(!readMoreCost)}
-              style={{
-                background: "none",
-                border: "none",
-                padding: 0,
-                color: "#E86337",
-                fontFamily: "var(--font-assistant)",
-                fontWeight: 700,
-                fontSize: "0.92rem",
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.3rem",
-                alignSelf: "flex-start",
-              }}
-            >
-              <span>{readMoreCost ? "Read less" : "Read more"}</span>
-              <span style={{ fontSize: "0.75rem" }}>{readMoreCost ? "▲" : "▼"}</span>
-            </button>
+            <p style={{ margin: 0 }}>
+              Phase one, at <strong>$18,000 per arch</strong>, covers your surgery and the fixed temporary teeth you leave with on the day of surgery or shortly afterwards.
+            </p>
+            <p style={{ margin: 0 }}>
+              Phase two is your final fixed teeth, at <strong>$10,000 for acrylic on titanium</strong> or <strong>$14,000 for zirconia</strong>. What drives your total is your materials, your anatomy and your choices, <strong>never the number of implants, because we don&apos;t charge per implant.</strong>
+            </p>
+            <p style={{ margin: 0 }}>
+              After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
+            </p>
           </div>
         </div>
 

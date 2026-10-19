@@ -126,7 +126,8 @@ export default function AllOn4SnapOn() {
             color: "#1C1C1E",
             fontWeight: 400,
             lineHeight: 1.3,
-            margin: "0 0 0.75rem",
+            textAlign: "center",
+            margin: "0 auto 0.75rem",
           }}
         >
           What Are Snap-on Implant Dentures or Clip-on Implant Dentures (All On 2)?

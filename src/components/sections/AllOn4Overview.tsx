@@ -101,6 +101,19 @@ export default function AllOn4Overview() {
             grid-template-columns: 1fr !important;
             gap: 1.5rem !important;
           }
+          .sc-hero-split-content {
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .sc-hero-h2 {
+            text-align: center !important;
+          }
+          .sc-hero-cta-wrap {
+            display: flex !important;
+            justify-content: center !important;
+          }
           .sc-comp-row {
             grid-template-columns: 1fr !important;
             gap: 0.45rem !important;
@@ -122,7 +135,7 @@ export default function AllOn4Overview() {
         }}
       >
         <div className="sc-hero-split">
-          <div>
+          <div className="sc-hero-split-content">
             <div
               style={{
                 display: "inline-flex",
@@ -150,6 +163,7 @@ export default function AllOn4Overview() {
             </div>
 
             <h2
+              className="sc-hero-h2"
               style={{
                 fontFamily: "var(--font-prata), Georgia, serif",
                 fontSize: "clamp(1.5rem, 4.2vw, 2.75rem)",
@@ -230,7 +244,7 @@ export default function AllOn4Overview() {
               </button>
             </div>
 
-            <div style={{ marginTop: "1.35rem" }}>
+            <div className="sc-hero-cta-wrap" style={{ marginTop: "1.35rem" }}>
               <a
                 href="#cost"
                 style={{

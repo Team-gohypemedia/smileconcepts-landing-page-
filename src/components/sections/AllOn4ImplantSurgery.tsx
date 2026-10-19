@@ -192,6 +192,17 @@ export default function AllOn4ImplantSurgery() {
       }}
     >
       <style>{`
+        @media (max-width: 768px) {
+          .sc-surgery-h2 {
+            text-align: center !important;
+          }
+          .sc-surgery-eyebrow {
+            display: flex !important;
+            justify-content: center !important;
+            text-align: center !important;
+            margin: 0 auto 0.75rem !important;
+          }
+        }
         @media (max-width: 640px) {
           .sc-img-slider {
             display: flex !important;
@@ -221,6 +232,7 @@ export default function AllOn4ImplantSurgery() {
       {/* ─── How many implants will I need? ─── */}
       <div style={blockStyle}>
         <span
+          className="sc-surgery-eyebrow"
           style={{
             display: "inline-block",
             fontFamily: "var(--font-assistant), sans-serif",
@@ -234,7 +246,7 @@ export default function AllOn4ImplantSurgery() {
         >
           All on 4 Implant Surgery
         </span>
-        <h2 style={h2Style}>How many implants will I need? All on 2, All on 4, All on 6?</h2>
+        <h2 className="sc-surgery-h2" style={h2Style}>How many implants will I need? All on 2, All on 4, All on 6?</h2>
         <p style={pStyle}>
           The number of implants chosen is based on the type of teeth you have selected as the end product (your final teeth).
         </p>
@@ -269,7 +281,7 @@ export default function AllOn4ImplantSurgery() {
 
       {/* ─── How are All on 4 Dental Implants placed? ─── */}
       <div style={blockStyle}>
-        <h2 style={h2Style}>How are All on 4 Dental Implants placed?</h2>
+        <h2 className="sc-surgery-h2" style={h2Style}>How are All on 4 Dental Implants placed?</h2>
         <ImageSlider
           images={placementRows.flatMap((row) => row.images)}
           style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))", rowGap: "2rem" }}
@@ -278,7 +290,7 @@ export default function AllOn4ImplantSurgery() {
 
       {/* ─── The Dental Implants used at Smile Concepts ─── */}
       <div style={blockStyle}>
-        <h2 style={h2Style}>The Dental Implants used at Smile Concepts</h2>
+        <h2 className="sc-surgery-h2" style={h2Style}>The Dental Implants used at Smile Concepts</h2>
         <p style={pStyle}>
           We are not a single-brand clinic. Smile Concepts works with several of the world&apos;s leading implant systems, including Neoss, DIO, Nobel Biocare and Straumann, among others, and our dentists have trained on and worked with most major systems.
         </p>
@@ -295,7 +307,7 @@ export default function AllOn4ImplantSurgery() {
 
       {/* ─── Our All on 4 Technology ─── */}
       <div style={blockStyle}>
-        <h2 style={h2Style}>Our All on 4 Technology</h2>
+        <h2 className="sc-surgery-h2" style={h2Style}>Our All on 4 Technology</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {technology.map((item) => (
             <div key={item.title} style={{ display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
@@ -325,7 +337,7 @@ export default function AllOn4ImplantSurgery() {
 
       {/* ─── All on 4 or All on X with Bone Loss? ─── */}
       <div style={blockStyle}>
-        <h2 style={h2Style}>All on 4 or All on X with Bone Loss?</h2>
+        <h2 className="sc-surgery-h2" style={h2Style}>All on 4 or All on X with Bone Loss?</h2>
         <p style={pStyle}>
           Bone loss after tooth loss is common and does not automatically rule out the All on 4 dental implant treatment concept.
         </p>

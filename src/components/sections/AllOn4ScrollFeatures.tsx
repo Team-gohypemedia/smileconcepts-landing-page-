@@ -673,6 +673,7 @@ export default function AllOn4ScrollFeatures() {
               style={{
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
                 marginBottom: "8px",
               }}
@@ -705,6 +706,7 @@ export default function AllOn4ScrollFeatures() {
                 fontWeight: 700,
                 color: "#1C1C1E",
                 lineHeight: 1.35,
+                textAlign: "center",
                 margin: "0 0 10px 0",
               }}
             >
@@ -720,6 +722,7 @@ export default function AllOn4ScrollFeatures() {
                   fontSize: "0.92rem",
                   lineHeight: 1.6,
                   color: "#4A4A50",
+                  textAlign: "center",
                   margin: "0 0 12px 0",
                 }}
               >
@@ -734,6 +737,7 @@ export default function AllOn4ScrollFeatures() {
                   fontSize: "0.95rem",
                   fontWeight: 700,
                   color: "#1C1C1E",
+                  textAlign: "center",
                   margin: "4px 0 8px 0",
                 }}
               >
@@ -797,6 +801,7 @@ export default function AllOn4ScrollFeatures() {
                   fontSize: "0.86rem",
                   lineHeight: 1.55,
                   color: "#6A6A70",
+                  textAlign: "center",
                   margin: "0 0 24px 0",
                 }}
               >
@@ -805,7 +810,7 @@ export default function AllOn4ScrollFeatures() {
             )}
 
             {/* CTA Button matching brand */}
-            <div style={{ marginBottom: "26px" }}>
+            <div style={{ marginBottom: "26px", display: "flex", justifyContent: "center" }}>
               <a
                 href={currentMobileSlide.ctaHref}
                 style={{
@@ -889,6 +894,8 @@ export default function AllOn4ScrollFeatures() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            paddingTop: "80px",
+            boxSizing: "border-box",
             overflow: "hidden",
             position: "relative",
             backgroundColor: "#FFFFFF",
@@ -1122,7 +1129,7 @@ export default function AllOn4ScrollFeatures() {
               style={{
                 flex: "1 1 48%",
                 maxWidth: "530px",
-                minHeight: "520px",
+                minHeight: "540px",
                 position: "relative",
                 display: "flex",
                 alignItems: "center",
@@ -1149,11 +1156,11 @@ export default function AllOn4ScrollFeatures() {
                   <h3
                     style={{
                       fontFamily: "var(--font-prata), Georgia, serif",
-                      fontSize: "clamp(1.4rem, 2.8vw, 2.1rem)",
+                      fontSize: "clamp(1.25rem, 2.3vw, 1.85rem)",
                       color: "#1C1C1E",
                       fontWeight: 400,
                       lineHeight: 1.25,
-                      margin: "0 0 8px 0",
+                      margin: "0 0 6px 0",
                     }}
                   >
                     {slide.heading}
@@ -1167,7 +1174,7 @@ export default function AllOn4ScrollFeatures() {
                       color: "#E86337",
                       fontWeight: 700,
                       lineHeight: 1.42,
-                      margin: "0 0 10px 0",
+                      margin: "0 0 8px 0",
                     }}
                   >
                     {slide.hook}
@@ -1210,8 +1217,8 @@ export default function AllOn4ScrollFeatures() {
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      gap: "8px",
-                      marginBottom: slide.footnote ? "12px" : "22px",
+                      gap: "6px",
+                      marginBottom: slide.footnote ? "10px" : "18px",
                       width: "100%",
                     }}
                   >
@@ -1241,11 +1248,11 @@ export default function AllOn4ScrollFeatures() {
                         </div>
                         <span
                           style={{
-                            fontSize: "0.88rem",
+                            fontSize: "0.84rem",
                             color: "#2C2C2E",
                             fontWeight: 500,
                             fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.42,
+                            lineHeight: 1.38,
                           }}
                         >
                           {renderChecklistItem(item)}
@@ -1261,7 +1268,7 @@ export default function AllOn4ScrollFeatures() {
                         fontSize: "0.86rem",
                         lineHeight: 1.55,
                         color: "#6A6A70",
-                        margin: "0 0 20px 0",
+                        margin: "0 0 14px 0",
                       }}
                     >
                       {slide.footnote}
