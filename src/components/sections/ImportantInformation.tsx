@@ -237,7 +237,7 @@ export default function ImportantInformation() {
           .sc-refs-toggle {
             display: flex !important;
           }
-          .sc-refs-panel h2 {
+          .sc-refs-panel .sc-refs-title {
             font-size: 1.35rem !important;
           }
           .sc-ref-card:hover {
@@ -413,7 +413,7 @@ export default function ImportantInformation() {
             <span style={eyebrowStyle}>
               References
             </span>
-            <h2 style={h2Style}>Clinical Evidence and Patient Information Sources</h2>
+            <p className="sc-refs-title" style={h2Style}>Clinical Evidence and Patient Information Sources</p>
           </div>
 
           <ol className="sc-refs-grid" style={{ listStyle: "none", margin: 0, padding: 0 }}>

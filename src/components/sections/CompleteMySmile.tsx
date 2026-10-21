@@ -54,7 +54,7 @@ export default function CompleteMySmile() {
             padding: 0.95rem 0.85rem !important;
             border-radius: 14px !important;
           }
-          .sc-cms-card h3 {
+          .sc-cms-card-title {
             font-size: 0.98rem !important;
             margin-bottom: 0.3rem !important;
           }
@@ -70,7 +70,7 @@ export default function CompleteMySmile() {
         }
       `}</style>
       <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
-        <h2
+        <h3
           className="sc-cms-title"
           style={{
             fontFamily: "var(--font-prata), Georgia, serif",
@@ -83,7 +83,7 @@ export default function CompleteMySmile() {
           }}
         >
           Complete My Smile
-        </h2>
+        </h3>
 
         <div
           className="sc-cms-grid"
@@ -106,7 +106,8 @@ export default function CompleteMySmile() {
               }}
             >
               <div>
-                <h3
+                <p
+                  className="sc-cms-card-title"
                   style={{
                     fontFamily: "var(--font-prata), Georgia, serif",
                     fontSize: "1.12rem",
@@ -117,7 +118,7 @@ export default function CompleteMySmile() {
                   }}
                 >
                   {f.title}
-                </h3>
+                </p>
                 <p
                   style={{
                     fontFamily: "var(--font-assistant), sans-serif",

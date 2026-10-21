@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Plus,
   Minus,
@@ -19,7 +19,12 @@ import {
   HeartHandshake,
 } from "lucide-react";
 
-const COST_TOPIC_COUNT = 6;
+const COST_TOPIC_COUNT = 5;
+
+// Interest-free payment plans are capped at this amount; anything above it is paid outside the plan
+const FINANCE_LIMIT = 30000;
+
+const formatAud = (amount: number) => `$${amount.toLocaleString("en-AU")}`;
 
 export default function AllOn4Cost() {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -65,7 +70,9 @@ export default function AllOn4Cost() {
   const totalPerArch = phase1PerArch + phase2PerArch;
   const archMultiplier = selectedArch === "both" ? 2 : 1;
   const grandTotal = totalPerArch * archMultiplier;
-  const weeklyEstimate = Math.round(grandTotal / (financeMonths * 4.33));
+  const financedAmount = Math.min(grandTotal, FINANCE_LIMIT);
+  const balanceOutsidePlan = grandTotal - financedAmount;
+  const weeklyEstimate = Math.round(financedAmount / (financeMonths * 4.33));
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
@@ -93,6 +100,7 @@ export default function AllOn4Cost() {
   const costTopics = [
     {
       id: "factors",
+      headingTag: "p" as const,
       tabLabel: "Cost Factors",
       badge: "Financial Transparency",
       title: "What Affects the Cost & What It Means for You",
@@ -147,9 +155,10 @@ export default function AllOn4Cost() {
     },
     {
       id: "materials",
+      headingTag: "h2" as const,
       tabLabel: "Acrylic or Zirconia",
       badge: "Choosing Your Final Teeth",
-      title: "Acrylic or Zirconia: Choosing Your Final Teeth",
+      title: "Acrylic or Zirconia Teeth: Choosing Your Final Teeth",
       src: "/assets/allon4/temporary-final-teeth-bridge.jpg",
       alt: "Acrylic vs Zirconia Final Teeth Bridge",
       caption: "Phase two permanent teeth: engineered for long-term function & beauty",
@@ -186,34 +195,11 @@ export default function AllOn4Cost() {
       ),
     },
     {
-      id: "additional",
-      tabLabel: "Additional Costs",
-      badge: "Clinical Considerations",
-      title: "Are There Any Additional Costs?",
-      src: "/assets/allon4/All-on-6-1.2.jpg",
-      alt: "3D Surgical planning and additional procedures",
-      caption: "Precision CBCT scanning and tailored patient care",
-      objectPosition: "center 48%",
-      content: (
-        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-          <p style={{ marginTop: "0.5rem" }}>
-            Sedation and bone grafting fees are not included in the two phases. They are quoted separately and only if you need them:
-          </p>
-          <ul style={{ paddingLeft: "1.25rem", margin: "0.5rem 0 1rem" }}>
-            <li>IV sedation or sleep dentistry</li>
-            <li>Bone grafting or related preparatory procedures</li>
-          </ul>
-          <p style={{ margin: 0 }}>
-            We will discuss both openly at your consultation before anything is decided, and confirm everything in a written, itemised quote.
-          </p>
-        </div>
-      ),
-    },
-    {
       id: "insurance",
+      headingTag: "h2" as const,
       tabLabel: "Insurance & Medicare",
       badge: "Health Fund Benefits",
-      title: "Does Private Insurance or Medicare Cover Any of the Costs of All on 4?",
+      title: "Does Private Insurance or Medicare cover any of the costs of All on 4?",
       src: "/assets/allon4/cost-factors-consult.png",
       alt: "Private health insurance and Medicare for All on 4",
       caption: "Itemised quotes for your health fund",
@@ -231,9 +217,10 @@ export default function AllOn4Cost() {
     },
     {
       id: "super",
+      headingTag: "h2" as const,
       tabLabel: "Superannuation",
       badge: "Early Super Release",
-      title: "Can I Use My Superannuation to Pay?",
+      title: "Can I Use My Superannuation to Pay for All on 4 Treatment?",
       src: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
       alt: "Couple enjoying meal with dental implants",
       caption: "Compassionate early release of Superannuation through SuperCare",
@@ -248,7 +235,16 @@ export default function AllOn4Cost() {
           </p>
           <div style={{ backgroundColor: "#F7F4EE", padding: "0.85rem 1.15rem", borderRadius: "10px", borderLeft: "4px solid #E86337", margin: "0.85rem 0 0" }}>
             <p style={{ margin: 0, fontWeight: 600, color: "#1C1C1E" }}>
-              We work with SuperCare to help patients through this process. Ask us about it at your consultation.
+              We work with SuperCare to help patients through this process. Ask us about it at your consultation or{" "}
+              <a
+                href="https://www.smileconcepts.com.au/about-us/supercare.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#E86337", textDecoration: "underline" }}
+              >
+                learn more about SuperCare here
+              </a>
+              .
             </p>
           </div>
         </div>
@@ -256,9 +252,10 @@ export default function AllOn4Cost() {
     },
     {
       id: "plans",
+      headingTag: "h2" as const,
       tabLabel: "Payment Plans",
       badge: "Flexible Financing",
-      title: "Do We Offer Payment Plans?",
+      title: "Do We Offer Payment Plans for All on 4 Treatment?",
       src: "/assets/services/payment-plans.jpg",
       alt: "Payment plan options for dental implants",
       caption: "Interest-free payment plans up to 48 months available",
@@ -500,10 +497,11 @@ export default function AllOn4Cost() {
 
         {/* ─── TWO PHASE CARDS (Exact Live Site Content) ─── */}
         <div style={{ maxWidth: "980px", margin: "0 auto" }}>
-          <h3
+          <h2
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
               fontSize: "clamp(1.2rem, 3.8vw, 1.5rem)",
+              fontWeight: 400,
               color: "#1C1C1E",
               textAlign: "center",
               marginBottom: "0.5rem",
@@ -511,7 +509,7 @@ export default function AllOn4Cost() {
             }}
           >
             Your Investment: Transparent Two Phase Pricing
-          </h3>
+          </h2>
           <p
             className="sc-cost-intro-text"
             style={{
@@ -524,7 +522,7 @@ export default function AllOn4Cost() {
               lineHeight: 1.6,
             }}
           >
-            Your All on 4 or All on X treatment is quoted in two clear phases, the surgical phase and the final bridge phase, so nothing is hidden. Sedation and bone grafting fees are not included in the phases below. They are quoted separately and only if you need them, and we will discuss both openly at your consultation before anything is decided.
+            Your All on 4 or All on X treatment is quoted in two clear phases, the surgical phase and the final bridge phase, so nothing is hidden.
           </p>
 
           <div
@@ -701,6 +699,21 @@ export default function AllOn4Cost() {
               Phase 2 ($10k-$14k)
             </button>
           </div>
+
+          <p
+            className="sc-cost-intro-text"
+            style={{
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "0.95rem",
+              color: "#555",
+              textAlign: "center",
+              maxWidth: "800px",
+              margin: "0 auto",
+              lineHeight: 1.6,
+            }}
+          >
+            Sedation and bone grafting fees are not included in the phases above. They are quoted separately and only if you need them, and we will discuss both openly at your consultation before anything is decided.
+          </p>
         </div>
 
         {/* ─── INTERACTIVE COST & FINANCE CALCULATOR ─── */}
@@ -733,7 +746,7 @@ export default function AllOn4Cost() {
               >
                 <Calculator size={19} color="#E86337" />
               </div>
-              <h3
+              <p
                 style={{
                   fontFamily: "var(--font-prata), Georgia, serif",
                   fontSize: "clamp(1.2rem, 3.2vw, 1.55rem)",
@@ -744,7 +757,7 @@ export default function AllOn4Cost() {
                 }}
               >
                 Interactive Investment &amp; Finance Calculator
-              </h3>
+              </p>
               <span
                 style={{
                   fontFamily: "var(--font-assistant)",
@@ -1001,7 +1014,7 @@ export default function AllOn4Cost() {
                     </span>
                   </div>
                   <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.74rem", color: "#777", display: "block", marginTop: "0.25rem", lineHeight: 1.4 }}>
-                    *Indicative estimate only. Interest-free plans up to 48 months and up to $30,000, based on eligibility; approval and terms apply.
+                    *Indicative estimate only, based on financing up to the {formatAud(FINANCE_LIMIT)} plan limit. Interest-free plans up to 48 months and up to $30,000, based on eligibility; approval and terms apply.
                   </span>
                 </div>
 
@@ -1032,6 +1045,16 @@ export default function AllOn4Cost() {
                       ${grandTotal.toLocaleString()}
                     </span>
                   </div>
+                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                    <span>Interest-free plan (max {formatAud(FINANCE_LIMIT)}):</span>
+                    <strong style={{ color: "#1C1C1E" }}>{formatAud(financedAmount)}</strong>
+                  </div>
+                  {balanceOutsidePlan > 0 && (
+                    <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                      <span>Balance payable outside the plan:</span>
+                      <strong style={{ color: "#1C1C1E" }}>{formatAud(balanceOutsidePlan)}</strong>
+                    </div>
+                  )}
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.35rem" }}>
@@ -1104,14 +1127,17 @@ export default function AllOn4Cost() {
           <div className="sc-cost-showcase-grid">
             {/* Left: Detailed Verbatim Content Panel (Uniform Height) */}
             <div className="sc-cost-showcase-panel">
-              <AnimatePresence mode="wait">
+              {costTopics.map((topic, topicIdx) => {
+                const isActive = topicIdx === activeCostTopic;
+                const TitleTag = topic.headingTag;
+                return (
                 <motion.div
-                  key={activeCostTopic}
-                  initial={{ y: 15, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -15, opacity: 0 }}
+                  key={topic.id}
+                  hidden={!isActive}
+                  initial={false}
+                  animate={isActive ? { y: 0, opacity: 1 } : { y: 15, opacity: 0 }}
                   transition={{ duration: 0.25, ease: "easeInOut" }}
-                  style={{ display: "flex", flexDirection: "column", flex: 1 }}
+                  style={{ display: isActive ? "flex" : "none", flexDirection: "column", flex: 1 }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
                     <span
@@ -1124,27 +1150,29 @@ export default function AllOn4Cost() {
                         color: "#E86337",
                       }}
                     >
-                      {costTopics[activeCostTopic].badge}
+                      {topic.badge}
                     </span>
                   </div>
 
-                  <h3
+                  <TitleTag
                     style={{
                       fontFamily: "var(--font-prata)",
                       fontSize: "clamp(1.25rem, 2.2vw, 1.7rem)",
+                      fontWeight: 400,
                       color: "#1C1C1E",
                       margin: "0 0 0.85rem",
                       lineHeight: 1.25,
                     }}
                   >
-                    {costTopics[activeCostTopic].title}
-                  </h3>
+                    {topic.title}
+                  </TitleTag>
 
                   <div style={{ flex: 1 }}>
-                    {costTopics[activeCostTopic].content}
+                    {topic.content}
                   </div>
                 </motion.div>
-              </AnimatePresence>
+                );
+              })}
 
               {/* Navigation & Actions Footer */}
               <div

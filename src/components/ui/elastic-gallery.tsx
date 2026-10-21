@@ -273,7 +273,7 @@ export function ElasticGallery({
                   </div>
 
                   {/* Title */}
-                  <h3
+                  <p
                     style={{
                       fontFamily: "var(--font-assistant), sans-serif",
                       fontSize: isMobile ? "1.15rem" : "clamp(1.5rem, 2.4vw, 2.4rem)",
@@ -287,7 +287,7 @@ export function ElasticGallery({
                     }}
                   >
                     {item.title}
-                  </h3>
+                  </p>
 
                   {/* Subtitle / Description (Clarté Reference Style) */}
                   {item.desc && (

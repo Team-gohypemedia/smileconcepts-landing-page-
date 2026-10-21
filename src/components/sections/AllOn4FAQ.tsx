@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Search, Phone, Calendar } from "lucide-react";
-import { BlurredStagger } from "@/components/ui/text-reveal-faqs";
 
 interface FAQItem {
   id: string;
@@ -176,12 +174,8 @@ export default function AllOn4FAQ() {
     });
   }, [activeCategory, searchQuery]);
 
-  const displayedFaqs = useMemo(() => {
-    if (searchQuery.trim().length > 0 || showAll) {
-      return filteredFaqs;
-    }
-    return filteredFaqs.slice(0, INITIAL_COUNT);
-  }, [filteredFaqs, searchQuery, showAll]);
+  // Collapsed questions stay in the HTML (hidden) so every question and answer is crawlable
+  const isCollapsedByLimit = (idx: number) => searchQuery.trim().length === 0 && !showAll && idx >= INITIAL_COUNT;
 
   const toggleItem = (id: string) => {
     setOpenIds((prev) => {
@@ -357,11 +351,13 @@ export default function AllOn4FAQ() {
               <p>No questions matched your search query. Please try different keywords.</p>
             </div>
           ) : (
-            displayedFaqs.map((faq) => {
+            filteredFaqs.map((faq, idx) => {
               const isOpen = openIds.has(faq.id);
+              const answerId = `${faq.id}-answer`;
               return (
                 <div
                   key={faq.id}
+                  hidden={isCollapsedByLimit(idx)}
                   style={{
                     backgroundColor: "#FAF9F6",
                     borderRadius: "12px",
@@ -370,24 +366,23 @@ export default function AllOn4FAQ() {
                     transition: "border-color 0.2s ease",
                   }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => toggleItem(faq.id)}
-                    style={{
-                      width: "100%",
-                      padding: "1.1rem 1.35rem",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "1rem",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span
+                  <h3 style={{ margin: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() => toggleItem(faq.id)}
+                      aria-expanded={isOpen}
+                      aria-controls={answerId}
                       style={{
+                        width: "100%",
+                        padding: "1.1rem 1.35rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "1rem",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        textAlign: "left",
                         fontFamily: "var(--font-prata)",
                         fontSize: "clamp(0.95rem, 2.8vw, 1.05rem)",
                         color: "#1C1C1E",
@@ -395,52 +390,54 @@ export default function AllOn4FAQ() {
                         lineHeight: 1.35,
                       }}
                     >
-                      {faq.question}
-                    </span>
+                      <span>{faq.question}</span>
 
-                    <span
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "50%",
-                        backgroundColor: isOpen ? "#E86337" : "#F3F0EA",
-                        color: isOpen ? "#ffffff" : "#1C1C1E",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                      }}
-                    >
-                      {isOpen ? <Minus size={15} /> : <Plus size={15} />}
-                    </span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22 }}
-                        style={{ overflow: "hidden" }}
+                      <span
+                        aria-hidden
+                        style={{
+                          width: "28px",
+                          height: "28px",
+                          borderRadius: "50%",
+                          backgroundColor: isOpen ? "#E86337" : "#F3F0EA",
+                          color: isOpen ? "#ffffff" : "#1C1C1E",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
                       >
-                        <div
-                          style={{
-                            padding: "0 1.35rem 1.25rem",
-                            borderTop: "1px solid #ECE7DE",
-                            fontFamily: "var(--font-assistant)",
-                            fontSize: "0.92rem",
-                            lineHeight: 1.65,
-                            color: "#505055",
-                          }}
-                        >
-                          <div style={{ margin: "0.85rem 0 0" }}>
-                            <BlurredStagger text={faq.answer} />
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {isOpen ? <Minus size={15} /> : <Plus size={15} />}
+                      </span>
+                    </button>
+                  </h3>
+
+                  {/* Answer is always rendered as plain text; the grid row animates it open */}
+                  <div
+                    id={answerId}
+                    role="region"
+                    inert={!isOpen}
+                    style={{
+                      display: "grid",
+                      gridTemplateRows: isOpen ? "1fr" : "0fr",
+                      transition: "grid-template-rows 0.22s ease",
+                    }}
+                  >
+                    <div style={{ overflow: "hidden" }}>
+                      <p
+                        style={{
+                          margin: "0 1.35rem 1.25rem",
+                          paddingTop: "0.85rem",
+                          borderTop: "1px solid #ECE7DE",
+                          fontFamily: "var(--font-assistant)",
+                          fontSize: "0.92rem",
+                          lineHeight: 1.65,
+                          color: "#505055",
+                        }}
+                      >
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               );
             })
@@ -501,9 +498,9 @@ export default function AllOn4FAQ() {
           }}
         >
           <div>
-            <h4 style={{ fontFamily: "var(--font-prata)", fontSize: "1.15rem", color: "#1C1C1E", margin: "0 0 0.2rem" }}>
+            <p style={{ fontFamily: "var(--font-prata)", fontSize: "1.15rem", color: "#1C1C1E", margin: "0 0 0.2rem" }}>
               Book an All on 4 Consultation in Sydney
-            </h4>
+            </p>
             <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", margin: 0 }}>
               Suite 403, Level 4/307 Pitt St, Sydney NSW 2000
             </p>

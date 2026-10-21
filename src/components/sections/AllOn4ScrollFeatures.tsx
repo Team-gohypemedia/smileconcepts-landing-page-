@@ -4,17 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  Check,
-  ArrowRight,
-  ShieldCheck,
-  Clock,
-  Layers,
-  Sparkles,
-  Activity,
-  Award,
-  HeartHandshake,
-} from "lucide-react";
+import { Check, ArrowRight, ShieldCheck, Clock, Layers, Sparkles, Award } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,7 +28,8 @@ export interface FeatureSlide {
   category: string;
   categoryIcon: React.ReactNode;
   heading: string;
-  hook: string;
+  // Doc tags these titles as H2, except "vs Individual Implants" which sits under Same-Day Teeth
+  headingLevel: 2 | 3;
   description: string | string[];
   checklistTitle?: string;
   checklist: string[];
@@ -48,16 +39,6 @@ export interface FeatureSlide {
   imageSrc: string;
   imageAlt: string;
   imagePosition: string;
-  floatingTop: {
-    icon: React.ReactNode;
-    title: string;
-    subtitle: string;
-  };
-  floatingBottom: {
-    icon: React.ReactNode;
-    title: string;
-    subtitle: string;
-  };
 }
 
 const slidesData: FeatureSlide[] = [
@@ -67,7 +48,7 @@ const slidesData: FeatureSlide[] = [
     category: "Clinical Suitability",
     categoryIcon: <ShieldCheck size={16} />,
     heading: "Who is suitable for All on 4 or All on X Implants?",
-    hook: "Suitability is always confirmed with a clinical assessment and a 3D CBCT scan.",
+    headingLevel: 2,
     description:
       "Suitability for All on 4 at Smile Concepts is always confirmed with a clinical assessment and a 3D CBCT scan at our Sydney CBD practice. As a starting point, it may be worth exploring if any of the following sounds familiar:",
     checklist: [
@@ -85,16 +66,6 @@ const slidesData: FeatureSlide[] = [
     imageSrc: "/assets/allon4/candidate-smile.jpg",
     imageAlt: "Patient smile assessment for All on 4 suitability at Smile Concepts Sydney",
     imagePosition: "center 22%",
-    floatingTop: {
-      icon: <ShieldCheck size={17} color="#16A34A" />,
-      title: "3D CBCT Bone Assessment",
-      subtitle: "At our Sydney CBD practice",
-    },
-    floatingBottom: {
-      icon: <HeartHandshake size={17} color="#E86337" />,
-      title: "Honest Clinical Advice",
-      subtitle: "Alternatives explained if it's not the right fit",
-    },
   },
 
   // ─── SLIDE 2: WHY CHOOSE ALL ON FOUR AT SMILE CONCEPTS ───
@@ -103,7 +74,7 @@ const slidesData: FeatureSlide[] = [
     category: "Why Smile Concepts",
     categoryIcon: <Award size={16} />,
     heading: "Why Choose All on Four Dental Implants at Smile Concepts in Sydney?",
-    hook: "Restoring everyday comfort and function.",
+    headingLevel: 2,
     description:
       "The all on four treatment concept is all about restoring everyday comfort and function. It's a smarter, simpler way to get a full, beautiful smile and here's why so many people at Smile Concepts in Sydney are choosing it.",
     checklist: [
@@ -119,16 +90,6 @@ const slidesData: FeatureSlide[] = [
     imageSrc: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
     imageAlt: "Couple enjoying everyday comfort and function with fixed implant-supported teeth",
     imagePosition: "center 18%",
-    floatingTop: {
-      icon: <Award size={17} color="#E86337" />,
-      title: "25+ Years' Experience",
-      subtitle: "Dr Manish Shah & Dr Kinnar Shah",
-    },
-    floatingBottom: {
-      icon: <HeartHandshake size={17} color="#16A34A" />,
-      title: "Fixed, Stable Teeth",
-      subtitle: "No Plates, No Adhesives, No Slipping",
-    },
   },
 
   // ─── SLIDE 3: SURGERY & SAME-DAY TEETH ───
@@ -137,8 +98,8 @@ const slidesData: FeatureSlide[] = [
     category: "Same-Day Teeth",
     categoryIcon: <Clock size={16} />,
     heading: "All on 4 Surgery and Same-Day Teeth",
-    hook: "You can walk out with teeth the same day as surgery, as long as you are a suitable candidate.",
-    description: [],
+    headingLevel: 2,
+    description: "You can walk out with teeth the same day as surgery, as long as you are a suitable candidate.",
     checklist: [
       "Quick Results: The best part. Most people don't need bone grafting. That means you can walk out with a stunning smile the same day, or shortly after.",
       "No Bone Grafting: Nobody loves extra surgery. Most patients skip it entirely, which saves you time, money, and a whole lot of discomfort.",
@@ -148,16 +109,6 @@ const slidesData: FeatureSlide[] = [
     imageSrc: "/assets/allon4/sunset-all-on-4.jpg",
     imageAlt: "Patient smiling after All on 4 same-day teeth at Smile Concepts Sydney",
     imagePosition: "center 25%",
-    floatingTop: {
-      icon: <Clock size={17} color="#E86337" />,
-      title: "Teeth in a Day",
-      subtitle: "For suitable candidates",
-    },
-    floatingBottom: {
-      icon: <Activity size={17} color="#16A34A" />,
-      title: "Quick Results",
-      subtitle: "Same day, or shortly after",
-    },
   },
 
   // ─── SLIDE 4: VS INDIVIDUAL IMPLANTS & BOTH JAWS ───
@@ -166,7 +117,7 @@ const slidesData: FeatureSlide[] = [
     category: "Treatment Options",
     categoryIcon: <Layers size={16} />,
     heading: "All on 4 Surgery vs Individual Implants",
-    hook: "All on 4 supports an entire arch with one fixed bridge.",
+    headingLevel: 3,
     description: [
       "Individual implants usually replace one or several teeth with crowns or smaller bridges. All on 4 supports an entire arch with one fixed bridge.",
       "If you only have a few missing teeth and your remaining teeth are healthy, individual implants or another tooth-preserving option may be more appropriate.",
@@ -183,16 +134,6 @@ const slidesData: FeatureSlide[] = [
     imageSrc: "/assets/services/dental-implants.jpg",
     imageAlt: "Single dental implant model compared with full arch All on 4 treatment",
     imagePosition: "center center",
-    floatingTop: {
-      icon: <Layers size={17} color="#E86337" />,
-      title: "Single Tooth or Full Arch",
-      subtitle: "Planned around your remaining teeth",
-    },
-    floatingBottom: {
-      icon: <ShieldCheck size={17} color="#16A34A" />,
-      title: "Upper, Lower or Both",
-      subtitle: "Pricing is quoted per arch",
-    },
   },
 
   // ─── SLIDE 5: TEMPORARY & FINAL TEETH ───
@@ -201,8 +142,9 @@ const slidesData: FeatureSlide[] = [
     category: "Prosthetics (Teeth)",
     categoryIcon: <Sparkles size={16} />,
     heading: "Temporary Teeth and Final Teeth: What To Expect",
-    hook: "Will you be without teeth during treatment? For most suitable patients, no.",
+    headingLevel: 2,
     description: [
+      "Will you be without teeth during treatment? For most suitable patients, no.",
       "A fixed temporary bridge may be fitted on the day of surgery or shortly afterwards if implant stability and other clinical factors allow. If immediate loading is unsuitable, your dentist will explain the alternative plan. Temporary teeth require a modified diet during healing. [1]",
       "Once healing is complete, the final bridge is designed and fitted. We walk you through your material options at consultation, including the difference between acrylic and zirconia, so you can make a decision that actually makes sense for your budget and your priorities rather than just accepting whatever is standard.",
       "It is worth understanding the difference between the two stages when you are comparing costs, because the materials and work involved are quite different.",
@@ -213,16 +155,6 @@ const slidesData: FeatureSlide[] = [
     imageSrc: "/assets/allon4/temporary-final-teeth-bridge.jpg",
     imageAlt: "All on 4 temporary and final teeth bridge at Smile Concepts",
     imagePosition: "center 48%",
-    floatingTop: {
-      icon: <Clock size={17} color="#E86337" />,
-      title: "Fixed Temporary Teeth",
-      subtitle: "Same day or shortly after, where suitable",
-    },
-    floatingBottom: {
-      icon: <Sparkles size={17} color="#16A34A" />,
-      title: "Acrylic or Zirconia",
-      subtitle: "Your choice of final fixed teeth",
-    },
   },
 ];
 
@@ -232,9 +164,7 @@ export default function AllOn4ScrollFeatures() {
 
   // References for animation targets
   const visualWrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const topBadgeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const photoFrameRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const btmBadgeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textContentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Mobile carousel state
@@ -256,22 +186,16 @@ export default function AllOn4ScrollFeatures() {
       // Set initial positions
       slidesData.forEach((_, idx) => {
         const wrapper = visualWrapperRefs.current[idx];
-        const topBadge = topBadgeRefs.current[idx];
         const photo = photoFrameRefs.current[idx];
-        const btmBadge = btmBadgeRefs.current[idx];
         const textEl = textContentRefs.current[idx];
 
         if (idx === 0) {
           if (wrapper) gsap.set(wrapper, { opacity: 1, zIndex: 10 });
-          if (topBadge) gsap.set(topBadge, { opacity: 1, y: 0 });
           if (photo) gsap.set(photo, { opacity: 1, y: 0, scale: 1 });
-          if (btmBadge) gsap.set(btmBadge, { opacity: 1, y: 0 });
           if (textEl) gsap.set(textEl, { opacity: 1, y: 0, zIndex: 10, pointerEvents: "auto" });
         } else {
           if (wrapper) gsap.set(wrapper, { opacity: 0, zIndex: 1 });
-          if (topBadge) gsap.set(topBadge, { opacity: 0, y: 35 });
           if (photo) gsap.set(photo, { opacity: 0, y: 40, scale: 0.95 });
-          if (btmBadge) gsap.set(btmBadge, { opacity: 0, y: 45 });
           if (textEl) gsap.set(textEl, { opacity: 0, y: 30, zIndex: 1, pointerEvents: "none" });
         }
       });
@@ -294,46 +218,16 @@ export default function AllOn4ScrollFeatures() {
         const prevIdx = i - 1;
 
         const outWrapper = visualWrapperRefs.current[prevIdx];
-        const outTop = topBadgeRefs.current[prevIdx];
         const outPhoto = photoFrameRefs.current[prevIdx];
-        const outBtm = btmBadgeRefs.current[prevIdx];
         const outText = textContentRefs.current[prevIdx];
 
         const inWrapper = visualWrapperRefs.current[i];
-        const inTop = topBadgeRefs.current[i];
         const inPhoto = photoFrameRefs.current[i];
-        const inBtm = btmBadgeRefs.current[i];
         const inText = textContentRefs.current[i];
 
         const stepTime = (i - 1) * 2;
 
         // 1. OUTGOING SLIDE
-        if (outTop) {
-          tl.to(
-            outTop,
-            {
-              y: -30,
-              opacity: 0,
-              duration: 0.45,
-              ease: "power2.inOut",
-            },
-            stepTime
-          );
-        }
-
-        if (outBtm) {
-          tl.to(
-            outBtm,
-            {
-              y: 30,
-              opacity: 0,
-              duration: 0.45,
-              ease: "power2.inOut",
-            },
-            stepTime + 0.05
-          );
-        }
-
         if (outPhoto) {
           tl.to(
             outPhoto,
@@ -402,34 +296,6 @@ export default function AllOn4ScrollFeatures() {
               ease: "power2.out",
             },
             stepTime + 0.45
-          );
-        }
-
-        if (inTop) {
-          tl.fromTo(
-            inTop,
-            { y: -30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.55,
-              ease: "power2.inOut",
-            },
-            stepTime + 0.5
-          );
-        }
-
-        if (inBtm) {
-          tl.fromTo(
-            inBtm,
-            { y: 40, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.54,
-              ease: "power2.inOut",
-            },
-            stepTime + 0.54
           );
         }
 
@@ -545,45 +411,6 @@ export default function AllOn4ScrollFeatures() {
               marginBottom: "28px",
             }}
           >
-            {/* Top Floating Badge */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: "14px",
-                padding: "8px 14px",
-                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
-                border: "1px solid #ECE7DE",
-                marginBottom: "12px",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    color: "#1C1C1E",
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {currentMobileSlide.floatingTop.title}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.7rem",
-                    color: "#7A756F",
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    lineHeight: 1.3,
-                    marginTop: "2px",
-                  }}
-                >
-                  {currentMobileSlide.floatingTop.subtitle}
-                </div>
-              </div>
-            </div>
-
             {/* Photo Preview inside Card */}
             <div
               style={{
@@ -623,47 +450,6 @@ export default function AllOn4ScrollFeatures() {
               />
             </div>
 
-            {/* Bottom Floating Badge */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                backgroundColor: "#FFFFFF",
-                borderRadius: "14px",
-                padding: "8px 14px",
-                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
-                border: "1px solid #ECE7DE",
-                marginTop: "12px",
-                alignSelf: "flex-end",
-                float: "right",
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    color: "#1C1C1E",
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {currentMobileSlide.floatingBottom.title}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.7rem",
-                    color: "#7A756F",
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    lineHeight: 1.3,
-                    marginTop: "2px",
-                  }}
-                >
-                  {currentMobileSlide.floatingBottom.subtitle}
-                </div>
-              </div>
-            </div>
-            <div style={{ clear: "both" }} />
           </div>
 
           {/* CONTENT SECTION BELOW CARD */}
@@ -698,8 +484,10 @@ export default function AllOn4ScrollFeatures() {
               </span>
             </div>
 
-            {/* Hook / Subhead */}
-            <h4
+            {/* Slide title (the desktop view carries the heading tags) */}
+            <p
+              role="heading"
+              aria-level={currentMobileSlide.headingLevel}
               style={{
                 fontFamily: "var(--font-assistant), sans-serif",
                 fontSize: "1.05rem",
@@ -710,8 +498,8 @@ export default function AllOn4ScrollFeatures() {
                 margin: "0 0 10px 0",
               }}
             >
-              {currentMobileSlide.hook}
-            </h4>
+              {currentMobileSlide.heading}
+            </p>
 
             {/* Description */}
             {toParagraphs(currentMobileSlide.description).map((para, pIdx) => (
@@ -731,7 +519,7 @@ export default function AllOn4ScrollFeatures() {
             ))}
 
             {currentMobileSlide.checklistTitle && (
-              <h5
+              <p
                 style={{
                   fontFamily: "var(--font-assistant), sans-serif",
                   fontSize: "0.95rem",
@@ -742,7 +530,7 @@ export default function AllOn4ScrollFeatures() {
                 }}
               >
                 {currentMobileSlide.checklistTitle}
-              </h5>
+              </p>
             )}
 
             {/* Checklist */}
@@ -930,7 +718,7 @@ export default function AllOn4ScrollFeatures() {
               zIndex: 10,
             }}
           >
-            {/* ─── LEFT COLUMN: ARCHITECTURAL GALLERY FRAME + CLEAN FLOATING BADGES ─── */}
+            {/* ─── LEFT COLUMN: ARCHITECTURAL GALLERY FRAME ─── */}
             <div
               className="sc-showcase-left"
               style={{
@@ -959,57 +747,7 @@ export default function AllOn4ScrollFeatures() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  {/* 1. TOP BADGE: Positioned cleanly ABOVE the frame with ZERO overlap */}
-                  <div
-                    ref={(el) => {
-                      topBadgeRefs.current[idx] = el;
-                    }}
-                    style={{
-                      alignSelf: "flex-start",
-                      marginBottom: "12px",
-                      willChange: "transform, opacity",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        backgroundColor: "#FFFFFF",
-                        borderRadius: "14px",
-                        padding: "8px 14px",
-                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
-                        border: "1px solid #ECE7DE",
-                      }}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "0.8rem",
-                            fontWeight: 700,
-                            color: "#1C1C1E",
-                            fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.25,
-                          }}
-                        >
-                          {slide.floatingTop.title}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "0.72rem",
-                            color: "#7A756F",
-                            fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.3,
-                            marginTop: "2px",
-                          }}
-                        >
-                          {slide.floatingTop.subtitle}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 2. PREMIUM GALLERY FRAME: Edge-to-edge fill */}
+                  {/* PREMIUM GALLERY FRAME: Edge-to-edge fill */}
                   <div
                     ref={(el) => {
                       photoFrameRefs.current[idx] = el;
@@ -1071,54 +809,6 @@ export default function AllOn4ScrollFeatures() {
                     </div>
                   </div>
 
-                  {/* 3. BOTTOM BADGE: Positioned cleanly BELOW the frame with ZERO overlap */}
-                  <div
-                    ref={(el) => {
-                      btmBadgeRefs.current[idx] = el;
-                    }}
-                    style={{
-                      alignSelf: "flex-end",
-                      marginTop: "12px",
-                      willChange: "transform, opacity",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        backgroundColor: "#FFFFFF",
-                        borderRadius: "14px",
-                        padding: "8px 16px",
-                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
-                        border: "1px solid #ECE7DE",
-                      }}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            fontSize: "0.8rem",
-                            fontWeight: 700,
-                            color: "#1C1C1E",
-                            fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.25,
-                          }}
-                        >
-                          {slide.floatingBottom.title}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "0.72rem",
-                            color: "#7A756F",
-                            fontFamily: "var(--font-assistant), sans-serif",
-                            lineHeight: 1.3,
-                            marginTop: "2px",
-                          }}
-                        >
-                          {slide.floatingBottom.subtitle}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               ))}
             </div>
@@ -1135,7 +825,9 @@ export default function AllOn4ScrollFeatures() {
                 alignItems: "center",
               }}
             >
-              {slidesData.map((slide, idx) => (
+              {slidesData.map((slide, idx) => {
+                const HeadingTag = slide.headingLevel === 2 ? "h2" : "h3";
+                return (
                 <div
                   key={slide.id}
                   ref={(el) => {
@@ -1153,7 +845,7 @@ export default function AllOn4ScrollFeatures() {
                   }}
                 >
                   {/* Main Heading in Signature Prata Serif */}
-                  <h3
+                  <HeadingTag
                     style={{
                       fontFamily: "var(--font-prata), Georgia, serif",
                       fontSize: "clamp(1.25rem, 2.3vw, 1.85rem)",
@@ -1164,21 +856,7 @@ export default function AllOn4ScrollFeatures() {
                     }}
                   >
                     {slide.heading}
-                  </h3>
-
-                  {/* Brand Orange Impact Hook */}
-                  <p
-                    style={{
-                      fontFamily: "var(--font-assistant), sans-serif",
-                      fontSize: "clamp(0.95rem, 1.6vw, 1.08rem)",
-                      color: "#E86337",
-                      fontWeight: 700,
-                      lineHeight: 1.42,
-                      margin: "0 0 8px 0",
-                    }}
-                  >
-                    {slide.hook}
-                  </p>
+                  </HeadingTag>
 
                   {/* Authoritative Clinical Description */}
                   {toParagraphs(slide.description).map((para, pIdx) => (
@@ -1312,7 +990,8 @@ export default function AllOn4ScrollFeatures() {
                     </a>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

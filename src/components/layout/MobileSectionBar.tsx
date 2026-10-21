@@ -7,15 +7,15 @@ import { scrollToSection } from "@/lib/scroll-to-section";
 // All section navigation tabs for mobile
 const ALL_SECTION_TABS = [
   { id: "overview", label: "Overview" },
-  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs X" },
   { id: "transformations", label: "Results" },
   { id: "testimonials", label: "Reviews" },
   { id: "general-info", label: "About" },
+  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs X" },
   { id: "implant-surgery", label: "Surgery" },
+  { id: "procedure", label: "Process" },
   { id: "dentures-comparison", label: "Vs Dentures" },
   { id: "cost", label: "Cost" },
   { id: "snap-on-dentures", label: "Snap-On" },
-  { id: "procedure", label: "Process" },
   { id: "our-practice", label: "Clinic" },
   { id: "team", label: "Doctors" },
   { id: "affiliations", label: "Accreditation" },

@@ -51,7 +51,7 @@ export default function Affiliations() {
         >
           Recognised Excellence
         </p>
-        <h3
+        <p
           style={{
             fontFamily: "var(--font-prata)",
             fontSize: "clamp(1.12rem, 3.2vw, 1.75rem)",
@@ -62,7 +62,7 @@ export default function Affiliations() {
           }}
         >
           Our Accreditations &amp; Professional Affiliations
-        </h3>
+        </p>
       </div>
 
       {/* Infinite logo track */}

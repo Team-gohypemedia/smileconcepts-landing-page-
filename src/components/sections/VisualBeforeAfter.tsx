@@ -7,7 +7,7 @@ import { CompareReveal } from "@/components/ui/compare-reveal";
 
 interface CaseItem {
   id: string;
-  category: "allon4" | "fullarch" | "zirconia" | "makeover";
+  category: "allon4" | "fullarch";
   categoryLabel: string;
   title: string;
   desc: string;
@@ -19,17 +19,6 @@ interface CaseItem {
 
 const cases: CaseItem[] = [
   {
-    id: "all-20",
-    category: "zirconia",
-    categoryLabel: "Zirconia Bridge",
-    title: "Multi-Unit Precision Crown & Smile Realignment",
-    desc: "Replacing aged restorations and misaligned teeth with ultra-durable zirconia crowns designed to last.",
-    location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/all-20.1.jpg",
-    after: "/assets/before-after/all-20.2.jpg",
-  },
-  {
     id: "all-2",
     category: "allon4",
     categoryLabel: "All-on-4 Implants",
@@ -39,28 +28,6 @@ const cases: CaseItem[] = [
     duration: "Timeframe: 1–3 Days",
     before: "/assets/before-after/All-2.1.jpg",
     after: "/assets/before-after/All-2.2.jpg",
-  },
-  {
-    id: "all-3",
-    category: "makeover",
-    categoryLabel: "Smile Makeover",
-    title: "Aesthetic Alignment & Veneer Transformation",
-    desc: "Correcting incisal edge wear, uneven margins, and tooth discoloration with handcrafted porcelain veneers.",
-    location: "Sydney CBD · Dr. Kinnar Shah",
-    duration: "Timeframe: 48 Hours",
-    before: "/assets/before-after/all-3.1.jpg",
-    after: "/assets/before-after/all-3.2.jpg",
-  },
-  {
-    id: "all-4",
-    category: "makeover",
-    categoryLabel: "Smile Makeover",
-    title: "Full Smile Harmony & Gumline Rejuvenation",
-    desc: "Restoring symmetry and youthfulness to worn dentition with custom precision cosmetic restorations.",
-    location: "Sydney CBD · Dr. Manish Shah",
-    duration: "Timeframe: 48 Hours",
-    before: "/assets/before-after/all-4.1.jpg",
-    after: "/assets/before-after/all-4.2.jpg",
   },
   {
     id: "all-5",
@@ -74,17 +41,6 @@ const cases: CaseItem[] = [
     after: "/assets/before-after/all-5.2.jpg",
   },
   {
-    id: "all-6",
-    category: "zirconia",
-    categoryLabel: "Zirconia Bridge",
-    title: "Aesthetic Zirconia Crown & Shade Renewal",
-    desc: "Replacing dark discolored dentition with premium translucent zirconia crowns for bright, lifelike translucency.",
-    location: "Sydney CBD · Dr. Kinnar Shah",
-    duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/all-6.1.jpg",
-    after: "/assets/before-after/all-6.2.jpg",
-  },
-  {
     id: "all-8",
     category: "allon4",
     categoryLabel: "All-on-4 Implants",
@@ -94,17 +50,6 @@ const cases: CaseItem[] = [
     duration: "Timeframe: 1–3 Days",
     before: "/assets/before-after/all-8.1.jpg",
     after: "/assets/before-after/all-8.2.jpg",
-  },
-  {
-    id: "all-10",
-    category: "zirconia",
-    categoryLabel: "Zirconia Bridge",
-    title: "Full Arch Restoration & Deep Stain Removal",
-    desc: "Transforming severe enamel discoloration and heavy wear with biocompatible, high-strength zirconia restorations.",
-    location: "Sydney CBD · Dr. Kinnar Shah",
-    duration: "Timeframe: Precision Delivery",
-    before: "/assets/before-after/all-10.1.jpg",
-    after: "/assets/before-after/all-10.2.jpg",
   },
   {
     id: "all-15",
@@ -309,7 +254,7 @@ export default function VisualBeforeAfter() {
               .sc-ba-case-meta-right {
                 text-align: center !important;
               }
-              .sc-ba-case-meta h3 {
+              .sc-ba-case-meta .sc-ba-case-title {
                 font-size: 1.1rem !important;
               }
               .sc-ba-cases-grid {
@@ -380,7 +325,8 @@ export default function VisualBeforeAfter() {
                   >
                     {activeCase.categoryLabel}
                   </span>
-                  <h3
+                  <p
+                    className="sc-ba-case-title"
                     style={{
                       fontFamily: "var(--font-prata)",
                       fontSize: "clamp(1.08rem, 2.8vw, 1.6rem)",
@@ -391,7 +337,7 @@ export default function VisualBeforeAfter() {
                     }}
                   >
                     {activeCase.title}
-                  </h3>
+                  </p>
                   <p
                     style={{
                       fontFamily: "var(--font-assistant)",
@@ -474,16 +420,12 @@ export default function VisualBeforeAfter() {
               <div
                 style={{
                   marginTop: "0.75rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
                   fontFamily: "var(--font-assistant)",
                   fontSize: "0.76rem",
                   color: "#8E93A4",
                 }}
               >
-                <span>Drag divider &bull; Double-click to snap 50%</span>
-                <span style={{ color: "#F47A4A", fontWeight: 600 }}>100% Verified Result</span>
+                Drag divider &bull; Double-click to snap 50%
               </div>
             </div>
 
@@ -511,7 +453,7 @@ export default function VisualBeforeAfter() {
                 }}
               >
                 <div>
-                  <h4
+                  <p
                     style={{
                       fontFamily: "var(--font-assistant)",
                       fontSize: "0.92rem",
@@ -523,7 +465,7 @@ export default function VisualBeforeAfter() {
                     }}
                   >
                     Clinical Cases
-                  </h4>
+                  </p>
                   <span
                     style={{
                       fontFamily: "var(--font-assistant)",
@@ -666,34 +608,13 @@ export default function VisualBeforeAfter() {
               borderTop: "1px solid #EDEDF2",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "0.82rem",
-                  color: "#7A7F92",
-                }}
-              >
-                Interactive Comparison &bull; High Precision Dental Implant &amp; Cosmetic Rehabilitation
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "0.82rem",
-                  color: "#F47A4A",
-                  fontWeight: 600,
-                }}
-              >
-                100% Genuine Clinical Transformations &bull; Sydney CBD
-              </span>
-            </div>
             <p
               style={{
                 fontFamily: "var(--font-assistant)",
                 fontSize: "0.75rem",
                 color: "#8E93A4",
                 lineHeight: 1.45,
-                margin: "0.25rem 0 0",
+                margin: 0,
               }}
             >
               <strong>Warning:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary.

@@ -456,7 +456,7 @@ export default function Hero() {
                 pointerEvents: pIdx === 0 ? "auto" : "none",
               }}
             >
-              <h2
+              <p
                 style={{
                   fontFamily: "var(--font-prata), serif",
                   fontSize: "clamp(22px, 4.2vw, 32px)",
@@ -483,7 +483,7 @@ export default function Hero() {
                     {char}
                   </span>
                 ))}
-              </h2>
+              </p>
             </div>
           ))}
         </div>

@@ -7,21 +7,21 @@ import { scrollToSection } from "@/lib/scroll-to-section";
 // Sections the arrows step through; ordered by their position on the page at runtime
 const SECTIONS = [
   { id: "overview", label: "Introduction" },
-  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs All on X" },
   { id: "transformations", label: "Before & Afters" },
   { id: "testimonials", label: "Patient Reviews" },
   { id: "general-info", label: "General Information" },
+  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs All on X" },
   { id: "implant-surgery", label: "Implant Surgery" },
+  { id: "procedure", label: "5-Step Process" },
   { id: "dentures-comparison", label: "All on 4 vs Dentures" },
   { id: "cost", label: "Cost & Pricing" },
   { id: "snap-on-dentures", label: "Cheaper Alternative" },
-  { id: "procedure", label: "5-Step Process" },
   { id: "our-practice", label: "Our Practice" },
   { id: "team", label: "Our Dentists" },
   { id: "affiliations", label: "Accreditations" },
+  { id: "book", label: "Book a Consultation" },
   { id: "complete-my-smile", label: "Complete My Smile" },
   { id: "faq", label: "FAQs" },
-  { id: "book", label: "Book a Consultation" },
   { id: "important-information", label: "Important Information" },
 ];
 

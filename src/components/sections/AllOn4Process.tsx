@@ -97,27 +97,27 @@ export default function AllOn4Process() {
   const steps = [
     {
       num: "1",
-      title: "Consultation and assessment",
+      title: "Step 1: Consultation and Assessment",
       desc: "A full clinical examination with 3D CBCT imaging and a review of your medical history. The scan gives us a detailed map of your jawbone, so we can plan implant placement precisely before we do anything. We also talk through your goals and concerns at this appointment.",
     },
     {
       num: "2",
-      title: "Treatment Planning",
+      title: "Step 2: Treatment Planning",
       desc: "We build a personalised treatment plan and walk through it with you in detail. You will know exactly what is being done, what it costs, and what to expect at each stage before anything starts.",
     },
     {
       num: "3",
-      title: "Implant Placement",
+      title: "Step 3: Implant Placement",
       desc: "Most patients choose to have their implants placed under IV sedation for comfort. Any remaining teeth that need removing are taken out at the same appointment. In most suitable cases, a temporary set of teeth is fitted the same day. The number of implants placed, usually four to six, follows your dentist's analysis of your scans, at no change to your quoted price.",
     },
     {
       num: "4",
-      title: "Healing and Integration",
+      title: "Step 4: Healing and Integration",
       desc: "Over the following months, the implants fuse with the surrounding bone. We monitor progress through review appointments. Your temporary teeth let you eat and speak normally throughout this phase.",
     },
     {
       num: "5",
-      title: "Final Restoration",
+      title: "Step 5: Final Restoration",
       desc: "Once healing is complete, your final bridge is designed and fitted. We explain your material options, including the difference between acrylic and zirconia, at your consultation so you can make an informed decision.",
     },
   ];
@@ -335,12 +335,12 @@ export default function AllOn4Process() {
           .sc-stack-text {
             padding: 1.1rem 1.1rem 1rem !important;
           }
-          .sc-stack-text h3 {
+          .sc-stack-text .sc-stack-title {
             font-size: 1.28rem !important;
             line-height: 1.25 !important;
             margin-bottom: 0.55rem !important;
           }
-          .sc-stack-text h4 {
+          .sc-stack-text .sc-stack-sub {
             font-size: 0.92rem !important;
           }
           .sc-stack-text p,
@@ -652,9 +652,9 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
-                      Recovery, Aftercare &amp; Ongoing Maintenance
-                    </h3>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                      Recovery, Aftercare &amp; Ongoing Maintenance after All on 4 Implant Surgery
+                    </h2>
 
                     <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
                       Recovery from All on 4 is usually easier than people expect. Most Smile Concepts patients return to their normal routine within a few days, while the implants fuse with the jawbone over the next three to six months. Here is what to expect at each stage.
@@ -663,9 +663,9 @@ export default function AllOn4Process() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.6rem" }}>
                       {/* The First Few Days */}
                       <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <h4 style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                        <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
                           The First Few Days After Surgery: What to Expect
-                        </h4>
+                        </h3>
                         <p style={{ margin: "0 0 0.35rem", color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
                           Some swelling, mild bruising, and general tenderness in the days after surgery are all normal. These effects are temporary and usually start fading within the first week. We&apos;ll go through your aftercare plan with you in detail, covering:
                         </p>
@@ -681,20 +681,20 @@ export default function AllOn4Process() {
                       {/* Eating & Long Term */}
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
                         <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                          <h4 style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
                             Eating During Healing
-                          </h4>
+                          </h3>
                           <p style={{ margin: 0, color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
                             During this period, the implants fuse with the jawbone, so we recommend a softer diet to avoid putting unnecessary pressure on them. We&apos;ll explain exactly what&apos;s appropriate to eat at each stage of recovery.
                           </p>
                         </div>
 
                         <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                          <h4 style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
                             Long-Term Maintenance
-                          </h4>
+                          </h3>
                           <p style={{ margin: "0 0 0.35rem", color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
-                            All on 4 is designed as a long-term solution, but it still needs ongoing care to stay that way. We recommend:
+                            All on 4 is designed as a long-term solution, but it still needs ongoing care to stay that way. To help maintain the health of your implants and the surrounding tissue, we recommend:
                           </p>
                           <ul style={{ paddingLeft: "1.1rem", margin: 0, color: "#555", fontSize: "0.76rem", lineHeight: 1.45 }}>
                             <li>Daily brushing and cleaning around the bridge</li>
@@ -756,23 +756,17 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       What You Should Know About Risks Associated with All on 4 Dental Implants
-                    </h3>
+                    </h2>
 
                     <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.6rem" }}>
-                      All on 4 (All on X) has a strong clinical track record, but it is a surgical procedure, and every patient should understand the risks before proceeding.
+                      All on 4 (All on X) has a strong clinical track record, but it is a surgical procedure, and every patient should understand the risks before proceeding. Any surgical or invasive procedure carries risks. Before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.
                     </p>
-
-                    <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 1rem", borderRadius: "8px", border: "1px solid #ECE7DE", marginBottom: "0.65rem" }}>
-                      <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.8rem", lineHeight: 1.45 }}>
-                        Any surgical or invasive procedure carries risks. Before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.
-                      </strong>
-                    </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.45rem 0.85rem", fontSize: "0.78rem", lineHeight: 1.45, color: "#444" }}>
                       <div><strong>Healing varies:</strong> Overall health, blood supply, and adherence to post-operative instructions affect how well and how quickly implants integrate.</div>
-                      <div><strong>Smoking:</strong> Smoking is associated with higher implant failure risk and greater bone loss. Discuss stopping smoking and individual risk management with your treating team. [4]</div>
+                      <div>Smoking is associated with higher implant failure risk and greater bone loss. Discuss stopping smoking and individual risk management with your treating team. [4]</div>
                       <div><strong>Medical history matters:</strong> Certain medications and conditions can affect healing, so we take a full history before proceeding.</div>
                       <div><strong>Maintenance is not optional:</strong> The bridge and implants need regular professional cleaning. Skipping maintenance appointments increases the risk of complications over time.</div>
                       <div style={{ gridColumn: "1 / -1" }}><strong>Implant failure is possible:</strong> An implant may not integrate or may lose support later. Biological and mechanical complications can occur even after initial healing. [2–5]</div>
@@ -824,18 +818,18 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <p className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       All on 4 Revision and Failed Implant Treatment
-                    </h3>
+                    </p>
 
                     <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
                       We assess existing full arch implants and bridges placed at other clinics or overseas. Problems may involve an implant that has failed, inflammation and bone loss around implants, a broken bridge or an uncomfortable bite. Bring previous records, scans and implant brand details if available. Depending on the findings, treatment may involve repairing or replacing the bridge, treating disease, removing failed implants or planning further surgery. Existing implants cannot always be reused, and you must check compatibility with replacement components. Revision treatment is individually quoted after assessment.
                     </p>
 
                     <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                      <h4 style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                      <h2 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
                         How Long Do All on 4 Implants and Bridges Last?
-                      </h4>
+                      </h2>
                       <p style={{ margin: 0, color: "#555", fontSize: "0.78rem", lineHeight: 1.5 }}>
                         The implants in the jawbone and the bridge attached to them have different maintenance needs. Long-term studies support the use of All on 4 in selected patients, but they also report biological and mechanical complications. A bridge may need repair or replacement while its implants remain usable. No individual lifespan is guaranteed. [2,3] Regular reviews assess the gums, bone support, bite, bridge and screws. Cleaning access, smoking, health and bite forces all influence ongoing care. Ask about likely maintenance and replacement costs before treatment. [4,5]
                       </p>
@@ -887,9 +881,9 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       Why Patients Choose Smile Concepts
-                    </h3>
+                    </h2>
 
                     <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
                       Choosing all on 4 procedure is a significant decision. Patients want experienced care, clear communication, and a treatment plan tailored to their needs.

@@ -17,13 +17,13 @@ interface NavLinkItem {
 // Complete section navigation matching page order
 const navLinks: NavLinkItem[] = [
   { label: "Overview", href: "#overview", id: "overview" },
-  { label: "All on 4 vs X", href: "#all-on-4-vs-all-on-x", id: "all-on-4-vs-all-on-x" },
   { label: "Results", href: "#transformations", id: "transformations" },
   { label: "Reviews", href: "#testimonials", id: "testimonials" },
   { label: "About", href: "#general-info", id: "general-info" },
-  { label: "Surgery", href: "#implant-surgery", id: "implant-surgery", aliases: ["dentures-comparison"] },
+  { label: "All on 4 vs X", href: "#all-on-4-vs-all-on-x", id: "all-on-4-vs-all-on-x" },
+  { label: "Surgery", href: "#implant-surgery", id: "implant-surgery" },
+  { label: "Process", href: "#procedure", id: "procedure", aliases: ["dentures-comparison"] },
   { label: "Cost", href: "#cost", id: "cost", aliases: ["snap-on-dentures"] },
-  { label: "Process", href: "#procedure", id: "procedure" },
   { label: "Clinic", href: "#our-practice", id: "our-practice" },
   { label: "Doctors", href: "#team", id: "team" },
   { label: "Accreditation", href: "#affiliations", id: "affiliations" },

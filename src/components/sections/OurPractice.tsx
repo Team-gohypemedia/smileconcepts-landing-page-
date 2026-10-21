@@ -91,7 +91,8 @@ export default function OurPractice() {
           Our Practice
         </p>
 
-        <h2
+        <p
+          aria-hidden
           style={{
             fontFamily: "var(--font-assistant), 'Helvetica Neue', Arial, sans-serif",
             fontSize: "clamp(2rem, 7vw, 5.8rem)",
@@ -107,7 +108,7 @@ export default function OurPractice() {
           }}
         >
           Smile Concepts
-        </h2>
+        </p>
       </div>
 
       {/* Interactive Elastic Gallery */}

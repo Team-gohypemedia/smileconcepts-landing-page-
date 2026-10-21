@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, ShieldCheck, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShieldCheck, ExternalLink } from "lucide-react";
 import { images } from "@/lib/images";
 
 /* ─── Social Icon SVGs ─── */
@@ -33,11 +33,11 @@ const XTwitterIcon = () => (
   </svg>
 );
 
-/* ─── Doctor Profiles with Full Credentials ─── */
+/* ─── Doctor Profiles ─── */
 const doctors = [
   {
     id: "manish",
-    name: "Dr. Manish Shah",
+    name: "Dr Manish Shah",
     registrationText: "Registered Dental & Medical Practitioner · AHPRA DEN0001361239 | MED0001361238",
     registrationUrl: "https://www.ahpra.gov.au/",
     img: images.team.drManishShah,
@@ -54,42 +54,14 @@ const doctors = [
     ],
     summaryBio:
       "Dr Manish Shah is a registered dentist and medical practitioner. He graduated in Dentistry with honours from the University of Sydney in 1998, completed his Medical Degree in 2005, and holds a Master of Medicine in Sleep Medicine. With more than 25 years in restorative and cosmetic dentistry, he brings a rare dual clinical perspective to full-arch implant surgery and prosthetics, with a focus on patient comfort.",
-    extraBio: [
-      "With a special interest in Craniofacial Pain and Sleep Disorders, and Functional, Anti-Aging and Regenerative Medicine, Dr Manish brings a rare dual clinical perspective to full-arch implant surgery and patient comfort.",
-    ],
-    expertiseTitle: "EXPERTISE",
-    expertise: [
-      "General, Implant and Cosmetic Dentistry",
-      "TMJ & Craniofacial Pain",
-      "Sleep Medicine",
-      "General Medicine",
-      "Functional & Lifestyle Medicine",
-      "Regenerative & Anti-aging Medicine",
-      "Peptide therapy and treatment",
-    ],
-    membershipsTitle: "Memberships",
-    memberships: [
-      { label: "Dent", value: "ADA, AOS, ASID, ICOI, AIA" },
-      { label: "Pain", value: "AACP" },
-      { label: "Sleep", value: "ASA" },
-      { label: "Med", value: "AMA, FRACGP" },
-      { label: "Func", value: "IFM, ACNEM, ASLM" },
-      { label: "Regen", value: "A4M, A5M" },
-      { label: "PEP", value: "A4M" },
-    ],
   },
   {
     id: "kinnar",
-    name: "Dr. Kinnar Shah",
+    name: "Dr Kinnar Shah",
     registrationText: "Registered Dental Practitioner · AHPRA DEN0001309395",
     registrationUrl: "https://www.ahpra.gov.au/",
     img: images.team.drKinnarShah,
     qualifications: "BDS, University of Glasgow",
-    certifications: [
-      "Certified High Performance Coach",
-      "Certified Gallup Strengths Coach",
-      "NLP Master Coach",
-    ],
     socials: [
       { name: "Facebook", url: "https://fb.me/kinnar.shah.10", icon: <FacebookIcon /> },
       { name: "LinkedIn", url: "https://au.linkedin.com/in/drkinnarshah", icon: <LinkedinIcon /> },
@@ -97,14 +69,6 @@ const doctors = [
     ],
     summaryBio:
       "Dr Kinnar Shah completed his dental training in Glasgow in 2000 and has more than 25 years of experience in implant, cosmetic and full-mouth rehabilitation dentistry. He uses digitally guided implant techniques and trains other dentists in advanced implant and full-mouth rehabilitation.",
-    extraBio: [
-      "Specialising in digitally guided and advanced technology to achieve precise and predictable results for implants and comprehensive full-mouth rehabilitations, Dr. Kinnar Shah utilises cutting-edge methods to deliver life-changing outcomes tailored to the unique needs of each patient. His commitment to perfection ensures not only exceptional aesthetics but also long-term functionality and oral health.",
-      "Recognised globally for his empathetic and patient-focused approach, Dr. Kinnar Shah is a pioneer in understanding the emotional needs and aspirations of those he treats. His advanced expertise in communication allows him to connect deeply with his patients, crafting bespoke treatment plans that align with their goals and enhance their confidence.",
-      "Dr. Kinnar Shah’s leadership in restorative and cosmetic dentistry has earned him acclaim for solving complex cases that require advanced skill, vision, and precision. His work exemplifies innovation and dedication to offering his patients the highest standard of care and results that exceed expectations.",
-      "In addition to his clinical excellence, Dr. Kinnar Shah is a passionate educator and mentor, training countless dentists worldwide in advanced techniques, including full-mouth rehabilitation, implantology, and cosmetic dentistry. His dedication to sharing knowledge ensures that his expertise and standards of excellence inspire the next generation of dental professionals.",
-      "Dr. Kinnar Shah’s time is highly sought after, and his availability is carefully reserved for those who share his commitment to excellence and a genuine desire to achieve transformational results. This selective approach allows Dr. Kinnar Shah to maintain the highest standards of care and ensure a profound, lasting impact on those he chooses to help.",
-      "Dr. Kinnar Shah is not only a highly skilled clinician but also a visionary leader who has elevated modern dentistry through innovation, artistry, and a deep commitment to patient care. His work is a testament to the transformative power of dentistry, making him one of the most respected and sought-after dental experts in the world.",
-    ],
     quote:
       "“Transforming smiles is more than dentistry—it’s transforming lives with precision, compassion, and the belief that every patient deserves to see the best version of themselves reflected back in the mirror.” – Dr. Kinnar Shah",
   },
@@ -116,28 +80,6 @@ export default function Team() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  const toggleExpanded = (id: string) => {
-    if (expandedId === id) {
-      // User is collapsing the expanded card
-      const el = cardRefs.current[id];
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        // If the top of the card has scrolled out of view, smoothly scroll back to it
-        if (rect.top < 100) {
-          const yOffset = -90; // offset for fixed header
-          const y = rect.top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-        }
-      }
-      setExpandedId(null);
-    } else {
-      setExpandedId(id);
-    }
-  };
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -203,6 +145,11 @@ export default function Team() {
           }
         }
         @media (max-width: 767px) {
+          /* Phones: name + qualifications get the full card width, socials sit below */
+          .sc-team-head {
+            flex-direction: column !important;
+            gap: 0.65rem !important;
+          }
           .sc-team-container {
             display: flex !important;
             overflow-x: auto !important;
@@ -243,27 +190,6 @@ export default function Team() {
           transform: translateY(-2px);
         }
 
-        .sc-read-more-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          background-color: #ffffff;
-          border: 1.5px solid #F47A4A;
-          border-radius: 999px;
-          padding: 0.45rem 1.15rem;
-          color: #E86337;
-          font-family: var(--font-assistant), sans-serif;
-          font-size: 0.82rem;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          align-self: flex-start;
-          margin-top: auto;
-        }
-        .sc-read-more-btn:hover {
-          background-color: #F47A4A;
-          color: #ffffff;
-        }
       `}</style>
 
       <div style={{ maxWidth: "1520px", margin: "0 auto", padding: "0 clamp(1rem, 3.5vw, 3rem)" }}>
@@ -322,14 +248,9 @@ export default function Team() {
           className="sc-team-container sc-team-slider"
         >
           {doctors.map((doc) => {
-            const isExpanded = expandedId === doc.id;
-
             return (
               <div
                 key={doc.id}
-                ref={(el) => {
-                  cardRefs.current[doc.id] = el;
-                }}
                 className="sc-team-card"
                 style={{
                   background: "#fafafa",
@@ -379,8 +300,8 @@ export default function Team() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                    {/* Doctor Name & Header */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.35rem" }}>
+                    {/* Doctor Name, Qualifications & Socials */}
+                    <div className="sc-team-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.5rem" }}>
                       <h3
                         style={{
                           fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
@@ -391,6 +312,21 @@ export default function Team() {
                         }}
                       >
                         {doc.name}
+                        <span className="sr-only">, </span>
+                        <span
+                          style={{
+                            display: "block",
+                            marginTop: "0.35rem",
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "0.8rem",
+                            letterSpacing: "0.1em",
+                            textTransform: "uppercase",
+                            fontWeight: 700,
+                            lineHeight: 1.45,
+                          }}
+                        >
+                          {doc.qualifications}
+                        </span>
                       </h3>
 
                       {/* Social Media Links */}
@@ -436,24 +372,6 @@ export default function Team() {
                       </a>
                     </div>
 
-                    {/* Qualifications */}
-                    <p
-                      style={{
-                        fontFamily: "var(--font-assistant), sans-serif",
-                        fontSize: "0.82rem",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "#1A1A24",
-                        fontWeight: 700,
-                        margin: "0 0 0.75rem 0",
-                        minHeight: "1.25rem",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {doc.qualifications}
-                    </p>
-
                     {/* Certifications / Key Areas */}
                     {doc.certifications && (
                       <div
@@ -494,159 +412,33 @@ export default function Team() {
                         fontSize: "0.92rem",
                         color: "#5A5A66",
                         lineHeight: 1.65,
-                        margin: 0,
-                        minHeight: "4.75rem",
+                        margin: "0 0 1rem",
                       }}
                     >
                       {doc.summaryBio}
                     </p>
 
-                    {/* Expandable Section with Read More / Read Less */}
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.35, ease: "easeInOut" }}
-                          style={{ overflow: "hidden" }}
-                        >
-                          <div style={{ paddingTop: "0.85rem", display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-                            {/* Extra Bio Paragraphs */}
-                            {doc.extraBio &&
-                              doc.extraBio.map((para, pIdx) => (
-                                <p
-                                  key={pIdx}
-                                  style={{
-                                    fontFamily: "var(--font-assistant), sans-serif",
-                                    fontWeight: 400,
-                                    fontSize: "0.92rem",
-                                    color: "#5A5A66",
-                                    lineHeight: 1.65,
-                                    margin: 0,
-                                  }}
-                                >
-                                  {para}
-                                </p>
-                              ))}
-
-                            {/* Expertise Section (Dr. Manish Shah) */}
-                            {doc.expertise && (
-                              <div style={{ marginTop: "0.5rem" }}>
-                                <h4
-                                  style={{
-                                    fontFamily: "var(--font-assistant), sans-serif",
-                                    fontSize: "0.78rem",
-                                    letterSpacing: "0.14em",
-                                    textTransform: "uppercase",
-                                    color: "#E86337",
-                                    fontWeight: 700,
-                                    marginBottom: "0.5rem",
-                                  }}
-                                >
-                                  {doc.expertiseTitle}
-                                </h4>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                                  {doc.expertise.map((exp) => (
-                                    <span
-                                      key={exp}
-                                      style={{
-                                        padding: "0.25rem 0.65rem",
-                                        background: "#F3F2EE",
-                                        border: "1px solid #E5E3DC",
-                                        borderRadius: "6px",
-                                        fontFamily: "var(--font-assistant), sans-serif",
-                                        fontSize: "0.76rem",
-                                        fontWeight: 500,
-                                        color: "#333333",
-                                      }}
-                                    >
-                                      {exp}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Memberships Section (Dr. Manish Shah) */}
-                            {doc.memberships && (
-                              <div style={{ marginTop: "0.5rem" }}>
-                                <h4
-                                  style={{
-                                    fontFamily: "var(--font-assistant), sans-serif",
-                                    fontSize: "0.78rem",
-                                    letterSpacing: "0.14em",
-                                    textTransform: "uppercase",
-                                    color: "#E86337",
-                                    fontWeight: 700,
-                                    marginBottom: "0.5rem",
-                                  }}
-                                >
-                                  {doc.membershipsTitle}
-                                </h4>
-                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.4rem" }}>
-                                  {doc.memberships.map((m) => (
-                                    <div
-                                      key={m.label}
-                                      style={{
-                                        backgroundColor: "#ffffff",
-                                        border: "1px solid #ECEAE4",
-                                        borderRadius: "6px",
-                                        padding: "0.35rem 0.6rem",
-                                        fontSize: "0.74rem",
-                                        fontFamily: "var(--font-assistant), sans-serif",
-                                      }}
-                                    >
-                                      <strong style={{ color: "#E86337" }}>{m.label}: </strong>
-                                      <span style={{ color: "#555555" }}>{m.value}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Quote Callout (Dr. Kinnar Shah) */}
-                            {doc.quote && (
-                              <blockquote
-                                style={{
-                                  margin: "0.6rem 0 0 0",
-                                  padding: "0.85rem 1rem",
-                                  background: "rgba(244, 122, 74, 0.06)",
-                                  borderLeft: "3px solid #F47A4A",
-                                  borderRadius: "0 8px 8px 0",
-                                  fontStyle: "italic",
-                                  fontFamily: "var(--font-prata), Georgia, serif",
-                                  fontSize: "0.88rem",
-                                  lineHeight: 1.6,
-                                  color: "#333333",
-                                }}
-                              >
-                                {doc.quote}
-                              </blockquote>
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Read More / Read Less Toggle Button */}
-                  <button
-                    type="button"
-                    onClick={() => toggleExpanded(doc.id)}
-                    className="sc-read-more-btn"
-                    style={{ marginTop: "auto" }}
-                  >
-                    {isExpanded ? (
-                      <>
-                        Read Less <ChevronUp size={14} />
-                      </>
-                    ) : (
-                      <>
-                        Read More <ChevronDown size={14} />
-                      </>
+                    {/* Quote Callout (Dr Kinnar Shah) */}
+                    {doc.quote && (
+                      <blockquote
+                        style={{
+                          margin: 0,
+                          padding: "0.85rem 1rem",
+                          background: "rgba(244, 122, 74, 0.06)",
+                          borderLeft: "3px solid #F47A4A",
+                          borderRadius: "0 8px 8px 0",
+                          fontStyle: "italic",
+                          fontFamily: "var(--font-prata), Georgia, serif",
+                          fontSize: "0.88rem",
+                          lineHeight: 1.6,
+                          color: "#333333",
+                        }}
+                      >
+                        {doc.quote}
+                      </blockquote>
                     )}
-                  </button>
+
+                  </div>
                 </div>
               </div>
             );
