@@ -24,8 +24,9 @@ import Testimonials from "@/components/sections/Testimonials";
 import AllOn4FAQ from "@/components/sections/AllOn4FAQ";
 import CTABanner from "@/components/sections/CTABanner";
 
-// Section order follows the "All on X Content Manish" doc. The hero, the pinned
-// Suitability showcase and the Process + stacking cards section are kept as they are.
+// Section order follows the "All on X Content (Manish)" doc flow exactly.
+// Animated sections (Hero video scrub, ScrollFeatures pinned scroll, Process
+// carousel + stacking cards) are self-contained and unaffected by reordering.
 export default function Home() {
   return (
     <>
@@ -34,6 +35,7 @@ export default function Home() {
       <SectionStepper />
       <MobileSectionBar />
       <main>
+        {/* ── INTRODUCTION ─────────────────────────────────────────── */}
         {/* 1. Cinematic Hero with Scroll Video Scrubbing */}
         <Hero />
 
@@ -43,55 +45,60 @@ export default function Home() {
         {/* 3. H1: All on 4 Dental Implants & All on X in Sydney */}
         <VisualStory />
 
-        {/* 4. Real All on 4 Results (Before & After) */}
+        {/* 4. Real All on 4 Results — Before & After (H2) */}
         <VisualBeforeAfter />
 
-        {/* 4b. Trusted by Sydney Patients (Google Reviews) */}
+        {/* 4b. Trusted by Sydney Patients — Google Reviews (H2) */}
         <Testimonials />
 
-        {/* 5. What are All on 4 Dental Implants (full arch)? */}
+        {/* ── GENERAL INFORMATION ──────────────────────────────────── */}
+        {/* 5. What are All on 4 Dental Implants (full arch)? (H2) */}
         <AllOn4Overview />
 
-        {/* 6. All on 4 vs All on X: What Do These Names Mean? */}
+        {/* 6. All on 4 vs All on X: What Do These Names Mean? (H2) */}
         <AllOn4VsAllOnX />
 
-        {/* 7. Pinned showcase: Suitability, Why Choose, Same-Day Teeth, Temporary Teeth */}
+        {/* 7. Pinned showcase: Suitability, Why Choose, Same-Day Teeth, vs Individual Implants, Temporary Teeth (H2s) */}
         <AllOn4ScrollFeatures />
 
-        {/* 8. How many implants, Placement, Implant systems, Technology, Bone Loss */}
+        {/* ── SURGERY & CLINICAL DETAIL ────────────────────────────── */}
+        {/* 8. How many implants, Placement types, Implant systems, Technology, Bone Loss (H2s) */}
         <AllOn4ImplantSurgery />
 
-        {/* 9. The 5-Step Process + stacking cards (Recovery, Risks, Revision & Longevity, Why Patients Choose) */}
+        {/* 9. 5-Step Process carousel + stacking cards: Recovery & Aftercare, Risks, Revision & Longevity, Why Patients Choose (H2s) */}
         <AllOn4Process />
 
-        {/* 10. All on 4 vs Traditional Dentures */}
+        {/* ── COMPARISON & COST ────────────────────────────────────── */}
+        {/* 10. All on 4 vs Traditional Dentures (H2) */}
         <AllOn4VsDentures />
 
-        {/* 11. Cost, Two Phase Pricing, Calculator & cost topics (Acrylic or Zirconia, Insurance, Super, Payment Plans) */}
+        {/* 11. Cost, Two-Phase Pricing, Acrylic or Zirconia, Insurance, Super, Payment Plans (H2s) */}
         <AllOn4Cost />
 
-        {/* 12. Is There A Cheaper Alternative to All on 4? */}
+        {/* 12. Is There A Cheaper Alternative? Snap-On / All on 2 (H2) */}
         <AllOn4SnapOn />
 
-        {/* 13. Our Practice: Sydney CBD Clinic */}
+        {/* ── TRUST & PRACTICE ─────────────────────────────────────── */}
+        {/* 13. Our Practice — Sydney CBD Clinic */}
         <OurPractice />
 
-        {/* 14. Meet Your Full Arch Implant Dentists */}
+        {/* 14. Meet Your Full Arch Implant Dentists (H2) */}
         <Team />
 
         {/* 15. Clinical Affiliations & Implant Brand Standards */}
         <Affiliations />
 
-        {/* 17. Book an All on 4 Consultation in Sydney */}
+        {/* ── CALL TO ACTION & FAQ ─────────────────────────────────── */}
+        {/* 17. Book an All on 4 Consultation in Sydney (H2) */}
         <CTABanner />
 
         {/* 18. Complete My Smile (H3 under Book) */}
         <CompleteMySmile />
 
-        {/* 19. Frequently Asked Questions */}
+        {/* 19. Frequently Asked Questions (H2) */}
         <AllOn4FAQ />
 
-        {/* 20. Important Information, Clinical References & Review Details */}
+        {/* 20. Important Information, Clinical References & Review Details (H2) */}
         <ImportantInformation />
       </main>
       <Footer />

@@ -205,9 +205,9 @@ export default function AllOn4ScrollFeatures() {
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: () => `+=${totalTransitions * 90}vh`,
+          end: () => `+=${totalTransitions * 125}vh`,
           pin: stage,
-          scrub: 0.6,
+          scrub: 0.8,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },

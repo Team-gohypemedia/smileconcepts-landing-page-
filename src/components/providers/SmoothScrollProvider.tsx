@@ -23,10 +23,11 @@ export default function SmoothScrollProvider({
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08, // Frame-by-frame damping: buttery smooth stop without runaway inertia
       orientation: "vertical",
       smoothWheel: true,
+      wheelMultiplier: 0.65, // Controlled distance per wheel notch; prevents 1 scroll from jumping whole sections
+      touchMultiplier: 1.0,
     });
 
     lenisRef.current = lenis;

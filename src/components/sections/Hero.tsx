@@ -112,9 +112,9 @@ export default function Hero() {
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=220%", // Generous scroll distance so text doesn't disappear too fast
+        end: "+=240%", // Generous scroll distance so text and frames don't move too fast
         pin: true,
-        scrub: 0.6,
+        scrub: 0.8,
         onUpdate: (self) => {
           const progress = self.progress;
 
