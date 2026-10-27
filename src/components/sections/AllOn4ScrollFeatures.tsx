@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, ArrowRight, ShieldCheck, Clock, Layers, Award } from "lucide-react";
+import { Check, ShieldCheck, Clock, Layers, Award } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,8 +34,6 @@ export interface FeatureSlide {
   checklistTitle?: string;
   checklist: string[];
   footnote?: string;
-  ctaText: string;
-  ctaHref: string;
   imageSrc: string;
   imageAlt: string;
   imagePosition: string;
@@ -61,8 +59,6 @@ const slidesData: FeatureSlide[] = [
     ],
     footnote:
       "We always determine suitability through a proper clinical assessment. We look at your bone volume, oral health, and medical history before recommending anything. If all on 4 is not the right fit, we will tell you and explain what alternatives exist.",
-    ctaText: "Check Your Suitability",
-    ctaHref: "#book",
     imageSrc: "/assets/allon4/candidate-smile.jpg",
     imageAlt: "Patient smile assessment for All on 4 suitability at Smile Concepts Sydney",
     imagePosition: "center 22%",
@@ -85,8 +81,6 @@ const slidesData: FeatureSlide[] = [
     ],
     footnote:
       "Results vary, and this treatment isn't suitable for everyone. We assess every case individually before making any recommendation.",
-    ctaText: "Complete My Smile",
-    ctaHref: "tel:0292677777",
     imageSrc: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
     imageAlt: "Couple enjoying everyday comfort and function with fixed implant-supported teeth",
     imagePosition: "center 18%",
@@ -104,8 +98,6 @@ const slidesData: FeatureSlide[] = [
       "Quick Results: The best part. Most people don't need bone grafting. That means you can walk out with a stunning smile the same day, or shortly after.",
       "No Bone Grafting: Nobody loves extra surgery. Most patients skip it entirely, which saves you time, money, and a whole lot of discomfort.",
     ],
-    ctaText: "See the Treatment Steps",
-    ctaHref: "#procedure",
     imageSrc: "/assets/allon4/sunset-all-on-4.jpg",
     imageAlt: "Patient smiling after All on 4 same-day teeth at Smile Concepts Sydney",
     imagePosition: "center 25%",
@@ -124,8 +116,6 @@ const slidesData: FeatureSlide[] = [
       "Neither approach is automatically cheaper or better; the plan depends on bone requirements, restorative design, and the number of teeth being replaced.",
     ],
     checklist: [],
-    ctaText: "Book an Assessment",
-    ctaHref: "#book",
     imageSrc: "/assets/services/dental-implants.jpg",
     imageAlt: "Single dental implant model compared with full arch All on 4 treatment",
     imagePosition: "center center",
@@ -144,8 +134,6 @@ const slidesData: FeatureSlide[] = [
       "Pricing is quoted per arch.",
     ],
     checklist: [],
-    ctaText: "Book an Assessment",
-    ctaHref: "#book",
     imageSrc: "/assets/allon4/all-on-4-904x1024.jpg",
     imageAlt: "A full arch implant-supported dental bridge",
     imagePosition: "center center",
@@ -530,32 +518,6 @@ export default function AllOn4ScrollFeatures() {
               </p>
             )}
 
-            {/* CTA Button matching brand */}
-            <div style={{ marginBottom: "26px", display: "flex", justifyContent: "center" }}>
-              <a
-                href={currentMobileSlide.ctaHref}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  padding: "13px 32px",
-                  borderRadius: "999px",
-                  backgroundColor: "#E86337",
-                  color: "#FFFFFF",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  boxShadow: "0 6px 20px rgba(232, 99, 55, 0.28)",
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                <span>{currentMobileSlide.ctaText}</span>
-                <ArrowRight size={15} />
-              </a>
-            </div>
-
             {/* Horizontal Pagination Dots matching user's reference */}
             <div
               style={{
@@ -889,43 +851,6 @@ export default function AllOn4ScrollFeatures() {
                       {slide.footnote}
                     </p>
                   )}
-
-                  {/* Brand CTA Button */}
-                  <div>
-                    <a
-                      href={slide.ctaHref}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        padding: "12px 28px",
-                        borderRadius: "8px",
-                        backgroundColor: "#E86337",
-                        color: "#FFFFFF",
-                        fontWeight: 700,
-                        fontSize: "0.92rem",
-                        textDecoration: "none",
-                        boxShadow: "0 6px 20px rgba(232, 99, 55, 0.28)",
-                        transition: "all 0.2s ease",
-                        fontFamily: "var(--font-assistant), sans-serif",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.backgroundColor = "#d65529";
-                        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                        (e.currentTarget as HTMLElement).style.boxShadow =
-                          "0 10px 26px rgba(232, 99, 55, 0.42)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.backgroundColor = "#E86337";
-                        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                        (e.currentTarget as HTMLElement).style.boxShadow =
-                          "0 6px 20px rgba(232, 99, 55, 0.28)";
-                      }}
-                    >
-                      <span>{slide.ctaText}</span>
-                      <ArrowRight size={15} />
-                    </a>
-                  </div>
                 </div>
                 );
               })}

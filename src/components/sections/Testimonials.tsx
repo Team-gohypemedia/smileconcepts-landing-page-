@@ -324,20 +324,6 @@ export default function Testimonials() {
           >
             The Trust We Have Earned
           </h2>
-
-          <p
-            style={{
-              fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "var(--fs-body)",
-              color: "#555869",
-              lineHeight: 1.62,
-              maxWidth: "700px",
-              fontWeight: 400,
-              margin: 0,
-            }}
-          >
-            Smile Concepts is an award winning Sydney CBD dental practice with {GOOGLE_REVIEW_COUNT} Google reviews. Read what our patients say on Google.
-          </p>
         </motion.div>
 
         {/* 3-Column Infinite Vertical Scrolling Carousel */}

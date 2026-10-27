@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, PhoneCall, Menu, X } from "lucide-react";
+import { Phone, Menu, X } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll-to-section";
 
 interface NavLinkItem {
@@ -287,16 +287,15 @@ export default function Navbar() {
             <span className="sc-phone-text">02 9267 7777</span>
           </a>
 
-          {/* Primary "Complete My Smile" CTA button (calls the clinic) */}
+          {/* "Book Online" button (goes to the booking section) */}
           <a
-            href="tel:0292677777"
-            aria-label="Complete My Smile: call 02 9267 7777"
+            href="#book"
+            onClick={(e) => handleSectionClick(e, "#book")}
             className="sc-primary-cta"
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0.4rem",
               padding: "0.55rem 1.25rem",
               background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
               color: "#ffffff",
@@ -312,8 +311,7 @@ export default function Navbar() {
               whiteSpace: "nowrap",
             }}
           >
-            <PhoneCall size={15} aria-hidden />
-            Complete My Smile
+            Book Online
           </a>
         </div>
 
@@ -436,13 +434,12 @@ export default function Navbar() {
                   02 9267 7777
                 </a>
                 <a
-                  href="tel:0292677777"
-                  aria-label="Complete My Smile: call 02 9267 7777"
+                  href="#book"
+                  onClick={(e) => handleMobileClick(e, "#book")}
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "0.5rem",
                     padding: "0.8rem",
                     background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
                     color: "#ffffff",
@@ -455,8 +452,7 @@ export default function Navbar() {
                     boxShadow: "0 4px 14px rgba(244, 122, 74, 0.4)",
                   }}
                 >
-                  <PhoneCall size={16} aria-hidden />
-                  Complete My Smile
+                  Book Online
                 </a>
               </div>
             </div>
