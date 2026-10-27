@@ -23,7 +23,7 @@ export default function VisualStory() {
             <p
               style={{
                 color: "#F47A4A",
-                fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
+                fontSize: "var(--fs-body)",
                 fontWeight: 600,
                 lineHeight: 1.45,
                 letterSpacing: "-0.01em",
@@ -36,7 +36,7 @@ export default function VisualStory() {
             <p
               style={{
                 color: "#F1F5F9",
-                fontSize: "clamp(0.92rem, 1.9vw, 1rem)",
+                fontSize: "var(--fs-body)",
                 lineHeight: 1.68,
                 fontWeight: 400,
               }}
@@ -57,7 +57,7 @@ export default function VisualStory() {
                   <p
                     style={{
                       color: "#E2E8F0",
-                      fontSize: "clamp(0.9rem, 1.8vw, 0.98rem)",
+                      fontSize: "var(--fs-body)",
                       lineHeight: 1.68,
                       fontWeight: 400,
                     }}
@@ -67,7 +67,7 @@ export default function VisualStory() {
                   <p
                     style={{
                       color: "#E2E8F0",
-                      fontSize: "clamp(0.9rem, 1.8vw, 0.98rem)",
+                      fontSize: "var(--fs-body)",
                       lineHeight: 1.68,
                       fontWeight: 400,
                     }}
@@ -77,7 +77,7 @@ export default function VisualStory() {
                   <p
                     style={{
                       color: "#CBD5E1",
-                      fontSize: "clamp(0.9rem, 1.8vw, 0.98rem)",
+                      fontSize: "var(--fs-body)",
                       lineHeight: 1.68,
                       fontWeight: 400,
                     }}
@@ -112,7 +112,7 @@ export default function VisualStory() {
         }
         callToAction={{
           text: "COMPLETE MY SMILE",
-          href: "#cost",
+          href: "tel:0292677777",
         }}
         backgroundImage="/yamu_jay-ai-generated-9214176.jpg"
         imagePosition="center 25%"

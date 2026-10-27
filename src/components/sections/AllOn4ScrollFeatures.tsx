@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, ArrowRight, ShieldCheck, Clock, Layers, Sparkles, Award } from "lucide-react";
+import { Check, ArrowRight, ShieldCheck, Clock, Layers, Award } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,7 +28,7 @@ export interface FeatureSlide {
   category: string;
   categoryIcon: React.ReactNode;
   heading: string;
-  // Doc tags these titles as H2, except "vs Individual Implants" which sits under Same-Day Teeth
+  // The treatment-option headings sit under Same-Day Teeth.
   headingLevel: 2 | 3;
   description: string | string[];
   checklistTitle?: string;
@@ -86,7 +86,7 @@ const slidesData: FeatureSlide[] = [
     footnote:
       "Results vary, and this treatment isn't suitable for everyone. We assess every case individually before making any recommendation.",
     ctaText: "Complete My Smile",
-    ctaHref: "#cost",
+    ctaHref: "tel:0292677777",
     imageSrc: "/assets/allon4/elder-couple-cooking-dental-implant.jpg",
     imageAlt: "Couple enjoying everyday comfort and function with fixed implant-supported teeth",
     imagePosition: "center 18%",
@@ -111,7 +111,7 @@ const slidesData: FeatureSlide[] = [
     imagePosition: "center 25%",
   },
 
-  // ─── SLIDE 4: VS INDIVIDUAL IMPLANTS & BOTH JAWS ───
+  // ─── SLIDE 4: VS INDIVIDUAL IMPLANTS ───
   {
     id: "individual",
     category: "Treatment Options",
@@ -123,12 +123,7 @@ const slidesData: FeatureSlide[] = [
       "If you only have a few missing teeth and your remaining teeth are healthy, individual implants or another tooth-preserving option may be more appropriate.",
       "Neither approach is automatically cheaper or better; the plan depends on bone requirements, restorative design, and the number of teeth being replaced.",
     ],
-    checklistTitle: "Do I need All on 4 on both upper and lower Jaws?",
-    checklist: [
-      "An arch means the upper or lower set of teeth. One arch can be treated independently.",
-      "You may not need both arches to be treated. That is why a detailed assessment is required to make that decision. Your remaining teeth, opposing bite and oral health guide the plan.",
-      "Pricing is quoted per arch.",
-    ],
+    checklist: [],
     ctaText: "Book an Assessment",
     ctaHref: "#book",
     imageSrc: "/assets/services/dental-implants.jpg",
@@ -136,26 +131,26 @@ const slidesData: FeatureSlide[] = [
     imagePosition: "center center",
   },
 
-  // ─── SLIDE 5: TEMPORARY & FINAL TEETH ───
+  // ─── SLIDE 5: UPPER AND LOWER JAWS ───
   {
-    id: "timeline",
-    category: "Prosthetics (Teeth)",
-    categoryIcon: <Sparkles size={16} />,
-    heading: "Temporary Teeth and Final Teeth: What To Expect",
-    headingLevel: 2,
+    id: "both-jaws",
+    category: "Treatment Options",
+    categoryIcon: <Layers size={16} />,
+    heading: "Do I need All on 4 on both upper and lower Jaws?",
+    headingLevel: 3,
     description: [
-      "Will you be without teeth during treatment? For most suitable patients, no.",
-      "A fixed temporary bridge may be fitted on the day of surgery or shortly afterwards if implant stability and other clinical factors allow. If immediate loading is unsuitable, your dentist will explain the alternative plan. Temporary teeth require a modified diet during healing. [1]",
-      "Once healing is complete, the final bridge is designed and fitted. We walk you through your material options at consultation, including the difference between acrylic and zirconia, so you can make a decision that actually makes sense for your budget and your priorities rather than just accepting whatever is standard.",
-      "It is worth understanding the difference between the two stages when you are comparing costs, because the materials and work involved are quite different.",
+      "An arch means the upper or lower set of teeth. One arch can be treated independently.",
+      "You may not need both arches to be treated. That is why a detailed assessment is required to make that decision. Your remaining teeth, opposing bite and oral health guide the plan.",
+      "Pricing is quoted per arch.",
     ],
     checklist: [],
-    ctaText: "Compare Final Teeth Options",
-    ctaHref: "#cost",
-    imageSrc: "/assets/allon4/temporary-final-teeth-bridge.jpg",
-    imageAlt: "All on 4 temporary and final teeth bridge at Smile Concepts",
-    imagePosition: "center 48%",
+    ctaText: "Book an Assessment",
+    ctaHref: "#book",
+    imageSrc: "/assets/allon4/all-on-4-904x1024.jpg",
+    imageAlt: "A full arch implant-supported dental bridge",
+    imagePosition: "center center",
   },
+
 ];
 
 export default function AllOn4ScrollFeatures() {
@@ -183,145 +178,84 @@ export default function AllOn4ScrollFeatures() {
       const totalSlides = slidesData.length;
       const totalTransitions = totalSlides - 1;
 
-      // Set initial positions
-      slidesData.forEach((_, idx) => {
-        const wrapper = visualWrapperRefs.current[idx];
-        const photo = photoFrameRefs.current[idx];
-        const textEl = textContentRefs.current[idx];
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const dx = reduced ? 0 : 24;
+      const dy = reduced ? 0 : 12;
+      const ty = reduced ? 0 : 20;
+      const pick = <T,>(refs: (T | null)[], i: number) => refs[i] ?? undefined;
 
-        if (idx === 0) {
-          if (wrapper) gsap.set(wrapper, { opacity: 1, zIndex: 10 });
-          if (photo) gsap.set(photo, { opacity: 1, y: 0, scale: 1 });
-          if (textEl) gsap.set(textEl, { opacity: 1, y: 0, zIndex: 10, pointerEvents: "auto" });
-        } else {
-          if (wrapper) gsap.set(wrapper, { opacity: 0, zIndex: 1 });
-          if (photo) gsap.set(photo, { opacity: 0, y: 40, scale: 0.95 });
-          if (textEl) gsap.set(textEl, { opacity: 0, y: 30, zIndex: 1, pointerEvents: "none" });
-        }
+      // Pointer events and stacking follow the slide that is currently on screen
+      let shownIndex = -1;
+      const markActive = (progress: number) => {
+        const idx = Math.max(0, Math.min(totalSlides - 1, Math.round(progress * totalTransitions)));
+        if (idx === shownIndex) return;
+        shownIndex = idx;
+        slidesData.forEach((_, i) => {
+          const wrapper = pick(visualWrapperRefs.current, i);
+          const textEl = pick(textContentRefs.current, i);
+          if (wrapper) wrapper.style.zIndex = i === idx ? "10" : "1";
+          if (textEl) {
+            textEl.style.zIndex = i === idx ? "10" : "1";
+            textEl.style.pointerEvents = i === idx ? "auto" : "none";
+          }
+        });
+      };
+
+      // Start state: first slide shown, the rest hidden
+      slidesData.forEach((_, i) => {
+        const wrapper = pick(visualWrapperRefs.current, i);
+        const photo = pick(photoFrameRefs.current, i);
+        const textEl = pick(textContentRefs.current, i);
+        if (wrapper) gsap.set(wrapper, { autoAlpha: i === 0 ? 1 : 0 });
+        if (photo) gsap.set(photo, { x: 0, y: 0, scale: 1, opacity: 1 });
+        if (textEl) gsap.set(textEl, { autoAlpha: i === 0 ? 1 : 0, y: 0 });
       });
+      markActive(0);
 
-      // Master Timeline linked directly to scroll
+      // One scrubbed timeline: every slide holds still for most of its step and
+      // crossfades into the next while you scroll, so the page responds directly to
+      // the scroll position with no snapping. Wheel events are never captured.
+      const TRANSITION_START = 0.3;
+      const TRANSITION_LENGTH = 0.4;
       const tl = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: () => `+=${totalTransitions * 125}vh`,
+          end: () => `+=${totalTransitions * Math.round(Math.max(480, window.innerHeight * 0.9))}`,
           pin: stage,
-          scrub: 0.8,
+          scrub: 0.4,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onUpdate: (self) => markActive(self.progress),
+          onRefresh: (self) => markActive(self.progress),
         },
       });
 
-      // Build transitions
-      for (let i = 1; i < totalSlides; i++) {
-        const prevIdx = i - 1;
+      for (let i = 0; i < totalTransitions; i++) {
+        const at = i + TRANSITION_START;
+        const fade = { duration: TRANSITION_LENGTH, ease: "power1.inOut" };
+        const outWrapper = pick(visualWrapperRefs.current, i);
+        const outPhoto = pick(photoFrameRefs.current, i);
+        const outText = pick(textContentRefs.current, i);
+        const inWrapper = pick(visualWrapperRefs.current, i + 1);
+        const inPhoto = pick(photoFrameRefs.current, i + 1);
+        const inText = pick(textContentRefs.current, i + 1);
 
-        const outWrapper = visualWrapperRefs.current[prevIdx];
-        const outPhoto = photoFrameRefs.current[prevIdx];
-        const outText = textContentRefs.current[prevIdx];
-
-        const inWrapper = visualWrapperRefs.current[i];
-        const inPhoto = photoFrameRefs.current[i];
-        const inText = textContentRefs.current[i];
-
-        const stepTime = (i - 1) * 2;
-
-        // 1. OUTGOING SLIDE
-        if (outPhoto) {
-          tl.to(
-            outPhoto,
-            {
-              y: -25,
-              scale: 0.96,
-              opacity: 0,
-              duration: 0.55,
-              ease: "power2.inOut",
-            },
-            stepTime + 0.05
-          );
-        }
-
-        if (outText) {
-          tl.to(
-            outText,
-            {
-              y: -25,
-              opacity: 0,
-              duration: 0.45,
-              ease: "power2.inOut",
-              onComplete: () => {
-                if (outText) outText.style.pointerEvents = "none";
-              },
-              onReverseComplete: () => {
-                if (outText) outText.style.pointerEvents = "auto";
-              },
-            },
-            stepTime
-          );
-        }
-
-        if (outWrapper) {
-          tl.to(
-            outWrapper,
-            {
-              opacity: 0,
-              duration: 0.35,
-              onComplete: () => {
-                if (outWrapper) outWrapper.style.zIndex = "1";
-              },
-            },
-            stepTime + 0.3
-          );
-        }
-
-        // 2. INCOMING SLIDE
-        if (inWrapper) {
-          tl.set(inWrapper, { opacity: 1, zIndex: 10 + i }, stepTime + 0.45);
-        }
-
-        if (inPhoto) {
-          tl.fromTo(
-            inPhoto,
-            {
-              y: 45,
-              scale: 0.94,
-              opacity: 0,
-            },
-            {
-              y: 0,
-              scale: 1,
-              opacity: 1,
-              duration: 0.6,
-              ease: "power2.out",
-            },
-            stepTime + 0.45
-          );
-        }
-
-        if (inText) {
-          tl.fromTo(
-            inText,
-            { y: 25, opacity: 0, zIndex: 10 + i },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.5,
-              ease: "power2.inOut",
-              onStart: () => {
-                if (inText) inText.style.pointerEvents = "auto";
-              },
-              onReverseComplete: () => {
-                if (inText) inText.style.pointerEvents = "none";
-              },
-            },
-            stepTime + 0.55
-          );
-        }
-
-        // Dwell hold
-        tl.to({}, { duration: 0.4 });
+        if (outWrapper) tl.to(outWrapper, { autoAlpha: 0, ...fade }, at);
+        if (outPhoto) tl.to(outPhoto, { x: -dx, y: -dy, scale: reduced ? 1 : 0.965, ...fade }, at);
+        if (outText) tl.to(outText, { autoAlpha: 0, y: -ty, ...fade }, at);
+        if (inWrapper) tl.fromTo(inWrapper, { autoAlpha: 0 }, { autoAlpha: 1, ...fade }, at);
+        if (inPhoto) tl.fromTo(inPhoto, { x: dx, y: dy, scale: reduced ? 1 : 0.965 }, { x: 0, y: 0, scale: 1, ...fade }, at);
+        if (inText) tl.fromTo(inText, { autoAlpha: 0, y: ty }, { autoAlpha: 1, y: 0, ...fade }, at);
       }
+      // Pad the timeline to a whole number of steps so the last slide also holds
+      tl.to({}, { duration: 0.001 }, totalTransitions - 0.001);
+
+      return () => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
     });
 
     return () => {
@@ -330,6 +264,7 @@ export default function AllOn4ScrollFeatures() {
   }, []);
 
   const currentMobileSlide = slidesData[mobileIndex];
+  const MobileHeadingTag = currentMobileSlide.headingLevel === 2 ? "h2" : "h3";
 
   return (
     <>
@@ -484,14 +419,12 @@ export default function AllOn4ScrollFeatures() {
               </span>
             </div>
 
-            {/* Slide title (the desktop view carries the heading tags) */}
-            <p
-              role="heading"
-              aria-level={currentMobileSlide.headingLevel}
+            {/* Slide title */}
+            <MobileHeadingTag
               style={{
-                fontFamily: "var(--font-assistant), sans-serif",
-                fontSize: "1.05rem",
-                fontWeight: 700,
+                fontFamily: "var(--font-prata), Georgia, serif",
+                fontSize: "1.25rem",
+                fontWeight: 400,
                 color: "#1C1C1E",
                 lineHeight: 1.35,
                 textAlign: "center",
@@ -499,7 +432,7 @@ export default function AllOn4ScrollFeatures() {
               }}
             >
               {currentMobileSlide.heading}
-            </p>
+            </MobileHeadingTag>
 
             {/* Description */}
             {toParagraphs(currentMobileSlide.description).map((para, pIdx) => (
@@ -519,7 +452,7 @@ export default function AllOn4ScrollFeatures() {
             ))}
 
             {currentMobileSlide.checklistTitle && (
-              <p
+              <h3
                 style={{
                   fontFamily: "var(--font-assistant), sans-serif",
                   fontSize: "0.95rem",
@@ -530,7 +463,7 @@ export default function AllOn4ScrollFeatures() {
                 }}
               >
                 {currentMobileSlide.checklistTitle}
-              </p>
+              </h3>
             )}
 
             {/* Checklist */}
@@ -744,6 +677,8 @@ export default function AllOn4ScrollFeatures() {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    opacity: idx === 0 ? 1 : 0,
+                    visibility: idx === 0 ? "visible" : "hidden",
                     willChange: "transform, opacity",
                   }}
                 >
@@ -841,6 +776,8 @@ export default function AllOn4ScrollFeatures() {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "flex-start",
+                    opacity: idx === 0 ? 1 : 0,
+                    visibility: idx === 0 ? "visible" : "hidden",
                     willChange: "transform, opacity",
                   }}
                 >
@@ -848,7 +785,7 @@ export default function AllOn4ScrollFeatures() {
                   <HeadingTag
                     style={{
                       fontFamily: "var(--font-prata), Georgia, serif",
-                      fontSize: "clamp(1.25rem, 2.3vw, 1.85rem)",
+                      fontSize: "var(--fs-card-title)",
                       color: "#1C1C1E",
                       fontWeight: 400,
                       lineHeight: 1.25,
@@ -876,7 +813,7 @@ export default function AllOn4ScrollFeatures() {
                   ))}
 
                   {slide.checklistTitle && (
-                    <h4
+                    <h3
                       style={{
                         fontFamily: "var(--font-assistant), sans-serif",
                         fontSize: "1rem",
@@ -886,7 +823,7 @@ export default function AllOn4ScrollFeatures() {
                       }}
                     >
                       {slide.checklistTitle}
-                    </h4>
+                    </h3>
                   )}
 
                   {/* Feature Checklist */}

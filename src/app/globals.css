@@ -33,6 +33,11 @@
   --color-gray-text:   #7A7A7A;
   --color-dark:        #3C3C3C;
   --color-navy:        #1a1a2e;
+
+  /* Type scale shared by every section: phone → laptop → desktop */
+  --fs-section-title: clamp(1.6rem, 1.2rem + 1.6vw, 2.35rem);
+  --fs-card-title:    clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-body:          clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
 }
 
 /* ─── Reset ────────────────────────────────────────────────────────── */

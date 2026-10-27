@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, PhoneCall, Menu, X } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll-to-section";
 
 interface NavLinkItem {
@@ -19,6 +19,7 @@ const navLinks: NavLinkItem[] = [
   { label: "Overview", href: "#overview", id: "overview" },
   { label: "Results", href: "#transformations", id: "transformations" },
   { label: "Reviews", href: "#testimonials", id: "testimonials" },
+  { label: "Why Us", href: "#complete-my-smile", id: "complete-my-smile" },
   { label: "About", href: "#general-info", id: "general-info" },
   { label: "All on 4 vs X", href: "#all-on-4-vs-all-on-x", id: "all-on-4-vs-all-on-x" },
   { label: "Surgery", href: "#implant-surgery", id: "implant-surgery" },
@@ -27,7 +28,6 @@ const navLinks: NavLinkItem[] = [
   { label: "Clinic", href: "#our-practice", id: "our-practice" },
   { label: "Doctors", href: "#team", id: "team" },
   { label: "Accreditation", href: "#affiliations", id: "affiliations" },
-  { label: "Why Us", href: "#complete-my-smile", id: "complete-my-smile" },
   { label: "FAQs", href: "#faq", id: "faq", aliases: ["important-information", "book"] },
 ];
 
@@ -287,16 +287,16 @@ export default function Navbar() {
             <span className="sc-phone-text">02 9267 7777</span>
           </a>
 
-          {/* Primary "Book Online" CTA button */}
+          {/* Primary "Complete My Smile" CTA button (calls the clinic) */}
           <a
-            href="#book"
-            onClick={(e) => handleSectionClick(e, "#book")}
+            href="tel:0292677777"
+            aria-label="Complete My Smile: call 02 9267 7777"
             className="sc-primary-cta"
             style={{
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0.35rem",
+              gap: "0.4rem",
               padding: "0.55rem 1.25rem",
               background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
               color: "#ffffff",
@@ -312,7 +312,8 @@ export default function Navbar() {
               whiteSpace: "nowrap",
             }}
           >
-            Book Online
+            <PhoneCall size={15} aria-hidden />
+            Complete My Smile
           </a>
         </div>
 
@@ -435,12 +436,13 @@ export default function Navbar() {
                   02 9267 7777
                 </a>
                 <a
-                  href="#book"
-                  onClick={(e) => handleMobileClick(e, "#book")}
+                  href="tel:0292677777"
+                  aria-label="Complete My Smile: call 02 9267 7777"
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    gap: "0.5rem",
                     padding: "0.8rem",
                     background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
                     color: "#ffffff",
@@ -453,7 +455,8 @@ export default function Navbar() {
                     boxShadow: "0 4px 14px rgba(244, 122, 74, 0.4)",
                   }}
                 >
-                  Book a Consultation Online
+                  <PhoneCall size={16} aria-hidden />
+                  Complete My Smile
                 </a>
               </div>
             </div>

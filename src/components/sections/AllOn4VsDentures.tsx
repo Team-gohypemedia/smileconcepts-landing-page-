@@ -70,7 +70,7 @@ export default function AllOn4VsDentures() {
         <h2
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(1.35rem, 2.5vw, 2.15rem)",
+            fontSize: "var(--fs-section-title)",
             fontWeight: 400,
             color: "#F47A4A",
             lineHeight: 1.25,
@@ -86,7 +86,7 @@ export default function AllOn4VsDentures() {
         <p
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
-            fontSize: "clamp(0.92rem, 1.6vw, 1.02rem)",
+            fontSize: "var(--fs-body)",
             color: "#4F4F4F",
             textAlign: "center",
             maxWidth: "960px",

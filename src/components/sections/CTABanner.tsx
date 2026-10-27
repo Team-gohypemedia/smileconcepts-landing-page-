@@ -585,7 +585,7 @@ export default function CTABanner() {
               style={{
                 fontFamily: "var(--font-prata)",
                 fontWeight: 400,
-                fontSize: "clamp(1.4rem, 4.8vw, 2.8rem)",
+                fontSize: "var(--fs-section-title)",
                 color: "#fff",
                 lineHeight: 1.2,
                 marginBottom: "0.5rem",
@@ -619,7 +619,7 @@ export default function CTABanner() {
                 color: "rgba(255,255,255,0.92)",
                 fontFamily: "var(--font-assistant)",
                 fontWeight: 300,
-                fontSize: "clamp(0.84rem, 2.6vw, 0.94rem)",
+                fontSize: "var(--fs-body)",
                 lineHeight: 1.6,
                 maxWidth: "520px",
                 margin: "0 0 0.85rem 0",

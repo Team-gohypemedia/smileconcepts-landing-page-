@@ -1,5 +1,6 @@
 "use client";
 
+import { Cite } from "@/components/ui/Cite";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
@@ -8,15 +9,75 @@ import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stack
 import { GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
 
 
-const STACK_MOBILE_QUERY = "(max-width: 640px)";
+const STACK_MOBILE_QUERY = "(max-width: 900px)";
 const STACK_MOBILE_DOCK_PX = 84; // just below the mobile navbar
+const STACK_DESKTOP_DOCK_PX = 95; // just below the desktop navbar
 const STACK_BOTTOM_GAP_PX = 12;
+const PROCESS_STEP_COUNT = 5;
 
-export default function AllOn4Process() {
+type ProcessPart = "journey" | "recovery" | "risks" | "why";
+
+function ProstheticCard({ index, topPosition }: { index: 1 | 2; topPosition?: string }) {
+  const temporary = index === 1;
+  return (
+    <StackingCardItem index={index} topPosition={topPosition} className="mb-32 sm:mb-48 sc-stack-item">
+      <div className="sc-stack-card" style={{ backgroundColor: "#fff", borderRadius: "24px", border: "1px solid #EAE5DC", boxShadow: "0 24px 50px -15px rgba(28,28,30,0.08)", overflow: "hidden", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))", minHeight: "min(580px, calc(100vh - 140px))" }}>
+        <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.97rem", color: "#444", lineHeight: 1.65 }}>
+            <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.75rem", lineHeight: 1.2 }}>
+              {temporary ? "Temporary Teeth and Final Teeth: What To Expect" : "Acrylic or Zirconia Teeth: Choosing Your Final Teeth"}
+            </h2>
+            {temporary ? <>
+              <p>Will you be without teeth during treatment? For most suitable patients, no.</p>
+              <p>A fixed temporary bridge may be fitted on the day of surgery or shortly afterwards if implant stability and other clinical factors allow. If immediate loading is unsuitable, your dentist will explain the alternative plan. Temporary teeth require a modified diet during healing. <Cite refs="1" /></p>
+              <p>Once healing is complete, the final bridge is designed and fitted. We walk you through your material options at consultation, including the difference between acrylic and zirconia, so you can make a decision that actually makes sense for your budget and your priorities rather than just accepting whatever is standard.</p>
+              <p>It is worth understanding the difference between the two stages when you are comparing costs, because the materials and work involved are quite different.</p>
+            </> : <>
+              <p>Your final fixed teeth come in two materials, and both are fitted in Phase Two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here is how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, budget, and goals.</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.85rem", margin: "1rem 0" }}>
+                <div style={{ backgroundColor: "#FAF9F6", padding: "1.1rem", borderRadius: "12px", border: "1px solid #E5E0D7" }}>
+                  <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.12rem 0.55rem", borderRadius: "999px", backgroundColor: "#ECE7DE", color: "#555", marginBottom: "0.45rem" }}>Mid Tier</span>
+                  <strong className="sc-tier-title" style={{ display: "block", fontSize: "1.02rem", color: "#1C1C1E" }}>Acrylic on titanium — $10,000</strong>
+                  <p style={{ margin: "0.5rem 0 0", fontSize: "0.92rem", lineHeight: 1.6, color: "#444" }}>A lighter, reliable and more economical option. The teeth are acrylic bonded to a strong titanium bar, and the surface may need an occasional refresh or repair over the years.</p>
+                </div>
+                <div style={{ backgroundColor: "#FFF8F4", padding: "1.1rem", borderRadius: "12px", border: "1.5px solid #E86337" }}>
+                  <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.12rem 0.55rem", borderRadius: "999px", backgroundColor: "#1C1C1E", color: "#fff", marginBottom: "0.45rem" }}>Premium Tier</span>
+                  <strong className="sc-tier-title" style={{ display: "block", fontSize: "1.02rem", color: "#1C1C1E" }}>Zirconia — $14,000</strong>
+                  <p style={{ margin: "0.5rem 0 0", fontSize: "0.92rem", lineHeight: 1.6, color: "#444" }}>Offers high strength, excellent stain resistance and very natural aesthetics. Zirconia is milled from a single ceramic block, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.</p>
+                </div>
+              </div>
+              <p>We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and your priorities.</p>
+            </>}
+          </div>
+          <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>{index + 1} of 3 • {temporary ? "Temporary & Final Teeth" : "Choosing Your Final Teeth"}</span>
+            {temporary && <span style={{ color: "#E86337", fontSize: "0.82rem", fontWeight: 600 }}>Scroll down for Materials ↓</span>}
+          </div>
+        </div>
+        <div className="sc-stack-media" style={{ position: "relative", minHeight: "260px", overflow: "hidden", backgroundColor: "#000" }}>
+          {temporary ? (
+            <Image src="/assets/allon4/pmma-temporary-teeth.jpg" alt="PMMA temporary teeth bridge fitted in Phase 1" fill sizes="(max-width: 900px) 100vw, 740px" style={{ objectFit: "contain", objectPosition: "center center", backgroundColor: "#000" }} />
+          ) : (
+            <div style={{ position: "absolute", inset: 0, display: "grid", gridTemplateRows: "1fr 1fr", gap: "2px", backgroundColor: "#000" }}>
+              <div style={{ position: "relative" }}>
+                <Image src="/assets/allon4/acrylic-final-teeth.jpg" alt="Acrylic on titanium final teeth bridge" fill sizes="(max-width: 900px) 100vw, 740px" style={{ objectFit: "contain", objectPosition: "center center" }} />
+              </div>
+              <div style={{ position: "relative" }}>
+                <Image src="/assets/allon4/zirconia-final-teeth.jpg" alt="Zirconia final teeth bridge" fill sizes="(max-width: 900px) 100vw, 740px" style={{ objectFit: "contain", objectPosition: "center center" }} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </StackingCardItem>
+  );
+}
+
+export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart }) {
   const [activeStep, setActiveStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // On mobile, cards taller than the screen dock by their bottom edge instead of
+  // On smaller screens, cards taller than the screen dock by their bottom edge instead of
   // their top, so the whole card is readable before the next one slides over it.
   const stackRef = useRef<HTMLDivElement>(null);
   const [stackTops, setStackTops] = useState<(string | undefined)[]>([]);
@@ -26,22 +87,27 @@ export default function AllOn4Process() {
     if (!container) return;
 
     const computeTops = () => {
-      if (!window.matchMedia(STACK_MOBILE_QUERY).matches) {
-        setStackTops([]);
-        return;
-      }
+      const isMobile = window.matchMedia(STACK_MOBILE_QUERY).matches;
       const cards = Array.from(container.querySelectorAll<HTMLElement>(".sc-stack-card"));
-      setStackTops(
-        cards.map((card) => {
-          const height = card.getBoundingClientRect().height;
-          const top = Math.min(STACK_MOBILE_DOCK_PX, window.innerHeight - height - STACK_BOTTOM_GAP_PX);
-          return `${Math.round(top)}px`;
-        })
-      );
+      // Measure each card at its natural height, then give every card in the stack the
+      // tallest one's height (desktop), so a later card always fully covers the one under it.
+      container.style.setProperty("--sc-stack-h", "0px");
+      const heights = cards.map((card) => card.getBoundingClientRect().height);
+      const tallest = Math.max(0, ...heights);
+      if (isMobile || cards.length < 2) container.style.removeProperty("--sc-stack-h");
+      else container.style.setProperty("--sc-stack-h", `${Math.ceil(tallest)}px`);
+
+      const dock = isMobile ? STACK_MOBILE_DOCK_PX : STACK_DESKTOP_DOCK_PX;
+      const next = heights.map((natural) => {
+        const height = isMobile ? natural : Math.max(natural, tallest);
+        const top = Math.min(dock, window.innerHeight - height - STACK_BOTTOM_GAP_PX);
+        return `${Math.round(top)}px`;
+      });
+      setStackTops((prev) => (prev.length === next.length && prev.every((v, i) => v === next[i]) ? prev : next));
     };
 
     computeTops();
-    const observer = new ResizeObserver(computeTops);
+    const observer = new ResizeObserver(() => requestAnimationFrame(computeTops));
     container.querySelectorAll(".sc-stack-card").forEach((card) => observer.observe(card));
     window.addEventListener("resize", computeTops);
     return () => {
@@ -86,12 +152,12 @@ export default function AllOn4Process() {
 
   // Autoplay carousel every 5.5s, pauses on hover / touch
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || part !== "journey") return;
     const timer = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
+      setActiveStep((prev) => (prev + 1) % PROCESS_STEP_COUNT);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, part]);
 
   // Exact 5 Steps from Live Website (Preserved Verbatim)
   const steps = [
@@ -124,7 +190,8 @@ export default function AllOn4Process() {
 
   return (
     <section
-      id="procedure"
+      id={part === "journey" ? "procedure" : part === "why" ? "why-patients" : part}
+      className={`sc-process-${part}`}
       style={{
         padding: "clamp(3.5rem, 6vw, 6rem) 0",
         backgroundColor: "#FAF9F6",
@@ -178,6 +245,17 @@ export default function AllOn4Process() {
       </div>
 
       <style>{`
+        @media (min-width: 901px) {
+          .sc-stack-card {
+            min-height: var(--sc-stack-h, min(580px, calc(100vh - 140px))) !important;
+          }
+        }
+        .sc-stack-text li {
+          margin-bottom: 0.25rem;
+        }
+        .sc-stack-text li::marker {
+          color: #E86337;
+        }
         .sc-proc-carousel-stage {
           position: relative;
           width: 100vw;
@@ -324,11 +402,14 @@ export default function AllOn4Process() {
             min-height: 0 !important;
           }
           /* Each photo box matches its image's own proportions, so nothing is cropped */
-          .sc-stack-item:nth-child(1) .sc-stack-media { aspect-ratio: 1000 / 667; }
-          .sc-stack-item:nth-child(2) .sc-stack-media { aspect-ratio: 700 / 400; }
-          .sc-stack-item:nth-child(3) .sc-stack-media { aspect-ratio: 16 / 11; }
-          .sc-stack-item:nth-child(3) .sc-stack-media img { object-fit: contain !important; }
-          .sc-stack-item:nth-child(4) .sc-stack-media { aspect-ratio: 1376 / 768; }
+          .sc-stack-media { aspect-ratio: 1000 / 667; }
+          .sc-process-recovery .sc-stack-item:nth-child(2) .sc-stack-media { aspect-ratio: 2 / 1; }
+          .sc-process-recovery .sc-stack-item:nth-child(3) .sc-stack-media { aspect-ratio: 1 / 1; }
+          .sc-process-risks .sc-stack-item:first-child .sc-stack-media { aspect-ratio: 700 / 400; }
+          .sc-process-risks .sc-stack-item:nth-child(2) .sc-stack-media { aspect-ratio: 904 / 1024; }
+          .sc-process-risks .sc-stack-item:nth-child(2) .sc-stack-media img { object-fit: contain !important; }
+          .sc-process-risks .sc-stack-item:nth-child(3) .sc-stack-media { aspect-ratio: 348 / 395; }
+          .sc-process-why .sc-stack-media { aspect-ratio: 1376 / 768; }
           .sc-stack-chip {
             display: none !important;
           }
@@ -348,6 +429,9 @@ export default function AllOn4Process() {
           .sc-stack-text div {
             font-size: 0.88rem !important;
             line-height: 1.55 !important;
+          }
+          .sc-stack-text .sc-tier-title {
+            font-size: 0.98rem !important;
           }
           .sc-stack-text ul {
             font-size: 0.86rem !important;
@@ -384,6 +468,7 @@ export default function AllOn4Process() {
           zIndex: 1,
         }}
       >
+        {part === "journey" && <>
         {/* Exact Section Header from Live Website */}
         <div style={{ maxWidth: "860px", margin: "0 auto clamp(2rem, 4vw, 3rem)", textAlign: "center" }}>
           <div
@@ -415,7 +500,7 @@ export default function AllOn4Process() {
           <h2
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.75rem, 4.2vw, 2.75rem)",
+              fontSize: "var(--fs-section-title)",
               color: "#1C1C1E",
               fontWeight: 400,
               lineHeight: 1.25,
@@ -429,7 +514,7 @@ export default function AllOn4Process() {
           <p
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)",
+              fontSize: "var(--fs-body)",
               lineHeight: 1.6,
               color: "#5E616B",
               margin: "0 auto",
@@ -576,7 +661,7 @@ export default function AllOn4Process() {
                     <h3
                       style={{
                         fontFamily: "var(--font-prata), Georgia, serif",
-                        fontSize: "clamp(1.25rem, 2.2vw, 1.65rem)",
+                        fontSize: "var(--fs-card-title)",
                         fontWeight: 400,
                         color: "#1C1C1E",
                         margin: "0 0 0.85rem 0",
@@ -624,18 +709,20 @@ export default function AllOn4Process() {
         </div>
 
         {/* ─── STACKING CARDS: RECOVERY, BONE LOSS, RISKS & WHY CHOOSE ─── */}
-        <div
+        </>}
+        {part !== "journey" && <div
           ref={stackRef}
           className="sc-stacking-cards-wrapper"
           style={{
             width: "100%",
             maxWidth: "1480px",
-            margin: "3.5rem auto 0",
+            margin: "0 auto",
             position: "relative",
           }}
         >
-          <StackingCards totalCards={4} scaleMultiplier={0.015}>
+          <StackingCards totalCards={part === "recovery" || part === "risks" ? 3 : 1} scaleMultiplier={0.015}>
             {/* 1. Recovery, Aftercare & Ongoing Maintenance */}
+            {part === "recovery" && <>
             <StackingCardItem index={0} topPosition={stackTops[0]} className="mb-32 sm:mb-48 sc-stack-item">
               <div
                 className="sc-stack-card"
@@ -652,24 +739,24 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       Recovery, Aftercare &amp; Ongoing Maintenance after All on 4 Implant Surgery
                     </h2>
 
-                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
+                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.97rem", lineHeight: 1.6, color: "#444", margin: "0 0 1rem" }}>
                       Recovery from All on 4 is usually easier than people expect. Most Smile Concepts patients return to their normal routine within a few days, while the implants fuse with the jawbone over the next three to six months. Here is what to expect at each stage.
                     </p>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.6rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.85rem" }}>
                       {/* The First Few Days */}
-                      <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                        <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                      <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                        <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
                           The First Few Days After Surgery: What to Expect
                         </h3>
-                        <p style={{ margin: "0 0 0.35rem", color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
+                        <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
                           Some swelling, mild bruising, and general tenderness in the days after surgery are all normal. These effects are temporary and usually start fading within the first week. We&apos;ll go through your aftercare plan with you in detail, covering:
                         </p>
-                        <ul style={{ paddingLeft: "1.1rem", margin: 0, color: "#555", fontSize: "0.76rem", lineHeight: 1.45 }}>
+                        <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.88rem", lineHeight: 1.6 }}>
                           <li>How to manage swelling and discomfort</li>
                           <li>What medication you&apos;ll need and how to take it</li>
                           <li>Oral hygiene during the early healing period</li>
@@ -679,31 +766,31 @@ export default function AllOn4Process() {
                       </div>
 
                       {/* Eating & Long Term */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                        <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+                        <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
                             Eating During Healing
                           </h3>
-                          <p style={{ margin: 0, color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
+                          <p style={{ margin: 0, color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
                             During this period, the implants fuse with the jawbone, so we recommend a softer diet to avoid putting unnecessary pressure on them. We&apos;ll explain exactly what&apos;s appropriate to eat at each stage of recovery.
                           </p>
                         </div>
 
-                        <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
+                        <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
                             Long-Term Maintenance
                           </h3>
-                          <p style={{ margin: "0 0 0.35rem", color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
+                          <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
                             All on 4 is designed as a long-term solution, but it still needs ongoing care to stay that way. To help maintain the health of your implants and the surrounding tissue, we recommend:
                           </p>
-                          <ul style={{ paddingLeft: "1.1rem", margin: 0, color: "#555", fontSize: "0.76rem", lineHeight: 1.45 }}>
+                          <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.88rem", lineHeight: 1.6 }}>
                             <li>Daily brushing and cleaning around the bridge</li>
                             <li>Following the oral hygiene instructions your clinician gives you</li>
                             <li>Attending regular dental check-ups</li>
                             <li>Booking in for professional implant maintenance and cleaning</li>
                             <li>Letting us know promptly if anything feels off</li>
                           </ul>
-                          <p style={{ margin: "0.35rem 0 0", color: "#555", fontSize: "0.78rem", lineHeight: 1.45 }}>
+                          <p style={{ margin: "0.35rem 0 0", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
                             With proper care, many patients go on to enjoy their All on 4 implants for years to come.
                           </p>
                         </div>
@@ -713,10 +800,10 @@ export default function AllOn4Process() {
 
                   <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>
-                      1 of 4 • Recovery &amp; Maintenance
+                      1 of 3 • Recovery &amp; Maintenance
                     </span>
                     <span style={{ color: "#E86337", fontSize: "0.82rem", fontWeight: 600, fontFamily: "var(--font-assistant)" }}>
-                      Scroll down for Risks ↓
+                      Scroll down for Temporary Teeth ↓
                     </span>
                   </div>
                 </div>
@@ -739,8 +826,13 @@ export default function AllOn4Process() {
               </div>
             </StackingCardItem>
 
+            <ProstheticCard index={1} topPosition={stackTops[1]} />
+            <ProstheticCard index={2} topPosition={stackTops[2]} />
+            </>}
+
             {/* 2. What You Should Know About Risks */}
-            <StackingCardItem index={1} topPosition={stackTops[1]} className="mb-32 sm:mb-48 sc-stack-item">
+            {part === "risks" && <>
+            <StackingCardItem index={0} topPosition={stackTops[0]} className="mb-32 sm:mb-48 sc-stack-item">
               <div
                 className="sc-stack-card"
                 style={{
@@ -756,7 +848,7 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       What You Should Know About Risks Associated with All on 4 Dental Implants
                     </h2>
 
@@ -766,19 +858,19 @@ export default function AllOn4Process() {
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.45rem 0.85rem", fontSize: "0.78rem", lineHeight: 1.45, color: "#444" }}>
                       <div><strong>Healing varies:</strong> Overall health, blood supply, and adherence to post-operative instructions affect how well and how quickly implants integrate.</div>
-                      <div>Smoking is associated with higher implant failure risk and greater bone loss. Discuss stopping smoking and individual risk management with your treating team. [4]</div>
+                      <div>Smoking is associated with higher implant failure risk and greater bone loss. Discuss stopping smoking and individual risk management with your treating team. <Cite refs="4" /></div>
                       <div><strong>Medical history matters:</strong> Certain medications and conditions can affect healing, so we take a full history before proceeding.</div>
                       <div><strong>Maintenance is not optional:</strong> The bridge and implants need regular professional cleaning. Skipping maintenance appointments increases the risk of complications over time.</div>
-                      <div style={{ gridColumn: "1 / -1" }}><strong>Implant failure is possible:</strong> An implant may not integrate or may lose support later. Biological and mechanical complications can occur even after initial healing. [2–5]</div>
+                      <div style={{ gridColumn: "1 / -1" }}><strong>Implant failure is possible:</strong> An implant may not integrate or may lose support later. Biological and mechanical complications can occur even after initial healing. <Cite refs="2–5" /></div>
                     </div>
                   </div>
 
                   <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>
-                      2 of 4 • Risk Awareness
+                      1 of 3 • Risk Awareness
                     </span>
                     <span style={{ color: "#E86337", fontSize: "0.82rem", fontWeight: 600, fontFamily: "var(--font-assistant)" }}>
-                      Scroll down for Revision &amp; Longevity ↓
+                      Scroll down for Revision ↓
                     </span>
                   </div>
                 </div>
@@ -801,8 +893,8 @@ export default function AllOn4Process() {
               </div>
             </StackingCardItem>
 
-            {/* 3. Revision & Longevity */}
-            <StackingCardItem index={2} topPosition={stackTops[2]} className="mb-32 sm:mb-48 sc-stack-item">
+            {/* 3. Revision */}
+            <StackingCardItem index={1} topPosition={stackTops[1]} className="mb-32 sm:mb-48 sc-stack-item">
               <div
                 className="sc-stack-card"
                 style={{
@@ -818,30 +910,41 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <p className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h3 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       All on 4 Revision and Failed Implant Treatment
-                    </p>
+                    </h3>
 
                     <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
-                      We assess existing full arch implants and bridges placed at other clinics or overseas. Problems may involve an implant that has failed, inflammation and bone loss around implants, a broken bridge or an uncomfortable bite. Bring previous records, scans and implant brand details if available. Depending on the findings, treatment may involve repairing or replacing the bridge, treating disease, removing failed implants or planning further surgery. Existing implants cannot always be reused, and you must check compatibility with replacement components. Revision treatment is individually quoted after assessment.
+                      We assess existing full arch implants and bridges placed at other clinics or overseas. Revision treatment is individually quoted after assessment.
                     </p>
 
-                    <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.9rem", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                      <h2 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.25rem" }}>
-                        How Long Do All on 4 Implants and Bridges Last?
-                      </h2>
-                      <p style={{ margin: 0, color: "#555", fontSize: "0.78rem", lineHeight: 1.5 }}>
-                        The implants in the jawbone and the bridge attached to them have different maintenance needs. Long-term studies support the use of All on 4 in selected patients, but they also report biological and mechanical complications. A bridge may need repair or replacement while its implants remain usable. No individual lifespan is guaranteed. [2,3] Regular reviews assess the gums, bone support, bite, bridge and screws. Cleaning access, smoking, health and bite forces all influence ongoing care. Ask about likely maintenance and replacement costs before treatment. [4,5]
-                      </p>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem 1.5rem", marginTop: "1.1rem", fontFamily: "var(--font-assistant)", fontSize: "0.86rem", lineHeight: 1.55, color: "#555" }}>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Problems we assess</strong>
+                        A failed implant, inflammation and bone loss around implants, a broken bridge or an uncomfortable bite.
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>What to bring</strong>
+                        Previous records, scans and implant brand details, if available.
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Possible treatment</strong>
+                        Repairing or replacing the bridge, treating disease, removing failed implants or planning further surgery.
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Good to know</strong>
+                        Existing implants cannot always be reused, and you must check compatibility with replacement components.
+                      </div>
                     </div>
+
                   </div>
 
                   <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>
-                      3 of 4 • Revision &amp; Longevity
+                      2 of 3 • Revision
                     </span>
                     <span style={{ color: "#E86337", fontSize: "0.82rem", fontWeight: 600, fontFamily: "var(--font-assistant)" }}>
-                      Scroll down for Why Us ↓
+                      Scroll down for Longevity ↓
                     </span>
                   </div>
                 </div>
@@ -864,15 +967,15 @@ export default function AllOn4Process() {
               </div>
             </StackingCardItem>
 
-            {/* 4. Why Patients Choose Smile Concepts */}
-            <StackingCardItem index={3} topPosition={stackTops[3]} className="mb-12 sc-stack-item">
+            {/* 4. Longevity */}
+            <StackingCardItem index={2} topPosition={stackTops[2]} className="mb-32 sm:mb-48 sc-stack-item">
               <div
                 className="sc-stack-card"
                 style={{
                   backgroundColor: "#ffffff",
                   borderRadius: "24px",
                   border: "1px solid #EAE5DC",
-                  boxShadow: "0 24px 50px -15px rgba(232,99,55,0.14), 0 0 0 1px rgba(234,229,220,0.7)",
+                  boxShadow: "0 24px 50px -15px rgba(28,28,30,0.08), 0 0 0 1px rgba(234,229,220,0.7)",
                   overflow: "hidden",
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))",
@@ -881,7 +984,61 @@ export default function AllOn4Process() {
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
-                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.35rem, 2.2vw, 1.85rem)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", fontWeight: 400, lineHeight: 1.2, color: "#1C1C1E", margin: "0 0 0.5rem" }}>
+                      How Long Do All on 4 Implants and Bridges Last?
+                    </h2>
+                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.75rem" }}>
+                      The implants in the jawbone and the bridge attached to them have different maintenance needs. No individual lifespan is guaranteed. <Cite refs="2,3" />
+                    </p>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem 1.5rem", marginTop: "1.1rem", fontFamily: "var(--font-assistant)", fontSize: "0.86rem", lineHeight: 1.55, color: "#555" }}>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Studies and complications</strong>
+                        Long-term studies support All on 4 in selected patients, but they also report biological and mechanical complications. <Cite refs="2,3" />
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Bridge vs implants</strong>
+                        A bridge may need repair or replacement while its implants remain usable.
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Regular reviews</strong>
+                        We assess the gums, bone support, bite, bridge and screws.
+                      </div>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>What affects ongoing care</strong>
+                        Cleaning access, smoking, health and bite forces. Ask about likely maintenance and replacement costs before treatment. <Cite refs="4,5" />
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>3 of 3 • Longevity</span>
+                    <span style={{ color: "#E86337", fontSize: "0.82rem", fontWeight: 600, fontFamily: "var(--font-assistant)" }}>Continue to meet your dentists ↓</span>
+                  </div>
+                </div>
+                <div className="sc-stack-media" style={{ position: "relative", minHeight: "280px", overflow: "hidden" }}>
+                  <Image src="/assets/allon4/dental-implants-model.jpg" alt="Dental implant model showing a fixed implant restoration" fill sizes="(max-width: 900px) 100vw, 740px" style={{ objectFit: "cover", objectPosition: "center center" }} />
+                </div>
+              </div>
+            </StackingCardItem>
+
+            </>}
+            {/* 4. Why Patients Choose Smile Concepts */}
+            {part === "why" && <StackingCardItem index={0} topPosition={stackTops[0]} className="mb-12 sc-stack-item">
+              <div
+                className="sc-stack-card"
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "24px",
+                  border: "none",
+                  boxShadow: "0 24px 60px -20px rgba(28,28,30,0.16)",
+                  overflow: "hidden",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))",
+                  minHeight: "min(580px, calc(100vh - 140px))",
+                }}
+              >
+                <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div>
+                    <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       Why Patients Choose Smile Concepts
                     </h2>
 
@@ -889,38 +1046,35 @@ export default function AllOn4Process() {
                       Choosing all on 4 procedure is a significant decision. Patients want experienced care, clear communication, and a treatment plan tailored to their needs.
                     </p>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.5rem 0.85rem", fontSize: "0.78rem", lineHeight: 1.45 }}>
-                      <div>
-                        <strong>Over 25 Years of Experience:</strong> Dr Manish Shah and Dr Kinnar Shah each bring over 25 years of experience with a strong focus on complex restorative and implant cases.
+                    <div className="sc-why-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.1rem 1.5rem", fontSize: "0.86rem", lineHeight: 1.55, color: "#555", marginTop: "1.1rem", fontFamily: "var(--font-assistant)" }}>
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Over 25 Years of Experience</strong> Dr Manish Shah and Dr Kinnar Shah each bring over 25 years of experience with a strong focus on complex restorative and implant cases.
                       </div>
-                      <div>
-                        <strong>3D Imaging and Digital Planning:</strong> CBCT imaging is standard on every all on 4 procedure we do. It gives us a detailed picture of your bone before anything happens, and we use guided surgical planning to improve precision.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>3D Imaging and Digital Planning</strong> CBCT imaging is standard on every all on 4 procedure we do. It gives us a detailed picture of your bone before anything happens, and we use guided surgical planning to improve precision.
                       </div>
-                      <div>
-                        <strong>Everything Under One Roof:</strong> Consultation, imaging, surgery, temporary teeth, final restoration, and ongoing maintenance all happen here. One team that knows your case the whole way through.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Everything Under One Roof</strong> Consultation, imaging, surgery, temporary teeth, final restoration, and ongoing maintenance all happen here. One team that knows your case the whole way through.
                       </div>
-                      <div>
-                        <strong>Experience With Complex Cases:</strong> Significant bone loss, years of denture wear, multiple failing teeth. We see these regularly and plan properly for them.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Experience With Complex Cases</strong> Significant bone loss, years of denture wear, multiple failing teeth. We see these regularly and plan properly for them.
                       </div>
-                      <div>
-                        <strong>Sedation Available:</strong> If the procedure makes you very anxious, sedation is available. You do not have to push through something that really stresses you out.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Sedation Available</strong> If the procedure makes you very anxious, sedation is available. You do not have to push through something that really stresses you out.
                       </div>
-                      <div>
-                        <strong>Multiple Implant Systems:</strong> We work across leading systems including Neoss, DIO, Nobel Biocare, Straumann, and many other leading implant brands, and accept revision cases from other clinics and overseas.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Multiple Implant Systems</strong> We work across leading systems including Neoss, DIO, Nobel Biocare, Straumann, and many other leading implant brands, and accept revision cases from other clinics and overseas.
                       </div>
-                      <div>
-                        <strong>Flexible Ways to Pay:</strong> Interest-free payment plans up to 48 months and up to $30,000 (eligibility applies), plus guidance on superannuation access for eligible patients.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Flexible Ways to Pay</strong> Interest-free payment plans up to 48 months and up to $30,000 (eligibility applies), plus guidance on superannuation access for eligible patients.
                       </div>
-                      <div>
-                        <strong>Trusted by Sydney Patients:</strong> An award winning Sydney CBD dental practice with {GOOGLE_REVIEW_COUNT} Google reviews.
+                      <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
+                        <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Trusted by Sydney Patients</strong> An award winning Sydney CBD dental practice with {GOOGLE_REVIEW_COUNT} Google reviews.
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "1px solid #F0ECE4", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
-                    <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#8E8E93" }}>
-                      4 of 4 • Award-Winning Practice
-                    </span>
+                  <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "none", display: "flex", alignItems: "center", justifyContent: "flex-start", flexWrap: "wrap", gap: "0.5rem" }}>
                     <a
                       href="#book"
                       style={{
@@ -960,9 +1114,9 @@ export default function AllOn4Process() {
                   </div>
                 </div>
               </div>
-            </StackingCardItem>
+            </StackingCardItem>}
           </StackingCards>
-        </div>
+        </div>}
       </div>
     </section>
   );

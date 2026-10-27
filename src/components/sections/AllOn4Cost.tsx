@@ -1,33 +1,31 @@
 "use client";
 
+import { Cite } from "@/components/ui/Cite";
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  Plus,
-  Minus,
   ArrowRight,
   ArrowLeft,
   Calculator,
   Phone,
-  ShieldCheck,
-  CreditCard,
-  Layers,
-  Sparkles,
-  Award,
-  Clock,
-  HeartHandshake,
 } from "lucide-react";
-
-const COST_TOPIC_COUNT = 5;
 
 // Interest-free payment plans are capped at this amount; anything above it is paid outside the plan
 const FINANCE_LIMIT = 30000;
 
 const formatAud = (amount: number) => `$${amount.toLocaleString("en-AU")}`;
 
-export default function AllOn4Cost() {
-  const [openSection, setOpenSection] = useState<string | null>(null);
+// Phase 1 is the advertised "from $18,000" price: surgery plus temporary teeth only
+const PHASE_1_PER_ARCH = 18000;
+
+// Phase 2 final teeth options, ordered from mid tier to premium
+const FINAL_TEETH = {
+  acrylic: { name: "Acrylic on Titanium", short: "Acrylic", tier: "Mid Tier", perArch: 10000 },
+  zirconia: { name: "Monolithic Zirconia", short: "Zirconia", tier: "Premium Tier", perArch: 14000 },
+} as const;
+
+export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding" }) {
+  const topicCount = part === "funding" ? 3 : 1;
   const [activePhase, setActivePhase] = useState<0 | 1>(0);
   const phasesGridRef = useRef<HTMLDivElement>(null);
 
@@ -65,8 +63,8 @@ export default function AllOn4Cost() {
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
   // Calculations
-  const phase1PerArch = 18000;
-  const phase2PerArch = selectedMaterial === "acrylic" ? 10000 : 14000;
+  const phase1PerArch = PHASE_1_PER_ARCH;
+  const phase2PerArch = FINAL_TEETH[selectedMaterial].perArch;
   const totalPerArch = phase1PerArch + phase2PerArch;
   const archMultiplier = selectedArch === "both" ? 2 : 1;
   const grandTotal = totalPerArch * archMultiplier;
@@ -74,28 +72,24 @@ export default function AllOn4Cost() {
   const balanceOutsidePlan = grandTotal - financedAmount;
   const weeklyEstimate = Math.round(financedAmount / (financeMonths * 4.33));
 
-  const toggleSection = (id: string) => {
-    setOpenSection(openSection === id ? null : id);
-  };
-
   const handleNextCostTopic = () => {
-    setActiveCostTopic((prev) => (prev + 1) % COST_TOPIC_COUNT);
+    setActiveCostTopic((prev) => (prev + 1) % topicCount);
   };
 
   const handlePrevCostTopic = () => {
-    setActiveCostTopic((prev) => (prev - 1 + COST_TOPIC_COUNT) % COST_TOPIC_COUNT);
+    setActiveCostTopic((prev) => (prev - 1 + topicCount) % topicCount);
   };
 
   // Autoplay slide transition (rotates every 5.5s, pauses on user hover)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || topicCount < 2) return;
     const timer = setInterval(() => {
       // Topics are text-heavy: on phones readers move through them with the arrows instead
       if (window.matchMedia("(max-width: 640px)").matches) return;
-      setActiveCostTopic((prev) => (prev + 1) % COST_TOPIC_COUNT);
+      setActiveCostTopic((prev) => (prev + 1) % topicCount);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, topicCount]);
 
   const costTopics = [
     {
@@ -154,47 +148,6 @@ export default function AllOn4Cost() {
       ),
     },
     {
-      id: "materials",
-      headingTag: "h2" as const,
-      tabLabel: "Acrylic or Zirconia",
-      badge: "Choosing Your Final Teeth",
-      title: "Acrylic or Zirconia Teeth: Choosing Your Final Teeth",
-      src: "/assets/allon4/temporary-final-teeth-bridge.jpg",
-      alt: "Acrylic vs Zirconia Final Teeth Bridge",
-      caption: "Phase two permanent teeth: engineered for long-term function & beauty",
-      objectPosition: "center center",
-      content: (
-        <div style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", color: "#444", lineHeight: 1.65 }}>
-          <p style={{ marginTop: "0.5rem" }}>
-            Your final fixed teeth come in two materials, and both are fitted in Phase Two once your implants have healed. Unlike the temporary teeth you leave with after surgery, these are built for long-term wear. Here is how acrylic on titanium and zirconia compare, so you can choose the option that suits your bite, budget, and goals.
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.85rem", margin: "1rem 0" }}>
-            <div style={{ backgroundColor: "#FFFFFF", padding: "1rem", borderRadius: "12px", border: "1px solid #E5E0D7" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                <strong style={{ color: "#1C1C1E" }}>Acrylic on titanium</strong>
-                <span style={{ fontWeight: 700, color: "#E86337", fontSize: "1rem" }}>$10,000</span>
-              </div>
-              <p style={{ margin: 0, fontSize: "0.86rem", color: "#555", lineHeight: 1.5 }}>
-                A lighter, reliable and more economical option. The teeth are acrylic bonded to a strong titanium bar, and the surface may need an occasional refresh or repair over the years.
-              </p>
-            </div>
-            <div style={{ backgroundColor: "#FAF7F2", padding: "1rem", borderRadius: "12px", border: "1px solid #D5CEBF" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                <strong style={{ color: "#1C1C1E" }}>Zirconia</strong>
-                <span style={{ fontWeight: 700, color: "#E86337", fontSize: "1rem" }}>$14,000</span>
-              </div>
-              <p style={{ margin: 0, fontSize: "0.86rem", color: "#555", lineHeight: 1.5 }}>
-                Offers high strength, excellent stain resistance and very natural aesthetics. Zirconia is milled from a single ceramic block, resists chipping and staining, and is the choice most patients make when longevity and aesthetics are the priority.
-              </p>
-            </div>
-          </div>
-          <p style={{ margin: 0 }}>
-            We walk you through both options at your consultation, with examples you can see and hold, so the decision fits your budget and your priorities.
-          </p>
-        </div>
-      ),
-    },
-    {
       id: "insurance",
       headingTag: "h2" as const,
       tabLabel: "Insurance & Medicare",
@@ -210,7 +163,7 @@ export default function AllOn4Cost() {
             Private health insurance benefits depend on your policy, item numbers, waiting periods and annual or lifetime limits.
           </p>
           <p style={{ margin: 0 }}>
-            Ask your insurer for a written benefit estimate using your itemised quote. Medicare generally does not cover routine private dental implant treatment. [6]
+            Ask your insurer for a written benefit estimate using your itemised quote. Medicare generally does not cover routine private dental implant treatment. <Cite refs="6" />
           </p>
         </div>
       ),
@@ -231,7 +184,7 @@ export default function AllOn4Cost() {
             Possibly. If dental treatment is needed to relieve chronic pain or a condition affecting your quality of life, you may be eligible to apply to the ATO for early release of superannuation on compassionate grounds.
           </p>
           <p>
-            The ATO assesses applications case by case against strict criteria, requires supporting reports from two practitioners and an itemised treatment plan, and recommends considering other payment options first. Consider the tax and retirement savings implications and seek independent financial advice. [7]
+            The ATO assesses applications case by case against strict criteria, requires supporting reports from two practitioners and an itemised treatment plan, and recommends considering other payment options first. Consider the tax and retirement savings implications and seek independent financial advice. <Cite refs="7" />
           </p>
           <div style={{ backgroundColor: "#F7F4EE", padding: "0.85rem 1.15rem", borderRadius: "10px", borderLeft: "4px solid #E86337", margin: "0.85rem 0 0" }}>
             <p style={{ margin: 0, fontWeight: 600, color: "#1C1C1E" }}>
@@ -284,9 +237,177 @@ export default function AllOn4Cost() {
     },
   ];
 
+  const visibleTopics = costTopics.filter((topic) =>
+    part === "funding" ? ["insurance", "super", "plans"].includes(topic.id) : topic.id === "factors"
+  );
+
+  const showcase = (
+    <>
+        {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO BG, NO BOX FRAME, DETAILS LEFT, FULL IMAGE RIGHT) ─── */}
+        <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          style={{
+            width: "100%",
+            maxWidth: "100%",
+            margin: part === "cost" ? "3rem auto" : "0 auto",
+            padding: 0,
+            boxSizing: "border-box",
+          }}
+        >
+          {/* Main 2-Column Showcase */}
+          <div className="sc-cost-showcase-grid">
+            {/* Left: Detailed Verbatim Content Panel (Uniform Height) */}
+            <div className="sc-cost-showcase-panel">
+              {visibleTopics.map((topic, topicIdx) => {
+                const isActive = topicIdx === activeCostTopic;
+                const TitleTag = topic.headingTag;
+                return (
+                <motion.div
+                  key={topic.id}
+                  hidden={!isActive}
+                  initial={false}
+                  animate={isActive ? { y: 0, opacity: 1 } : { y: 15, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  style={{ display: isActive ? "flex" : "none", flexDirection: "column", flex: 1 }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-assistant)",
+                        fontSize: "0.76rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "#E86337",
+                      }}
+                    >
+                      {topic.badge}
+                    </span>
+                  </div>
+
+                  <TitleTag
+                    style={{
+                      fontFamily: "var(--font-prata)",
+                      fontSize: "var(--fs-card-title)",
+                      fontWeight: 400,
+                      color: "#1C1C1E",
+                      margin: "0 0 0.85rem",
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {topic.title}
+                  </TitleTag>
+
+                  <div style={{ flex: 1 }}>
+                    {topic.content}
+                  </div>
+                </motion.div>
+                );
+              })}
+
+              {/* Navigation & Actions Footer */}
+              {visibleTopics.length > 1 && <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "1rem",
+                  paddingTop: "1.25rem",
+                  marginTop: "1.25rem",
+                  borderTop: "1px solid #ECE7DE",
+                }}
+              >
+                {/* Dots & Counter */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {visibleTopics.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActiveCostTopic(i)}
+                      aria-label={`Go to topic ${i + 1}`}
+                      style={{
+                        height: "8px",
+                        width: activeCostTopic === i ? "24px" : "8px",
+                        borderRadius: "999px",
+                        backgroundColor: activeCostTopic === i ? "#E86337" : "#D5CEBF",
+                        border: "none",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        padding: 0,
+                      }}
+                    />
+                  ))}
+                  <span
+                    style={{
+                      marginLeft: "0.5rem",
+                      fontSize: "0.78rem",
+                      color: "#777",
+                      fontFamily: "var(--font-assistant)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {activeCostTopic + 1} of {visibleTopics.length}
+                  </span>
+                </div>
+
+                {/* Arrow Controls */}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <button
+                    type="button"
+                    onClick={handlePrevCostTopic}
+                    aria-label="Previous Topic"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      borderRadius: "50%",
+                      backgroundColor: "#FAF6F0",
+                      border: "1px solid #E5E0D7",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#1C1C1E",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <ArrowLeft size={17} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextCostTopic}
+                    aria-label="Next Topic"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      borderRadius: "50%",
+                      backgroundColor: "#E86337",
+                      border: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#FFFFFF",
+                      boxShadow: "0 4px 12px rgba(232, 99, 55, 0.25)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <ArrowRight size={17} />
+                  </button>
+                </div>
+              </div>}
+            </div>
+          </div>
+        </div>
+    </>
+  );
+
   return (
     <section
-      id="cost"
+      id={part === "cost" ? "cost" : "payment-options"}
       style={{
         padding: "clamp(3.5rem, 6vw, 6rem) 0",
         backgroundColor: "#FAF9F6",
@@ -447,13 +568,14 @@ export default function AllOn4Cost() {
       `}</style>
 
       <div className="container-sc" style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 1.25rem" }}>
+        {part === "cost" && <>
         {/* Exact Section Heading & Intro from Live Website */}
         <div style={{ maxWidth: "1020px", margin: "0 auto 2.5rem", textAlign: "center" }}>
           <h2
             className="sc-cost-main-title"
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.5rem, 3.2vw, 2.25rem)",
+              fontSize: "var(--fs-section-title)",
               color: "#1C1C1E",
               fontWeight: 400,
               lineHeight: 1.22,
@@ -467,7 +589,7 @@ export default function AllOn4Cost() {
           <div
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "clamp(0.88rem, 2.8vw, 1.05rem)",
+              fontSize: "var(--fs-body)",
               lineHeight: 1.68,
               color: "#444449",
               textAlign: "left",
@@ -495,12 +617,14 @@ export default function AllOn4Cost() {
           </div>
         </div>
 
+        {showcase}
+
         {/* ─── TWO PHASE CARDS (Exact Live Site Content) ─── */}
         <div style={{ maxWidth: "980px", margin: "0 auto" }}>
           <h2
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.2rem, 3.8vw, 1.5rem)",
+              fontSize: "var(--fs-card-title)",
               fontWeight: 400,
               color: "#1C1C1E",
               textAlign: "center",
@@ -555,9 +679,9 @@ export default function AllOn4Cost() {
               >
                 Phase 1
               </span>
-              <h4 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.2vw, 1.35rem)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
+              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
                 Surgery &amp; Same-Day Temporary Teeth
-              </h4>
+              </h3>
               <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
                 <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
                 <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.55rem, 4.8vw, 2rem)", fontWeight: 700, color: "#1C1C1E" }}>
@@ -620,9 +744,9 @@ export default function AllOn4Cost() {
               >
                 Phase 2
               </span>
-              <h4 style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.2vw, 1.35rem)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
+              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
                 Your Final Fixed Teeth
-              </h4>
+              </h3>
               <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
                 <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
@@ -749,7 +873,7 @@ export default function AllOn4Cost() {
               <p
                 style={{
                   fontFamily: "var(--font-prata), Georgia, serif",
-                  fontSize: "clamp(1.2rem, 3.2vw, 1.55rem)",
+                  fontSize: "var(--fs-card-title)",
                   color: "#1C1C1E",
                   margin: 0,
                   fontWeight: 400,
@@ -784,7 +908,7 @@ export default function AllOn4Cost() {
                 maxWidth: "760px",
               }}
             >
-              Tailor your treatment options to calculate your transparent two-phase total and view interest-free weekly payment estimates.
+              Pick your arches and final teeth to see your total and a weekly payment estimate.
             </p>
           </div>
 
@@ -864,7 +988,7 @@ export default function AllOn4Cost() {
                   </div>
                 </div>
 
-                {/* Material Toggle */}
+                {/* Phase 1 – always included, not selectable */}
                 <div>
                   <label
                     className="sc-calc-ctrl-label"
@@ -879,59 +1003,96 @@ export default function AllOn4Cost() {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    2. Select Final Bridge Material (Phase 2):
+                    2. Phase 1: Temporary Teeth
+                  </label>
+                  <div
+                    className="sc-calc-btn"
+                    style={{
+                      padding: "0.75rem 0.95rem",
+                      borderRadius: "12px",
+                      border: "1px dashed #D9D2C6",
+                      backgroundColor: "#F4EFEB",
+                      fontFamily: "var(--font-assistant)",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.75rem", fontWeight: 700, color: "#1C1C1E", fontSize: "clamp(0.85rem, 2vw, 0.92rem)" }}>
+                      <span>Temporary Teeth</span>
+                      <span>{formatAud(PHASE_1_PER_ARCH)} / arch</span>
+                    </div>
+                    <span className="sc-calc-btn-sub" style={{ fontSize: "0.78rem", color: "#666", display: "block", marginTop: "0.2rem" }}>
+                      Always included. Fitted at surgery and lasts about 6 to 12 months.
+                    </span>
+                  </div>
+                </div>
+
+                {/* Phase 2 – final teeth material */}
+                <div>
+                  <label
+                    className="sc-calc-ctrl-label"
+                    style={{
+                      display: "block",
+                      fontFamily: "var(--font-assistant)",
+                      fontSize: "0.82rem",
+                      fontWeight: 700,
+                      color: "#1C1C1E",
+                      marginBottom: "0.55rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    3. Phase 2: Final Teeth
                   </label>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                    <button
-                      type="button"
-                      className="sc-calc-btn"
-                      onClick={() => setSelectedMaterial("acrylic")}
-                      style={{
-                        padding: "0.75rem 0.85rem",
-                        borderRadius: "12px",
-                        border: selectedMaterial === "acrylic" ? "2px solid #E86337" : "1px solid #E5E0D7",
-                        backgroundColor: selectedMaterial === "acrylic" ? "#ffffff" : "#ffffff",
-                        color: selectedMaterial === "acrylic" ? "#E86337" : "#444",
-                        fontFamily: "var(--font-assistant)",
-                        fontWeight: 700,
-                        cursor: "pointer",
-                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
-                        transition: "all 0.2s ease",
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        boxShadow: selectedMaterial === "acrylic" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
-                      }}
-                    >
-                      <div>Acrylic on Titanium</div>
-                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedMaterial === "acrylic" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
-                        $10,000 / arch
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      className="sc-calc-btn"
-                      onClick={() => setSelectedMaterial("zirconia")}
-                      style={{
-                        padding: "0.75rem 0.85rem",
-                        borderRadius: "12px",
-                        border: selectedMaterial === "zirconia" ? "2px solid #E86337" : "1px solid #E5E0D7",
-                        backgroundColor: selectedMaterial === "zirconia" ? "#ffffff" : "#ffffff",
-                        color: selectedMaterial === "zirconia" ? "#E86337" : "#444",
-                        fontFamily: "var(--font-assistant)",
-                        fontWeight: 700,
-                        cursor: "pointer",
-                        fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
-                        transition: "all 0.2s ease",
-                        textAlign: "center",
-                        lineHeight: 1.3,
-                        boxShadow: selectedMaterial === "zirconia" ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
-                      }}
-                    >
-                      <div>Monolithic Zirconia</div>
-                      <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: selectedMaterial === "zirconia" ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
-                        $14,000 / arch
-                      </span>
-                    </button>
+                    {(Object.keys(FINAL_TEETH) as (keyof typeof FINAL_TEETH)[]).map((key) => {
+                      const option = FINAL_TEETH[key];
+                      const isSelected = selectedMaterial === key;
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          className="sc-calc-btn"
+                          onClick={() => setSelectedMaterial(key)}
+                          aria-pressed={isSelected}
+                          style={{
+                            padding: "0.75rem 0.85rem",
+                            borderRadius: "12px",
+                            border: isSelected ? "2px solid #E86337" : "1px solid #E5E0D7",
+                            backgroundColor: "#ffffff",
+                            color: isSelected ? "#E86337" : "#444",
+                            fontFamily: "var(--font-assistant)",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                            transition: "all 0.2s ease",
+                            textAlign: "center",
+                            lineHeight: 1.3,
+                            boxShadow: isSelected ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
+                          }}
+                        >
+                          <span
+                            style={{
+                              display: "inline-block",
+                              fontSize: "0.64rem",
+                              fontWeight: 700,
+                              letterSpacing: "0.06em",
+                              textTransform: "uppercase",
+                              padding: "0.1rem 0.45rem",
+                              borderRadius: "100px",
+                              marginBottom: "0.3rem",
+                              backgroundColor: key === "zirconia" ? "#1C1C1E" : "#F4EFEB",
+                              color: key === "zirconia" ? "#ffffff" : "#666",
+                            }}
+                          >
+                            {option.tier}
+                          </span>
+                          <div>{option.name}</div>
+                          <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: isSelected ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
+                            {formatAud(option.perArch)} / arch
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -949,7 +1110,7 @@ export default function AllOn4Cost() {
                         letterSpacing: "0.06em",
                       }}
                     >
-                      3. Plan Duration:
+                      4. Plan Duration:
                     </label>
                     <span style={{ fontFamily: "var(--font-assistant)", fontWeight: 700, color: "#E86337", fontSize: "0.88rem" }}>
                       {financeMonths} Mo (Interest-Free)
@@ -1019,13 +1180,19 @@ export default function AllOn4Cost() {
                 </div>
 
                 <div style={{ borderTop: "1px solid #ECE7DE", paddingTop: "0.85rem", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
-                    <span>Phase 1 ({selectedArch === "both" ? "Both Arches" : "Single Arch"}):</span>
-                    <strong style={{ color: "#1C1C1E" }}>${(phase1PerArch * archMultiplier).toLocaleString()}</strong>
+                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                    <span>
+                      Phase 1: Temporary teeth
+                      <span style={{ display: "block", fontSize: "0.74rem", color: "#888" }}>Lasts 6 to 12 months</span>
+                    </span>
+                    <strong style={{ color: "#1C1C1E", whiteSpace: "nowrap" }}>{formatAud(phase1PerArch * archMultiplier)}</strong>
                   </div>
-                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
-                    <span>Phase 2 ({selectedMaterial === "acrylic" ? "Acrylic" : "Zirconia"}):</span>
-                    <strong style={{ color: "#1C1C1E" }}>${(phase2PerArch * archMultiplier).toLocaleString()}</strong>
+                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                    <span>
+                      Phase 2: {FINAL_TEETH[selectedMaterial].short} final teeth
+                      <span style={{ display: "block", fontSize: "0.74rem", color: "#888" }}>{FINAL_TEETH[selectedMaterial].tier}</span>
+                    </span>
+                    <strong style={{ color: "#1C1C1E", whiteSpace: "nowrap" }}>{formatAud(phase2PerArch * archMultiplier)}</strong>
                   </div>
                   <div
                     style={{
@@ -1040,9 +1207,9 @@ export default function AllOn4Cost() {
                       borderTop: "1px dashed #D9D2C6",
                     }}
                   >
-                    <span>Total Investment:</span>
+                    <span>Total:</span>
                     <span style={{ color: "#1C1C1E", fontFamily: "var(--font-prata)", fontSize: "1.35rem" }}>
-                      ${grandTotal.toLocaleString()}
+                      {formatAud(grandTotal)}
                     </span>
                   </div>
                   <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
@@ -1056,6 +1223,10 @@ export default function AllOn4Cost() {
                     </div>
                   )}
                 </div>
+
+                <p style={{ margin: 0, padding: "0.7rem 0.85rem", backgroundColor: "#F7F4EE", borderLeft: "3px solid #E86337", borderRadius: "8px", fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#555", lineHeight: 1.5 }}>
+                  The &ldquo;from {formatAud(PHASE_1_PER_ARCH)}&rdquo; price covers Phase 1 only. Final teeth are Phase 2.
+                </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.35rem" }}>
                   <a
@@ -1109,165 +1280,9 @@ export default function AllOn4Cost() {
           </div>
         </div>
 
-        {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO BG, NO BOX FRAME, DETAILS LEFT, FULL IMAGE RIGHT) ─── */}
-        <div
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
-          style={{
-            width: "100%",
-            maxWidth: "100%",
-            margin: "3rem auto 0",
-            padding: 0,
-            boxSizing: "border-box",
-          }}
-        >
-          {/* Main 2-Column Showcase */}
-          <div className="sc-cost-showcase-grid">
-            {/* Left: Detailed Verbatim Content Panel (Uniform Height) */}
-            <div className="sc-cost-showcase-panel">
-              {costTopics.map((topic, topicIdx) => {
-                const isActive = topicIdx === activeCostTopic;
-                const TitleTag = topic.headingTag;
-                return (
-                <motion.div
-                  key={topic.id}
-                  hidden={!isActive}
-                  initial={false}
-                  animate={isActive ? { y: 0, opacity: 1 } : { y: 15, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
-                  style={{ display: isActive ? "flex" : "none", flexDirection: "column", flex: 1 }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.76rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        color: "#E86337",
-                      }}
-                    >
-                      {topic.badge}
-                    </span>
-                  </div>
+        </>}
+        {part === "funding" && showcase}
 
-                  <TitleTag
-                    style={{
-                      fontFamily: "var(--font-prata)",
-                      fontSize: "clamp(1.25rem, 2.2vw, 1.7rem)",
-                      fontWeight: 400,
-                      color: "#1C1C1E",
-                      margin: "0 0 0.85rem",
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {topic.title}
-                  </TitleTag>
-
-                  <div style={{ flex: 1 }}>
-                    {topic.content}
-                  </div>
-                </motion.div>
-                );
-              })}
-
-              {/* Navigation & Actions Footer */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  gap: "1rem",
-                  paddingTop: "1.25rem",
-                  marginTop: "1.25rem",
-                  borderTop: "1px solid #ECE7DE",
-                }}
-              >
-                {/* Dots & Counter */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  {costTopics.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActiveCostTopic(i)}
-                      aria-label={`Go to topic ${i + 1}`}
-                      style={{
-                        height: "8px",
-                        width: activeCostTopic === i ? "24px" : "8px",
-                        borderRadius: "999px",
-                        backgroundColor: activeCostTopic === i ? "#E86337" : "#D5CEBF",
-                        border: "none",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        padding: 0,
-                      }}
-                    />
-                  ))}
-                  <span
-                    style={{
-                      marginLeft: "0.5rem",
-                      fontSize: "0.78rem",
-                      color: "#777",
-                      fontFamily: "var(--font-assistant)",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {activeCostTopic + 1} of {costTopics.length}
-                  </span>
-                </div>
-
-                {/* Arrow Controls */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <button
-                    type="button"
-                    onClick={handlePrevCostTopic}
-                    aria-label="Previous Topic"
-                    style={{
-                      width: "38px",
-                      height: "38px",
-                      borderRadius: "50%",
-                      backgroundColor: "#FAF6F0",
-                      border: "1px solid #E5E0D7",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "#1C1C1E",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <ArrowLeft size={17} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNextCostTopic}
-                    aria-label="Next Topic"
-                    style={{
-                      width: "38px",
-                      height: "38px",
-                      borderRadius: "50%",
-                      backgroundColor: "#E86337",
-                      border: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "#FFFFFF",
-                      boxShadow: "0 4px 12px rgba(232, 99, 55, 0.25)",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <ArrowRight size={17} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

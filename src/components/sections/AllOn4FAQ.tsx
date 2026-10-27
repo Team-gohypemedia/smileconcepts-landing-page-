@@ -1,5 +1,6 @@
 "use client";
 
+import BlurReveal from "@/components/ui/BlurReveal";
 import { useState, useMemo } from "react";
 import { Plus, Minus, Search, Phone, Calendar } from "lucide-react";
 
@@ -249,7 +250,7 @@ export default function AllOn4FAQ() {
           <h2
             style={{
               fontFamily: "var(--font-prata), Georgia, serif",
-              fontSize: "clamp(1.45rem, 5vw, 2.9rem)",
+              fontSize: "var(--fs-section-title)",
               color: "#1C1C1E",
               fontWeight: 400,
               lineHeight: 1.22,
@@ -384,7 +385,7 @@ export default function AllOn4FAQ() {
                         cursor: "pointer",
                         textAlign: "left",
                         fontFamily: "var(--font-prata)",
-                        fontSize: "clamp(0.95rem, 2.8vw, 1.05rem)",
+                        fontSize: "var(--fs-body)",
                         color: "#1C1C1E",
                         fontWeight: 400,
                         lineHeight: 1.35,
@@ -423,7 +424,10 @@ export default function AllOn4FAQ() {
                     }}
                   >
                     <div style={{ overflow: "hidden" }}>
-                      <p
+                      <BlurReveal
+                        key={isOpen ? "open" : "closed"}
+                        text={faq.answer}
+                        active={isOpen}
                         style={{
                           margin: "0 1.35rem 1.25rem",
                           paddingTop: "0.85rem",
@@ -433,9 +437,7 @@ export default function AllOn4FAQ() {
                           lineHeight: 1.65,
                           color: "#505055",
                         }}
-                      >
-                        {faq.answer}
-                      </p>
+                      />
                     </div>
                   </div>
                 </div>

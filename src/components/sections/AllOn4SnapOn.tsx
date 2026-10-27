@@ -96,7 +96,7 @@ export default function AllOn4SnapOn() {
         <h2
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(1.35rem, 2.5vw, 2.15rem)",
+            fontSize: "var(--fs-section-title)",
             fontWeight: 400,
             color: "#F47A4A",
             lineHeight: 1.25,
@@ -112,7 +112,7 @@ export default function AllOn4SnapOn() {
           className="sc-snap-intro-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
-            fontSize: "clamp(0.92rem, 1.6vw, 1.02rem)",
+            fontSize: "var(--fs-body)",
             color: "#4F4F4F",
             textAlign: "center",
             maxWidth: "960px",
@@ -126,7 +126,7 @@ export default function AllOn4SnapOn() {
         <h3
           style={{
             fontFamily: "var(--font-prata), Georgia, serif",
-            fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)",
+            fontSize: "var(--fs-card-title)",
             color: "#1C1C1E",
             fontWeight: 400,
             lineHeight: 1.3,
@@ -193,7 +193,7 @@ export default function AllOn4SnapOn() {
         <h3
           style={{
             fontFamily: "var(--font-prata), Georgia, serif",
-            fontSize: "clamp(1.15rem, 2.2vw, 1.45rem)",
+            fontSize: "var(--fs-card-title)",
             color: "#1C1C1E",
             fontWeight: 400,
             lineHeight: 1.3,

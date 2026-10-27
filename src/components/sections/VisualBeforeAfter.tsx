@@ -128,7 +128,7 @@ export default function VisualBeforeAfter() {
             transition={{ delay: 0.1 }}
             style={{
               fontFamily: "var(--font-prata)",
-              fontSize: "clamp(1.5rem, 5.2vw, 3.4rem)",
+              fontSize: "var(--fs-section-title)",
               fontWeight: 400,
               color: "#11121E",
               lineHeight: 1.18,
@@ -144,7 +144,7 @@ export default function VisualBeforeAfter() {
             transition={{ delay: 0.2 }}
             style={{
               fontFamily: "var(--font-assistant)",
-              fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
+              fontSize: "var(--fs-body)",
               color: "#555869",
               lineHeight: 1.62,
               fontWeight: 400,
@@ -329,7 +329,7 @@ export default function VisualBeforeAfter() {
                     className="sc-ba-case-title"
                     style={{
                       fontFamily: "var(--font-prata)",
-                      fontSize: "clamp(1.08rem, 2.8vw, 1.6rem)",
+                      fontSize: "var(--fs-card-title)",
                       fontWeight: 400,
                       color: "#11121E",
                       lineHeight: 1.25,

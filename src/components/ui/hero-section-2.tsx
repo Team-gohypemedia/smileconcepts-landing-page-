@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion, type Variants, type HTMLMotionProps } from 'framer-motion';
-import { Globe, Phone, MapPin, Mail, ArrowRight } from 'lucide-react';
+import { Globe, Phone, PhoneCall, MapPin, Mail } from 'lucide-react';
 
 // Icon component for contact details using lucide-react with inline styles
 const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' | 'email' }) => {
@@ -400,7 +400,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
                 }}
               >
                 {callToAction.text}
-                <ArrowRight size={16} />
+                <PhoneCall size={16} aria-hidden />
               </a>
             </motion.div>
           </motion.main>

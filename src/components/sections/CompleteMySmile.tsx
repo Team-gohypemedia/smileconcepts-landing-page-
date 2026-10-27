@@ -1,5 +1,7 @@
 "use client";
 
+import { PhoneCall } from "lucide-react";
+
 const features = [
   {
     title: "Teeth in a Day",
@@ -39,6 +41,17 @@ export default function CompleteMySmile() {
       }}
     >
       <style>{`
+        .sc-cms-cta {
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .sc-cms-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 24px rgba(244, 122, 74, 0.45);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-cms-cta { transition: none; }
+          .sc-cms-cta:hover { transform: none; }
+        }
         @media (max-width: 640px) {
           .sc-cms-section {
             padding: 2.75rem 1rem !important;
@@ -70,20 +83,38 @@ export default function CompleteMySmile() {
         }
       `}</style>
       <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
-        <h3
+        <h2
           className="sc-cms-title"
           style={{
-            fontFamily: "var(--font-prata), Georgia, serif",
-            fontSize: "clamp(1.45rem, 4vw, 2.6rem)",
-            color: "#1C1C1E",
-            fontWeight: 400,
-            lineHeight: 1.22,
-            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
             margin: "0 0 clamp(1.75rem, 3.5vw, 2.75rem)",
           }}
         >
-          Complete My Smile
-        </h3>
+          <a
+            href="tel:0292677777"
+            className="sc-cms-cta"
+            aria-label="Complete My Smile: call 02 9267 7777"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              padding: "0.85rem 1.9rem",
+              background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
+              color: "#FFFFFF",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontFamily: "var(--font-assistant), sans-serif",
+              fontSize: "clamp(1rem, 0.95rem + 0.3vw, 1.15rem)",
+              fontWeight: 700,
+              letterSpacing: "0.01em",
+              boxShadow: "0 4px 14px rgba(244, 122, 74, 0.35)",
+            }}
+          >
+            <PhoneCall size={18} aria-hidden />
+            Complete My Smile
+          </a>
+        </h2>
 
         <div
           className="sc-cms-grid"
@@ -105,32 +136,30 @@ export default function CompleteMySmile() {
                 padding: "1.35rem 1.4rem",
               }}
             >
-              <div>
-                <p
-                  className="sc-cms-card-title"
-                  style={{
-                    fontFamily: "var(--font-prata), Georgia, serif",
-                    fontSize: "1.12rem",
-                    fontWeight: 400,
-                    color: "#1C1C1E",
-                    margin: "0 0 0.3rem",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {f.title}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-assistant), sans-serif",
-                    fontSize: "0.9rem",
-                    color: "#555",
-                    lineHeight: 1.55,
-                    margin: 0,
-                  }}
-                >
-                  {f.text}
-                </p>
-              </div>
+              <h3
+                className="sc-cms-card-title"
+                style={{
+                  fontFamily: "var(--font-prata), Georgia, serif",
+                  fontSize: "1.12rem",
+                  fontWeight: 400,
+                  color: "#1C1C1E",
+                  margin: "0 0 0.3rem",
+                  lineHeight: 1.3,
+                }}
+              >
+                {f.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-assistant), sans-serif",
+                  fontSize: "0.9rem",
+                  color: "#555",
+                  lineHeight: 1.55,
+                  margin: 0,
+                }}
+              >
+                {f.text}
+              </p>
             </div>
           ))}
         </div>

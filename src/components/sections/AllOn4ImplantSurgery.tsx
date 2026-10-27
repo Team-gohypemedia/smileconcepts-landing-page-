@@ -45,7 +45,7 @@ const technology = [
 
 const h2Style = {
   fontFamily: "var(--font-prata), Georgia, serif",
-  fontSize: "clamp(1.45rem, 3.6vw, 2.35rem)",
+  fontSize: "var(--fs-section-title)",
   color: "#1C1C1E",
   fontWeight: 400,
   lineHeight: 1.22,
@@ -54,7 +54,7 @@ const h2Style = {
 
 const pStyle = {
   fontFamily: "var(--font-assistant), sans-serif",
-  fontSize: "clamp(0.92rem, 2.2vw, 1rem)",
+  fontSize: "var(--fs-body)",
   lineHeight: 1.68,
   color: "#444449",
   margin: "0 0 0.9rem",

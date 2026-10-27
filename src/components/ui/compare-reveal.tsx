@@ -6,19 +6,21 @@ import * as React from "react";
 
 /* ---- motion primitives ---- */
 
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
 function useReducedMotion(): boolean {
-  const [reduced, setReduced] = React.useState(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  return React.useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
   );
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", mq.matches ? () => {} : onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
 }
+
+const subscribeNever = () => () => {};
 
 function useVisibilityPause<T extends Element>(
   ref: React.RefObject<T | null>,
@@ -175,8 +177,7 @@ export function CompareReveal({
   const paintRef = React.useRef<() => void>(() => {});
 
   const systemReduced = useReducedMotion();
-  const [hydrated, setHydrated] = React.useState(false);
-  React.useEffect(() => setHydrated(true), []);
+  const hydrated = React.useSyncExternalStore(subscribeNever, () => true, () => false);
   const still = reducedMotion === true || (hydrated && systemReduced);
 
   const onScreen = useVisibilityPause(rootRef, { threshold: 0.2 });
@@ -201,10 +202,11 @@ export function CompareReveal({
   });
 
   const params = React.useRef({ stiffness, damping, still, introSweep });
-  params.current = { stiffness, damping, still, introSweep };
-
   const pctRef = React.useRef(pct);
-  pctRef.current = pct;
+  React.useEffect(() => {
+    params.current = { stiffness, damping, still, introSweep };
+    pctRef.current = pct;
+  });
 
   React.useEffect(() => {
     const paint = () => {

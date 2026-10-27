@@ -31,7 +31,7 @@ export default function AllOn4VsAllOnX() {
         <h2
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(1.55rem, 3.8vw, 3.1rem)",
+            fontSize: "var(--fs-section-title)",
             fontWeight: 400,
             color: "#E86337",
             lineHeight: 1.25,
@@ -47,7 +47,7 @@ export default function AllOn4VsAllOnX() {
           className="sc-vsonx-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
-            fontSize: "clamp(0.96rem, 1.4vw, 1.05rem)",
+            fontSize: "var(--fs-body)",
             lineHeight: 1.7,
             color: "#4A4D57",
             margin: "0 auto 1.5rem",
@@ -63,7 +63,7 @@ export default function AllOn4VsAllOnX() {
           className="sc-vsonx-para"
           style={{
             fontFamily: "var(--font-assistant), sans-serif",
-            fontSize: "clamp(0.94rem, 1.35vw, 1.03rem)",
+            fontSize: "var(--fs-body)",
             lineHeight: 1.7,
             color: "#4A4D57",
             margin: "0 auto 2rem",

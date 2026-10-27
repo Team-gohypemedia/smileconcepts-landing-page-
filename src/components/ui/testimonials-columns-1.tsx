@@ -97,6 +97,7 @@ export const TestimonialsColumn = (props: {
                 return (
                   <div
                     key={`${index}-${i}`}
+                    className="sc-rv-card"
                     style={{
                       padding: "1.45rem 1.65rem",
                       borderRadius: "18px",
@@ -155,6 +156,7 @@ export const TestimonialsColumn = (props: {
 
                     {/* Review Quote Text */}
                     <p
+                      className="sc-rv-text"
                       style={{
                         fontFamily: "var(--font-assistant), sans-serif",
                         fontSize: "0.91rem",

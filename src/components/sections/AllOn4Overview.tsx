@@ -1,9 +1,10 @@
 "use client";
 
+import { Cite } from "@/components/ui/Cite";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 
 export default function AllOn4Overview() {
   const [readMoreIntro, setReadMoreIntro] = useState(false);
@@ -98,7 +99,7 @@ export default function AllOn4Overview() {
               className="sc-hero-h2"
               style={{
                 fontFamily: "var(--font-prata), Georgia, serif",
-                fontSize: "clamp(1.5rem, 4.2vw, 2.75rem)",
+                fontSize: "var(--fs-section-title)",
                 color: "#1C1C1E",
                 fontWeight: 400,
                 lineHeight: 1.22,
@@ -112,7 +113,7 @@ export default function AllOn4Overview() {
               className="sc-overview-intro-body"
               style={{
                 fontFamily: "var(--font-assistant), sans-serif",
-                fontSize: "clamp(0.92rem, 2.5vw, 1.02rem)",
+                fontSize: "var(--fs-body)",
                 lineHeight: 1.68,
                 color: "#444449",
                 display: "flex",
@@ -142,7 +143,7 @@ export default function AllOn4Overview() {
                       The two rear implants may or may not be placed at an angle of up to 45 degrees. This is not just a technical detail. Sometimes, angling the rear implants lets them reach denser bone further forward in the jaw, which is why most patients can avoid the bone grafting traditional full-arch implant approaches often require. Less surgery, less recovery time, and, in most cases, a same-day temporary set of teeth, so you never go without a smile while things heal.
                     </p>
                     <p style={{ margin: 0 }}>
-                      Same-day teeth also depend on adequate implant stability. [1–3]
+                      Same-day teeth also depend on adequate implant stability. <Cite refs="1–3" />
                     </p>
                     <p style={{ margin: 0 }}>
                       The final bridge is fixed permanently to the implants. It does not come out at night. It does not need adhesive. It functions much more like your natural teeth than any removable denture can.
@@ -179,7 +180,8 @@ export default function AllOn4Overview() {
 
             <div className="sc-hero-cta-wrap" style={{ marginTop: "1.35rem" }}>
               <a
-                href="#cost"
+                href="tel:0292677777"
+                aria-label="Complete my smile: call 02 9267 7777"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -196,7 +198,7 @@ export default function AllOn4Overview() {
                 }}
               >
                 <span>Complete my smile</span>
-                <ArrowRight size={15} />
+                <PhoneCall size={15} aria-hidden />
               </a>
             </div>
           </div>

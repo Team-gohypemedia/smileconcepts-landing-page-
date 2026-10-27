@@ -159,6 +159,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
+      className="sc-rv-section"
       style={{
         position: "relative",
         backgroundColor: "#FAF8F5",
@@ -189,6 +190,35 @@ export default function Testimonials() {
         @media (min-width: 640px) {
           .sc-testimonials-title {
             white-space: nowrap !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .sc-rv-section {
+            padding: 2.5rem 1rem !important;
+          }
+          .sc-rv-wrap {
+            max-height: 330px !important;
+          }
+          .sc-rv-cta-row {
+            margin-top: 1.25rem !important;
+            gap: 0.6rem !important;
+          }
+          .sc-rv-card {
+            padding: 0.85rem 1rem !important;
+            gap: 0.55rem !important;
+            border-radius: 14px !important;
+            max-width: 100% !important;
+          }
+          .sc-rv-text {
+            font-size: 0.8rem !important;
+            line-height: 1.5 !important;
+          }
+          .sc-rv-card > div:first-child span:first-child {
+            font-size: 0.85rem !important;
+          }
+          .sc-rv-card > div:last-child {
+            padding-top: 0.55rem !important;
+            gap: 0.55rem !important;
           }
         }
       `}</style>
@@ -284,21 +314,21 @@ export default function Testimonials() {
             className="sc-testimonials-title"
             style={{
               fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
-              fontSize: "clamp(1.45rem, 3.8vw, 3rem)",
-              color: "#11121E",
+              fontSize: "var(--fs-section-title)",
+              color: "#E86337",
               fontWeight: 400,
               lineHeight: 1.2,
               letterSpacing: "-0.01em",
               margin: "0.25rem 0 0.5rem 0",
             }}
           >
-            Trusted by Sydney Patients
+            The Trust We Have Earned
           </h2>
 
           <p
             style={{
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
+              fontSize: "var(--fs-body)",
               color: "#555869",
               lineHeight: 1.62,
               maxWidth: "700px",
@@ -312,6 +342,7 @@ export default function Testimonials() {
 
         {/* 3-Column Infinite Vertical Scrolling Carousel */}
         <div
+          className="sc-rv-wrap"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -352,6 +383,7 @@ export default function Testimonials() {
 
         {/* Bottom CTA Row */}
         <div
+          className="sc-rv-cta-row"
           style={{
             marginTop: "3rem",
             display: "flex",

@@ -54,7 +54,7 @@ export default function Affiliations() {
         <p
           style={{
             fontFamily: "var(--font-prata)",
-            fontSize: "clamp(1.12rem, 3.2vw, 1.75rem)",
+            fontSize: "var(--fs-section-title)",
             color: "#231F20",
             fontWeight: 400,
             letterSpacing: "-0.01em",

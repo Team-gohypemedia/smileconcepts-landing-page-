@@ -77,7 +77,7 @@ export default function OurPractice() {
         <p
           style={{
             fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            fontSize: "clamp(1.65rem, 5vw, 3.4rem)",
+            fontSize: "var(--fs-section-title)",
             color: "#E86337",
             fontWeight: 600,
             fontStyle: "italic",

@@ -202,7 +202,7 @@ export default function Team() {
             textAlign: "center",
             fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
             fontWeight: 400,
-            fontSize: "clamp(1.45rem, 5vw, 3.2rem)",
+            fontSize: "var(--fs-section-title)",
             color: "#1A1A24",
             lineHeight: 1.2,
             marginBottom: "0.65rem",
@@ -220,7 +220,7 @@ export default function Team() {
             maxWidth: "780px",
             margin: "0 auto 1.5rem",
             color: "#5E616B",
-            fontSize: "clamp(0.88rem, 2.8vw, 1.02rem)",
+            fontSize: "var(--fs-body)",
             lineHeight: 1.6,
             fontFamily: "var(--font-assistant), sans-serif",
           }}
@@ -306,7 +306,7 @@ export default function Team() {
                         style={{
                           fontFamily: "var(--font-prata), 'Playfair Display', Georgia, serif",
                           fontWeight: 400,
-                          fontSize: "clamp(1.15rem, 3.2vw, 1.35rem)",
+                          fontSize: "var(--fs-card-title)",
                           color: "#1A1A24",
                           margin: 0,
                         }}

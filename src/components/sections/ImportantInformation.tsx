@@ -82,7 +82,7 @@ const eyebrowStyle = {
 
 const h2Style = {
   fontFamily: "var(--font-prata), Georgia, serif",
-  fontSize: "clamp(1.5rem, 3.6vw, 2.4rem)",
+  fontSize: "var(--fs-section-title)",
   color: "#1C1C1E",
   fontWeight: 400,
   lineHeight: 1.22,
@@ -413,13 +413,14 @@ export default function ImportantInformation() {
             <span style={eyebrowStyle}>
               References
             </span>
-            <p className="sc-refs-title" style={h2Style}>Clinical Evidence and Patient Information Sources</p>
+            <h2 className="sc-refs-title" style={h2Style}>Clinical Evidence and Patient Information Sources</h2>
           </div>
 
           <ol className="sc-refs-grid" style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {references.map((ref, idx) => (
               <li
                 key={ref.url}
+                id={`ref-${idx + 1}`}
                 className={idx >= MOBILE_VISIBLE_REFS && !showAllRefs ? "sc-ref-extra" : undefined}
                 style={{ display: "flex" }}
               >
