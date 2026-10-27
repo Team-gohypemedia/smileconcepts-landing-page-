@@ -859,11 +859,11 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                       What You Should Know About Risks Associated with All on 4 Dental Implants
                     </h2>
 
-                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", lineHeight: 1.5, color: "#555", margin: "0 0 0.6rem" }}>
+                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.95rem", lineHeight: 1.6, color: "#444", margin: "0 0 0.9rem" }}>
                       All on 4 (All on X) has a strong clinical track record, but it is a surgical procedure, and every patient should understand the risks before proceeding. Any surgical or invasive procedure carries risks. Before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.
                     </p>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.45rem 0.85rem", fontSize: "0.78rem", lineHeight: 1.45, color: "#444" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.85rem 1.25rem", fontSize: "0.88rem", lineHeight: 1.6, color: "#333" }}>
                       <div><strong>Healing varies:</strong> Overall health, blood supply, and adherence to post-operative instructions affect how well and how quickly implants integrate.</div>
                       <div>Smoking is associated with higher implant failure risk and greater bone loss. Discuss stopping smoking and individual risk management with your treating team. <Cite refs="4" /></div>
                       <div><strong>Medical history matters:</strong> Certain medications and conditions can affect healing, so we take a full history before proceeding.</div>
