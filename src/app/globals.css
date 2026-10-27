@@ -40,6 +40,13 @@
   --fs-body:          clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
 }
 
+/* Phones: every section heading is 22px */
+@media (max-width: 767px) {
+  :root {
+    --fs-section-title: 22px;
+  }
+}
+
 /* ─── Reset ────────────────────────────────────────────────────────── */
 *,
 *::before,

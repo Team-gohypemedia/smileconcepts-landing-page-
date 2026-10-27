@@ -424,7 +424,7 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
             padding: 1.1rem 1.1rem 1rem !important;
           }
           .sc-stack-text .sc-stack-title {
-            font-size: 1.28rem !important;
+            font-size: 22px !important;
             line-height: 1.25 !important;
             margin-bottom: 0.55rem !important;
           }

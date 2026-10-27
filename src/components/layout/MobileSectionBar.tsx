@@ -31,12 +31,21 @@ const ALL_SECTION_TABS = [
 export default function MobileSectionBar() {
   const [activeSection, setActiveSection] = useState<string>("overview");
   const pillsContainerRef = useRef<HTMLDivElement>(null);
+  // The dock is shown at the top of the page and while scrolling up, hidden while scrolling down
+  const [dockVisible, setDockVisible] = useState(true);
 
   // Scrollspy logic to track current section
   useEffect(() => {
     let frame = 0;
+    let lastY = window.scrollY;
     const handleScroll = () => {
       frame = 0;
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (y < 80) setDockVisible(true);
+      else if (delta < -6) setDockVisible(true);
+      else if (delta > 6) setDockVisible(false);
+      if (Math.abs(delta) > 6) lastY = y;
       const headerOffset = 110;
       let currentId = "overview";
       let closestTop = -Infinity;
@@ -87,6 +96,9 @@ export default function MobileSectionBar() {
           -ms-overflow-style: none !important;
           scrollbar-width: none !important;
         }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-mobile-dock { transition: none !important; }
+        }
       `}</style>
 
       {/* Main Floating Bottom Dock (Mobile Only) */}
@@ -100,6 +112,10 @@ export default function MobileSectionBar() {
           margin: "0 auto",
           maxWidth: "430px",
           zIndex: 9980,
+          transform: dockVisible ? "translateY(0)" : "translateY(calc(100% + 24px))",
+          opacity: dockVisible ? 1 : 0,
+          pointerEvents: dockVisible ? "auto" : "none",
+          transition: "transform 0.3s ease, opacity 0.3s ease",
         }}
         aria-label="Mobile section navigation"
       >

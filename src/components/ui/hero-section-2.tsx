@@ -326,7 +326,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               className="sc-hero2-title"
               style={{
                 fontFamily: "var(--font-prata)",
-                fontSize: "clamp(1.35rem, 2.35vw, 2.15rem)",
+                fontSize: "clamp(22px, 2.35vw, 2.15rem)",
                 fontWeight: 400,
                 color: "#ffffff",
                 lineHeight: 1.18,
