@@ -7,7 +7,7 @@ import { CompareReveal } from "@/components/ui/compare-reveal";
 
 interface CaseItem {
   id: string;
-  category: "allon4" | "fullarch";
+  category: "allon4" | "fullarch" | "zirconia" | "makeover";
   categoryLabel: string;
   title: string;
   desc: string;
@@ -72,6 +72,61 @@ const cases: CaseItem[] = [
     duration: "Timeframe: 1–3 Days",
     before: "/assets/before-after/all-1.1.jpg",
     after: "/assets/before-after/all-1.2.jpg",
+  },
+  {
+    id: "all-20",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Multi-Unit Precision Crown & Smile Realignment",
+    desc: "Replacing aged restorations and misaligned teeth with ultra-durable zirconia crowns designed to last.",
+    location: "Sydney CBD · Dr. Manish Shah",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-20.1.jpg",
+    after: "/assets/before-after/all-20.2.jpg",
+  },
+  {
+    id: "all-3",
+    category: "makeover",
+    categoryLabel: "Smile Makeover",
+    title: "Aesthetic Alignment & Veneer Transformation",
+    desc: "Correcting incisal edge wear, uneven margins, and tooth discoloration with handcrafted porcelain veneers.",
+    location: "Sydney CBD · Dr. Kinnar Shah",
+    duration: "Timeframe: 48 Hours",
+    before: "/assets/before-after/all-3.1.jpg",
+    after: "/assets/before-after/all-3.2.jpg",
+  },
+  {
+    id: "all-4",
+    category: "makeover",
+    categoryLabel: "Smile Makeover",
+    title: "Full Smile Harmony & Gumline Rejuvenation",
+    desc: "Restoring symmetry and youthfulness to worn dentition with custom precision cosmetic restorations.",
+    location: "Sydney CBD · Dr. Manish Shah",
+    duration: "Timeframe: 48 Hours",
+    before: "/assets/before-after/all-4.1.jpg",
+    after: "/assets/before-after/all-4.2.jpg",
+  },
+  {
+    id: "all-6",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Aesthetic Zirconia Crown & Shade Renewal",
+    desc: "Replacing dark discolored dentition with premium translucent zirconia crowns for bright, lifelike translucency.",
+    location: "Sydney CBD · Dr. Kinnar Shah",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-6.1.jpg",
+    after: "/assets/before-after/all-6.2.jpg",
+  },
+  {
+    id: "all-10",
+    category: "zirconia",
+    categoryLabel: "Zirconia Bridge",
+    title: "Full Arch Restoration & Deep Stain Removal",
+    desc: "Transforming severe enamel discoloration and heavy wear with biocompatible, high-strength zirconia restorations.",
+    location: "Sydney CBD · Dr. Kinnar Shah",
+    duration: "Timeframe: Precision Delivery",
+    before: "/assets/before-after/all-10.1.jpg",
+    after: "/assets/before-after/all-10.2.jpg",
   },
 ];
 
@@ -380,6 +435,19 @@ export default function VisualBeforeAfter() {
                   </div>
                 </div>
               </div>
+
+              {/* Details of the other cases stay in the page source (not shown) so every case is readable */}
+              {cases
+                .filter((c) => c.id !== activeCase.id)
+                .map((c) => (
+                  <div key={c.id} hidden>
+                    <p>{c.categoryLabel}</p>
+                    <p>{c.title}</p>
+                    <p>{c.desc}</p>
+                    <p>{c.location}</p>
+                    <p>{c.duration}</p>
+                  </div>
+                ))}
 
               {/* Compare Slider Container */}
               <div

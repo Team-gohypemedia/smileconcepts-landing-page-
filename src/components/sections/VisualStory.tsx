@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { HeroSection } from "@/components/ui/hero-section-2";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function VisualStory() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -45,48 +44,49 @@ export default function VisualStory() {
             </p>
 
             {/* Expandable Extended Details */}
-            <AnimatePresence initial={false}>
-              {isExpanded && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex flex-col gap-3 overflow-hidden pt-1"
+            {/* Always in the page source; collapsed with CSS until "Read More" is pressed */}
+            <div
+              inert={!isExpanded}
+              style={{
+                display: "grid",
+                gridTemplateRows: isExpanded ? "1fr" : "0fr",
+                opacity: isExpanded ? 1 : 0,
+                transition: "grid-template-rows 0.3s ease-in-out, opacity 0.3s ease-in-out",
+              }}
+            >
+              <div className="flex flex-col gap-3 overflow-hidden pt-1" style={{ minHeight: 0 }}>
+                <p
+                  style={{
+                    color: "#E2E8F0",
+                    fontSize: "var(--fs-body)",
+                    lineHeight: 1.68,
+                    fontWeight: 400,
+                  }}
                 >
-                  <p
-                    style={{
-                      color: "#E2E8F0",
-                      fontSize: "var(--fs-body)",
-                      lineHeight: 1.68,
-                      fontWeight: 400,
-                    }}
-                  >
-                    Also known as All on X, full arch or full mouth dental implants, the treatment uses a tailored number of implants, most often four to six, to support your new smile.
-                  </p>
-                  <p
-                    style={{
-                      color: "#E2E8F0",
-                      fontSize: "var(--fs-body)",
-                      lineHeight: 1.68,
-                      fontWeight: 400,
-                    }}
-                  >
-                    Located in the Sydney CBD and easy to reach from across Sydney, Smile Concepts plans every full arch case around your own bone and bite. Our dentists each have over 25 years of experience, and treatment is priced per arch, not per implant.
-                  </p>
-                  <p
-                    style={{
-                      color: "#CBD5E1",
-                      fontSize: "var(--fs-body)",
-                      lineHeight: 1.68,
-                      fontWeight: 400,
-                    }}
-                  >
-                    Whether you are currently wearing dentures, have multiple failing teeth, or have been told your treatment options are limited, the first step is understanding what may be possible for your individual situation.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  Also known as All on X, full arch or full mouth dental implants, the treatment uses a tailored number of implants, most often four to six, to support your new smile.
+                </p>
+                <p
+                  style={{
+                    color: "#E2E8F0",
+                    fontSize: "var(--fs-body)",
+                    lineHeight: 1.68,
+                    fontWeight: 400,
+                  }}
+                >
+                  Located in the Sydney CBD and easy to reach from across Sydney, Smile Concepts plans every full arch case around your own bone and bite. Our dentists each have over 25 years of experience, and treatment is priced per arch, not per implant.
+                </p>
+                <p
+                  style={{
+                    color: "#CBD5E1",
+                    fontSize: "var(--fs-body)",
+                    lineHeight: 1.68,
+                    fontWeight: 400,
+                  }}
+                >
+                  Whether you are currently wearing dentures, have multiple failing teeth, or have been told your treatment options are limited, the first step is understanding what may be possible for your individual situation.
+                </p>
+              </div>
+            </div>
 
             {/* Read More / Read Less Toggle */}
             <button

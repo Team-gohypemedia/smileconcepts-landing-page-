@@ -249,6 +249,13 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
           .sc-stack-card {
             min-height: var(--sc-stack-h, min(580px, calc(100vh - 140px))) !important;
           }
+          /* Cards share the tallest card's height; shorter cards' text sits centred */
+          .sc-stack-text {
+            padding: clamp(1.25rem, 2.2vw, 2rem) clamp(1.35rem, 2.6vw, 2.25rem) !important;
+          }
+          .sc-stack-text > div:first-child {
+            margin-block: auto;
+          }
         }
         .sc-stack-text li {
           margin-bottom: 0.25rem;
@@ -743,20 +750,20 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                       Recovery, Aftercare &amp; Ongoing Maintenance after All on 4 Implant Surgery
                     </h2>
 
-                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.97rem", lineHeight: 1.6, color: "#444", margin: "0 0 1rem" }}>
+                    <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.9rem", lineHeight: 1.55, color: "#444", margin: "0 0 0.8rem" }}>
                       Recovery from All on 4 is usually easier than people expect. Most Smile Concepts patients return to their normal routine within a few days, while the implants fuse with the jawbone over the next three to six months. Here is what to expect at each stage.
                     </p>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.85rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.6rem" }}>
                       {/* The First Few Days */}
-                      <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
-                        <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
+                      <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.95rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                        <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.3rem", lineHeight: 1.3 }}>
                           The First Few Days After Surgery: What to Expect
                         </h3>
-                        <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                        <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.82rem", lineHeight: 1.5 }}>
                           Some swelling, mild bruising, and general tenderness in the days after surgery are all normal. These effects are temporary and usually start fading within the first week. We&apos;ll go through your aftercare plan with you in detail, covering:
                         </p>
-                        <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.88rem", lineHeight: 1.6 }}>
+                        <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.8rem", lineHeight: 1.5 }}>
                           <li>How to manage swelling and discomfort</li>
                           <li>What medication you&apos;ll need and how to take it</li>
                           <li>Oral hygiene during the early healing period</li>
@@ -766,31 +773,31 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                       </div>
 
                       {/* Eating & Long Term */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-                        <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
-                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                        <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.95rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.3rem", lineHeight: 1.3 }}>
                             Eating During Healing
                           </h3>
-                          <p style={{ margin: 0, color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                          <p style={{ margin: 0, color: "#444", fontSize: "0.82rem", lineHeight: 1.5 }}>
                             During this period, the implants fuse with the jawbone, so we recommend a softer diet to avoid putting unnecessary pressure on them. We&apos;ll explain exactly what&apos;s appropriate to eat at each stage of recovery.
                           </p>
                         </div>
 
-                        <div style={{ backgroundColor: "#FAF9F6", padding: "1rem 1.1rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
-                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "1rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.4rem", lineHeight: 1.35 }}>
+                        <div style={{ backgroundColor: "#FAF9F6", padding: "0.75rem 0.95rem", borderRadius: "12px", border: "1px solid #ECE7DE" }}>
+                          <h3 className="sc-stack-sub" style={{ fontFamily: "var(--font-assistant)", fontSize: "0.92rem", fontWeight: 700, color: "#1C1C1E", margin: "0 0 0.3rem", lineHeight: 1.3 }}>
                             Long-Term Maintenance
                           </h3>
-                          <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                          <p style={{ margin: "0 0 0.35rem", color: "#444", fontSize: "0.82rem", lineHeight: 1.5 }}>
                             All on 4 is designed as a long-term solution, but it still needs ongoing care to stay that way. To help maintain the health of your implants and the surrounding tissue, we recommend:
                           </p>
-                          <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.88rem", lineHeight: 1.6 }}>
+                          <ul style={{ listStyleType: "disc", paddingLeft: "1.2rem", margin: 0, color: "#333", fontSize: "0.8rem", lineHeight: 1.5 }}>
                             <li>Daily brushing and cleaning around the bridge</li>
                             <li>Following the oral hygiene instructions your clinician gives you</li>
                             <li>Attending regular dental check-ups</li>
                             <li>Booking in for professional implant maintenance and cleaning</li>
                             <li>Letting us know promptly if anything feels off</li>
                           </ul>
-                          <p style={{ margin: "0.35rem 0 0", color: "#444", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                          <p style={{ margin: "0.35rem 0 0", color: "#444", fontSize: "0.82rem", lineHeight: 1.5 }}>
                             With proper care, many patients go on to enjoy their All on 4 implants for years to come.
                           </p>
                         </div>
@@ -921,15 +928,15 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem 1.5rem", marginTop: "1.1rem", fontFamily: "var(--font-assistant)", fontSize: "0.86rem", lineHeight: 1.55, color: "#555" }}>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Problems we assess</strong>
-                        A failed implant, inflammation and bone loss around implants, a broken bridge or an uncomfortable bite.
+                        Problems may involve an implant that has failed, inflammation and bone loss around implants, a broken bridge or an uncomfortable bite.
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>What to bring</strong>
-                        Previous records, scans and implant brand details, if available.
+                        Bring previous records, scans and implant brand details if available.
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Possible treatment</strong>
-                        Repairing or replacing the bridge, treating disease, removing failed implants or planning further surgery.
+                        Depending on the findings, treatment may involve repairing or replacing the bridge, treating disease, removing failed implants or planning further surgery.
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Good to know</strong>
@@ -993,7 +1000,7 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem 1.5rem", marginTop: "1.1rem", fontFamily: "var(--font-assistant)", fontSize: "0.86rem", lineHeight: 1.55, color: "#555" }}>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Studies and complications</strong>
-                        Long-term studies support All on 4 in selected patients, but they also report biological and mechanical complications. <Cite refs="2,3" />
+                        Long-term studies support the use of All on 4 in selected patients, but they also report biological and mechanical complications. <Cite refs="2,3" />
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Bridge vs implants</strong>
@@ -1001,11 +1008,11 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>Regular reviews</strong>
-                        We assess the gums, bone support, bite, bridge and screws.
+                        Regular reviews assess the gums, bone support, bite, bridge and screws.
                       </div>
                       <div style={{ borderLeft: "2px solid #F2C9B8", paddingLeft: "0.8rem" }}>
                         <strong style={{ display: "block", color: "#1C1C1E", fontSize: "0.92rem", marginBottom: "0.15rem" }}>What affects ongoing care</strong>
-                        Cleaning access, smoking, health and bite forces. Ask about likely maintenance and replacement costs before treatment. <Cite refs="4,5" />
+                        Cleaning access, smoking, health and bite forces all influence ongoing care. Ask about likely maintenance and replacement costs before treatment. <Cite refs="4,5" />
                       </div>
                     </div>
                   </div>

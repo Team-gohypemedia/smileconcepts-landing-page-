@@ -2,7 +2,6 @@
 
 import { Cite } from "@/components/ui/Cite";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { PhoneCall } from "lucide-react";
 
@@ -125,20 +124,18 @@ export default function AllOn4Overview() {
                 All on 4 is a full-arch treatment in which a complete fixed bridge of replacement teeth is supported by a small number of dental implants, most commonly four, and up to six when your anatomy calls for it. It is designed for patients missing all or most of their upper or lower teeth, and it removes the need to place an individual implant for every missing tooth.
               </p>
 
-              <AnimatePresence>
-                {readMoreIntro && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.22 }}
-                    style={{
-                      overflow: "hidden",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.85rem",
-                    }}
-                  >
+              {/* Always in the page source; collapsed with CSS until "Read more" is pressed */}
+              <div
+                inert={!readMoreIntro}
+                style={{
+                  display: "grid",
+                  gridTemplateRows: readMoreIntro ? "1fr" : "0fr",
+                  opacity: readMoreIntro ? 1 : 0,
+                  transition: "grid-template-rows 0.22s ease, opacity 0.22s ease",
+                  marginTop: readMoreIntro ? 0 : "-0.85rem",
+                }}
+              >
+                <div style={{ overflow: "hidden", minHeight: 0, display: "flex", flexDirection: "column", gap: "0.85rem" }}>
                     <p style={{ margin: 0 }}>
                       The two rear implants may or may not be placed at an angle of up to 45 degrees. This is not just a technical detail. Sometimes, angling the rear implants lets them reach denser bone further forward in the jaw, which is why most patients can avoid the bone grafting traditional full-arch implant approaches often require. Less surgery, less recovery time, and, in most cases, a same-day temporary set of teeth, so you never go without a smile while things heal.
                     </p>
@@ -151,9 +148,8 @@ export default function AllOn4Overview() {
                     <p style={{ margin: 0 }}>
                       The bridge stays in place for daily use and is removed by a clinician when needed. It still requires daily cleaning and professional maintenance.
                     </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                </div>
+              </div>
 
               <button
                 type="button"
