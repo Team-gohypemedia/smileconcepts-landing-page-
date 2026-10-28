@@ -83,7 +83,7 @@ export default function CompleteMySmile() {
         }
       `}</style>
       <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
-        <h2
+        <div
           className="sc-cms-title"
           style={{
             display: "flex",
@@ -114,7 +114,7 @@ export default function CompleteMySmile() {
             Complete My Smile
             <PhoneCall size={18} aria-hidden />
           </a>
-        </h2>
+        </div>
 
         <div
           className="sc-cms-grid"

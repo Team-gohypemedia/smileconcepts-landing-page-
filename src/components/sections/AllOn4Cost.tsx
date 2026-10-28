@@ -1,11 +1,12 @@
 "use client";
 
 import { Cite } from "@/components/ui/Cite";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ArrowLeft,
+  Minus,
+  Plus,
   Calculator,
   Check,
   Phone,
@@ -27,7 +28,6 @@ const FINAL_TEETH = {
 } as const;
 
 export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding" }) {
-  const topicCount = part === "funding" ? 3 : 1;
   const [activePhase, setActivePhase] = useState<0 | 1>(0);
   const phasesGridRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +63,6 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
   const [selectedMaterial, setSelectedMaterial] = useState<"acrylic" | "zirconia" | null>(null);
   const [financeMonths, setFinanceMonths] = useState<number>(48);
   const [activeCostTopic, setActiveCostTopic] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   // Calculations
   const phase1PerArch = PHASE_1_PER_ARCH;
@@ -75,25 +74,6 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
   const financedAmount = Math.min(grandTotal, FINANCE_LIMIT);
   const balanceOutsidePlan = grandTotal - financedAmount;
   const weeklyEstimate = Math.round(financedAmount / (financeMonths * 4.33));
-
-  const handleNextCostTopic = () => {
-    setActiveCostTopic((prev) => (prev + 1) % topicCount);
-  };
-
-  const handlePrevCostTopic = () => {
-    setActiveCostTopic((prev) => (prev - 1 + topicCount) % topicCount);
-  };
-
-  // Autoplay slide transition (rotates every 5.5s, pauses on user hover)
-  useEffect(() => {
-    if (isPaused || topicCount < 2) return;
-    const timer = setInterval(() => {
-      // Topics are text-heavy: on phones readers move through them with the arrows instead
-      if (window.matchMedia("(max-width: 640px)").matches) return;
-      setActiveCostTopic((prev) => (prev + 1) % topicCount);
-    }, 5500);
-    return () => clearInterval(timer);
-  }, [isPaused, topicCount]);
 
   const costTopics = [
     {
@@ -222,7 +202,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
           <p style={{ marginTop: "0.5rem", marginBottom: "1rem" }}>
             Yes. Interest-free payment plans are available up to 48 months and up to $30,000, based on eligibility, from around $90 per week (subject to eligibility, approval and terms). Ask our team which option suits your circumstances, and we will include your payment options in your written quote.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "0.75rem", marginTop: "1rem" }}>
+          <div className="sc-plan-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "0.75rem", marginTop: "1rem" }}>
             <div style={{ backgroundColor: "#FFFFFF", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid #E5E0D7" }}>
               <div style={{ fontSize: "0.75rem", color: "#777", textTransform: "uppercase", letterSpacing: "0.05em" }}>Term Length</div>
               <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1C1C1E", marginTop: "0.2rem" }}>Up to 48 Months</div>
@@ -249,10 +229,6 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
     <>
         {/* ─── INTERACTIVE ANIMATED TOPIC SHOWCASE (NO BG, NO BOX FRAME, DETAILS LEFT, FULL IMAGE RIGHT) ─── */}
         <div
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
           style={{
             width: "100%",
             maxWidth: "100%",
@@ -267,142 +243,104 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
             <div className="sc-cost-showcase-panel">
               {visibleTopics.map((topic, topicIdx) => {
                 const isActive = topicIdx === activeCostTopic;
+                const isAccordion = visibleTopics.length > 1;
                 const TitleTag = topic.headingTag;
-                return (
-                <motion.div
-                  key={topic.id}
-                  hidden={!isActive}
-                  initial={false}
-                  animate={isActive ? { y: 0, opacity: 1 } : { y: 15, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
-                  style={{ display: isActive ? "flex" : "none", flexDirection: "column", flex: 1 }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                const panelId = `cost-topic-panel-${topic.id}`;
+                const heading = (
+                  <>
                     <span
                       style={{
+                        display: "block",
                         fontFamily: "var(--font-assistant)",
                         fontSize: "0.76rem",
                         fontWeight: 700,
                         letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         color: "#E86337",
+                        marginBottom: "0.4rem",
                       }}
                     >
                       {topic.badge}
                     </span>
-                  </div>
+                    <TitleTag
+                      className="sc-acc-title"
+                      style={{
+                        fontFamily: "var(--font-prata)",
+                        fontSize: "var(--fs-card-title)",
+                        fontWeight: 400,
+                        color: "#1C1C1E",
+                        margin: 0,
+                        lineHeight: 1.25,
+                      }}
+                    >
+                      {topic.title}
+                    </TitleTag>
+                  </>
+                );
+                return (
+                <div
+                  key={topic.id}
+                  style={isAccordion ? { borderBottom: "1px solid #ECE7DE", padding: "0.25rem 0" } : { display: "flex", flexDirection: "column", flex: 1 }}
+                >
+                  {isAccordion ? (
+                    <button
+                      type="button"
+                      className="sc-acc-btn"
+                      onClick={() => setActiveCostTopic(isActive ? -1 : topicIdx)}
+                      aria-expanded={isActive}
+                      aria-controls={panelId}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "1rem",
+                        padding: "1rem 0",
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        textAlign: "left",
+                      }}
+                    >
+                      <span style={{ flex: 1 }}>{heading}</span>
+                      <span
+                        aria-hidden
+                        className="sc-acc-icon"
+                        style={{
+                          flexShrink: 0,
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "50%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          backgroundColor: isActive ? "#E86337" : "#FAF6F0",
+                          color: isActive ? "#FFFFFF" : "#1C1C1E",
+                          border: isActive ? "none" : "1px solid #E5E0D7",
+                          transition: "all 0.2s ease",
+                        }}
+                      >
+                        {isActive ? <Minus size={16} /> : <Plus size={16} />}
+                      </span>
+                    </button>
+                  ) : (
+                    <div style={{ marginBottom: "0.85rem" }}>{heading}</div>
+                  )}
 
-                  <TitleTag
-                    style={{
-                      fontFamily: "var(--font-prata)",
-                      fontSize: "var(--fs-card-title)",
-                      fontWeight: 400,
-                      color: "#1C1C1E",
-                      margin: "0 0 0.85rem",
-                      lineHeight: 1.25,
-                    }}
+                  <motion.div
+                    id={panelId}
+                    hidden={!isActive}
+                    initial={false}
+                    animate={isActive ? { y: 0, opacity: 1 } : { y: 8, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    style={{ display: isActive ? "block" : "none", paddingBottom: isAccordion ? "1rem" : 0, flex: 1 }}
                   >
-                    {topic.title}
-                  </TitleTag>
-
-                  <div style={{ flex: 1 }}>
                     {topic.content}
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </div>
                 );
               })}
 
-              {/* Navigation & Actions Footer */}
-              {visibleTopics.length > 1 && <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  gap: "1rem",
-                  paddingTop: "1.25rem",
-                  marginTop: "1.25rem",
-                  borderTop: "1px solid #ECE7DE",
-                }}
-              >
-                {/* Dots & Counter */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  {visibleTopics.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActiveCostTopic(i)}
-                      aria-label={`Go to topic ${i + 1}`}
-                      style={{
-                        height: "8px",
-                        width: activeCostTopic === i ? "24px" : "8px",
-                        borderRadius: "999px",
-                        backgroundColor: activeCostTopic === i ? "#E86337" : "#D5CEBF",
-                        border: "none",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        padding: 0,
-                      }}
-                    />
-                  ))}
-                  <span
-                    style={{
-                      marginLeft: "0.5rem",
-                      fontSize: "0.78rem",
-                      color: "#777",
-                      fontFamily: "var(--font-assistant)",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {activeCostTopic + 1} of {visibleTopics.length}
-                  </span>
-                </div>
-
-                {/* Arrow Controls */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <button
-                    type="button"
-                    onClick={handlePrevCostTopic}
-                    aria-label="Previous Topic"
-                    style={{
-                      width: "38px",
-                      height: "38px",
-                      borderRadius: "50%",
-                      backgroundColor: "#FAF6F0",
-                      border: "1px solid #E5E0D7",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "#1C1C1E",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <ArrowLeft size={17} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNextCostTopic}
-                    aria-label="Next Topic"
-                    style={{
-                      width: "38px",
-                      height: "38px",
-                      borderRadius: "50%",
-                      backgroundColor: "#E86337",
-                      border: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      color: "#FFFFFF",
-                      boxShadow: "0 4px 12px rgba(232, 99, 55, 0.25)",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <ArrowRight size={17} />
-                  </button>
-                </div>
-              </div>}
             </div>
           </div>
         </div>
@@ -568,6 +506,41 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
           width: 100%;
           display: flex;
           flex-direction: column;
+        }
+        @media (max-width: 640px) {
+          .sc-acc-btn {
+            gap: 0.75rem !important;
+            padding: 0.85rem 0 !important;
+          }
+          .sc-acc-title {
+            font-size: 1rem !important;
+            line-height: 1.3 !important;
+          }
+          /* Plan stats: three compact tiles in one row instead of three tall stacked cards */
+          .sc-plan-stats {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 0.4rem !important;
+            margin-top: 0.6rem !important;
+          }
+          .sc-plan-stats > div {
+            padding: 0.55rem 0.5rem !important;
+          }
+          .sc-plan-stats > div > div:first-child {
+            font-size: 0.58rem !important;
+            letter-spacing: 0.03em !important;
+          }
+          .sc-plan-stats > div > div:last-child {
+            font-size: 0.78rem !important;
+            line-height: 1.25 !important;
+            margin-top: 0.15rem !important;
+          }
+          .sc-acc-icon {
+            width: 28px !important;
+            height: 28px !important;
+          }
+          .sc-cost-showcase-panel p {
+            font-size: var(--fs-body) !important;
+          }
         }
       `}</style>
 

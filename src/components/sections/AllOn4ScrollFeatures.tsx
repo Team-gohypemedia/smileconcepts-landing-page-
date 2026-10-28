@@ -182,7 +182,19 @@ export default function AllOn4ScrollFeatures() {
   const [mobileIndex, setMobileIndex] = React.useState(0);
   const touchStartXRef = useRef<number | null>(null);
 
+  // Only one layout is in the DOM at a time, so the headings and text are never output twice.
+  // Until the viewport is known (server render and first paint) the desktop layout is used.
+  const [isMobile, setIsMobile] = React.useState<boolean | null>(null);
   useEffect(() => {
+    const query = window.matchMedia("(max-width: 1023px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile === null) return;
     const container = containerRef.current;
     const stage = stageRef.current;
     if (!container || !stage) return;
@@ -277,7 +289,7 @@ export default function AllOn4ScrollFeatures() {
     return () => {
       mm.revert();
     };
-  }, []);
+  }, [isMobile]);
 
   const currentMobileSlide = slidesData[mobileIndex];
   const MobileHeadingTag = currentMobileSlide.headingLevel === 2 ? "h2" : "h3";
@@ -312,6 +324,7 @@ export default function AllOn4ScrollFeatures() {
           1. MOBILE VIEW (< 1024px): Matching Reference UI Screenshot
           Auto-moving carousel, card on top, text & CTA, bottom dots
       ──────────────────────────────────────────────────────────── */}
+      {isMobile && (
       <div
         className="sc-scroll-mobile-view"
         style={{
@@ -587,11 +600,13 @@ export default function AllOn4ScrollFeatures() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ───────────────────────────────────────────────────────────
           2. DESKTOP VIEW (>= 1024px): Pinned GSAP Scroll Animation
           Completely untouched, preserving original brand experience
       ──────────────────────────────────────────────────────────── */}
+      {!isMobile && (
       <div
         ref={containerRef}
         className="sc-scroll-desktop-view"
@@ -894,6 +909,7 @@ export default function AllOn4ScrollFeatures() {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

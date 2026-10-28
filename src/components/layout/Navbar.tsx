@@ -266,6 +266,7 @@ export default function Navbar() {
             }}
           >
             <span
+              className="sc-phone-icon"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -516,8 +517,17 @@ export default function Navbar() {
             gap: 0.6rem !important;
           }
           .sc-desktop-cta-group .sc-primary-cta {
-            padding: 0.45rem 0.9rem !important;
+            height: 36px;
+            padding: 0 1rem !important;
             font-size: 0.78rem !important;
+          }
+          .sc-desktop-cta-group .sc-phone-icon {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .sc-desktop-cta-group .sc-phone-icon svg {
+            width: 16px;
+            height: 16px;
           }
           .sc-mobile-toggle {
             display: inline-flex !important;
