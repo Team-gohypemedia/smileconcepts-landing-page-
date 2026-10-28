@@ -874,6 +874,20 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: "#E86337",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      Risks and Longevity
+                    </span>
                     <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       What You Should Know About Risks Associated with All on 4 Dental Implants
                     </h2>
