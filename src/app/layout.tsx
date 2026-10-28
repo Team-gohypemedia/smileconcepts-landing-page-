@@ -67,6 +67,9 @@ export const metadata: Metadata = {
     apple: "/assets/brand/cropped-favicon-180x180.png",
     shortcut: "/assets/brand/cropped-favicon-32x32.png",
   },
+  verification: {
+    google: "jzagH1Kn22XN1lF4JTew6XuNGpapqfA0DzwuHf5xP3I",
+  },
 };
 
 /* ─── Root Layout ───────────────────────────────────────────────── */
