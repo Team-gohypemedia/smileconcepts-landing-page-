@@ -116,3 +116,64 @@ video {
 
 /* ─── Utility: hide video tag when no source, show Image fallback ─── */
 #hero-video:not([src]) { display: none; }
+
+/* ─── Comparison tables: one table, shown as stacked cards on phones ─── */
+@media (max-width: 640px) {
+  .sc-cmp-wrap {
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .sc-cmp-table,
+  .sc-cmp-table tbody {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  /* Header stays in the DOM for screen readers, hidden visually (cards carry their own labels) */
+  .sc-cmp-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .sc-cmp-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 0.7rem;
+    border: 1px solid #ECE7DE;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff !important;
+  }
+  .sc-cmp-table td {
+    display: block !important;
+    border-bottom: none !important;
+    padding: 0.7rem 0.95rem !important;
+  }
+  .sc-cmp-table td:first-child {
+    grid-column: 1 / -1;
+    background: #EB6B3D;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    padding: 0.6rem 0.95rem !important;
+  }
+  .sc-cmp-table td:nth-child(2) {
+    border-right: 1px solid #ECE7DE;
+  }
+  .sc-cmp-table td:not(:first-child)::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #777777;
+  }
+  .sc-cmp-table td:nth-child(2)::before {
+    color: #E86337;
+  }
+}

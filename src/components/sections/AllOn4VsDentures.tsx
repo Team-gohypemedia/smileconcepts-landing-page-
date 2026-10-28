@@ -45,21 +45,6 @@ export default function AllOn4VsDentures() {
         borderTop: "1px solid #ECE7DE",
       }}
     >
-      <style>{`
-        .sc-dent-cards {
-          display: none;
-        }
-        @media (max-width: 640px) {
-          .sc-dent-table {
-            display: none !important;
-          }
-          .sc-dent-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 0.65rem;
-          }
-        }
-      `}</style>
       <div
         style={{
           maxWidth: "1060px",
@@ -99,7 +84,7 @@ export default function AllOn4VsDentures() {
 
         {/* Clean, Simple Table (Responsive & Easy to Read) */}
         <div
-          className="sc-dent-table"
+          className="sc-cmp-wrap"
           style={{
             width: "100%",
             overflowX: "auto",
@@ -109,6 +94,7 @@ export default function AllOn4VsDentures() {
           }}
         >
           <table
+            className="sc-cmp-table"
             style={{
               width: "100%",
               minWidth: "620px",
@@ -181,6 +167,7 @@ export default function AllOn4VsDentures() {
                     {row.feature}
                   </td>
                   <td
+                    data-label="All On 4"
                     style={{
                       padding: "1.05rem 1.4rem",
                       color: "#333333",
@@ -193,6 +180,7 @@ export default function AllOn4VsDentures() {
                     {row.allon4}
                   </td>
                   <td
+                    data-label="Traditional Dentures"
                     style={{
                       padding: "1.05rem 1.4rem",
                       color: "#555555",
@@ -208,40 +196,6 @@ export default function AllOn4VsDentures() {
               ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Mobile: comparison as stacked cards */}
-        <div className="sc-dent-cards">
-          {comparisonData.map((row) => (
-            <div
-              key={row.feature}
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid #ECE7DE",
-                borderRadius: "14px",
-                overflow: "hidden",
-                fontFamily: "var(--font-assistant), sans-serif",
-              }}
-            >
-              <div style={{ backgroundColor: "#EB6B3D", color: "#FFFFFF", fontWeight: 700, fontSize: "0.9rem", padding: "0.6rem 0.95rem" }}>
-                {row.feature}
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-                <div style={{ padding: "0.7rem 0.95rem", borderRight: "1px solid #ECE7DE" }}>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#E86337", marginBottom: "0.2rem" }}>
-                    All On 4
-                  </div>
-                  <div style={{ fontSize: "0.92rem", color: "#333333", fontWeight: 600 }}>{row.allon4}</div>
-                </div>
-                <div style={{ padding: "0.7rem 0.95rem" }}>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#777777", marginBottom: "0.2rem" }}>
-                    Traditional Dentures
-                  </div>
-                  <div style={{ fontSize: "0.92rem", color: "#555555", fontWeight: 600 }}>{row.dentures}</div>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* Centered Footnote Matching Second Image */}

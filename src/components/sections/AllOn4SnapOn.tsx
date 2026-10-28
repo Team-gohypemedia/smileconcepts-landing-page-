@@ -71,20 +71,9 @@ export default function AllOn4SnapOn() {
       }}
     >
       <style>{`
-        .sc-snap-cards {
-          display: none;
-        }
         @media (max-width: 640px) {
           .sc-snap-section {
             padding: 2.75rem 1rem !important;
-          }
-          .sc-snap-table {
-            display: none;
-          }
-          .sc-snap-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
           }
           .sc-snap-intro-para {
             text-align: left !important;
@@ -205,7 +194,7 @@ export default function AllOn4SnapOn() {
         </h3>
 
         <div
-          className="sc-snap-table"
+          className="sc-cmp-wrap"
           style={{
             width: "100%",
             overflowX: "auto",
@@ -215,6 +204,7 @@ export default function AllOn4SnapOn() {
           }}
         >
           <table
+            className="sc-cmp-table"
             style={{
               width: "100%",
               minWidth: "620px",
@@ -252,6 +242,7 @@ export default function AllOn4SnapOn() {
                     {row.feature}
                   </td>
                   <td
+                    data-label="All on 4 (All on X)"
                     style={{
                       padding: "1.05rem 1.4rem",
                       color: "#333333",
@@ -264,6 +255,7 @@ export default function AllOn4SnapOn() {
                     {row.allon4}
                   </td>
                   <td
+                    data-label="Snap on implant dentures"
                     style={{
                       padding: "1.05rem 1.4rem",
                       color: "#555555",
@@ -279,48 +271,6 @@ export default function AllOn4SnapOn() {
               ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Mobile: comparison as stacked cards */}
-        <div className="sc-snap-cards">
-          {comparisonData.map((row) => (
-            <div
-              key={row.feature}
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid #ECE7DE",
-                borderRadius: "14px",
-                overflow: "hidden",
-                fontFamily: "var(--font-assistant), sans-serif",
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: "#EB6B3D",
-                  color: "#FFFFFF",
-                  fontWeight: 700,
-                  fontSize: "0.9rem",
-                  padding: "0.6rem 0.95rem",
-                }}
-              >
-                {row.feature}
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-                <div style={{ padding: "0.75rem 0.95rem", borderRight: "1px solid #ECE7DE" }}>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#E86337", marginBottom: "0.25rem" }}>
-                    All on 4 (All on X)
-                  </div>
-                  <div style={{ fontSize: "0.88rem", color: "#333333", lineHeight: 1.5 }}>{row.allon4}</div>
-                </div>
-                <div style={{ padding: "0.75rem 0.95rem" }}>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#777777", marginBottom: "0.25rem" }}>
-                    Snap on implant dentures
-                  </div>
-                  <div style={{ fontSize: "0.88rem", color: "#555555", lineHeight: 1.5 }}>{row.snapOn}</div>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
 
         <p
