@@ -1232,7 +1232,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.35rem" }}>
                   <a
-                    href="https://smileconcepts.com.au/book-online.html"
+                    href="https://www.smileconcepts.com.au/book-online.html"
                     className="sc-calc-cta-btn"
                     style={{
                       display: "flex",

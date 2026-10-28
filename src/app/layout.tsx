@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Prata, Assistant, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import allOn4Schema from "@/data/all-on-4-schema.json";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -83,6 +84,14 @@ export default function RootLayout({
       lang="en"
       className={`${prata.variable} ${assistant.variable} ${playfair.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(allOn4Schema),
+          }}
+        />
+      </head>
       <body id="top" suppressHydrationWarning>
         <style>{`
           /* Custom Premium Scrollbar - Vibrant Signature Orange */

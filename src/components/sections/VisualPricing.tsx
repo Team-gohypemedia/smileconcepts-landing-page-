@@ -131,7 +131,7 @@ export default function VisualPricing() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               <a
-                href="https://smileconcepts.com.au/book-online.html"
+                href="https://www.smileconcepts.com.au/book-online.html"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

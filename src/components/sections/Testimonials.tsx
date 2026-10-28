@@ -381,7 +381,7 @@ export default function Testimonials() {
         >
           {/* Book Consultation Button */}
           <a
-            href="https://smileconcepts.com.au/book-online.html"
+            href="https://www.smileconcepts.com.au/book-online.html"
             style={{
               display: "inline-flex",
               alignItems: "center",

@@ -180,13 +180,11 @@ export default function AllOn4FAQ() {
 
   const toggleItem = (id: string) => {
     setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
+      // If this item is already the only one open, collapse it; otherwise open only this one
+      if (prev.has(id) && prev.size === 1) {
+        return new Set();
       }
-      return next;
+      return new Set([id]);
     });
   };
 
@@ -530,7 +528,7 @@ export default function AllOn4FAQ() {
               <Phone size={14} color="#E86337" />
             </a>
             <a
-              href="https://smileconcepts.com.au/book-online.html"
+              href="https://www.smileconcepts.com.au/book-online.html"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

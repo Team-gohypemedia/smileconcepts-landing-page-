@@ -437,7 +437,7 @@ export default function WhySmileConcepts() {
               <Phone size={16} />
             </a>
             <a
-              href="https://smileconcepts.com.au/book-online.html"
+              href="https://www.smileconcepts.com.au/book-online.html"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

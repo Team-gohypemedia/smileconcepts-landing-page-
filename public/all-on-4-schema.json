@@ -1,0 +1,594 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.smileconcepts.com.au/#website",
+      "url": "https://www.smileconcepts.com.au/",
+      "name": "Smile Concepts",
+      "inLanguage": "en-AU",
+      "publisher": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      }
+    },
+    {
+      "@type": "Dentist",
+      "@id": "https://www.smileconcepts.com.au/#organization",
+      "name": "Smile Concepts",
+      "url": "https://www.smileconcepts.com.au/",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://www.smileconcepts.com.au/#logo",
+        "url": "https://www.smileconcepts.com.au/wp-content/uploads/2024/07/cropped-logo_large-1.png"
+      },
+      "image": "https://www.smileconcepts.com.au/wp-content/uploads/2019/03/P2.jpg",
+      "telephone": "+61292677777",
+      "email": "info@smileconcepts.com.au",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Suite 403, Level 4, 307 Pitt Street",
+        "addressLocality": "Sydney",
+        "addressRegion": "NSW",
+        "postalCode": "2000",
+        "addressCountry": "AU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -33.8736283,
+        "longitude": 151.2077398
+      },
+      "hasMap": "https://maps.google.com/?cid=11220679013814101875",
+      "areaServed": {
+        "@type": "City",
+        "name": "Sydney",
+        "sameAs": "https://en.wikipedia.org/wiki/Sydney"
+      },
+      "medicalSpecialty": "https://schema.org/Dentistry",
+      "knowsAbout": [
+        "All on 4 dental implants",
+        "All on X dental implants",
+        "Full arch dental implants",
+        "Snap on implant dentures",
+        "Dental implant revision",
+        "IV sedation"
+      ],
+      "sameAs": [
+        "https://www.facebook.com/SmileConceptsSydney",
+        "https://www.instagram.com/smileconceptssydney",
+        "https://www.youtube.com/@smileconceptssydney",
+        "https://maps.google.com/?cid=11220679013814101875"
+      ],
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Book a consultation online",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.smileconcepts.com.au/book-online.html",
+          "actionPlatform": [
+            "https://schema.org/DesktopWebPlatform",
+            "https://schema.org/MobileWebPlatform"
+          ]
+        },
+        "result": {
+          "@type": "Reservation",
+          "name": "Dental consultation"
+        }
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.smileconcepts.com.au/#dr-manish-shah",
+      "name": "Dr Manish Shah",
+      "honorificPrefix": "Dr",
+      "givenName": "Manish",
+      "familyName": "Shah",
+      "jobTitle": "Dentist and Medical Practitioner",
+      "description": "Dr Manish Shah is a registered dentist and medical practitioner. He graduated in Dentistry with honours from the University of Sydney in 1998, completed his Medical Degree in 2005, and holds a Master of Medicine in Sleep Medicine.",
+      "url": "https://www.smileconcepts.com.au/about-us/dr-manish-shah.html",
+      "image": "https://www.smileconcepts.com.au/allon4/assets/team/dr-manish-shah.jpg",
+      "worksFor": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Sydney",
+        "sameAs": "https://en.wikipedia.org/wiki/University_of_Sydney"
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Bachelor of Dental Surgery (Honours)",
+          "credentialCategory": "degree"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
+          "credentialCategory": "degree"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Master of Medicine (Sleep Medicine)",
+          "credentialCategory": "degree"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "AHPRA registration (Dental)",
+          "credentialCategory": "registration",
+          "identifier": "DEN0001361239",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Australian Health Practitioner Regulation Agency",
+            "url": "https://www.ahpra.gov.au/"
+          }
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "AHPRA registration (Medical)",
+          "credentialCategory": "registration",
+          "identifier": "MED0001361238",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Australian Health Practitioner Regulation Agency",
+            "url": "https://www.ahpra.gov.au/"
+          }
+        }
+      ],
+      "knowsAbout": [
+        "Cosmetic and implant dentistry",
+        "TMJ and craniofacial pain",
+        "Sleep medicine",
+        "Full arch dental implants"
+      ],
+      "sameAs": [
+        "https://au.linkedin.com/in/drmanishshah",
+        "https://www.instagram.com/doctormanishshah/",
+        "https://www.facebook.com/manish.shah.94849410"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.smileconcepts.com.au/#dr-kinnar-shah",
+      "name": "Dr Kinnar Shah",
+      "honorificPrefix": "Dr",
+      "givenName": "Kinnar",
+      "familyName": "Shah",
+      "jobTitle": "Dentist",
+      "description": "Dr Kinnar Shah completed his dental training in Glasgow in 2000 and has more than 25 years of experience in implant, cosmetic and full-mouth rehabilitation dentistry. He uses digitally guided implant techniques and trains other dentists in advanced implant and full-mouth rehabilitation.",
+      "url": "https://www.smileconcepts.com.au/about-us/dr-kinnar-shah.html",
+      "image": "https://www.smileconcepts.com.au/allon4/assets/team/dr-kinnar-shah.jpg",
+      "worksFor": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Glasgow",
+        "sameAs": "https://en.wikipedia.org/wiki/University_of_Glasgow"
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Bachelor of Dental Surgery (BDS)",
+          "credentialCategory": "degree"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "AHPRA registration (Dental)",
+          "credentialCategory": "registration",
+          "identifier": "DEN0001309395",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Australian Health Practitioner Regulation Agency",
+            "url": "https://www.ahpra.gov.au/"
+          }
+        }
+      ],
+      "knowsAbout": [
+        "Dental implants",
+        "Full mouth rehabilitation",
+        "Cosmetic dentistry",
+        "Digitally guided implant surgery"
+      ],
+      "sameAs": [
+        "https://au.linkedin.com/in/drkinnarshah",
+        "https://twitter.com/drkinnarshah"
+      ]
+    },
+    {
+      "@type": "MedicalWebPage",
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#webpage",
+      "url": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html",
+      "name": "All on 4 Dental Implants & All on X Sydney | Cost From $18k/Arch",
+      "description": "All on 4 and All on X full arch dental implants at Smile Concepts in the Sydney CBD. $18,000 per arch for your implants and temporary teeth; including your final teeth, complete treatment is $28,000 to $32,000 per arch in total. No per implant charge.",
+      "inLanguage": "en-AU",
+      "isPartOf": {
+        "@id": "https://www.smileconcepts.com.au/#website"
+      },
+      "about": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#procedure"
+      },
+      "mainEntity": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#procedure"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#primaryimage"
+      },
+      "breadcrumb": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#breadcrumb"
+      },
+      "publisher": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      },
+      "reviewedBy": {
+        "@id": "https://www.smileconcepts.com.au/#dr-manish-shah"
+      },
+      "lastReviewed": "2026-10-30",
+      "specialty": "https://schema.org/Dentistry",
+      "medicalAudience": {
+        "@type": "MedicalAudience",
+        "audienceType": "Patients considering full arch dental implants"
+      },
+      "citation": [
+        {
+          "@type": "CreativeWork",
+          "name": "ITI. Loading Protocols for Fixed Prostheses in Edentulous Jaws. 2013 consensus.",
+          "url": "https://academy.iti.org/academy/consensus-database/consensus-statement/-/consensus/loading-protocols-for-fixed-prostheses-in-edentulous-jaws/1313"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Maló P et al. All on 4 mandibular rehabilitation with 10 to 18 years of follow-up. Clinical Implant Dentistry and Related Research. 2019;21:565–577.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30924309/"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Maló P et al. All on 4 maxillary rehabilitation with 5 to 13 years of follow-up. Clinical Implant Dentistry and Related Research. 2019;21:538–549.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30924250/"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Mustapha AD, Salame Z, Chrcanovic BR. Smoking and Dental Implants: A Systematic Review and Meta-Analysis. Medicina. 2022;58:39.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35056347/"
+        },
+        {
+          "@type": "ScholarlyArticle",
+          "name": "Herrera D et al. Prevention and treatment of peri-implant diseases: EFP S3 clinical practice guideline. 2023.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37271498/"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Services Australia. Health care and Medicare.",
+          "url": "https://www.servicesaustralia.gov.au/health-care-and-medicare?context=60092"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Australian Taxation Office. Access on compassionate grounds.",
+          "url": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/withdrawing-and-using-your-super/early-access-to-super/access-on-compassionate-grounds"
+        }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#primaryimage",
+      "url": "https://www.smileconcepts.com.au/allon4/assets/before-after/All-2.2.jpg",
+      "contentUrl": "https://www.smileconcepts.com.au/allon4/assets/before-after/All-2.2.jpg",
+      "caption": "After treatment: immediate fixed implant arch rehabilitation at Smile Concepts"
+    },
+    {
+      "@type": [
+        "SurgicalProcedure",
+        "Service"
+      ],
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#procedure",
+      "name": "All on 4 Dental Implants",
+      "alternateName": [
+        "All on X Dental Implants",
+        "All on Four Dental Implants",
+        "All on 5 Dental Implants",
+        "All on 6 Dental Implants",
+        "Full Arch Dental Implants",
+        "Full Mouth Dental Implants",
+        "Fixed Full Arch Implants",
+        "Teeth in a Day",
+        "Same Day Teeth"
+      ],
+      "description": "All on 4, also known as All on X, replaces a full arch of missing or failing teeth with fixed, natural looking teeth on a tailored number of implants, most often four to six. It suits people who wear dentures, have multiple failing teeth, or have been told their options are limited.",
+      "url": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html",
+      "serviceType": "Full arch dental implants",
+      "bodyLocation": "Upper jaw, lower jaw, or both",
+      "preparation": "A full clinical examination, a review of your medical history and 3D CBCT imaging. You receive a written, itemised quote after your examination, photos and 3D CT scan.",
+      "howPerformed": "Each case is planned from a 3D CBCT scan and placed with 4th generation digital guided implant technology. Your dentist decides the number of implants, most commonly four to six and sometimes eight, and the number does not change the price because there is no per implant charge. Implants come from leading systems including Neoss, DIO, Nobel Biocare and Straumann. Where immediate loading is suitable, a fixed temporary bridge is fitted the same day or the next day. The final fixed teeth, in acrylic on titanium or zirconia, are fitted once the implants have healed and integrated with the bone, usually within three to six months.",
+      "followup": "A modified diet while you wear the fixed temporary teeth, twice daily brushing and cleaning beneath the bridge, and regular professional reviews and implant maintenance with the same team.",
+      "provider": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Sydney",
+        "sameAs": "https://en.wikipedia.org/wiki/Sydney"
+      },
+      "isSimilarTo": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#snap-on-dentures"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Phase 1: implants and fixed temporary teeth",
+          "description": "Your consultation, 3D CBCT planning, any extractions, placement of your implants (usually four to six) and fixed temporary teeth on the day of surgery, where suitable. Phase 2 final teeth complete the treatment. Sedation and bone grafting are quoted separately, only if needed.",
+          "price": 18000,
+          "priceCurrency": "AUD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "priceCurrency": "AUD",
+            "unitText": "per arch",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": 1,
+              "unitText": "arch"
+            },
+            "price": 18000
+          },
+          "seller": {
+            "@id": "https://www.smileconcepts.com.au/#organization"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Complete treatment with acrylic on titanium final teeth",
+          "description": "Phase 1 ($18,000 per arch) plus acrylic on titanium final fixed teeth ($10,000 per arch). Sedation and bone grafting are quoted separately, only if needed.",
+          "price": 28000,
+          "priceCurrency": "AUD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "priceCurrency": "AUD",
+            "unitText": "per arch",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": 1,
+              "unitText": "arch"
+            },
+            "price": 28000
+          },
+          "seller": {
+            "@id": "https://www.smileconcepts.com.au/#organization"
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Complete treatment with zirconia final teeth",
+          "description": "Phase 1 ($18,000 per arch) plus zirconia on titanium or pure zirconia final fixed teeth ($14,000 per arch). Sedation and bone grafting are quoted separately, only if needed.",
+          "price": 32000,
+          "priceCurrency": "AUD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "priceCurrency": "AUD",
+            "unitText": "per arch",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": 1,
+              "unitText": "arch"
+            },
+            "price": 32000
+          },
+          "seller": {
+            "@id": "https://www.smileconcepts.com.au/#organization"
+          }
+        }
+      ]
+    },
+    {
+      "@type": [
+        "SurgicalProcedure",
+        "Service"
+      ],
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#snap-on-dentures",
+      "name": "Snap on Implant Dentures",
+      "alternateName": [
+        "Clip on Implant Dentures",
+        "Implant Overdenture",
+        "All on 2"
+      ],
+      "description": "A removable denture that clips onto two to four implants. It costs less than fixed All on 4 teeth and is far more stable than a conventional denture.",
+      "url": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#snap-on-dentures",
+      "provider": {
+        "@id": "https://www.smileconcepts.com.au/#organization"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Sydney",
+        "sameAs": "https://en.wikipedia.org/wiki/Sydney"
+      },
+      "isSimilarTo": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#procedure"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Snap on implant dentures",
+        "description": "From $12,000 per arch.",
+        "priceCurrency": "AUD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "AUD",
+          "unitText": "per arch",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "arch"
+          },
+          "minPrice": 12000
+        },
+        "seller": {
+          "@id": "https://www.smileconcepts.com.au/#organization"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#faq",
+      "isPartOf": {
+        "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#webpage"
+      },
+      "inLanguage": "en-AU",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between All on 4 and All on X?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no difference in the treatment. Both give you a full arch of fixed teeth on dental implants. “All on 4” is the well-known name, while “All on X” means the number of implants (the “X”) is tailored to you, usually four to six. At Smile Concepts, we plan each case to your anatomy and don't charge per implant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is All on 4 surgery painful?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally, the procedure itself is not painful. Most patients choose sleep dentistry (IV sedation), so they stay completely relaxed throughout. They typically report the discomfort afterwards is less than they expected and is well managed with prescribed pain relief and simple aftercare."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does recovery take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many patients return to light activities within a few days. Most surgical recovery happens over 2 to 4 weeks. Full healing and integration of the implants with your jaw typically takes three to six months, during which you wear your fixed temporary teeth before your final bridge is fitted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get all on four implants if I have bone loss?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Possibly, yes. Bone loss does not automatically rule you out. Angled implants may make use of available bone, but some people need grafting or a different approach. Suitability is determined with clinical examination and 3D imaging. Severe bone loss may require assessment for advanced options such as zygomatic or pterygoid implants. These have different risks and may require specialist referral."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I keep the temporary teeth and skip the final bridge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Temporary teeth are intended for the healing phase and need a modified diet. They are adjustable as tissues change but are not a substitute for the planned definitive bridge. They are a short term solution and designed to last no longer than 6 to 12 months. Once your implants have healed, we fit your final fixed teeth on a titanium base with acrylic or zirconia teeth on top, built to last. This is why every All on 4 plan at Smile Concepts includes both phases."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I really get teeth in a day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When immediate loading is suitable, yes. Immediate loading depends on bone, implant stability, bite and health. We can place your implants and fit a fixed temporary bridge the same day or the next day, so you can leave with teeth. Your final bridge is fitted after your implants have healed and integrated with the bone, usually within three to six months."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do All on 4 dental implants cost at Smile Concepts in Sydney?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At Smile Concepts, All on 4 is $18,000 per arch for your implants and temporary teeth. Including your final teeth, complete treatment is $28,000 to $32,000 per arch in total. It is quoted in two phases. Phase 1, which includes your implants and the fixed temporary teeth you leave with on the day of surgery (where suitable), is $18,000 per arch. Phase 2 includes your final fixed teeth: $10,000 for acrylic on titanium or $14,000 for zirconia on titanium or pure zirconia. We don't charge per implant, and you receive a written, itemised quote after your examination, photos and 3D CT scan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the cost of All on 4 dental implants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At Smile Concepts, phase one of your quote ($18,000 per arch) includes your consultation, 3D CBCT planning, any extractions, placement of your implants (usually four to six) and your same-day fixed temporary teeth. Phase two covers your final fixed teeth in acrylic or zirconia. Your care doesn’t stop at phase two. The same team that planned and placed your implants looks after you for the long term, with regular reviews, professional implant maintenance and cleaning, and prompt help if anything ever feels loose or uncomfortable. We’ll explain your recommended maintenance schedule and any ongoing costs at your consultation. Sedation and bone grafting are quoted separately, and we confirm everything in a written, itemised quote."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many implants will I need, and does it change the price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your dentist decides the number of implants, most commonly four to six (and sometimes eight), after analysing your X-rays and 3D CBCT scan. It depends on your bone and what gives you the most stable result. Because we don't charge per implant, the number placed does not change your price. Your quote is driven by case complexity, not implant count."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use my superannuation to pay for All on 4 or All on X?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Eligible patients may apply to the ATO for compassionate release of superannuation. We can provide treatment information and discuss application support, but the ATO determines approval. Confirm current supporting report requirements with the ATO and consider independent financial advice before applying. We partner with SuperCare who can help you manage the application process with the ATO."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a cheaper alternative to All on 4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Snap on implant dentures, also called an implant overdenture or All on 2, start from $12,000 per arch at Smile Concepts. The denture clips onto two to four implants and is removed for cleaning, so it costs less than fixed All on 4 teeth while being far more stable than a conventional denture."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do All on 4 dental implants last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dental implants and full-arch bridges are intended as long-term treatment, but no lifespan is guaranteed. Implants, components and bridge materials can require maintenance, repair or replacement. Longevity depends on oral hygiene, regular checkups, smoking, overall health, bite forces, and other individual factors. We'll show you exactly how to care for your new teeth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is All on 4 better than dentures?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They solve the same problem in different ways. All on 4 gives you fixed teeth that stay in place, so you don't have to remove them daily, no adhesive, and more stability when eating. Dentures remain a reasonable option for some patients. The right choice depends on your oral health, your bone and your goals, which is what your assessment confirms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can smokers have all on 4 dental implants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Possibly, yes. Smoking is associated with increased implant failure risk and bone loss. Suitability is assessed individually; stopping smoking is an important risk reduction step. Nicotine reduces blood flow to the bone and gums, which slows healing and raises the risk of implant failure. We assess smokers individually, discuss the risks at consultation, and can talk through ways to reduce risk around the time of surgery. A successful early result does not remove the longer-term risks associated with smoking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I clean all on four dental implants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Brush twice daily and clean beneath the bridge with the aids recommended for your design, such as suitable interdental brushes or floss. A water flosser may be an adjunct. Attend regular professional reviews so inflammation and mechanical problems can be detected early."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if my remaining teeth are failing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "That is one of the most common starting points for All on 4. During your assessment, we look at whether your remaining teeth can be saved or whether replacing the full arch is the more predictable long-term option. If extractions are needed, they are done at the same appointment as your implant placement, and they are included in your phase one fee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if my Bridge breaks or an Implant fails?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact us promptly if the bridge becomes loose, breaks or causes pain. Avoid chewing on the affected area and do not attempt a repair yourself. The cause must be assessed before deciding whether repair, replacement or further implant treatment is appropriate."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.smileconcepts.com.au/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dental Implants",
+          "item": "https://www.smileconcepts.com.au/dental-implants/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "All on 4 Dental Implants Sydney",
+          "item": "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html"
+        }
+      ]
+    }
+  ]
+}

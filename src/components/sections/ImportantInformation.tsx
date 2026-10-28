@@ -583,7 +583,7 @@ export default function ImportantInformation() {
                 margin: 0,
               }}
             >
-              Clinically reviewed by <strong style={{ color: "#1C1C1E" }}>Dr Manish Shah</strong>, BDS (Hons), MBBS, MMED (Sleep Medicine), University of Sydney, AHPRA registration: DEN0001361239 (Dental) and MED0001361238 (Medical). Last reviewed: 15th October 2026.
+              Clinically reviewed by <strong style={{ color: "#1C1C1E" }}>Dr Manish Shah</strong>, BDS (Hons), MBBS, MMED (Sleep Medicine), University of Sydney, AHPRA registration: DEN0001361239 (Dental) and MED0001361238 (Medical). Last reviewed: 30th October 2026.
             </p>
           </div>
         </div>

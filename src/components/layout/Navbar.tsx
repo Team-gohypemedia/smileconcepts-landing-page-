@@ -286,7 +286,7 @@ export default function Navbar() {
 
           {/* "Book Online" button (goes to the booking section) */}
           <a
-            href="https://smileconcepts.com.au/book-online.html"
+            href="https://www.smileconcepts.com.au/book-online.html"
             className="sc-primary-cta"
             style={{
               display: "inline-flex",
@@ -431,7 +431,7 @@ export default function Navbar() {
                   02 9267 7777
                 </a>
                 <a
-                  href="https://smileconcepts.com.au/book-online.html"
+                  href="https://www.smileconcepts.com.au/book-online.html"
                   style={{
                     display: "flex",
                     alignItems: "center",
