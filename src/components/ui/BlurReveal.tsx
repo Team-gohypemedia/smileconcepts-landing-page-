@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Cite } from "@/components/ui/Cite";
 
@@ -56,7 +57,7 @@ export default function BlurReveal({ text, active, className, style }: {
       animate="show"
     >
       {pieces.map((p) => (
-        <span key={p.key} style={{ display: "contents" }}>{p.node}</span>
+        <Fragment key={p.key}>{p.node}</Fragment>
       ))}
     </motion.p>
   );

@@ -52,7 +52,7 @@ const faqsData: FAQItem[] = [
     categoryLabel: "Procedure & Implants",
     question: "Can I keep the temporary teeth and skip the final bridge?",
     answer:
-      "Temporary teeth are intended for the healing phase and need a modified diet. They are adjustable as tissues change but are not a substitute for the planned definitive bridge. They are a short term solution and designed to last no longer than 6 to 12 months. Once your implants have healed, we fit your final fixed teeth on a titanium base with acrylic or zirconia teeth on top, built to last. This is why every All on 4 plan at Smile Concepts includes both phases.",
+      "No. Temporary teeth are intended for the healing phase and need a modified diet. They are adjustable as tissues change but are not a substitute for the planned definitive bridge. They are a short term solution and designed to last no longer than 6 to 12 months. Once your implants have healed, we fit your final fixed teeth on a titanium base with acrylic or zirconia teeth on top, built to last. This is why every All on 4 plan at Smile Concepts includes both phases.",
   },
   {
     id: "faq-6",
@@ -68,7 +68,7 @@ const faqsData: FAQItem[] = [
     categoryLabel: "Cost & Super",
     question: "How much do All on 4 dental implants cost at Smile Concepts in Sydney?",
     answer:
-      "At Smile Concepts, All on 4 or All on X is quoted in two phases. Phase one, which includes your implants and the fixed temporary teeth you leave with on the day of surgery (where suitable), is $18,000 per arch. Phase 2 includes your final fixed teeth: $10,000 for acrylic on titanium or $14,000 for zirconia on titanium or pure zirconia, so complete treatment ranges from $28,000 to $32,000 per arch. We don't charge per implant, and you receive a written, itemised quote after your examination, photos and 3D CT scan.",
+      "At Smile Concepts, All on 4 is $18,000 per arch for your implants and temporary teeth. Including your final teeth, complete treatment is $28,000 to $32,000 per arch in total. It is quoted in two phases. Phase 1, which includes your implants and the fixed temporary teeth you leave with on the day of surgery (where suitable), is $18,000 per arch. Phase 2 includes your final fixed teeth: $10,000 for acrylic on titanium or $14,000 for zirconia on titanium or pure zirconia. We don't charge per implant, and you receive a written, itemised quote after your examination, photos and 3D CT scan.",
   },
   {
     id: "faq-8",
@@ -124,7 +124,7 @@ const faqsData: FAQItem[] = [
     categoryLabel: "Candidacy & Bone Loss",
     question: "Can smokers have all on 4 dental implants?",
     answer:
-      "Smoking is associated with increased implant failure risk and bone loss. Suitability is assessed individually; stopping smoking is an important risk reduction step. [4] Nicotine reduces blood flow to the bone and gums, which slows healing and raises the risk of implant failure. We assess smokers individually, discuss the risks at consultation, and can talk through ways to reduce risk around the time of surgery. A successful early result does not remove the longer-term risks associated with smoking.",
+      "Possibly, yes. Smoking is associated with increased implant failure risk and bone loss. Suitability is assessed individually; stopping smoking is an important risk reduction step. [4] Nicotine reduces blood flow to the bone and gums, which slows healing and raises the risk of implant failure. We assess smokers individually, discuss the risks at consultation, and can talk through ways to reduce risk around the time of surgery. A successful early result does not remove the longer-term risks associated with smoking.",
   },
   {
     id: "faq-15",
