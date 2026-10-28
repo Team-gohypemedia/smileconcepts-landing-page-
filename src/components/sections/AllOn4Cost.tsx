@@ -24,7 +24,7 @@ const PHASE_1_PER_ARCH = 18000;
 // Phase 2 final teeth options, ordered from mid tier to premium
 const FINAL_TEETH = {
   acrylic: { name: "Acrylic on Titanium", short: "Acrylic", tier: "Mid Tier", perArch: 10000, phase: 2 },
-  zirconia: { name: "Monolithic Zirconia", short: "Zirconia", tier: "Premium Tier", perArch: 14000, phase: 3 },
+  zirconia: { name: "Monolithic Zirconia", short: "Zirconia", tier: "Premium Tier", perArch: 14000, phase: 2 },
 } as const;
 
 export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding" }) {
@@ -1008,7 +1008,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                       const isSelected = selectedMaterial === option.key;
                       return (
                         <button
-                          key={option.phase}
+                          key={option.key ?? "temporary"}
                           type="button"
                           role="radio"
                           aria-checked={isSelected}
