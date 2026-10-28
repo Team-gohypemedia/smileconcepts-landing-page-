@@ -683,7 +683,7 @@ export default function CTABanner() {
                 Call (02) 9267 7777
               </a>
               <a
-                href="#book"
+                href="https://smileconcepts.com.au/book-online.html"
                 className="sc-cta-btn"
                 style={{
                   display: "inline-flex",

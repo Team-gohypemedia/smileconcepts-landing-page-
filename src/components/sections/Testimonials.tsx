@@ -381,7 +381,7 @@ export default function Testimonials() {
         >
           {/* Book Consultation Button */}
           <a
-            href="#book"
+            href="https://smileconcepts.com.au/book-online.html"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -443,8 +443,8 @@ export default function Testimonials() {
               (e.currentTarget as HTMLElement).style.color = "#222222";
             }}
           >
-            <Phone size={15} color="#F47A4A" />
             <span>Call (02) 9267 7777</span>
+            <Phone size={15} color="#F47A4A" />
           </a>
         </div>
       </div>

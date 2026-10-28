@@ -526,11 +526,11 @@ export default function AllOn4FAQ() {
                 textDecoration: "none",
               }}
             >
-              <Phone size={14} color="#E86337" />
               <span>02 9267 7777</span>
+              <Phone size={14} color="#E86337" />
             </a>
             <a
-              href="#book"
+              href="https://smileconcepts.com.au/book-online.html"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

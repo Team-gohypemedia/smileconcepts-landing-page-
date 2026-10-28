@@ -7,7 +7,9 @@ import {
   ArrowRight,
   ArrowLeft,
   Calculator,
+  Check,
   Phone,
+  PhoneCall,
 } from "lucide-react";
 
 // Interest-free payment plans are capped at this amount; anything above it is paid outside the plan
@@ -20,8 +22,8 @@ const PHASE_1_PER_ARCH = 18000;
 
 // Phase 2 final teeth options, ordered from mid tier to premium
 const FINAL_TEETH = {
-  acrylic: { name: "Acrylic on Titanium", short: "Acrylic", tier: "Mid Tier", perArch: 10000 },
-  zirconia: { name: "Monolithic Zirconia", short: "Zirconia", tier: "Premium Tier", perArch: 14000 },
+  acrylic: { name: "Acrylic on Titanium", short: "Acrylic", tier: "Mid Tier", perArch: 10000, phase: 2 },
+  zirconia: { name: "Monolithic Zirconia", short: "Zirconia", tier: "Premium Tier", perArch: 14000, phase: 3 },
 } as const;
 
 export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding" }) {
@@ -57,14 +59,16 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
 
   // Interactive Calculator State
   const [selectedArch, setSelectedArch] = useState<"single" | "both">("single");
-  const [selectedMaterial, setSelectedMaterial] = useState<"acrylic" | "zirconia">("zirconia");
+  // null = Phase 1 only (temporary teeth), the default; a material adds its final teeth on top
+  const [selectedMaterial, setSelectedMaterial] = useState<"acrylic" | "zirconia" | null>(null);
   const [financeMonths, setFinanceMonths] = useState<number>(48);
   const [activeCostTopic, setActiveCostTopic] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
   // Calculations
   const phase1PerArch = PHASE_1_PER_ARCH;
-  const phase2PerArch = FINAL_TEETH[selectedMaterial].perArch;
+  const finalTeeth = selectedMaterial ? FINAL_TEETH[selectedMaterial] : null;
+  const phase2PerArch = finalTeeth ? finalTeeth.perArch : 0;
   const totalPerArch = phase1PerArch + phase2PerArch;
   const archMultiplier = selectedArch === "both" ? 2 : 1;
   const grandTotal = totalPerArch * archMultiplier;
@@ -698,7 +702,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                 <li>Fixed temporary teeth on the day of surgery or shortly afterwards, where suitable</li>
               </ul>
               <a
-                href="#book"
+                href="tel:0292677777"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -715,7 +719,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                 }}
               >
                 <span>Book Phase 1 Consultation</span>
-                <ArrowRight size={14} />
+                <PhoneCall size={14} aria-hidden />
               </a>
             </div>
 
@@ -762,7 +766,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                 Once your implants have healed and integrated with your jawbone, you&apos;ll return for your custom-made permanent bridge. Together, we&apos;ll help you choose the material that best suits your lifestyle, functional needs and aesthetic goals.
               </p>
               <a
-                href="#book"
+                href="tel:0292677777"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -778,8 +782,8 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                   fontSize: "0.9rem",
                 }}
               >
-                <span>Request Written Itemised Quote</span>
-                <ArrowRight size={14} />
+                <span>Get My Price Per Arch</span>
+                <PhoneCall size={14} aria-hidden />
               </a>
             </div>
           </div>
@@ -988,7 +992,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                   </div>
                 </div>
 
-                {/* Phase 1 – always included, not selectable */}
+                {/* Choose your teeth: Phase 1 is the default, final teeth (Phase 2 / 3) are optional add-ons */}
                 <div>
                   <label
                     className="sc-calc-ctrl-label"
@@ -1003,92 +1007,113 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                       letterSpacing: "0.06em",
                     }}
                   >
-                    2. Phase 1: Temporary Teeth
+                    2. Choose Your Teeth:
                   </label>
-                  <div
-                    className="sc-calc-btn"
-                    style={{
-                      padding: "0.75rem 0.95rem",
-                      borderRadius: "12px",
-                      border: "1px dashed #D9D2C6",
-                      backgroundColor: "#F4EFEB",
-                      fontFamily: "var(--font-assistant)",
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.75rem", fontWeight: 700, color: "#1C1C1E", fontSize: "clamp(0.85rem, 2vw, 0.92rem)" }}>
-                      <span>Temporary Teeth</span>
-                      <span>{formatAud(PHASE_1_PER_ARCH)} / arch</span>
-                    </div>
-                    <span className="sc-calc-btn-sub" style={{ fontSize: "0.78rem", color: "#666", display: "block", marginTop: "0.2rem" }}>
-                      Always included. Fitted at surgery and lasts about 6 to 12 months.
-                    </span>
-                  </div>
-                </div>
-
-                {/* Phase 2 – final teeth material */}
-                <div>
-                  <label
-                    className="sc-calc-ctrl-label"
-                    style={{
-                      display: "block",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.82rem",
-                      fontWeight: 700,
-                      color: "#1C1C1E",
-                      marginBottom: "0.55rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                    }}
-                  >
-                    3. Phase 2: Final Teeth
-                  </label>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-                    {(Object.keys(FINAL_TEETH) as (keyof typeof FINAL_TEETH)[]).map((key) => {
-                      const option = FINAL_TEETH[key];
-                      const isSelected = selectedMaterial === key;
+                  <div role="radiogroup" aria-label="Choose your teeth" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "0.5rem" }}>
+                    {[
+                      {
+                        key: null as null | keyof typeof FINAL_TEETH,
+                        phase: 1,
+                        badge: "Phase 1",
+                        tier: "Starting Point",
+                        name: "Temporary Teeth",
+                        price: formatAud(PHASE_1_PER_ARCH),
+                        note: "Fitted at surgery, lasts 6 to 12 mo",
+                        dark: false,
+                      },
+                      ...(Object.keys(FINAL_TEETH) as (keyof typeof FINAL_TEETH)[]).map((key) => ({
+                        key: key as null | keyof typeof FINAL_TEETH,
+                        phase: FINAL_TEETH[key].phase,
+                        badge: `Phase ${FINAL_TEETH[key].phase}`,
+                        tier: FINAL_TEETH[key].tier,
+                        name: FINAL_TEETH[key].name,
+                        price: `+${formatAud(FINAL_TEETH[key].perArch)}`,
+                        note: `Final teeth, ${formatAud(PHASE_1_PER_ARCH + FINAL_TEETH[key].perArch)} total`,
+                        dark: key === "zirconia",
+                      })),
+                    ].map((option) => {
+                      const isSelected = selectedMaterial === option.key;
                       return (
                         <button
-                          key={key}
+                          key={option.phase}
                           type="button"
+                          role="radio"
+                          aria-checked={isSelected}
                           className="sc-calc-btn"
-                          onClick={() => setSelectedMaterial(key)}
-                          aria-pressed={isSelected}
+                          onClick={() => setSelectedMaterial(option.key)}
                           style={{
-                            padding: "0.75rem 0.85rem",
+                            position: "relative",
+                            padding: "0.6rem 0.4rem",
                             borderRadius: "12px",
                             border: isSelected ? "2px solid #E86337" : "1px solid #E5E0D7",
-                            backgroundColor: "#ffffff",
+                            backgroundColor: isSelected ? "rgba(232, 99, 55, 0.04)" : "#ffffff",
                             color: isSelected ? "#E86337" : "#444",
                             fontFamily: "var(--font-assistant)",
                             fontWeight: 700,
                             cursor: "pointer",
-                            fontSize: "clamp(0.85rem, 2vw, 0.92rem)",
+                            fontSize: "clamp(0.72rem, 1.6vw, 0.8rem)",
                             transition: "all 0.2s ease",
                             textAlign: "center",
                             lineHeight: 1.3,
                             boxShadow: isSelected ? "0 4px 14px rgba(232, 99, 55, 0.12)" : "0 1px 3px rgba(0,0,0,0.03)",
                           }}
                         >
+                          {isSelected && (
+                            <span
+                              aria-hidden
+                              style={{
+                                position: "absolute",
+                                top: "0.3rem",
+                                right: "0.3rem",
+                                width: "16px",
+                                height: "16px",
+                                borderRadius: "50%",
+                                backgroundColor: "#E86337",
+                                color: "#ffffff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Check size={12} strokeWidth={3} />
+                            </span>
+                          )}
                           <span
                             style={{
                               display: "inline-block",
-                              fontSize: "0.64rem",
+                              fontSize: "0.58rem",
                               fontWeight: 700,
                               letterSpacing: "0.06em",
                               textTransform: "uppercase",
-                              padding: "0.1rem 0.45rem",
+                              padding: "0.1rem 0.4rem", whiteSpace: "nowrap",
                               borderRadius: "100px",
-                              marginBottom: "0.3rem",
-                              backgroundColor: key === "zirconia" ? "#1C1C1E" : "#F4EFEB",
-                              color: key === "zirconia" ? "#ffffff" : "#666",
+                              marginBottom: "0.2rem",
+                              backgroundColor: option.dark ? "#1C1C1E" : "#F4EFEB",
+                              color: option.dark ? "#ffffff" : "#666",
+                            }}
+                          >
+                            {option.badge}
+                          </span>
+                          <span
+                            style={{
+                              display: "block",
+                              fontSize: "0.56rem",
+                              fontWeight: 700,
+                              letterSpacing: "0.06em",
+                              textTransform: "uppercase",
+                              color: option.dark ? "#1C1C1E" : "#999",
+                              marginBottom: "0.25rem",
                             }}
                           >
                             {option.tier}
                           </span>
                           <div>{option.name}</div>
-                          <span className="sc-calc-btn-sub" style={{ fontSize: "0.74rem", fontWeight: 500, opacity: isSelected ? 0.9 : 0.65, display: "block", marginTop: "0.15rem" }}>
-                            {formatAud(option.perArch)} / arch
+                          <div style={{ fontFamily: "var(--font-prata)", fontWeight: 400, fontSize: "0.95rem", color: "#1C1C1E", marginTop: "0.1rem" }}>
+                            {option.price}
+                            <span style={{ display: "block", fontFamily: "var(--font-assistant)", fontSize: "0.66rem", color: "#888", lineHeight: 1.1 }}>per arch</span>
+                          </div>
+                          <span className="sc-calc-btn-sub" style={{ fontSize: "0.66rem", fontWeight: 500, color: "#777", display: "block", marginTop: "0.1rem", lineHeight: 1.25 }}>
+                            {option.note}
                           </span>
                         </button>
                       );
@@ -1110,7 +1135,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                         letterSpacing: "0.06em",
                       }}
                     >
-                      4. Plan Duration:
+                      3. Plan Duration:
                     </label>
                     <span style={{ fontFamily: "var(--font-assistant)", fontWeight: 700, color: "#E86337", fontSize: "0.88rem" }}>
                       {financeMonths} Mo (Interest-Free)
@@ -1187,13 +1212,15 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                     </span>
                     <strong style={{ color: "#1C1C1E", whiteSpace: "nowrap" }}>{formatAud(phase1PerArch * archMultiplier)}</strong>
                   </div>
-                  <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
-                    <span>
-                      Phase 2: {FINAL_TEETH[selectedMaterial].short} final teeth
-                      <span style={{ display: "block", fontSize: "0.74rem", color: "#888" }}>{FINAL_TEETH[selectedMaterial].tier}</span>
-                    </span>
-                    <strong style={{ color: "#1C1C1E", whiteSpace: "nowrap" }}>{formatAud(phase2PerArch * archMultiplier)}</strong>
-                  </div>
+                  {finalTeeth && (
+                    <div className="sc-calc-breakdown-row" style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#555" }}>
+                      <span>
+                        Phase {finalTeeth.phase}: {finalTeeth.short} final teeth
+                        <span style={{ display: "block", fontSize: "0.74rem", color: "#888" }}>{finalTeeth.tier}</span>
+                      </span>
+                      <strong style={{ color: "#1C1C1E", whiteSpace: "nowrap" }}>{formatAud(phase2PerArch * archMultiplier)}</strong>
+                    </div>
+                  )}
                   <div
                     style={{
                       display: "flex",
@@ -1225,12 +1252,14 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                 </div>
 
                 <p style={{ margin: 0, padding: "0.7rem 0.85rem", backgroundColor: "#F7F4EE", borderLeft: "3px solid #E86337", borderRadius: "8px", fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#555", lineHeight: 1.5 }}>
-                  The &ldquo;from {formatAud(PHASE_1_PER_ARCH)}&rdquo; price covers Phase 1 only. Final teeth are Phase 2.
+                  {finalTeeth
+                    ? `This includes Phase 1 (temporary teeth) plus your Phase ${finalTeeth.phase} final teeth, ${formatAud(totalPerArch)} per arch in total.`
+                    : `This covers Phase 1: your implants and fixed temporary teeth. Choose your final teeth above to see your complete price, from ${formatAud(PHASE_1_PER_ARCH + FINAL_TEETH.acrylic.perArch)} per arch.`}
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.35rem" }}>
                   <a
-                    href="#book"
+                    href="https://smileconcepts.com.au/book-online.html"
                     className="sc-calc-cta-btn"
                     style={{
                       display: "flex",
@@ -1249,7 +1278,7 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                       boxShadow: "0 4px 14px rgba(232, 99, 55, 0.24)",
                     }}
                   >
-                    <span>Book Consultation &amp; Claim Quote</span>
+                    <span>Book Consultation Online</span>
                     <ArrowRight size={14} />
                   </a>
                   <a
@@ -1271,8 +1300,8 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
                       fontSize: "0.84rem",
                     }}
                   >
+                    <span>Ask About My Payment Plan Options</span>
                     <Phone size={13} color="#E86337" />
-                    <span>Call 02 9267 7777 for Quote Details</span>
                   </a>
                 </div>
               </div>

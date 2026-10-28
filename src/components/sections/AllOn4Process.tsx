@@ -4,7 +4,7 @@ import { Cite } from "@/components/ui/Cite";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
+import { ArrowRight, ChevronRight, ChevronLeft, PhoneCall } from "lucide-react";
 import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
 import { GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
 
@@ -150,14 +150,32 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
     setIsPaused(false);
   };
 
+  // Autoplay only runs while the carousel is on screen; each fresh visit starts at Step 1.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || part !== "journey") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setActiveStep(0);
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [part]);
+
   // Autoplay carousel every 5.5s, pauses on hover / touch
   useEffect(() => {
-    if (isPaused || part !== "journey") return;
+    if (isPaused || !inView || part !== "journey") return;
     const timer = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % PROCESS_STEP_COUNT);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isPaused, part]);
+  }, [isPaused, inView, part]);
 
   // Exact 5 Steps from Live Website (Preserved Verbatim)
   const steps = [
@@ -534,6 +552,7 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
 
         {/* ─── 3D COVERFLOW CAROUSEL WITH LEFT & RIGHT CARD PREVIEWS (AUTOPLAY + MANUAL + TOUCH SWIPE) ─── */}
         <div
+          ref={stageRef}
           className="sc-proc-carousel-stage"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -1083,7 +1102,7 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
 
                   <div style={{ marginTop: "0.85rem", paddingTop: "0.65rem", borderTop: "none", display: "flex", alignItems: "center", justifyContent: "flex-start", flexWrap: "wrap", gap: "0.5rem" }}>
                     <a
-                      href="#book"
+                      href="tel:0292677777"
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -1100,7 +1119,7 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                       }}
                     >
                       <span>Book Consultation</span>
-                      <ArrowRight size={14} />
+                      <PhoneCall size={14} aria-hidden />
                     </a>
                   </div>
                 </div>

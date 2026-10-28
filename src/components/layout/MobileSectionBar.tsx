@@ -1,61 +1,43 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Calendar } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll-to-section";
 
 // All section navigation tabs for mobile
-const ALL_SECTION_TABS = [
+const ALL_SECTION_TABS: { id: string; label: string; aliases?: string[] }[] = [
   { id: "overview", label: "Overview" },
-  { id: "transformations", label: "Results" },
-  { id: "testimonials", label: "Reviews" },
-  { id: "complete-my-smile", label: "Complete My Smile" },
-  { id: "general-info", label: "About" },
-  { id: "all-on-4-vs-all-on-x", label: "All on 4 vs X" },
-  { id: "implant-surgery", label: "Surgery" },
-  { id: "recovery", label: "Recovery" },
-  { id: "procedure", label: "Process" },
-  { id: "dentures-comparison", label: "Vs Dentures" },
-  { id: "cost", label: "Cost" },
-  { id: "snap-on-dentures", label: "Snap-On" },
-  { id: "payment-options", label: "Payment" },
+  { id: "transformations", label: "Results", aliases: ["testimonials", "complete-my-smile"] },
+  { id: "general-info", label: "About All on 4 (X)", aliases: ["all-on-4-vs-all-on-x"] },
+  { id: "implant-surgery", label: "Surgery", aliases: ["recovery"] },
+  { id: "procedure", label: "Process", aliases: ["dentures-comparison"] },
+  { id: "cost", label: "Cost", aliases: ["snap-on-dentures", "payment-options"] },
   { id: "risks", label: "Risks" },
-  { id: "team", label: "Doctors" },
-  { id: "why-patients", label: "Why Us" },
-  { id: "faq", label: "FAQs" },
-  { id: "important-information", label: "Info" },
-  { id: "our-practice", label: "Clinic" },
-  { id: "affiliations", label: "Accreditation" },
+  { id: "team", label: "About Us", aliases: ["why-patients", "our-practice", "affiliations"] },
+  { id: "faq", label: "FAQs", aliases: ["important-information", "book"] },
 ];
 
 export default function MobileSectionBar() {
   const [activeSection, setActiveSection] = useState<string>("overview");
   const pillsContainerRef = useRef<HTMLDivElement>(null);
-  // The dock is shown at the top of the page and while scrolling up, hidden while scrolling down
-  const [dockVisible, setDockVisible] = useState(true);
 
   // Scrollspy logic to track current section
   useEffect(() => {
     let frame = 0;
-    let lastY = window.scrollY;
     const handleScroll = () => {
       frame = 0;
-      const y = window.scrollY;
-      const delta = y - lastY;
-      if (y < 80) setDockVisible(true);
-      else if (delta < -6) setDockVisible(true);
-      else if (delta > 6) setDockVisible(false);
-      if (Math.abs(delta) > 6) lastY = y;
       const headerOffset = 110;
       let currentId = "overview";
       let closestTop = -Infinity;
       for (const tab of ALL_SECTION_TABS) {
-        const el = document.getElementById(tab.id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= headerOffset && rect.top > closestTop) {
-            closestTop = rect.top;
-            currentId = tab.id;
+        for (const id of [tab.id, ...(tab.aliases ?? [])]) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= headerOffset && rect.top > closestTop) {
+              closestTop = rect.top;
+              currentId = tab.id;
+            }
           }
         }
       }
@@ -112,10 +94,6 @@ export default function MobileSectionBar() {
           margin: "0 auto",
           maxWidth: "430px",
           zIndex: 9980,
-          transform: dockVisible ? "translateY(0)" : "translateY(calc(100% + 24px))",
-          opacity: dockVisible ? 1 : 0,
-          pointerEvents: dockVisible ? "auto" : "none",
-          transition: "transform 0.3s ease, opacity 0.3s ease",
         }}
         aria-label="Mobile section navigation"
       >
@@ -186,10 +164,9 @@ export default function MobileSectionBar() {
           {/* Vertical subtle divider */}
           <div style={{ width: "1px", height: "18px", backgroundColor: "#EAE5DC", flexShrink: 0 }} />
 
-          {/* Quick Book CTA button */}
-          <button
-            type="button"
-            onClick={() => scrollToSection("book")}
+          {/* Quick call CTA */}
+          <a
+            href="tel:0292677777"
             style={{
               display: "flex",
               alignItems: "center",
@@ -199,20 +176,18 @@ export default function MobileSectionBar() {
               borderRadius: "9999px",
               backgroundColor: "#E86337",
               color: "#FFFFFF",
-              border: "none",
+              textDecoration: "none",
               fontFamily: "var(--font-assistant)",
               fontSize: "0.78rem",
               fontWeight: 700,
-              cursor: "pointer",
               flexShrink: 0,
               boxShadow: "0 4px 12px rgba(232, 99, 55, 0.3)",
-              transition: "transform 0.15s ease",
             }}
-            aria-label="Book a Consultation"
+            aria-label="Call 02 9267 7777"
           >
-            <Calendar size={13} strokeWidth={2.4} />
-            <span>Book</span>
-          </button>
+            <span>Call</span>
+            <PhoneCall size={13} strokeWidth={2.4} aria-hidden />
+          </a>
         </div>
       </div>
     </>

@@ -4,11 +4,36 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, ShieldCheck, Clock, Layers, Award } from "lucide-react";
+import { Check, ShieldCheck, Clock, Layers, Award, PhoneCall } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const toParagraphs = (description: string | string[]) =>
+// Phone CTA: label first, phone icon at the end (matches the other call buttons)
+const renderCta = (label: string) => (
+  <a
+    href="tel:0292677777"
+    aria-label={`${label}: call 02 9267 7777`}
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "0.45rem",
+      padding: "0.78rem 1.5rem",
+      backgroundColor: "#E86337",
+      color: "#ffffff",
+      borderRadius: "8px",
+      fontFamily: "var(--font-assistant)",
+      fontWeight: 700,
+      fontSize: "0.92rem",
+      textDecoration: "none",
+      boxShadow: "0 6px 18px rgba(232,99,55,0.25)",
+    }}
+  >
+    <span>{label}</span>
+    <PhoneCall size={15} aria-hidden />
+  </a>
+);
+
+const toParagraphs =(description: string | string[]) =>
   Array.isArray(description) ? description : [description];
 
 // Checklist items written as "Label: text" render the label in bold
@@ -34,6 +59,7 @@ export interface FeatureSlide {
   checklistTitle?: string;
   checklist: string[];
   footnote?: string;
+  cta?: string;
   imageSrc: string;
   imageAlt: string;
   imagePosition: string;
@@ -59,6 +85,7 @@ const slidesData: FeatureSlide[] = [
     ],
     footnote:
       "We always determine suitability through a proper clinical assessment. We look at your bone volume, oral health, and medical history before recommending anything. If all on 4 is not the right fit, we will tell you and explain what alternatives exist.",
+    cta: "Check If I’m Suitable",
     imageSrc: "/assets/allon4/candidate-smile.jpg",
     imageAlt: "Patient smile assessment for All on 4 suitability at Smile Concepts Sydney",
     imagePosition: "center 22%",
@@ -98,6 +125,7 @@ const slidesData: FeatureSlide[] = [
       "Quick Results: The best part. Most people don't need bone grafting. That means you can walk out with a stunning smile the same day, or shortly after.",
       "No Bone Grafting: Nobody loves extra surgery. Most patients skip it entirely, which saves you time, money, and a whole lot of discomfort.",
     ],
+    cta: "Ask About Teeth In A Day",
     imageSrc: "/assets/allon4/sunset-all-on-4.jpg",
     imageAlt: "Patient smiling after All on 4 same-day teeth at Smile Concepts Sydney",
     imagePosition: "center 25%",
@@ -518,6 +546,12 @@ export default function AllOn4ScrollFeatures() {
               </p>
             )}
 
+            {currentMobileSlide.cta && (
+              <div style={{ display: "flex", justifyContent: "center", margin: "0 0 24px 0" }}>
+                {renderCta(currentMobileSlide.cta)}
+              </div>
+            )}
+
             {/* Horizontal Pagination Dots matching user's reference */}
             <div
               style={{
@@ -851,6 +885,8 @@ export default function AllOn4ScrollFeatures() {
                       {slide.footnote}
                     </p>
                   )}
+
+                  {slide.cta && <div style={{ marginTop: "4px" }}>{renderCta(slide.cta)}</div>}
                 </div>
                 );
               })}

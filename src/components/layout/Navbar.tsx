@@ -17,17 +17,13 @@ interface NavLinkItem {
 // Complete section navigation matching page order
 const navLinks: NavLinkItem[] = [
   { label: "Overview", href: "#overview", id: "overview" },
-  { label: "Results", href: "#transformations", id: "transformations" },
-  { label: "Reviews", href: "#testimonials", id: "testimonials" },
-  { label: "Why Us", href: "#complete-my-smile", id: "complete-my-smile" },
-  { label: "About", href: "#general-info", id: "general-info" },
-  { label: "All on 4 vs X", href: "#all-on-4-vs-all-on-x", id: "all-on-4-vs-all-on-x" },
-  { label: "Surgery", href: "#implant-surgery", id: "implant-surgery" },
+  { label: "Results", href: "#transformations", id: "transformations", aliases: ["testimonials", "complete-my-smile"] },
+  { label: "About All on 4 (X)", href: "#general-info", id: "general-info", aliases: ["all-on-4-vs-all-on-x"] },
+  { label: "Surgery", href: "#implant-surgery", id: "implant-surgery", aliases: ["recovery"] },
   { label: "Process", href: "#procedure", id: "procedure", aliases: ["dentures-comparison"] },
-  { label: "Cost", href: "#cost", id: "cost", aliases: ["snap-on-dentures"] },
-  { label: "Clinic", href: "#our-practice", id: "our-practice" },
-  { label: "Doctors", href: "#team", id: "team" },
-  { label: "Accreditation", href: "#affiliations", id: "affiliations" },
+  { label: "Cost", href: "#cost", id: "cost", aliases: ["snap-on-dentures", "payment-options"] },
+  { label: "Risks", href: "#risks", id: "risks" },
+  { label: "About Us", href: "#team", id: "team", aliases: ["why-patients", "our-practice", "affiliations"] },
   { label: "FAQs", href: "#faq", id: "faq", aliases: ["important-information", "book"] },
 ];
 
@@ -289,8 +285,7 @@ export default function Navbar() {
 
           {/* "Book Online" button (goes to the booking section) */}
           <a
-            href="#book"
-            onClick={(e) => handleSectionClick(e, "#book")}
+            href="https://smileconcepts.com.au/book-online.html"
             className="sc-primary-cta"
             style={{
               display: "inline-flex",
@@ -311,7 +306,8 @@ export default function Navbar() {
               whiteSpace: "nowrap",
             }}
           >
-            Book Online
+            <span className="sc-book-full">Book Online</span>
+            <span className="sc-book-short">Book</span>
           </a>
         </div>
 
@@ -434,8 +430,7 @@ export default function Navbar() {
                   02 9267 7777
                 </a>
                 <a
-                  href="#book"
-                  onClick={(e) => handleMobileClick(e, "#book")}
+                  href="https://smileconcepts.com.au/book-online.html"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -477,6 +472,17 @@ export default function Navbar() {
         .sc-mobile-toggle {
           display: none;
         }
+        .sc-book-short {
+          display: none;
+        }
+        @media (max-width: 480px) {
+          .sc-book-full {
+            display: none;
+          }
+          .sc-book-short {
+            display: inline;
+          }
+        }
 
         .sc-nav-link:hover {
           color: #F47A4A !important;
@@ -504,8 +510,14 @@ export default function Navbar() {
           .sc-desktop-nav {
             display: none !important;
           }
+          /* Mobile: keep the phone icon and Book button in the top bar, next to the menu toggle */
           .sc-desktop-cta-group {
-            display: none !important;
+            margin-left: auto;
+            gap: 0.6rem !important;
+          }
+          .sc-desktop-cta-group .sc-primary-cta {
+            padding: 0.45rem 0.9rem !important;
+            font-size: 0.78rem !important;
           }
           .sc-mobile-toggle {
             display: inline-flex !important;

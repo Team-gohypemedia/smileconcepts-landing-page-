@@ -177,7 +177,7 @@ export default function AllOn4Overview() {
             <div className="sc-hero-cta-wrap" style={{ marginTop: "1.35rem" }}>
               <a
                 href="tel:0292677777"
-                aria-label="Complete my smile: call 02 9267 7777"
+                aria-label="Upgrade to fixed teeth: call 02 9267 7777"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -193,7 +193,7 @@ export default function AllOn4Overview() {
                   boxShadow: "0 6px 18px rgba(232,99,55,0.25)",
                 }}
               >
-                <span>Complete my smile</span>
+                <span>Upgrade To Fixed Teeth</span>
                 <PhoneCall size={15} aria-hidden />
               </a>
             </div>

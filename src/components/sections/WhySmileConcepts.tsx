@@ -433,11 +433,11 @@ export default function WhySmileConcepts() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = "#e06934")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = "#F47A4A")}
             >
-              <Phone size={16} />
               02 9267 7777
+              <Phone size={16} />
             </a>
             <a
-              href="#book"
+              href="https://smileconcepts.com.au/book-online.html"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

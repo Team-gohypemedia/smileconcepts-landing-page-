@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check, PhoneCall } from "lucide-react";
 
 const placementRows = [
   {
@@ -347,6 +347,28 @@ export default function AllOn4ImplantSurgery() {
         </p>
         <p style={pStyle}>Our 3D imaging shows us exactly what is available before we make any recommendations.</p>
         <p style={{ ...pStyle, margin: 0 }}>Some cases may require bone grafting.</p>
+        <a
+          href="tel:0292677777"
+          aria-label="Check if I’m suitable: call 02 9267 7777"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.45rem",
+            marginTop: "1.5rem",
+            padding: "0.78rem 1.5rem",
+            backgroundColor: "#E86337",
+            color: "#ffffff",
+            borderRadius: "8px",
+            fontFamily: "var(--font-assistant)",
+            fontWeight: 700,
+            fontSize: "0.92rem",
+            textDecoration: "none",
+            boxShadow: "0 6px 18px rgba(232,99,55,0.25)",
+          }}
+        >
+          <span>Check If I&rsquo;m Suitable</span>
+          <PhoneCall size={15} aria-hidden />
+        </a>
       </div>
     </section>
   );

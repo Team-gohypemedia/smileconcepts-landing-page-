@@ -111,8 +111,8 @@ export default function CompleteMySmile() {
               boxShadow: "0 4px 14px rgba(244, 122, 74, 0.35)",
             }}
           >
-            <PhoneCall size={18} aria-hidden />
             Complete My Smile
+            <PhoneCall size={18} aria-hidden />
           </a>
         </h2>
 
