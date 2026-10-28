@@ -223,7 +223,7 @@ export default function Navbar() {
                   padding: "0.4rem 0.25rem",
                   whiteSpace: "nowrap",
                   fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "clamp(0.72rem, 0.82vw, 0.82rem)",
+                  fontSize: "clamp(0.86rem, 1vw, 0.95rem)",
                   fontWeight: active ? 700 : 550,
                   letterSpacing: "0.01em",
                   color: active && isLight ? "#F47A4A" : isLight ? "#2C2C2C" : "rgba(255, 255, 255, 0.95)",

@@ -950,6 +950,20 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: "#E86337",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      Revision Treatment
+                    </span>
                     <h3 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
                       All on 4 Revision and Failed Implant Treatment
                     </h3>
@@ -1024,6 +1038,20 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
               >
                 <div className="sc-stack-text" style={{ padding: "clamp(1.5rem, 3vw, 2.75rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: "#E86337",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      Longevity and Maintenance
+                    </span>
                     <h2 className="sc-stack-title" style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", fontWeight: 400, lineHeight: 1.2, color: "#1C1C1E", margin: "0 0 0.5rem" }}>
                       How Long Do All on 4 Implants and Bridges Last?
                     </h2>
