@@ -306,9 +306,6 @@ export default function VisualBeforeAfter() {
               .sc-ba-case-meta > div:first-child {
                 text-align: center !important;
               }
-              .sc-ba-case-meta-right {
-                text-align: center !important;
-              }
               .sc-ba-case-meta .sc-ba-case-title {
                 font-size: 1.1rem !important;
               }
@@ -405,35 +402,6 @@ export default function VisualBeforeAfter() {
                     {activeCase.desc}
                   </p>
                 </div>
-
-                <div
-                  className="sc-ba-case-meta-right"
-                  style={{
-                    textAlign: "right",
-                    fontFamily: "var(--font-assistant)",
-                    flexShrink: 0,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "0.82rem",
-                      color: "#1A1A24",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {activeCase.location}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.78rem",
-                      color: "#F47A4A",
-                      fontWeight: 600,
-                      marginTop: "0.15rem",
-                    }}
-                  >
-                    {activeCase.duration}
-                  </div>
-                </div>
               </div>
 
               {/* Details of the other cases stay in the page source (not shown) so every case is readable */}
@@ -444,8 +412,6 @@ export default function VisualBeforeAfter() {
                     <p>{c.categoryLabel}</p>
                     <p>{c.title}</p>
                     <p>{c.desc}</p>
-                    <p>{c.location}</p>
-                    <p>{c.duration}</p>
                   </div>
                 ))}
 
@@ -676,6 +642,18 @@ export default function VisualBeforeAfter() {
               borderTop: "1px solid #EDEDF2",
             }}
           >
+            <p
+              style={{
+                fontFamily: "var(--font-assistant)",
+                fontSize: "0.85rem",
+                color: "#F47A4A",
+                fontWeight: 600,
+                lineHeight: 1.45,
+                margin: 0,
+              }}
+            >
+              Average treatment time: 3–6 months
+            </p>
             <p
               style={{
                 fontFamily: "var(--font-assistant)",
