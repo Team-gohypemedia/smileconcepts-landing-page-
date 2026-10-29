@@ -1,34 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { images } from "@/lib/images";
-import { Mail, CheckCircle2 } from "lucide-react";
+import Script from "next/script";
 
 export default function CTABanner() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-
-  const [formState, setFormState] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    preferredTime: "",
-    importantThing: "",
-    notes: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 600);
-  };
 
   return (
     <section
@@ -70,15 +50,6 @@ export default function CTABanner() {
           align-items: center;
           gap: 1.15rem;
           flex-wrap: wrap;
-        }
-        .sc-cta-form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.65rem;
-        }
-        .sc-cta-input:focus {
-          border-color: #F47A4A !important;
-          box-shadow: 0 0 0 3px rgba(244, 122, 74, 0.18) !important;
         }
 
         /* Mobile View: Reordered (1: Text Top, 2: Form, 3: Side-by-Side CTAs Bottom) */
@@ -126,13 +97,6 @@ export default function CTABanner() {
           .sc-cta-btn svg {
             width: 14px !important;
             height: 14px !important;
-          }
-        }
-
-        @media (max-width: 520px) {
-          .sc-cta-form-row {
-            grid-template-columns: 1fr !important;
-            gap: 0.55rem !important;
           }
         }
       `}</style>
@@ -211,348 +175,25 @@ export default function CTABanner() {
               margin: "0 auto",
             }}
           >
-            {submitted ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "2.5rem 1rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.85rem",
-                }}
-              >
-                <div
-                  style={{
-                    width: "52px",
-                    height: "52px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(35, 164, 85, 0.12)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#23A455",
-                  }}
-                >
-                  <CheckCircle2 size={32} />
-                </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-prata)",
-                    fontSize: "1.45rem",
-                    color: "#222222",
-                    margin: 0,
-                  }}
-                >
-                  Consultation Requested
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-assistant)",
-                    fontSize: "0.9rem",
-                    color: "#666666",
-                    lineHeight: 1.55,
-                    maxWidth: "340px",
-                    margin: 0,
-                  }}
-                >
-                  Thank you, <strong>{formState.fullName || "valued patient"}</strong>. Our Sydney CBD patient coordinator will call you shortly to confirm your booking.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormState({
-                      fullName: "",
-                      email: "",
-                      phone: "",
-                      preferredTime: "",
-                      importantThing: "",
-                      notes: "",
-                    });
-                  }}
-                  style={{
-                    marginTop: "0.5rem",
-                    padding: "0.5rem 1.25rem",
-                    backgroundColor: "transparent",
-                    border: "1px solid #DCDFE4",
-                    borderRadius: "8px",
-                    fontFamily: "var(--font-assistant)",
-                    fontSize: "0.82rem",
-                    color: "#555555",
-                    cursor: "pointer",
-                  }}
-                >
-                  Send another enquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
-                {/* Row 1: Full Name & Mobile Phone */}
-                <div className="sc-cta-form-row">
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.78rem",
-                        fontWeight: 600,
-                        color: "#333333",
-                        marginBottom: "0.2rem",
-                      }}
-                    >
-                      Full Name <span style={{ color: "#F47A4A" }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Full Name"
-                      value={formState.fullName}
-                      onChange={(e) => setFormState({ ...formState, fullName: e.target.value })}
-                      className="sc-cta-input"
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem 0.75rem",
-                        borderRadius: "8px",
-                        border: "1px solid #DCDFE4",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.86rem",
-                        color: "#222222",
-                        outline: "none",
-                        backgroundColor: "#FAFAFA",
-                        transition: "all 0.2s ease",
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.78rem",
-                        fontWeight: 600,
-                        color: "#333333",
-                        marginBottom: "0.2rem",
-                      }}
-                    >
-                      Mobile Number <span style={{ color: "#F47A4A" }}>*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Phone"
-                      value={formState.phone}
-                      onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                      className="sc-cta-input"
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem 0.75rem",
-                        borderRadius: "8px",
-                        border: "1px solid #DCDFE4",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.86rem",
-                        color: "#222222",
-                        outline: "none",
-                        backgroundColor: "#FAFAFA",
-                        transition: "all 0.2s ease",
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Row 2: Email & Preferred Time */}
-                <div className="sc-cta-form-row">
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.78rem",
-                        fontWeight: 600,
-                        color: "#333333",
-                        marginBottom: "0.2rem",
-                      }}
-                    >
-                      Email <span style={{ color: "#F47A4A" }}>*</span>
-                    </label>
-                    <div style={{ position: "relative" }}>
-                      <div
-                        style={{
-                          position: "absolute",
-                          left: "0.7rem",
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "#999999",
-                          pointerEvents: "none",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Mail size={14} />
-                      </div>
-                      <input
-                        type="email"
-                        required
-                        placeholder="Email"
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="sc-cta-input"
-                        style={{
-                          width: "100%",
-                          padding: "0.5rem 0.75rem 0.5rem 2.15rem",
-                          borderRadius: "8px",
-                          border: "1px solid #DCDFE4",
-                          fontFamily: "var(--font-assistant)",
-                          fontSize: "0.86rem",
-                          color: "#222222",
-                          outline: "none",
-                          backgroundColor: "#FAFAFA",
-                          transition: "all 0.2s ease",
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.78rem",
-                        fontWeight: 600,
-                        color: "#333333",
-                        marginBottom: "0.2rem",
-                      }}
-                    >
-                      Preferred Time to Call
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="eg. 10:30am"
-                      value={formState.preferredTime}
-                      onChange={(e) => setFormState({ ...formState, preferredTime: e.target.value })}
-                      className="sc-cta-input"
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem 0.75rem",
-                        borderRadius: "8px",
-                        border: "1px solid #DCDFE4",
-                        fontFamily: "var(--font-assistant)",
-                        fontSize: "0.86rem",
-                        color: "#222222",
-                        outline: "none",
-                        backgroundColor: "#FAFAFA",
-                        transition: "all 0.2s ease",
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* The most important thing for me is * */}
-                <div>
-                  <label
-                    style={{
-                      display: "block",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.78rem",
-                      fontWeight: 600,
-                      color: "#333333",
-                      marginBottom: "0.2rem",
-                    }}
-                  >
-                    The most important thing for me is <span style={{ color: "#F47A4A" }}>*</span>
-                  </label>
-                  <select
-                    required
-                    value={formState.importantThing}
-                    onChange={(e) => setFormState({ ...formState, importantThing: e.target.value })}
-                    className="sc-cta-input"
-                    style={{
-                      width: "100%",
-                      padding: "0.5rem 0.75rem",
-                      borderRadius: "8px",
-                      border: "1px solid #DCDFE4",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.86rem",
-                      color: formState.importantThing ? "#222222" : "#888888",
-                      outline: "none",
-                      backgroundColor: "#FAFAFA",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <option value="" disabled>Select Option</option>
-                    <option value="fixed-teeth">Immediate Fixed Teeth (All-on-4)</option>
-                    <option value="replace-dentures">Replacing loose or painful dentures</option>
-                    <option value="broken-teeth">Fixing broken, failing, or missing teeth</option>
-                    <option value="costs-payment">Costs, payment plans &amp; Superannuation release</option>
-                    <option value="cosmetic-makeover">Cosmetic smile transformation &amp; aesthetics</option>
-                  </select>
-                </div>
-
-                {/* Anything else */}
-                <div>
-                  <label
-                    style={{
-                      display: "block",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.78rem",
-                      fontWeight: 600,
-                      color: "#333333",
-                      marginBottom: "0.2rem",
-                    }}
-                  >
-                    Is there anything else you would like to know?
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder=""
-                    value={formState.notes}
-                    onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
-                    className="sc-cta-input"
-                    style={{
-                      width: "100%",
-                      padding: "0.45rem 0.75rem",
-                      borderRadius: "8px",
-                      border: "1px solid #DCDFE4",
-                      fontFamily: "var(--font-assistant)",
-                      fontSize: "0.86rem",
-                      color: "#222222",
-                      outline: "none",
-                      backgroundColor: "#FAFAFA",
-                      resize: "vertical",
-                      transition: "all 0.2s ease",
-                    }}
-                  />
-                </div>
-
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  style={{
-                    width: "100%",
-                    marginTop: "0.2rem",
-                    padding: "0.72rem",
-                    borderRadius: "8px",
-                    border: "none",
-                    backgroundColor: "#F47A4A",
-                    color: "#ffffff",
-                    fontFamily: "var(--font-assistant)",
-                    fontWeight: 700,
-                    fontSize: "0.94rem",
-                    cursor: loading ? "wait" : "pointer",
-                    boxShadow: "0 4px 14px rgba(244, 122, 74, 0.35)",
-                    transition: "background-color 0.2s ease, transform 0.15s ease",
-                  }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e06934")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = "#F47A4A")}
-                >
-                  {loading ? "Submitting..." : "Request a Consultation"}
-                </button>
-              </form>
-            )}
+            <iframe
+              src="https://link.smileconcepts.au/widget/form/wruGLMxJL9ggsTiTFfXN"
+              style={{ width: "100%", border: "none" }}
+              id="inline-wruGLMxJL9ggsTiTFfXN"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="7. Dental Implants - All on 4 New LP (Next JS)"
+              data-height="655"
+              data-layout-iframe-id="inline-wruGLMxJL9ggsTiTFfXN"
+              data-form-id="wruGLMxJL9ggsTiTFfXN"
+              data-cookie-consent="true"
+              data-cookie-consent-provider="auto"
+              title="7. Dental Implants - All on 4 New LP (Next JS)"
+            />
           </motion.div>
 
           {/* Text Block (Desktop Top Right / Mobile Order 1 Top) */}
@@ -732,6 +373,7 @@ export default function CTABanner() {
           </motion.div>
         </div>
       </div>
+      <Script src="https://link.smileconcepts.au/js/form_embed.js" strategy="lazyOnload" />
     </section>
   );
 }
