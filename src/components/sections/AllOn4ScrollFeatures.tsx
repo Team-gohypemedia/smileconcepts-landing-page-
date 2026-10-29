@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, ShieldCheck, Clock, Layers, Award, PhoneCall } from "lucide-react";
+import { Check, ShieldCheck, Clock, Layers, Award, PhoneCall, ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -318,6 +318,21 @@ export default function AllOn4ScrollFeatures() {
         .sc-mobile-card-transition {
           transition: opacity 0.45s ease, transform 0.45s ease;
         }
+
+        /* Gentle sideways nudge so the swipe hint arrows read as "swipe" */
+        @keyframes sc-swipe-nudge-left {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-3px); }
+        }
+        @keyframes sc-swipe-nudge-right {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        .sc-swipe-hint-left { animation: sc-swipe-nudge-left 1.8s ease-in-out infinite; }
+        .sc-swipe-hint-right { animation: sc-swipe-nudge-right 1.8s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-swipe-hint { animation: none !important; }
+        }
       `}</style>
 
       {/* ───────────────────────────────────────────────────────────
@@ -412,6 +427,36 @@ export default function AllOn4ScrollFeatures() {
                   pointerEvents: "none",
                 }}
               />
+
+              {/* Swipe hint arrows (visual only, not clickable) */}
+              {[
+                { side: "left" as const, Icon: ChevronLeft },
+                { side: "right" as const, Icon: ChevronRight },
+              ].map(({ side, Icon }) => (
+                <div
+                  key={side}
+                  aria-hidden
+                  className={`sc-swipe-hint sc-swipe-hint-${side}`}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    [side]: "10px",
+                    width: "28px",
+                    height: "28px",
+                    marginTop: "-14px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    color: "#1C1C1E",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.18)",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <Icon size={16} strokeWidth={2.5} />
+                </div>
+              ))}
             </div>
 
           </div>

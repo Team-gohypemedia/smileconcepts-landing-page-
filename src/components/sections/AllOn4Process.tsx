@@ -393,6 +393,39 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
           .sc-proc-pagination {
             margin-top: 4rem;
           }
+          .sc-proc-swipe-hint {
+            display: flex !important;
+          }
+        }
+        /* Swipe hint arrows on the card edges (visual only, mobile/tablet) */
+        .sc-proc-swipe-hint {
+          display: none;
+          position: absolute;
+          top: 50%;
+          width: 26px;
+          height: 26px;
+          margin-top: -13px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.92);
+          color: #E86337;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          pointer-events: none;
+          z-index: 40;
+        }
+        .sc-proc-swipe-hint-left { left: 2px; animation: sc-proc-nudge-left 1.8s ease-in-out infinite; }
+        .sc-proc-swipe-hint-right { right: 2px; animation: sc-proc-nudge-right 1.8s ease-in-out infinite; }
+        @keyframes sc-proc-nudge-left {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-3px); }
+        }
+        @keyframes sc-proc-nudge-right {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-proc-swipe-hint { animation: none !important; }
         }
         .sc-acc-btn-proc {
           width: 100%;
@@ -583,6 +616,13 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
           {/* Cards Track Container with Left/Center/Right Previews (Full width) */}
           <div style={{ width: "100%", margin: "0 auto" }}>
             <div className="sc-proc-track-container">
+              {/* Swipe hint arrows (visual only, not clickable) */}
+              <div aria-hidden className="sc-proc-swipe-hint sc-proc-swipe-hint-left">
+                <ChevronLeft size={15} strokeWidth={2.5} />
+              </div>
+              <div aria-hidden className="sc-proc-swipe-hint sc-proc-swipe-hint-right">
+                <ChevronRight size={15} strokeWidth={2.5} />
+              </div>
               {steps.map((st, idx) => {
                 // Calculate position relative to activeStep (-2, -1, 0, 1, 2)
                 let offset = idx - activeStep;
