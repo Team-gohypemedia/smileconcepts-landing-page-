@@ -271,15 +271,15 @@ export default function Navbar() {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "32px",
-                height: "32px",
+                width: "38px",
+                height: "38px",
                 borderRadius: "50%",
                 background: isLight ? "rgba(244, 122, 74, 0.12)" : "rgba(255, 255, 255, 0.15)",
                 color: "#F47A4A",
                 flexShrink: 0,
               }}
             >
-              <Phone size={15} />
+              <Phone size={17} />
             </span>
             <span className="sc-phone-text">02 9267 7777</span>
           </a>
