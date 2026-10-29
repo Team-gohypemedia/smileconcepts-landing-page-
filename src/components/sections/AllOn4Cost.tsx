@@ -125,9 +125,6 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
               </tbody>
             </table>
           </div>
-          <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", marginTop: "0.85rem", marginBottom: 0, lineHeight: 1.6 }}>
-            After your consultation, we provide a full written quote with itemised costs. There are no surprise fees added later. What we quote is what you pay.
-          </p>
         </div>
       ),
     },

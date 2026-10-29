@@ -455,7 +455,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://maps.google.com/?q=Suite+403,+Level+4/307+Pitt+St,+Sydney+NSW+2000"
+              href="https://www.google.com/maps/dir//Smile+Concepts,+Suite+403,+Level+4%2F307+Pitt+St,+Sydney+NSW+2000/@-33.8736283,151.2055511,17z/data=!3m1!5s0x6b12ae3dd637c355:0x5ffcef57ed062bc3!4m16!1m6!3m5!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2sSmile+Concepts!8m2!3d-33.8736283!4d151.2077398!4m8!1m0!1m5!1m1!1s0x6b12ae3dd6503f4b:0x9bb7dc1d0511e773!2m2!1d151.2077398!2d-33.8736283!3e0"
               target="_blank"
               rel="noopener noreferrer"
               className="sc-footer-contact-item"
@@ -469,7 +469,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://www.smileconcepts.com.au"
+              href="https://www.smileconcepts.com.au/sydney-cbd.html"
               target="_blank"
               rel="noopener noreferrer"
               className="sc-footer-contact-item"
@@ -505,11 +505,11 @@ export default function Footer() {
             }}
           >
             {[
-              { label: "Smile Gallery", href: "#transformations" },
-              { label: "Dr Manish Shah", href: "#team" },
-              { label: "Dr Kinnar Shah", href: "#team" },
-              { label: "Privacy Policy", href: "#" },
-              { label: "Terms of Use", href: "#" },
+              { label: "Smile Gallery", href: "https://www.smileconcepts.com.au/smilegallery.html" },
+              { label: "Dr Manish Shah", href: "https://www.smileconcepts.com.au/about-us/dr-manish-shah.html" },
+              { label: "Dr Kinnar Shah", href: "https://www.smileconcepts.com.au/about-us/dr-kinnar-shah.html" },
+              { label: "Privacy Policy", href: "https://www.smileconcepts.com.au/privacy-policy.html" },
+              { label: "Terms of Use", href: "https://www.smileconcepts.com.au/term-of-use.html" },
             ].map((link) => (
               <li key={link.label}>
                 <a href={link.href} className="sc-footer-link">
@@ -545,10 +545,10 @@ export default function Footer() {
             }}
           >
             {[
-              { label: "Porcelain Veneers", href: "https://www.smileconcepts.com.au/porcelain-veneers/" },
-              { label: "Dental Implants", href: "https://www.smileconcepts.com.au/dental-implants/" },
-              { label: "All Teeth On 4", href: "#overview" },
-              { label: "Invisalign", href: "https://www.smileconcepts.com.au/invisalign/" },
+              { label: "Porcelain Veneers", href: "https://www.smileconcepts.com.au/cosmetic-dentistry/porcelain-veneers-sydney.html" },
+              { label: "Dental Implants", href: "https://www.smileconcepts.com.au/dental-implants.html" },
+              { label: "All Teeth On 4", href: "https://www.smileconcepts.com.au/dental-implants/all-on-4-dental-implants-sydney.html" },
+              { label: "Invisalign", href: "https://www.smileconcepts.com.au/orthodontics/invisalign-sydney.html" },
             ].map((link) => (
               <li key={link.label}>
                 <a href={link.href} className="sc-footer-link">
@@ -584,10 +584,10 @@ export default function Footer() {
             }}
           >
             {[
-              { label: "Root Canal Treatment", href: "https://www.smileconcepts.com.au/" },
-              { label: "Wisdom Teeth Removal", href: "https://www.smileconcepts.com.au/" },
-              { label: "Emergency Dentistry", href: "https://www.smileconcepts.com.au/" },
-              { label: "TMJ Pain", href: "https://www.smileconcepts.com.au/" },
+              { label: "Root Canal Treatment", href: "https://www.smileconcepts.com.au/general-dentistry/root-canal-treatment.html" },
+              { label: "Wisdom Teeth Removal", href: "https://www.smileconcepts.com.au/general-dentistry/wisdom-teeth-removal-sydney.html" },
+              { label: "Emergency Dentistry", href: "https://www.smileconcepts.com.au/general-dentistry/emergency-dentist-sydney.html" },
+              { label: "TMJ Pain", href: "https://www.smileconcepts.com.au/tmj-pain-specialist-sydney.html" },
             ].map((link) => (
               <li key={link.label}>
                 <a href={link.href} className="sc-footer-link">
@@ -622,7 +622,7 @@ export default function Footer() {
             <FacebookIcon />
           </a>
           <a
-            href="https://www.youtube.com/@smileconceptssydney"
+            href="https://www.youtube.com/channel/UCZa3Lgyi0CcIlHzYQpzLz5Q"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -631,7 +631,7 @@ export default function Footer() {
             <YoutubeIcon />
           </a>
           <a
-            href="https://www.instagram.com/smileconceptssydney"
+            href="https://www.instagram.com/smile_concepts/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -651,13 +651,13 @@ export default function Footer() {
             textAlign: "center",
           }}
         >
-          Copyright @ 2004 - 2025 Smile Concepts. All Rights Reserved.
+          Copyright @ 2004 - 2026 Smile Concepts. All Rights Reserved.
         </p>
 
         {/* DMCA Badge + Smile Concepts Link Group (Tightly paired like reference) */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.45rem", marginTop: "0.25rem" }}>
           <a
-            href="https://www.dmca.com/Protection/Status.aspx"
+            href="https://www.dmca.com/Protection/Status.aspx?ID=88879f19-5f34-4a45-a8f3-1166ec72caac"
             target="_blank"
             rel="noopener noreferrer"
             title="DMCA.com Protection Status"
@@ -703,7 +703,9 @@ export default function Footer() {
 
           {/* Smile Concepts Orange Link */}
           <a
-            href="https://www.smileconcepts.com.au"
+            href="https://www.google.com/maps/place/Smile+Concepts/@-33.8736283,151.2077398,15z/data=!4m2!3m1!1s0x0:0x9bb7dc1d0511e773"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               color: "#E26A2C",
               fontSize: "0.85rem",

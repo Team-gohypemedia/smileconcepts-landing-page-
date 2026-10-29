@@ -43,6 +43,20 @@
         "name": "Sydney",
         "sameAs": "https://en.wikipedia.org/wiki/Sydney"
       },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
       "medicalSpecialty": "https://schema.org/Dentistry",
       "knowsAbout": [
         "All on 4 dental implants",
