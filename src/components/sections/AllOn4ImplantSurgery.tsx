@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
-import { Check, PhoneCall } from "lucide-react";
+import { Check, PhoneCall, ChevronLeft, ChevronRight } from "lucide-react";
 
 const placementRows = [
   {
@@ -150,12 +150,21 @@ function ImageSlider({ images, style }: { images: SliderImage[]; style?: CSSProp
 
   return (
     <div>
-      <div ref={trackRef} className="sc-img-slider" onScroll={handleScroll} style={{ ...twoUpGrid, ...style }}>
-        {images.map((img) => (
-          <div key={img.src} className="sc-img-slide">
-            <DocImage {...img} />
-          </div>
-        ))}
+      <div className="sc-img-slider-wrap">
+        <div ref={trackRef} className="sc-img-slider" onScroll={handleScroll} style={{ ...twoUpGrid, ...style }}>
+          {images.map((img) => (
+            <div key={img.src} className="sc-img-slide">
+              <DocImage {...img} />
+            </div>
+          ))}
+        </div>
+        {/* Swipe hint arrows (visual only, not clickable); hidden at either end */}
+        <div aria-hidden className="sc-img-swipe-hint sc-img-swipe-hint-left" style={{ opacity: active > 0 ? 1 : 0 }}>
+          <ChevronLeft size={15} strokeWidth={2.5} />
+        </div>
+        <div aria-hidden className="sc-img-swipe-hint sc-img-swipe-hint-right" style={{ opacity: active < images.length - 1 ? 1 : 0 }}>
+          <ChevronRight size={15} strokeWidth={2.5} />
+        </div>
       </div>
       <div className="sc-img-dots" style={{ display: "none", justifyContent: "center", gap: "0.5rem", marginTop: "0.9rem" }}>
         {images.map((img, idx) => (
@@ -226,6 +235,44 @@ export default function AllOn4ImplantSurgery() {
           .sc-img-dots {
             display: flex !important;
           }
+          .sc-img-slider-wrap {
+            position: relative;
+            container-type: inline-size;
+          }
+          .sc-img-swipe-hint {
+            display: flex !important;
+          }
+        }
+        /* Swipe hint arrows, centred on the image (slide is 86% wide, image 16:10) */
+        .sc-img-swipe-hint {
+          display: none;
+          position: absolute;
+          top: calc(86cqw * 10 / 16 / 2);
+          width: 26px;
+          height: 26px;
+          margin-top: -13px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.92);
+          color: #E86337;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 0.25s ease;
+        }
+        .sc-img-swipe-hint-left { left: -6px; animation: sc-img-nudge-left 1.8s ease-in-out infinite; }
+        .sc-img-swipe-hint-right { right: -6px; animation: sc-img-nudge-right 1.8s ease-in-out infinite; }
+        @keyframes sc-img-nudge-left {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-3px); }
+        }
+        @keyframes sc-img-nudge-right {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-img-swipe-hint { animation: none !important; }
         }
       `}</style>
 
