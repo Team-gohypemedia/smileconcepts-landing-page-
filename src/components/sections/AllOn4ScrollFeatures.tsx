@@ -12,6 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 // Phone CTA: label first, phone icon at the end (matches the other call buttons)
 // Mobile stacking cards dock just below the navbar; cards taller than the screen dock by
 // their bottom edge (clear of the bottom section bar) so the whole card is readable first
+// Desktop: scroll distance per slide change, about 3 mouse-wheel notches
+// (a notch is ~100px, scaled by Lenis' wheelMultiplier of 0.65)
+const SCROLL_PER_SLIDE_PX = 3 * 100 * 0.65;
+
 const MOBILE_STACK_DOCK_PX = 84;
 const MOBILE_STACK_BOTTOM_GAP_PX = 76;
 
@@ -256,7 +260,7 @@ export default function AllOn4ScrollFeatures() {
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: () => `+=${totalTransitions * Math.round(Math.max(480, window.innerHeight * 0.9))}`,
+          end: () => `+=${totalTransitions * SCROLL_PER_SLIDE_PX}`,
           pin: stage,
           scrub: 0.4,
           anticipatePin: 1,
