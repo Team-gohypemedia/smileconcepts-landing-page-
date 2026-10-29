@@ -11,10 +11,10 @@ export default function VisualStory() {
     <div id="overview" className="w-full relative" style={{ backgroundColor: "#0C0D17" }}>
       <HeroSection
         title={
-          <h1 style={{ font: "inherit", color: "inherit", margin: 0 }}>
-            All on 4 Dental Implants &amp; All on X{" "}
-            <span style={{ color: "#F47A4A" }}>in Sydney</span>
-          </h1>
+          <h2 style={{ font: "inherit", color: "inherit", margin: 0 }}>
+            Fixed Full Arch Teeth With All on 4 &amp; All on X{" "}
+            <span style={{ color: "#F47A4A" }}>in Sydney CBD</span>
+          </h2>
         }
         subtitle={
           <div className="flex flex-col gap-3">
@@ -114,8 +114,8 @@ export default function VisualStory() {
           text: "COMPLETE MY SMILE",
           href: "tel:0292677777",
         }}
-        backgroundImage="/yamu_jay-ai-generated-9214176.jpg"
-        imagePosition="center 25%"
+        backgroundImage="/hero.jpg"
+        imagePosition="42% 30%"
         contactInfo={{
           phone: "02 9267 7777",
           email: "info@smileconcepts.com.au",

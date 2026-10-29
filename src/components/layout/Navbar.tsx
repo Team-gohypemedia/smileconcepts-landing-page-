@@ -201,7 +201,7 @@ export default function Navbar() {
           className="sc-desktop-nav"
           style={{
             alignItems: "center",
-            gap: "clamp(0.35rem, 0.7vw, 0.85rem)",
+            gap: "clamp(0.35rem, 0.8vw, 1rem)",
             margin: "0 auto",
             flexShrink: 1,
             minWidth: 0,
@@ -223,7 +223,7 @@ export default function Navbar() {
                   padding: "0.4rem 0.25rem",
                   whiteSpace: "nowrap",
                   fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "clamp(0.86rem, 1vw, 0.95rem)",
+                  fontSize: "clamp(0.98rem, 1.1vw, 1.1rem)",
                   fontWeight: active ? 700 : 550,
                   letterSpacing: "0.01em",
                   color: active && isLight ? "#F47A4A" : isLight ? "#2C2C2C" : "rgba(255, 255, 255, 0.95)",
@@ -256,10 +256,10 @@ export default function Navbar() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.4rem",
+              gap: "0.5rem",
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "0.85rem",
-              fontWeight: 600,
+              fontSize: "0.92rem",
+              fontWeight: 700,
               color: isLight ? "#222222" : "#ffffff",
               textDecoration: "none",
               transition: "color 0.2s ease",
@@ -271,15 +271,15 @@ export default function Navbar() {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "26px",
-                height: "26px",
+                width: "32px",
+                height: "32px",
                 borderRadius: "50%",
                 background: isLight ? "rgba(244, 122, 74, 0.12)" : "rgba(255, 255, 255, 0.15)",
                 color: "#F47A4A",
                 flexShrink: 0,
               }}
             >
-              <Phone size={13} />
+              <Phone size={15} />
             </span>
             <span className="sc-phone-text">02 9267 7777</span>
           </a>
@@ -292,11 +292,11 @@ export default function Navbar() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "0.55rem 1.25rem",
+              padding: "0.62rem 1.4rem",
               background: "linear-gradient(135deg, #F47A4A 0%, #ea6935 100%)",
               color: "#ffffff",
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "0.82rem",
+              fontSize: "0.92rem",
               fontWeight: 700,
               letterSpacing: "0.02em",
               textTransform: "capitalize",

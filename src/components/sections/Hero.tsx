@@ -36,6 +36,7 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
   const mobileIndicatorRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrameObj = useRef({ frame: 0 });
@@ -108,6 +109,16 @@ export default function Hero() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
+      // Page H1: fully visible at the top, fades out over the first bit of scrolling
+      // and fades back in when the user scrolls back up to the top
+      const updateHeading = (progress: number) => {
+        const heading = headingRef.current;
+        if (!heading) return;
+        const fade = Math.max(0, 1 - progress * 14);
+        heading.style.opacity = String(fade);
+        heading.style.transform = `translate3d(0, ${(1 - fade) * -16}px, 0)`;
+      };
+
       // Pin hero section and scrub frame sequence across 220% scroll travel for comfortable reading
       ScrollTrigger.create({
         trigger: section,
@@ -115,8 +126,10 @@ export default function Hero() {
         end: "+=240%", // Generous scroll distance so text and frames don't move too fast
         pin: true,
         scrub: 0.8,
+        onRefresh: (self) => updateHeading(self.progress),
         onUpdate: (self) => {
           const progress = self.progress;
+          updateHeading(progress);
 
           // Fade out mobile indicator as soon as user starts scrolling
           const mobileIndicator = mobileIndicatorRef.current;
@@ -426,6 +439,27 @@ export default function Hero() {
           pointerEvents: "none",
         }}
       >
+        {/* Page H1: static and readable from first paint (not part of the typing animation) */}
+        <h1
+          ref={headingRef}
+          style={{
+            fontFamily: "var(--font-prata), serif",
+            fontSize: "clamp(22px, 4.6vw, 54px)",
+            fontWeight: 400,
+            letterSpacing: "-0.01em",
+            lineHeight: 1.18,
+            textAlign: "center",
+            color: "#ffffff",
+            maxWidth: "1240px",
+            textWrap: "balance",
+            margin: "0 auto clamp(0.25rem, 1.5vh, 1rem)",
+            textShadow: "0 3px 22px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9)",
+            willChange: "opacity, transform",
+          }}
+        >
+          All on 4 Dental Implants &amp; All on X <span style={{ color: "#F47A4A" }}>in Sydney</span>
+        </h1>
+
         {/* Centered Display Text Container with Character Reveal */}
         <div
           style={{

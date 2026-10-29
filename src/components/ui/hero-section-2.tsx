@@ -199,7 +199,8 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               flex: 0 0 auto !important;
               width: 100% !important;
               max-width: 100% !important;
-              min-height: 340px !important;
+              min-height: 0 !important;
+              aspect-ratio: 3 / 2;
               border-left: none !important;
             }
             .sc-hero2-subtitle button {
@@ -214,7 +215,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
               font-size: 1.6rem !important;
             }
             .sc-hero2-image {
-              min-height: 300px !important;
+              min-height: 0 !important;
             }
             .sc-hero2-footer {
               margin-top: 1rem !important;

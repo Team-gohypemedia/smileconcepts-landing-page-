@@ -11,6 +11,8 @@ import {
   Check,
   Phone,
   PhoneCall,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 // Interest-free payment plans are capped at this amount; anything above it is paid outside the plan
@@ -409,6 +411,43 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
             gap: 0.5rem;
             margin-bottom: 1.5rem !important;
           }
+          .sc-cost-swipe-hint {
+            display: flex !important;
+          }
+        }
+        /* Swipe hint arrows on the phase cards (visual only, mobile) */
+        .sc-cost-phases-wrap {
+          position: relative;
+        }
+        .sc-cost-swipe-hint {
+          display: none;
+          position: absolute;
+          top: 50%;
+          width: 26px;
+          height: 26px;
+          margin-top: -13px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.92);
+          color: #E86337;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 0.25s ease;
+        }
+        .sc-cost-swipe-hint-left { left: -6px; animation: sc-cost-nudge-left 1.8s ease-in-out infinite; }
+        .sc-cost-swipe-hint-right { right: -6px; animation: sc-cost-nudge-right 1.8s ease-in-out infinite; }
+        @keyframes sc-cost-nudge-left {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-3px); }
+        }
+        @keyframes sc-cost-nudge-right {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sc-cost-swipe-hint { animation: none !important; }
         }
         .sc-calc-content-pad {
           padding: 0;
@@ -623,138 +662,147 @@ export default function AllOn4Cost({ part = "cost" }: { part?: "cost" | "funding
             Your All on 4 or All on X treatment is quoted in two clear phases, the surgical phase and the final bridge phase, so nothing is hidden.
           </p>
 
-          <div
-            ref={phasesGridRef}
-            onScroll={handlePhaseScroll}
-            className="sc-cost-phases-grid"
-          >
-            {/* Phase 1 Card */}
+          <div className="sc-cost-phases-wrap">
             <div
-              className="sc-cost-phase-card"
-              style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "16px",
-                border: "1px solid #E5E0D7",
-                padding: "clamp(1.5rem, 3vw, 2.25rem)",
-                display: "flex",
-                flexDirection: "column",
-              }}
+              ref={phasesGridRef}
+              onScroll={handlePhaseScroll}
+              className="sc-cost-phases-grid"
             >
-              <span
+              {/* Phase 1 Card */}
+              <div
+                className="sc-cost-phase-card"
                 style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  color: "#E86337",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                  marginBottom: "0.35rem",
-                }}
-              >
-                Phase 1
-              </span>
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
-                Surgery &amp; Same-Day Temporary Teeth
-              </h3>
-              <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
-                <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.55rem, 4.8vw, 2rem)", fontWeight: 700, color: "#1C1C1E" }}>
-                  $18,000 <span style={{ fontSize: "0.9rem", fontWeight: 400, color: "#666" }}>per arch</span>
-                </span>
-              </div>
-              <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.9rem", color: "#555", lineHeight: 1.55, marginBottom: "0.75rem" }}>
-                Your first phase includes everything needed to restore your smile on the day of surgery (where clinically suitable), including:
-              </p>
-              <ul style={{ paddingLeft: "1.25rem", margin: "0 0 1.5rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", lineHeight: 1.6, flexGrow: 1 }}>
-                <li>Your consultation and 3D CBCT planning</li>
-                <li>Any extractions</li>
-                <li>Placement of your implants (usually four to six), with no per-implant charge</li>
-                <li>Fixed temporary teeth on the day of surgery or shortly afterwards, where suitable</li>
-              </ul>
-              <a
-                href="tel:0292677777"
-                style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "16px",
+                  border: "1px solid #E5E0D7",
+                  padding: "clamp(1.5rem, 3vw, 2.25rem)",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.45rem",
-                  padding: "0.75rem",
-                  backgroundColor: "#1C1C1E",
-                  color: "#ffffff",
-                  borderRadius: "8px",
-                  textDecoration: "none",
-                  fontFamily: "var(--font-assistant)",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
+                  flexDirection: "column",
                 }}
               >
-                <span>Book Phase 1 Consultation</span>
-                <PhoneCall size={14} aria-hidden />
-              </a>
-            </div>
-
-            {/* Phase 2 Card */}
-            <div
-              className="sc-cost-phase-card"
-              style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "16px",
-                border: "1px solid #E5E0D7",
-                padding: "clamp(1.5rem, 3vw, 2.25rem)",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--font-assistant)",
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  color: "#1C1C1E",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                  marginBottom: "0.35rem",
-                }}
-              >
-                Phase 2
-              </span>
-              <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
-                Your Final Fixed Teeth
-              </h3>
-              <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
-                <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-                  <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.5vw, 1.3rem)", fontWeight: 700, color: "#1C1C1E" }}>
-                    $10,000 per arch <span style={{ fontSize: "0.82rem", fontWeight: 400, color: "#666" }}>– Acrylic on Titanium</span>
-                  </span>
-                  <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.5vw, 1.3rem)", fontWeight: 700, color: "#E86337" }}>
-                    $14,000 per arch <span style={{ fontSize: "0.82rem", fontWeight: 400, color: "#666" }}>– Zirconia</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-assistant)",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#E86337",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  Phase 1
+                </span>
+                <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
+                  Surgery &amp; Same-Day Temporary Teeth
+                </h3>
+                <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
+                  <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
+                  <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.55rem, 4.8vw, 2rem)", fontWeight: 700, color: "#1C1C1E" }}>
+                    $18,000 <span style={{ fontSize: "0.9rem", fontWeight: 400, color: "#666" }}>per arch</span>
                   </span>
                 </div>
+                <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.9rem", color: "#555", lineHeight: 1.55, marginBottom: "0.75rem" }}>
+                  Your first phase includes everything needed to restore your smile on the day of surgery (where clinically suitable), including:
+                </p>
+                <ul style={{ paddingLeft: "1.25rem", margin: "0 0 1.5rem", fontFamily: "var(--font-assistant)", fontSize: "0.88rem", color: "#444", lineHeight: 1.6, flexGrow: 1 }}>
+                  <li>Your consultation and 3D CBCT planning</li>
+                  <li>Any extractions</li>
+                  <li>Placement of your implants (usually four to six), with no per-implant charge</li>
+                  <li>Fixed temporary teeth on the day of surgery or shortly afterwards, where suitable</li>
+                </ul>
+                <a
+                  href="tel:0292677777"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.45rem",
+                    padding: "0.75rem",
+                    backgroundColor: "#1C1C1E",
+                    color: "#ffffff",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                    fontFamily: "var(--font-assistant)",
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  <span>Book Phase 1 Consultation</span>
+                  <PhoneCall size={14} aria-hidden />
+                </a>
               </div>
-              <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.9rem", color: "#555", lineHeight: 1.55, margin: "0 0 1.5rem", flexGrow: 1 }}>
-                Once your implants have healed and integrated with your jawbone, you&apos;ll return for your custom-made permanent bridge. Together, we&apos;ll help you choose the material that best suits your lifestyle, functional needs and aesthetic goals.
-              </p>
-              <a
-                href="tel:0292677777"
+
+              {/* Phase 2 Card */}
+              <div
+                className="sc-cost-phase-card"
                 style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "16px",
+                  border: "1px solid #E5E0D7",
+                  padding: "clamp(1.5rem, 3vw, 2.25rem)",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.45rem",
-                  padding: "0.75rem",
-                  backgroundColor: "#E86337",
-                  color: "#ffffff",
-                  borderRadius: "8px",
-                  textDecoration: "none",
-                  fontFamily: "var(--font-assistant)",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
+                  flexDirection: "column",
                 }}
               >
-                <span>Get My Price Per Arch</span>
-                <PhoneCall size={14} aria-hidden />
-              </a>
+                <span
+                  style={{
+                    fontFamily: "var(--font-assistant)",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "#1C1C1E",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  Phase 2
+                </span>
+                <h3 style={{ fontFamily: "var(--font-prata)", fontSize: "var(--fs-card-title)", color: "#1C1C1E", margin: "0 0 0.5rem" }}>
+                  Your Final Fixed Teeth
+                </h3>
+                <div style={{ margin: "0.75rem 0 1.25rem", padding: "0.85rem 1rem", backgroundColor: "#FAF9F6", borderRadius: "10px", border: "1px solid #ECE7DE" }}>
+                  <span style={{ fontFamily: "var(--font-assistant)", fontSize: "0.85rem", color: "#666", display: "block" }}>Investment:</span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                    <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.5vw, 1.3rem)", fontWeight: 700, color: "#1C1C1E" }}>
+                      $10,000 per arch <span style={{ fontSize: "0.82rem", fontWeight: 400, color: "#666" }}>– Acrylic on Titanium</span>
+                    </span>
+                    <span style={{ fontFamily: "var(--font-prata)", fontSize: "clamp(1.15rem, 3.5vw, 1.3rem)", fontWeight: 700, color: "#E86337" }}>
+                      $14,000 per arch <span style={{ fontSize: "0.82rem", fontWeight: 400, color: "#666" }}>– Zirconia</span>
+                    </span>
+                  </div>
+                </div>
+                <p style={{ fontFamily: "var(--font-assistant)", fontSize: "0.9rem", color: "#555", lineHeight: 1.55, margin: "0 0 1.5rem", flexGrow: 1 }}>
+                  Once your implants have healed and integrated with your jawbone, you&apos;ll return for your custom-made permanent bridge. Together, we&apos;ll help you choose the material that best suits your lifestyle, functional needs and aesthetic goals.
+                </p>
+                <a
+                  href="tel:0292677777"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.45rem",
+                    padding: "0.75rem",
+                    backgroundColor: "#E86337",
+                    color: "#ffffff",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                    fontFamily: "var(--font-assistant)",
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  <span>Get My Price Per Arch</span>
+                  <PhoneCall size={14} aria-hidden />
+                </a>
+              </div>
+            </div>
+            {/* Swipe hint arrows (visual only, not clickable) */}
+            <div aria-hidden className="sc-cost-swipe-hint sc-cost-swipe-hint-left" style={{ opacity: activePhase === 1 ? 1 : 0 }}>
+              <ChevronLeft size={15} strokeWidth={2.5} />
+            </div>
+            <div aria-hidden className="sc-cost-swipe-hint sc-cost-swipe-hint-right" style={{ opacity: activePhase === 0 ? 1 : 0 }}>
+              <ChevronRight size={15} strokeWidth={2.5} />
             </div>
           </div>
 

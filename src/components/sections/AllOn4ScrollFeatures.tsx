@@ -4,11 +4,17 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, ShieldCheck, Clock, Layers, Award, PhoneCall, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ShieldCheck, Clock, Layers, Award, PhoneCall } from "lucide-react";
+import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Phone CTA: label first, phone icon at the end (matches the other call buttons)
+// Mobile stacking cards dock just below the navbar; cards taller than the screen dock by
+// their bottom edge (clear of the bottom section bar) so the whole card is readable first
+const MOBILE_STACK_DOCK_PX = 84;
+const MOBILE_STACK_BOTTOM_GAP_PX = 76;
+
 const renderCta = (label: string) => (
   <a
     href="tel:0292677777"
@@ -178,9 +184,9 @@ export default function AllOn4ScrollFeatures() {
   const photoFrameRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textContentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Mobile carousel state
-  const [mobileIndex, setMobileIndex] = React.useState(0);
-  const touchStartXRef = useRef<number | null>(null);
+  // Mobile stacking cards: per-card sticky top
+  const mobileStackRef = useRef<HTMLDivElement>(null);
+  const [mobileTops, setMobileTops] = React.useState<(string | undefined)[]>([]);
 
   // Only one layout is in the DOM at a time, so the headings and text are never output twice.
   // Until the viewport is known (server render and first paint) the desktop layout is used.
@@ -291,8 +297,28 @@ export default function AllOn4ScrollFeatures() {
     };
   }, [isMobile]);
 
-  const currentMobileSlide = slidesData[mobileIndex];
-  const MobileHeadingTag = currentMobileSlide.headingLevel === 2 ? "h2" : "h3";
+  useEffect(() => {
+    if (!isMobile) return;
+    const container = mobileStackRef.current;
+    if (!container) return;
+    const computeTops = () => {
+      const cards = Array.from(container.querySelectorAll<HTMLElement>(".sc-feat-stack-card"));
+      const next = cards.map((card) => {
+        const height = card.getBoundingClientRect().height;
+        const top = Math.min(MOBILE_STACK_DOCK_PX, window.innerHeight - height - MOBILE_STACK_BOTTOM_GAP_PX);
+        return `${Math.round(top)}px`;
+      });
+      setMobileTops((prev) => (prev.length === next.length && prev.every((v, i) => v === next[i]) ? prev : next));
+    };
+    computeTops();
+    const observer = new ResizeObserver(() => requestAnimationFrame(computeTops));
+    container.querySelectorAll(".sc-feat-stack-card").forEach((card) => observer.observe(card));
+    window.addEventListener("resize", computeTops);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", computeTops);
+    };
+  }, [isMobile]);
 
   return (
     <>
@@ -314,30 +340,15 @@ export default function AllOn4ScrollFeatures() {
           }
         }
 
-        /* Mobile carousel animations */
-        .sc-mobile-card-transition {
-          transition: opacity 0.45s ease, transform 0.45s ease;
-        }
-
-        /* Gentle sideways nudge so the swipe hint arrows read as "swipe" */
-        @keyframes sc-swipe-nudge-left {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(-3px); }
-        }
-        @keyframes sc-swipe-nudge-right {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(3px); }
-        }
-        .sc-swipe-hint-left { animation: sc-swipe-nudge-left 1.8s ease-in-out infinite; }
-        .sc-swipe-hint-right { animation: sc-swipe-nudge-right 1.8s ease-in-out infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .sc-swipe-hint { animation: none !important; }
+        /* Mobile stacking cards: pause between cards so each one can be read */
+        .sc-feat-stack-item:not(:last-child) {
+          margin-bottom: 20vh;
         }
       `}</style>
 
       {/* ───────────────────────────────────────────────────────────
-          1. MOBILE VIEW (< 1024px): Matching Reference UI Screenshot
-          Auto-moving carousel, card on top, text & CTA, bottom dots
+          1. MOBILE VIEW (< 1024px): Stacking cards on scroll
+          Each slide is a sticky card; the next one slides up over it
       ──────────────────────────────────────────────────────────── */}
       {isMobile && (
       <div
@@ -345,304 +356,220 @@ export default function AllOn4ScrollFeatures() {
         style={{
           width: "100%",
           backgroundColor: "#FFFFFF",
-          padding: "48px 20px 56px 20px",
+          padding: "48px 16px 40px",
           boxSizing: "border-box",
-          overflow: "hidden",
-        }}
-        onTouchStart={(e) => {
-          touchStartXRef.current = e.touches[0].clientX;
-        }}
-        onTouchEnd={(e) => {
-          if (touchStartXRef.current !== null) {
-            const diff = e.changedTouches[0].clientX - touchStartXRef.current;
-            if (diff > 45) {
-              // Swipe right -> prev
-              setMobileIndex((prev) => (prev - 1 + slidesData.length) % slidesData.length);
-            } else if (diff < -45) {
-              // Swipe left -> next
-              setMobileIndex((prev) => (prev + 1) % slidesData.length);
-            }
-            touchStartXRef.current = null;
-          }
         }}
       >
-        <div
-          style={{
-            maxWidth: "460px",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-          }}
-        >
-          {/* TOP CARD CONTAINER: Soft rounded corners, subtle warm background & shadow */}
-          <div
-            style={{
-              width: "100%",
-              backgroundColor: "#FAF9F5",
-              borderRadius: "26px",
-              padding: "16px 14px",
-              boxSizing: "border-box",
-              border: "1px solid #ECE7DE",
-              boxShadow: "0 14px 34px -10px rgba(0, 0, 0, 0.08)",
-              position: "relative",
-              overflow: "hidden",
-              marginBottom: "28px",
-            }}
-          >
-            {/* Photo Preview inside Card */}
-            <div
-              style={{
-                width: "100%",
-                height: "240px",
-                borderRadius: "18px",
-                overflow: "hidden",
-                position: "relative",
-                backgroundColor: "#F0EEEA",
-                boxShadow: "0 6px 18px rgba(0, 0, 0, 0.05)",
-              }}
-            >
-              <Image
-                key={currentMobileSlide.id}
-                src={currentMobileSlide.imageSrc}
-                alt={currentMobileSlide.imageAlt}
-                fill
-                sizes="(max-width: 600px) 100vw, 460px"
-                style={{
-                  objectFit: "cover",
-                  objectPosition: currentMobileSlide.imagePosition,
-                  transition: "opacity 0.4s ease",
-                }}
-                priority
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: "45px",
-                  background:
-                    "linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Swipe hint arrows (visual only, not clickable) */}
-              {[
-                { side: "left" as const, Icon: ChevronLeft },
-                { side: "right" as const, Icon: ChevronRight },
-              ].map(({ side, Icon }) => (
-                <div
-                  key={side}
-                  aria-hidden
-                  className={`sc-swipe-hint sc-swipe-hint-${side}`}
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    [side]: "10px",
-                    width: "28px",
-                    height: "28px",
-                    marginTop: "-14px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(255, 255, 255, 0.85)",
-                    color: "#1C1C1E",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.18)",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <Icon size={16} strokeWidth={2.5} />
-                </div>
-              ))}
-            </div>
-
-          </div>
-
-          {/* CONTENT SECTION BELOW CARD */}
-          <div style={{ textAlign: "left" }}>
-            {/* Category / Section Title with subtle mark */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                marginBottom: "8px",
-              }}
-            >
-              <div
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  borderRadius: "3px",
-                  backgroundColor: "#E86337",
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "1.1rem",
-                  fontWeight: 700,
-                  color: "#1C1C1E",
-                }}
-              >
-                {currentMobileSlide.category}
-              </span>
-            </div>
-
-            {/* Slide title */}
-            <MobileHeadingTag
-              style={{
-                fontFamily: "var(--font-prata), Georgia, serif",
-                fontSize: "1.25rem",
-                fontWeight: 400,
-                color: "#1C1C1E",
-                lineHeight: 1.35,
-                textAlign: "center",
-                margin: "0 0 10px 0",
-              }}
-            >
-              {currentMobileSlide.heading}
-            </MobileHeadingTag>
-
-            {/* Description */}
-            {toParagraphs(currentMobileSlide.description).map((para, pIdx) => (
-              <p
-                key={pIdx}
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.92rem",
-                  lineHeight: 1.6,
-                  color: "#4A4A50",
-                  textAlign: "center",
-                  margin: "0 0 12px 0",
-                }}
-              >
-                {para}
-              </p>
-            ))}
-
-            {currentMobileSlide.checklistTitle && (
-              <h3
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  color: "#1C1C1E",
-                  textAlign: "center",
-                  margin: "4px 0 8px 0",
-                }}
-              >
-                {currentMobileSlide.checklistTitle}
-              </h3>
-            )}
-
-            {/* Checklist */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px",
-                marginBottom: currentMobileSlide.footnote ? "12px" : "24px",
-              }}
-            >
-              {currentMobileSlide.checklist.map((item, cIdx) => (
-                <div
-                  key={cIdx}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "10px",
-                  }}
-                >
+        <div ref={mobileStackRef} style={{ maxWidth: "460px", margin: "0 auto" }}>
+          <StackingCards totalCards={slidesData.length}>
+            {slidesData.map((slide, idx) => {
+              const HeadingTag = slide.headingLevel === 2 ? "h2" : "h3";
+              return (
+                <StackingCardItem key={slide.id} index={idx} topPosition={mobileTops[idx]} className="sc-feat-stack-item">
                   <div
+                    className="sc-feat-stack-card"
                     style={{
-                      width: "18px",
-                      height: "18px",
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(22, 163, 74, 0.12)",
-                      color: "#16A34A",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      marginTop: "2px",
+                      width: "100%",
+                      backgroundColor: "#FAF9F5",
+                      borderRadius: "26px",
+                      padding: "14px 14px 20px",
+                      boxSizing: "border-box",
+                      border: "1px solid #ECE7DE",
+                      boxShadow: "0 14px 34px -10px rgba(0, 0, 0, 0.12)",
                     }}
                   >
-                    <Check size={11} strokeWidth={3} />
+                    {/* Photo */}
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "220px",
+                        borderRadius: "18px",
+                        overflow: "hidden",
+                        position: "relative",
+                        backgroundColor: "#F0EEEA",
+                        boxShadow: "0 6px 18px rgba(0, 0, 0, 0.05)",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      <Image
+                        src={slide.imageSrc}
+                        alt={slide.imageAlt}
+                        fill
+                        sizes="(max-width: 600px) 100vw, 460px"
+                        style={{ objectFit: "cover", objectPosition: slide.imagePosition }}
+                        priority={idx === 0}
+                      />
+                    </div>
+
+                    {/* CONTENT SECTION BELOW CARD */}
+                    <div style={{ textAlign: "left" }}>
+                      {/* Category / Section Title with subtle mark */}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            borderRadius: "3px",
+                            backgroundColor: "#E86337",
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "1.1rem",
+                            fontWeight: 700,
+                            color: "#1C1C1E",
+                          }}
+                        >
+                          {slide.category}
+                        </span>
+                      </div>
+
+                      {/* Slide title */}
+                      <HeadingTag
+                        style={{
+                          fontFamily: "var(--font-prata), Georgia, serif",
+                          fontSize: "1.25rem",
+                          fontWeight: 400,
+                          color: "#1C1C1E",
+                          lineHeight: 1.35,
+                          textAlign: "center",
+                          margin: "0 0 10px 0",
+                        }}
+                      >
+                        {slide.heading}
+                      </HeadingTag>
+
+                      {/* Description */}
+                      {toParagraphs(slide.description).map((para, pIdx) => (
+                        <p
+                          key={pIdx}
+                          style={{
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "0.92rem",
+                            lineHeight: 1.6,
+                            color: "#4A4A50",
+                            textAlign: "center",
+                            margin: "0 0 12px 0",
+                          }}
+                        >
+                          {para}
+                        </p>
+                      ))}
+
+                      {slide.checklistTitle && (
+                        <h3
+                          style={{
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "0.95rem",
+                            fontWeight: 700,
+                            color: "#1C1C1E",
+                            textAlign: "center",
+                            margin: "4px 0 8px 0",
+                          }}
+                        >
+                          {slide.checklistTitle}
+                        </h3>
+                      )}
+
+                      {/* Checklist */}
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                          marginBottom: slide.footnote ? "12px" : "24px",
+                        }}
+                      >
+                        {slide.checklist.map((item, cIdx) => (
+                          <div
+                            key={cIdx}
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: "10px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "50%",
+                                backgroundColor: "rgba(22, 163, 74, 0.12)",
+                                color: "#16A34A",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexShrink: 0,
+                                marginTop: "2px",
+                              }}
+                            >
+                              <Check size={11} strokeWidth={3} />
+                            </div>
+                            <span
+                              style={{
+                                fontSize: "0.88rem",
+                                color: "#2C2C2E",
+                                fontWeight: 500,
+                                fontFamily: "var(--font-assistant), sans-serif",
+                                lineHeight: 1.4,
+                              }}
+                            >
+                              {renderChecklistItem(item)}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {slide.footnote && (
+                        <p
+                          style={{
+                            fontFamily: "var(--font-assistant), sans-serif",
+                            fontSize: "0.86rem",
+                            lineHeight: 1.55,
+                            color: "#6A6A70",
+                            textAlign: "center",
+                            margin: "0 0 24px 0",
+                          }}
+                        >
+                          {slide.footnote}
+                        </p>
+                      )}
+
+                      {slide.cta && (
+                        <div style={{ display: "flex", justifyContent: "center", margin: "0 0 24px 0" }}>
+                          {renderCta(slide.cta)}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Card counter */}
+                    <p
+                      style={{
+                        fontFamily: "var(--font-assistant), sans-serif",
+                        fontSize: "0.78rem",
+                        color: "#8E8E93",
+                        textAlign: "center",
+                        margin: 0,
+                        paddingTop: "10px",
+                        borderTop: "1px solid #ECE7DE",
+                      }}
+                    >
+                      {idx + 1} of {slidesData.length}
+                    </p>
                   </div>
-                  <span
-                    style={{
-                      fontSize: "0.88rem",
-                      color: "#2C2C2E",
-                      fontWeight: 500,
-                      fontFamily: "var(--font-assistant), sans-serif",
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {renderChecklistItem(item)}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {currentMobileSlide.footnote && (
-              <p
-                style={{
-                  fontFamily: "var(--font-assistant), sans-serif",
-                  fontSize: "0.86rem",
-                  lineHeight: 1.55,
-                  color: "#6A6A70",
-                  textAlign: "center",
-                  margin: "0 0 24px 0",
-                }}
-              >
-                {currentMobileSlide.footnote}
-              </p>
-            )}
-
-            {currentMobileSlide.cta && (
-              <div style={{ display: "flex", justifyContent: "center", margin: "0 0 24px 0" }}>
-                {renderCta(currentMobileSlide.cta)}
-              </div>
-            )}
-
-            {/* Horizontal Pagination Dots matching user's reference */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                paddingTop: "6px",
-              }}
-            >
-              {slidesData.map((_, dotIdx) => {
-                const isActive = dotIdx === mobileIndex;
-                return (
-                  <button
-                    key={dotIdx}
-                    type="button"
-                    onClick={() => setMobileIndex(dotIdx)}
-                    aria-label={`Go to slide ${dotIdx + 1}`}
-                    style={{
-                      width: isActive ? "22px" : "8px",
-                      height: "8px",
-                      borderRadius: "999px",
-                      backgroundColor: isActive ? "#E86337" : "#DDD7CD",
-                      border: "none",
-                      padding: 0,
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
-                  />
-                );
-              })}
-            </div>
-          </div>
+                </StackingCardItem>
+              );
+            })}
+          </StackingCards>
         </div>
       </div>
       )}
