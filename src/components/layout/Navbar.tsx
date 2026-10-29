@@ -258,7 +258,7 @@ export default function Navbar() {
               alignItems: "center",
               gap: "0.5rem",
               fontFamily: "var(--font-assistant), sans-serif",
-              fontSize: "0.92rem",
+              fontSize: "1.23rem",
               fontWeight: 700,
               color: isLight ? "#222222" : "#ffffff",
               textDecoration: "none",
