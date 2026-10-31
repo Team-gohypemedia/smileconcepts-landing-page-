@@ -955,11 +955,6 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                     sizes="(max-width: 900px) 100vw, 740px"
                     style={{ objectFit: "cover", objectPosition: "center 65%" }}
                   />
-                  <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
-                    <p style={{ margin: 0, fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#1C1C1E", fontWeight: 600 }}>
-                      Most patients return to their normal routine within a few days.
-                    </p>
-                  </div>
                 </div>
               </div>
             </StackingCardItem>

@@ -667,25 +667,13 @@ export default function VisualBeforeAfter() {
             <p
               style={{
                 fontFamily: "var(--font-assistant)",
-                fontSize: "0.85rem",
-                color: "#F47A4A",
-                fontWeight: 600,
-                lineHeight: 1.45,
-                margin: 0,
-              }}
-            >
-              Average treatment time: 3–6 months
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-assistant)",
                 fontSize: "0.75rem",
                 color: "#8E93A4",
                 lineHeight: 1.45,
                 margin: 0,
               }}
             >
-              <strong>Warning:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary.
+              <strong>Warning:</strong> The before and after images shown are of real patients of our clinic. They are for illustrative purposes only and do not represent results all patients can expect. Individual results vary. Average treatment time: 3–6 months.
             </p>
           </div>
         </motion.div>
