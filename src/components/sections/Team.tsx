@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShieldCheck, ExternalLink } from "lucide-react";
 import { images } from "@/lib/images";
+import TrustindexReviews from "./TrustindexReviews";
 
 /* ─── Social Icon SVGs ─── */
 const FacebookIcon = () => (
@@ -532,6 +533,8 @@ export default function Team() {
         <div style={{ textAlign: "center", maxWidth: "840px", margin: "2.5rem auto 0", fontFamily: "var(--font-assistant)", fontSize: "0.95rem", color: "#555", lineHeight: 1.6 }}>
           Together, Dr Manish Shah and Dr Kinnar Shah have trained on and worked with most of the world&apos;s leading implant systems, and regularly take on revision cases referred from other clinics and from overseas.
         </div>
+
+        <TrustindexReviews />
       </div>
     </section>
   );
