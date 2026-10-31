@@ -9,151 +9,52 @@ import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from "@/lib/google-reviews";
 const GOOGLE_PROFILE_URL = "https://share.google/4Z9FLkA3yM48zIdYS";
 
 // Real Google Reviews from Smile Concepts (Sydney CBD)
-// Names formatted with First name + Last name initial letter (e.g. Sally D.)
-// Reviews curated to medium length to fit cards comfortably
-const googleReviews: TestimonialItem[] = [
-  // --- Column 1 ---
-  {
-    name: "Sally D.",
-    initials: "SD",
-    avatarColor: "#4285F4",
-    text: "Nobody likes going to the dentist, but Dr Angie Papas always makes me feel at ease and does an amazing job every time. The team is warm, reassuring and thorough. Highly recommend Smile Concepts!",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Oct 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Ruqiya K.",
-    initials: "RK",
-    avatarColor: "#EA4335",
-    text: "Dr Manish has been absolutely amazing throughout my treatment. He corrected both my TMJ and bite alignment issues, and I couldn't be happier with the final result. Always felt in the best hands.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Sep 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Jordyn L.",
-    initials: "JL",
-    avatarColor: "#34A853",
-    text: "Such a wonderful experience from start to finish. Dr Angie and the team were very professional, took their time and made sure everything was perfect. I will be highly recommending Smile Concepts.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Sep 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Joseph B.",
-    initials: "JB",
-    avatarColor: "#F59E0B",
-    text: "The team is just amazing. They took care of me throughout the entire process. The clinic environment is modern and welcoming, and the treatment was completely smooth and hassle-free.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Sep 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-
-  // --- Column 2 ---
-  {
-    name: "Allan A.",
-    initials: "AA",
-    avatarColor: "#8B5CF6",
-    text: "The staff here are fantastic, the atmosphere is relaxed and very friendly. The dentists do a fantastic job — extremely professional, reassuring, and gentle from initial consult to completion.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Aug 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Darren J.",
-    initials: "DJ",
-    avatarColor: "#0D9488",
-    text: "Highly experienced and skilled dentists with state-of-the-art facilities in Sydney CBD. Exceptional clinical standard, transparent consultation, and friendly practice. Will definitely return.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Aug 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Anne H.",
-    initials: "AH",
-    avatarColor: "#EC4899",
-    text: "I highly commend Smile Concepts for their excellent care. They eased my dental anxiety, made me feel completely comfortable, and brought back my smile and confidence. Simply the best team!",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Jul 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Samuel T.",
-    initials: "ST",
-    avatarColor: "#2563EB",
-    text: "Very pleased with the exceptional service and modern clinic facilities at 307 Pitt Street. The attention to detail, high hygiene standards, and patient comfort is outstanding. Thoroughly recommended.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Sep 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-
-  // --- Column 3 ---
-  {
-    name: "Rose S.",
-    initials: "RS",
-    avatarColor: "#059669",
-    text: "Very happy with Smile Concepts. I had severe jaw pain and grinding for years and Dr Manish was able to stop the pain and correct my bite. All the latest technology and done efficiently.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Jul 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Sreya N.",
-    initials: "SN",
-    avatarColor: "#D97706",
-    text: "So professional and great customer service from everyone at Smile Concepts. The dentists and nurses are knowledgeable, helpful and welcoming. Best dental clinic experience in Sydney.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Jul 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Kerrie M.",
-    initials: "KM",
-    avatarColor: "#7C3AED",
-    text: "Made an appointment after a recommendation and was put at ease right from the beginning. Skill, gentle care and modern technology. Sorting appointments and payment was a total breeze.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Jul 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
-  {
-    name: "Megan M.",
-    initials: "MM",
-    avatarColor: "#E11D48",
-    text: "Brilliant experience at Smile Concepts. Dr Manish and the clinical team are great! The whole practice is spotless, welcoming and uses top-tier digital dental equipment.",
-    role: "Verified Google Review",
-    location: "Sydney CBD",
-    date: "Jul 2026",
-    rating: 5,
-    url: GOOGLE_PROFILE_URL,
-  },
+// Names formatted with First name + Last name initial letter (e.g. Julia X.)
+// Text is copied verbatim from each Google review: do not reword or fix spelling.
+// "…" marks where words were cut from the original. No dates on any card.
+const reviewEntries: [name: string, text: string][] = [
+  ["Julia X.", "I recently had my all on 4 dental implants done by Dr. Shah and seriously could not recommend him more! … I now have the confidence to smile again which I hadn’t had for years."],
+  ["Aaron M.", "After years of neglecting my teeth and bad dental work plus a phobia of the dentist itself my teeth were in a really bad way, until I meet Dr Shah. … He has not only transformed my smile but my confidence also."],
+  ["Robert N.", "The price was extremely affordable and they even set up a payment plan. I would never consider overseas implant work due to it's complex nature and after care. Thank you Dr Manish and the girls at the front desk."],
+  ["Kenji W.", "My mum recently had her dental implants done at Smile Concepts with Dr. Shah… My mum has always been scared of dentistry, but Dr. Shah and the entire team made her feel completely at ease."],
+  ["Hanna E.", "…full dental implants of my top and lower jaw. … My years of suffering in silence and doing everything to avoid smiling are over. I Highly and Whole Heartily Recommend Dr Manesh Shah…"],
+  ["Jemarie L.", "My uncle came to see Dr Manish to get implants… The new permanent teeth that he got with the dental Implants has not only improved his confidence but has made a massive difference in his life."],
+  ["Leonnie P.", "The work done on my teeth was extensive but the results amazing. My teeth look so natural, my health is so much better but most of all my confidence has grown."],
+  ["Tys A.", "Excellent service, straight up answers and a clear set of steps and timelines - Dr Shah and the team don't just say what you want to hear, they're honest and clear about what's possible and follow through perfectly."],
+  ["John V.", "They are very reasonably priced. I had dental implants completed by Dr Manish, the results were outstanding and I have no hesitation in highly recommending Smile Concepts"],
+  ["Alfred D.", "As a person in her late seventies I was apprehensive about having front teeth implants. Dr Kinnar from my first visit was extremely reassuring and I am delighted with the cosmetic outcome…"],
+  ["Mia M.", "I have seen both dentists, Dr. Manish and Dr. Kinnar and their expertise in the field is unmatched. I had a complete smile transformation that gave me a ton of confidence."],
+  ["Anthony G.", "They did a great job in transforming my teeth to a new level that I now feel confident to smile again. I really appreciated the advice given by Dr. Manish and his assistants, as it was very honest."],
+  ["Moushumi D.", "Dr. Shah is an excellent dental surgeon and I recommend the team to everyone with the highest of praises. Well worth the effort of going all the way to Sydney for treatment from New Zealand!"],
+  ["Tommy D.", "Dr Manish Shah was recommended to me from friends who had dental implant work done. I am really happy to give a glowing review as it was a very good experience from start to the excellent follow up care…"],
+  ["Vijendra K.", "You are such a great person and you know your job so well. Manish, you have made me feel young again with the smile back to my face. I have been told that I look fantastic and good looking."],
 ];
 
-const firstColumn = googleReviews.slice(0, 4);
-const secondColumn = googleReviews.slice(4, 8);
-const thirdColumn = googleReviews.slice(8, 12);
+const AVATAR_COLORS = ["#4285F4", "#EA4335", "#34A853", "#F59E0B", "#8B5CF6", "#0D9488", "#EC4899", "#2563EB", "#059669", "#D97706", "#7C3AED", "#E11D48"];
+
+const googleReviews: TestimonialItem[] = reviewEntries.map(([name, text], i) => ({
+  name,
+  text,
+  avatarColor: AVATAR_COLORS[i % AVATAR_COLORS.length],
+  role: "Verified Google Review",
+  location: "Sydney CBD",
+  rating: 5,
+  url: GOOGLE_PROFILE_URL,
+}));
+
+// Fill columns in turn, so reviews read 1, 2, 3 across and keep their order.
+const splitIntoColumns = (count: number) =>
+  Array.from({ length: count }, (_, col) => googleReviews.filter((_, i) => i % count === col));
+
+// Seconds per card for each column (previous speeds: 26s, 32s, 28s for 4 cards).
+// Duration scales with card count so scrolling speed stays the same.
+const SECONDS_PER_CARD = [6.5, 8, 7];
+
+const LAYOUTS = [
+  { className: "sc-rv-layout-1", columns: splitIntoColumns(1) },
+  { className: "sc-rv-layout-2", columns: splitIntoColumns(2) },
+  { className: "sc-rv-layout-3", columns: splitIntoColumns(3) },
+];
 
 export default function Testimonials() {
   return (
@@ -340,30 +241,35 @@ export default function Testimonials() {
               "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
           }}
         >
-          <TestimonialsColumn testimonials={firstColumn} duration={26} />
-          <TestimonialsColumn
-            testimonials={secondColumn}
-            className="hidden md:block"
-            duration={32}
-          />
-          <TestimonialsColumn
-            testimonials={thirdColumn}
-            className="hidden lg:block"
-            duration={28}
-          />
+          {LAYOUTS.map((layout) => (
+            <div
+              key={layout.className}
+              className={`sc-rv-layout ${layout.className}`}
+              style={{ display: "flex", justifyContent: "center", gap: "1.5rem", width: "100%" }}
+            >
+              {layout.columns.map((column, col) => (
+                <TestimonialsColumn
+                  key={col}
+                  testimonials={column}
+                  duration={column.length * SECONDS_PER_CARD[col]}
+                />
+              ))}
+            </div>
+          ))}
         </div>
 
-        {/* Responsive Mobile/Desktop CSS helper */}
+        {/* Responsive layout helper: 1 column on phone, 2 on tablet, 3 on desktop */}
         <style>{`
-          @media (max-width: 767px) {
-            .hidden.md\\:block {
-              display: none !important;
-            }
+          .sc-rv-layout-1, .sc-rv-layout-2 {
+            display: none !important;
           }
-          @media (max-width: 1023px) {
-            .hidden.lg\\:block {
-              display: none !important;
-            }
+          @media (max-width: 767px) {
+            .sc-rv-layout-1 { display: flex !important; }
+            .sc-rv-layout-3 { display: none !important; }
+          }
+          @media (min-width: 768px) and (max-width: 1023px) {
+            .sc-rv-layout-2 { display: flex !important; }
+            .sc-rv-layout-3 { display: none !important; }
           }
         `}</style>
 
