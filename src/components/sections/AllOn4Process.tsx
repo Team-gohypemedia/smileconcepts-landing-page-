@@ -17,6 +17,75 @@ const PROCESS_STEP_COUNT = 5;
 
 type ProcessPart = "journey" | "recovery" | "risks" | "why";
 
+const CLINIC_SLIDES = [
+  { src: "/assets/allon4/clinic/reception-patient-visit.jpg", alt: "Smile Concepts dentist with a patient at the clinic reception", position: "center 40%" },
+  { src: "/assets/allon4/clinic/implant-surgery.jpg", alt: "Smile Concepts dentist performing implant surgery with surgical loupes", position: "center 30%" },
+  { src: "/assets/allon4/clinic/team-with-happy-patients.jpg", alt: "Smile Concepts team smiling with patients at the clinic", position: "center 35%" },
+  { src: "/assets/allon4/clinic/laser-dentistry-treatment.jpg", alt: "Dental laser treatment at Smile Concepts", position: "85% center" },
+  { src: "/assets/allon4/clinic/reception-patient-visit-2.jpg", alt: "Smile Concepts dentist with a patient in the Sydney CBD clinic", position: "center 45%" },
+  { src: "/assets/allon4/clinic/team-reception-bubbles.jpg", alt: "Smile Concepts team having fun at the clinic reception", position: "center 35%" },
+];
+
+function ClinicCarousel() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const touchX = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => setActive((i) => (i + 1) % CLINIC_SLIDES.length), 4000);
+    return () => window.clearInterval(id);
+  }, [paused, active]);
+
+  const go = (step: number) => setActive((i) => (i + step + CLINIC_SLIDES.length) % CLINIC_SLIDES.length);
+  const arrowStyle: React.CSSProperties = { position: "absolute", top: "50%", transform: "translateY(-50%)", zIndex: 2, width: "28px", height: "28px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.5)", padding: 0, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", backgroundColor: "rgba(28,28,30,0.28)", color: "#ffffff", backdropFilter: "blur(4px)" };
+
+  return (
+    <div
+      style={{ position: "absolute", inset: 0, touchAction: "pan-y" }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={(e) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        touchX.current = null;
+      }}
+    >
+      {CLINIC_SLIDES.map((slide, i) => (
+        <motion.div
+          key={slide.src}
+          initial={false}
+          animate={{ opacity: i === active ? 1 : 0, scale: i === active ? 1 : 1.04 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          style={{ position: "absolute", inset: 0 }}
+          aria-hidden={i !== active}
+        >
+          <Image src={slide.src} alt={slide.alt} fill sizes="(max-width: 900px) 100vw, 740px" style={{ objectFit: "cover", objectPosition: slide.position }} />
+        </motion.div>
+      ))}
+      <button type="button" className="sc-carousel-arrow" aria-label="Previous photo" onClick={() => go(-1)} style={{ ...arrowStyle, left: "0.6rem" }}>
+        <ChevronLeft size={16} aria-hidden />
+      </button>
+      <button type="button" className="sc-carousel-arrow" aria-label="Next photo" onClick={() => go(1)} style={{ ...arrowStyle, right: "0.6rem" }}>
+        <ChevronRight size={16} aria-hidden />
+      </button>
+      <div className="sc-carousel-dots" style={{ position: "absolute", bottom: "4.6rem", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "0.4rem", zIndex: 2 }}>
+        {CLINIC_SLIDES.map((slide, i) => (
+          <button
+            key={slide.src}
+            type="button"
+            aria-label={`Show photo ${i + 1} of ${CLINIC_SLIDES.length}`}
+            onClick={() => setActive(i)}
+            style={{ width: i === active ? "22px" : "8px", height: "8px", borderRadius: "999px", border: "none", padding: 0, cursor: "pointer", backgroundColor: i === active ? "#E86337" : "rgba(255,255,255,0.75)", transition: "width 0.3s ease, background-color 0.3s ease" }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ProstheticCard({ index, topPosition }: { index: 1 | 2; topPosition?: string }) {
   const temporary = index === 1;
   return (
@@ -461,13 +530,17 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
           }
           /* Each photo box matches its image's own proportions, so nothing is cropped */
           .sc-stack-media { aspect-ratio: 1000 / 667; }
+          .sc-process-recovery .sc-stack-item:first-child .sc-stack-media { aspect-ratio: 1080 / 1256; }
           .sc-process-recovery .sc-stack-item:nth-child(2) .sc-stack-media { aspect-ratio: 2 / 1; }
           .sc-process-recovery .sc-stack-item:nth-child(3) .sc-stack-media { aspect-ratio: 1 / 1; }
-          .sc-process-risks .sc-stack-item:first-child .sc-stack-media { aspect-ratio: 700 / 400; }
+          .sc-process-risks .sc-stack-item:first-child .sc-stack-media { aspect-ratio: 1557 / 799; }
           .sc-process-risks .sc-stack-item:nth-child(2) .sc-stack-media { aspect-ratio: 904 / 1024; }
           .sc-process-risks .sc-stack-item:nth-child(2) .sc-stack-media img { object-fit: contain !important; }
           .sc-process-risks .sc-stack-item:nth-child(3) .sc-stack-media { aspect-ratio: 348 / 395; }
-          .sc-process-why .sc-stack-media { aspect-ratio: 1376 / 768; }
+          .sc-process-why .sc-stack-media { aspect-ratio: 4 / 5; }
+          /* Clinic carousel: chip is hidden on phones, so dots sit at the bottom edge */
+          .sc-carousel-dots { bottom: 0.75rem !important; }
+          .sc-carousel-arrow { width: 26px !important; height: 26px !important; }
           .sc-stack-chip {
             display: none !important;
           }
@@ -876,13 +949,12 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
 
                 <div className="sc-stack-media" style={{ position: "relative", minHeight: "260px", overflow: "hidden" }}>
                   <Image
-                    src="/assets/allon4/elder-couple-cooking-dental-implant.jpg"
-                    alt="Elder couple cooking healthy meal enjoying dental implants recovery"
+                    src="/assets/allon4/before-after-all-on-x-smile.jpg"
+                    alt="Before and after All on X dental implants at Smile Concepts, from no teeth to a full fixed smile"
                     fill
                     sizes="(max-width: 900px) 100vw, 740px"
-                    style={{ objectFit: "cover", objectPosition: "left 20%" }}
+                    style={{ objectFit: "cover", objectPosition: "center 65%" }}
                   />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
                   <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
                     <p style={{ margin: 0, fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#1C1C1E", fontWeight: 600 }}>
                       Most patients return to their normal routine within a few days.
@@ -957,8 +1029,8 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
 
                 <div className="sc-stack-media" style={{ position: "relative", minHeight: "280px", overflow: "hidden" }}>
                   <Image
-                    src="/assets/allon4/All-on-6-1.2.jpg"
-                    alt="Dental implant arch restoration bridge demonstrating precision engineering"
+                    src="/assets/allon4/all-on-x-implants-xray.jpg"
+                    alt="Panoramic X-ray showing All on X dental implants placed in the upper and lower jaws"
                     fill
                     sizes="(max-width: 900px) 100vw, 740px"
                     style={{ objectFit: "cover", objectPosition: "center center" }}
@@ -1207,14 +1279,8 @@ export default function AllOn4Process({ part = "journey" }: { part?: ProcessPart
                 </div>
 
                 <div className="sc-stack-media" style={{ position: "relative", minHeight: "260px", overflow: "hidden" }}>
-                  <Image
-                    src="/assets/allon4/sunset-couple-hd.jpg"
-                    alt="Happy couple smiling after successful Smile Concepts All-on-4 transformation"
-                    fill
-                    sizes="(max-width: 900px) 100vw, 740px"
-                    style={{ objectFit: "cover", objectPosition: "35% center" }}
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
+                  <ClinicCarousel />
+                  <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "linear-gradient(180deg, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.4) 100%)" }} />
                   <div className="sc-stack-chip" style={{ position: "absolute", bottom: "1rem", left: "1rem", right: "1rem", padding: "0.65rem 1rem", backgroundColor: "rgba(255,255,255,0.94)", backdropFilter: "blur(8px)", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.7)" }}>
                     <p style={{ margin: 0, fontFamily: "var(--font-assistant)", fontSize: "0.78rem", color: "#1C1C1E", fontWeight: 600 }}>
                       An award winning Sydney CBD practice with {GOOGLE_REVIEW_COUNT} Google reviews.

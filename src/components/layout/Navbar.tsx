@@ -144,7 +144,7 @@ export default function Navbar() {
       >
         {/* ── Brand Logo ── */}
         <Link
-          href="/"
+          href="https://www.smileconcepts.com.au/"
           style={{
             display: "inline-flex",
             alignItems: "center",
