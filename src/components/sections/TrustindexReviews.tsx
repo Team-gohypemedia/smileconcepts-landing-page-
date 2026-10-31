@@ -24,7 +24,6 @@ import { useEffect, useRef } from 'react';
 
 // Text above the widget
 const HEADLINE = 'Our Patients Have the Final Say';
-const SUBLINE = '4.8 stars from 600+ reviews, straight from Google.';
 
 // Smile Concepts Trustindex widget
 const WIDGET_URL = 'https://cdn.trustindex.io/loader.js?b71948b403e3003e4476b145a2f';
@@ -52,6 +51,14 @@ export default function TrustindexReviews() {
       placeholder.setAttribute('data-src', WIDGET_URL);
       placeholder.setAttribute('src', WIDGET_URL);
       box.appendChild(placeholder);
+
+      // The loader only runs once per page. If it is already here (the block
+      // remounted), ask it to pick up the new placeholder instead.
+      const trustindex = (window as Window & { Trustindex?: { loadWidgetsFromDom?: () => void } }).Trustindex;
+      if (trustindex?.loadWidgetsFromDom) {
+        trustindex.loadWidgetsFromDom();
+        return;
+      }
 
       // Trustindex loader, which finds the placeholder and fills it
       const script = document.createElement('script');
@@ -94,16 +101,7 @@ export default function TrustindexReviews() {
           color: #E86337;
           line-height: 1.2;
           letter-spacing: -0.01em;
-          margin: 0 0 0.65rem;
-        }
-        .sc-reviews-sub {
-          text-align: center;
-          max-width: 780px;
-          margin: 0 auto 1.5rem;
-          color: #5E616B;
-          font-size: var(--fs-body);
-          line-height: 1.6;
-          font-family: var(--font-assistant), sans-serif;
+          margin: 0 0 1rem;
         }
         .sc-reviews-rule {
           width: 3rem;
@@ -130,11 +128,6 @@ export default function TrustindexReviews() {
           .sc-reviews-title {
             padding: 0 0.5rem;
           }
-          .sc-reviews-sub {
-            margin-bottom: 1rem;
-            padding: 0 0.75rem;
-            font-size: 0.95rem;
-          }
           .sc-reviews-rule {
             margin-bottom: 1.25rem;
           }
@@ -144,7 +137,6 @@ export default function TrustindexReviews() {
         }
       `}</style>
       <h3 className="sc-reviews-title">{HEADLINE}</h3>
-      <p className="sc-reviews-sub">{SUBLINE}</p>
       <div aria-hidden="true" className="sc-reviews-rule" />
       <div ref={boxRef} className="sc-reviews-box" />
     </div>
